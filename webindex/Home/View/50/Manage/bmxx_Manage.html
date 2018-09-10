@@ -1,0 +1,40 @@
+<extend name="50/index/base" title="会议信息管理"/>
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="#">管理中心</a>
+            </li>
+            <li>
+                <a href="/home/Manage/hyxx_manage">会议信息管理</a>
+            </li>
+            <li>
+                <a href="#">报名单位信息管理</a>
+            </li>
+        </ul>
+
+        <!-- Table -->
+
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+            <tr style="background: #347ab7; color: #ffffff">
+                <th nowrap>序号</th>
+                <th >单位名称</th><th >通讯地址</th><th >联系人</th><th >联系电话</th><th >电子邮箱</th><th >报名时间</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='Bmxx' item='Info' >                    <?php $i++;?>                    <tr>
+                <td>{$i}</td>
+                <td><a href="/home/manage/bmchr_manage?dw_id={$Info.id}&hy_id={$hy_id}">{$Info.gl_dwmc}</a></td><td>{$Info.gl_txdz}</td><td>{$Info.gl_lxr}</td><td>{$Info.gl_lxdh}</td><td>{$Info.gl_dzyx}</td><td>{$Info.gl_bmsj}</td>
+            </tr>
+            </foreach>                </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+        </div>
+
+</block>

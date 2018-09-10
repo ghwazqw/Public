@@ -1,0 +1,195 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <script type="text/javascript">
+        CKEDITOR.replace( 'content' ,{ //这里的 content就是上面我们设置的textarea或者input元素的id
+                    filebrowserBrowseUrl:'__PUBLIC__/Ckeditor/ckfinder.html',//设置上传图片的页面为ckfinder.html
+                    filebrowserImageBrowseUrl:'__PUBLIC__/Ckeditor/ckfinder.html?type=Images',
+                    filebrowserFlashBrowseUrl: '__PUBLIC__/Ckeditor/ckfinder.html?type=Flash',
+                    filebrowserUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                    filebrowserImageUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                    filebrowserFlashUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Flash',
+                }
+        );
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#calendar").bootstrapDatepickr();
+            $("#calendar1").bootstrapDatepickr({date_format: "d-m-Y"});
+            $("#calendar2").bootstrapDatepickr({date_format: "l, do F Y"});
+        });
+    </script>
+
+
+<script>
+   $ (function (){
+       var myDate = new Date();
+       var h=myDate.getFullYear();
+       var m=myDate.getMonth()+1;
+       var d=myDate.getDate();
+       var dd= h+"-"+m+"-"+d;
+       //$("#calendar1").val(dd);
+       function trim(str)
+       {
+           return str.replace(/^\s*|\s*$/ig,"");
+
+       }
+       function gettitle()
+       {
+           //	return document.getElementById("userpass").value;
+           return trim($("#info_title").val());
+       }
+       function getlx()
+       {
+           //	return document.getElementById("userpass").value;
+           return trim($("#zx_lx").val());
+       }
+       //类型选择判断
+       $("#zx_lx").blur(function(){
+           var info_lx = getlx();
+           if (info_lx==""){
+               $("#zx_lx").attr('placeholder',"此项为必填");
+               $("#zx_lx").css('border',"1px solid #ff0000");
+           }
+           else
+           {
+               $("#zx_lx").css('border',"1px solid #cccccc");
+           }
+
+       })
+      //标题判断
+       $("#info_title").blur(function(){
+           var info_title = gettitle();
+           if (info_title==""){
+               $("#info_title").attr('placeholder',"此项为必填");
+               $("#info_title").css('border',"1px solid #ff0000");
+           }
+           else
+           {
+               $("#info_title").css('border',"1px solid #cccccc");
+           }
+
+       })
+        $("#sub").click(function(){
+            var info_lx = getlx();
+            var info_title = gettitle();
+            if(info_lx=="" || info_title=="") {
+                $("#errorInfo").html("信息提交非法,请检查");
+                return false;
+            }
+            else
+            {
+                $(this).prop("disabled",true);
+                $(this).html("正在提交...");
+            }
+
+        })
+
+    })
+
+</script>
+    <style>
+        .alert{display: none;}
+    </style>
+    <foreach name="meta_data" item="M_dat" >
+    <div style="width: 90%;margin: 0px auto;">
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><a href="/index.php/Home/newstest/news_list/">资讯信息管理</a>-->资讯信息编辑</div>
+        <br />
+        <span class="label label-warning">{$errorInfo}</span>
+        <span class="label label-success">{$sussInfo}</span>
+        <br />
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-9 column" style="padding-left: 30px">
+                    <form method="post"  id="loginform" class="form-line" role="form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>资讯类型</label>
+                             <select name="zx_lx" class="selectpicker show-tick form-control" id="zx_lx" >
+                                <option value ="">请选择</option>
+                                <foreach name="lx_data" item="l_dat" >
+                                <option value ="{$l_dat.id}"  <php>if ($l_dat['id']==$M_dat['info_type']) :</php>selected<php>endif ;</php>>{$l_dat.infolx_title}</option>
+                                    </foreach>
+                            </select>
+                            <!--<label class="alert" role="alert" for="zx_lx" style="width: 200px;line-height: 20px;height: 20px"></label>!-->
+                        </div>
+                        <div class="form-inline" style="height: 40px">
+                            <label class="form-label">资讯标题<span class="alert" for="info_title" style="font-size: 12px;height: 20px;color: red"></span></label>
+                            <input type="text" class="form-control" style="width:35%" for="info_title" name="info_title" id="info_title" value="{$M_dat.info_title}">
+                            <input type="hidden" value="{$M_dat.info_id}" name="id" id="id">
+                            <label>发布日期</label>
+                            <input type="text" id="info_date" value="{$M_dat.info_date}" class="form-control" style="width: 200px" readonly="readonly" name="info_date" >
+                            <script>
+                                $("#info_date").datetimepicker({
+                                    format: "yyyy-mm-dd",
+                                    autoclose: true,
+                                    todayBtn: true,
+                                    language:"zh-CN",
+                                    minView:"month"
+                                });
+                            </script>
+                        </div>
+                        <div class="form-group">
+                            <label for="basic-url">资讯关键词</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon3">SEO</span>
+                                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="info_keywords" value="{$M_dat.info_keywords}">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="basic-url">资讯来源</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon11">来源</span>
+                                <input type="text" class="form-control" id="basic-url11" aria-describedby="basic-addon3" name="info_laiyuan" value="{$M_dat.info_laiyuan}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="basic-url">资讯作者</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon4">作者</span>
+                                <input type="text" class="form-control" id="basic-url1" aria-describedby="basic-addon3" name="info_user" value="{$M_dat.info_user}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="basic-url">资讯简介</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" >简述</span>
+                                <textarea class="form-control" rows="3" name="info_note" >{$M_dat.info_note}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="basic-url">资讯内容</label>
+                            <div id="weditor">
+                                <p>{$M_dat.info_content}</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="text1" name="content" />
+                        <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+                        <button type="reset" class="btn btn-default">重置</button>
+                        <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+
+                    </form>
+                </div>
+                <div class="col-md-3 column">
+                </div>
+            </div>
+        </div>
+        <script src="__PUBLIC__/bs/js/wangEditor.min.js"></script>
+        <script type="text/javascript">
+            var E = window.wangEditor
+            var editor = new E('#weditor')
+            editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+            var $text1 = $('#text1')
+            editor.customConfig.onchange = function (html) {
+                // 监控变化，同步更新到 textarea
+                $text1.val(html)
+            }
+            editor.create()
+            // 初始化 textarea 的值
+            $text1.val(editor.txt.html())
+        </script>
+
+    </div>
+        </foreach>
+</block>

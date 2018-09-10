@@ -1,0 +1,80 @@
+<extend name="glxh/index/base_user"  />
+<block name="customer">
+    {~$qnavbar=w("Nav/qdef")}
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;margin-left: 0px ">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+        </div>
+    <div style="width: 79%;text-align: left;margin: 0 auto">
+    <div style="width: 187px;height: 40px;background: #6cd89c;text-align: center;color: #ffffff;line-height: 40px;font-size: 16px;float: left">
+        <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px"></span> 全部供给
+
+    </div>
+        <form method="get" name="searchform">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input type="text" class="form-control" style="height: 39px;border: 1px solid #ed6d48"
+                <php> if($keyword==""): //资料信息</php>placeholder="共有资料({$count})项" <php> else:</php>value="{$keyword}"<php> endif;</php>
+                       name="keyword">
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default" style="height: 39px;border: 1px solid #ed6d48;background: #ed6d48;color: #ffffff">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div><!-- /.input-group -->
+        </div><!-- /.col-lg-6 -->
+            </form>
+        <div class="clear"></div>
+        <div style="width: 100%;font-size: 16px;color: #000000;margin-top: 20px">分组浏览</div>
+        <div class="col-md-12 column" style="margin-top: 30px;height: 130px">
+            <div class="tabbable" id="tabs-655806">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#panel-272038" data-toggle="tab">应用领域</a>
+                    </li>
+                    <li >
+                        <a href="#panel-896970" data-toggle="tab">所在地区</a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="margin-top: 20px;padding-left: 20px">
+                    <div class="tab-pane active" id="panel-272038">
+                        <p>
+                            <a href="#"> 道路工程</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 桥梁工程</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 隧道工程</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 监测检测</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 灾害防护</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 运营管理</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 智慧公路</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 环保绿化</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 交安设施</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#"> 其他</a>
+                        </p>
+                    </div>
+                    <div class="tab-pane " id="panel-896970">
+                        <p>
+                            {:W('Info/load',array(25))}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--list-->
+        <div class="clear"></div>
+        <div style="width: 100%;margin-top: 30px">
+            <foreach name="info_data" item="U" >
+        <div class="col-md-6 column cgxq_list" >
+            <span><a href="/index.php/home/ywcent/gj_dal?id={$U.id}" style="color: #01a8ee">{$U.gl_hdxq}</a></span>
+            <ul>应用领域：{$U.gl_yyly}</ul>
+            <ul>发布日期：{$U.gl_cjsj|strtotime|date="Y-m-d",###}        联系人：{$U.gl_lxr}</ul>
+        </div>
+                </foreach>
+
+
+        </div>
+
+        </div>
+    <div class="clear"></div>
+    </block>

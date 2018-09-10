@@ -1,0 +1,50 @@
+<form method="post" id="form" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+    <div class="kjtd_from_left"  >创建人： </div>
+    <div class="kjtd_from_right" >
+        {$InfoData.gl_cjr}</div>
+    <div class="kjtd_from_left"  >创建时间： </div>
+    <div class="kjtd_from_right" >
+        {$InfoData.gl_cjsj}</div>
+<div class="kjtd_from_left"  >表单状态： </div>
+<div class="kjtd_from_right" >
+    <php>if ($InfoData['gl_hdzt']==1):</php><span ><a href="#" data-toggle="modal">等待您的回复</a></span>
+    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+    <span class="label label-success">{$sussInfo}</span>
+    <php>endif ;</php>
+    <php>if ($InfoData['gl_hdzt']==5):</php>等待补充资料<php> endif;</php>
+    <php>if ($InfoData['gl_hdzt']==0):</php><span style="color: red">已退回</span><php> endif;</php>
+    <php>if ($InfoData['gl_hdzt']==10):</php><span style="color:green">已通过</span><php> endif;</php>
+</div>
+    <div style="height: auto">
+
+    <php>if ($InfoData['gl_hdzt']!=10):</php>
+<div class="kjtd_from_left"  style="height: 100px">回复内容： </div>
+<div class="kjtd_from_right" style="height: 100px">
+    <textarea class="form-control" rows="3" name="hf_content" style="width: 100%"></textarea></div>
+
+<div class="kjtd_from_left"  >业务选择： </div>
+<div class="kjtd_from_right" >
+    <select name="gl_hdzt" class="selectpicker show-tick form-control" id="zx_lx" >
+            <option value ="10" selected>直接通过</option>
+            <option value ="5">需要补充材料</option>
+            <option value ="0">退回</option>
+    </select>
+<input type="hidden" value="{$InfoData.gl_ywlx}" name="hf_ywlx"/>
+<input type="hidden" value="{$InfoData.id}" name="hf_ywid"/>
+    <input type="hidden" value="{$globar_user:user_name}" name="hf_hfr"/>
+</div>
+<include file="50/ywmanage/submit" />
+    <php> endif;</php>
+    </form>
+<div class="kjtd_from_left"  >历史回复信息： </div>
+<div class="kjtd_from_right" >
+    <foreach name='HfData' item='HfData' >
+        <div style="height: 40px">{$HfData.hf_hfr} 于 {$HfData.hf_sj}, 回复：{$HfData.hf_content}</div>
+    </foreach>
+
+</div>
+</div>
+
+<div class="kjtd_from_left" style="margin-top: 20px"></div>
+<div class="kjtd_from_right" style="margin-top: 20px">
+</div>

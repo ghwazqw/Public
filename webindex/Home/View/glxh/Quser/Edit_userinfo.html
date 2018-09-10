@@ -1,0 +1,76 @@
+<extend name="glxh/index/base_top"  title="用户中心"/>
+<block name="customer">
+       <div class="user_cnet_bg"></div>
+    <div class="user_cnet_kj">
+    <include file="glxh/Quser/user_nav_list" />
+        <div class="user_cnet_kj_cent">
+            <div class="user_cnet_kj_content">当前位置：<a href="/">首页</a>  -> <a href="/home/Quser/user_cent">用户中心</a> -> 用户信息编辑</div>
+            <hr />
+            <div class="col-md-12" style="padding-left: 5px">
+                <foreach name="Duser_info" item="user" >
+                <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right_effect',timely:1}">
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">用户名 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_name" id="user_name" value="{$globar_user:user_name}" readonly data-rule="required"/>
+                </div><br/><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">你的姓名 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_xm" id="user_xm" value="{$user.user_xm}" placeholder="请输入用户姓名" data-rule="required"/>
+                </div><br/><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">所在单位 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_comp" id="user_comp" value="{$user.user_comp}" placeholder="请输入所在单位" data-rule="required"/>
+                </div><br/>
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">工作职务 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_zw" id="user_zw" value="{$user.user_zw}" placeholder="请输入工作职务" data-rule="required"/>
+                </div><br/><!--END-->
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">电话 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_dh" id="user_dh" value="{$user.user_dh}" placeholder="请输入电话" data-rule="required;tel"/>
+                </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">手机 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_sj" id="user_sj" value="{$user.user_sj}" placeholder="请输入手机" data-rule="required;mobile"/>
+                </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">电子邮箱 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_yx" id="user_yx" value="{$user.user_yx}" placeholder="请输入电子邮箱" data-rule="required;email"/>
+                </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">联系地址 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+                    <textarea class="form-control" style="height: 100px" name="user_lxdz" id="user_lxdz" placeholder="请输入联系地址">{$user.user_lxdz}</textarea>
+                </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">传真 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_cz" id="user_cz" value="{$user.user_cz}" placeholder="请输入传真"/>
+                </div><br/><!--END-->
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"></lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+                    <button type="submit" class="btn btn-success">保存</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </div>
+                </form>
+                </foreach>
+            </div>
+        </div>
+
+        <div class="user_cnet_kj_right">
+            <div class="user_cnet_kj_you">
+                {:W('Info/load',array(8))}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</block>

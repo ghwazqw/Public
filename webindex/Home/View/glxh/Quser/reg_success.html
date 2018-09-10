@@ -1,0 +1,18 @@
+<extend name="glxh/index/base_user"  title="用户注册"/>
+<block name="customer">
+        {~$qnavbar=w("Nav/qdef")}
+
+        <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px ">
+            <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+            </foreach>
+
+        </div>
+<div class="container">
+    <div class="jumbotron">
+        <h1>注册成功!</h1>
+        <!--<p>系统正在审核</p>-->
+        <p><a class="btn btn-primary btn-lg" href="/?a=user_login&c=Quser" role="button">前往登录</a></p>
+    </div>
+</div>
+</block>

@@ -1,0 +1,41 @@
+<extend name="50/index/base" />
+<block name="customer">
+     <div style="width: 90%;margin: 0px auto;">
+     	<div><span class="glyphicon glyphicon glyphicon-user"> <a href="/">首页</a>--><php>if ($zjlx==2): </php>专家委员信息<php>else: </php>青年专家信息<php> endif; </php></span></div>
+     	<form class="navbar-form navbar-left" method="post">
+        <div class="form-group">
+         专家姓名：<input type="text" class="form-control" placeholder="{$keyword}" name="keyword">
+            <input type="hidden" class="form-control"  name="type" value="{$zjlx}">
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+         共有{$count}条信息
+      </form>
+      <table class="table table-hover" id="table">
+      	 	 <tr>
+  	<td><b>专家姓名</b></td>
+  	<td><b>专家工作单位</b></td>
+  	<td><b>专家从事专业</b></td>
+  	<td><b>专家类型</b></td>
+  	<td><b>主要项目</b></td>
+     <td><b>操作</b></td>
+  </tr>
+  <foreach name="info_data" item="zj" >
+
+  <tr>
+  	<td><a href="/index.php/home/zjxx/zjxx_dal?id={$zj.id}" target="_blank">{$zj.gl_zjxm}</a></td>
+  	<td>{$zj.gl_zjgzdw}</td>
+  	<td>{$zj.gl_zjcszygjc}</td>
+  	<td>{$zj.zjlx_mc}</td>
+  	<td><a href="/index.php/Home/Cgxx/cgxx_class/?keyword={$zj.gl_zjxm}">主要从事项目</a></td>
+      <td><a href="/index.php/home/menu/?act=delete&id={$me.id}" title="删除数据"><span class="glyphicon glyphicon-remove"></span></a>
+          <a href="/index.php/home/zjxx/zjxx_edit?id={$zj.id}&type=1" title="编辑数据"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a href="#" title="置为无效"><span class="glyphicon glyphicon-minus"></span></a></td>
+  </tr>
+   </foreach>
+
+</table>
+         <ul class="pagination">
+             {$pagebar}
+         </ul>
+</div>
+</block>

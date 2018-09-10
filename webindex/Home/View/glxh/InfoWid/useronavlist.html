@@ -1,0 +1,33 @@
+
+<div class="panel panel-default">
+    <div class="list-group">
+        
+    </div>
+    <div class="list-group">
+        <a href="#" class="list-group-item active">{$w_title}</a>
+        <div class="accordion" id="accordion2" style="width: 100%">
+            <foreach name="w_data" item="d">
+            <div class="accordion-group" >
+                <div class="accordion-heading" >
+                    <a class="list-group-item" data-toggle="collapse" data-parent="#accordion2" href="#{$d.info_title}" >
+                        {$d.info_title}
+                        <php>if ($count>0) :</php>
+                        <foreach name='Ywxxdata' item='Info' >
+                            <php>if ($d['info_en']==$Info['gl_ywlx']) :</php>
+                            <span class="cound">●</span>
+                            <php>endif ;</php>
+                        </foreach>
+                        <php>endif ;</php>
+                    </a>
+                </div>
+                <div id="{$d.info_title}" class="accordion-body collapse" >
+                    <div class="list-group-item">
+                        <a href="{$d.info_link}">提交需求</a> <a href="{$d.info_listlink}">信息查询</a>
+                    </div>
+                </div>
+            </div>
+            </foreach>
+        </div>
+
+    </div>
+</div>

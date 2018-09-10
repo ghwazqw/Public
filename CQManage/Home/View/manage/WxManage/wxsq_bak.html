@@ -1,0 +1,150 @@
+<extend name="manage/index/base_user" title="设备信息管理"/>
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <script type="text/javascript">
+        function Search() {
+                $("#tijiao").show();
+        }
+        function Submit() {
+            obj = document.getElementsByName("sb_id");
+            zc_lx=$("#zc_lx").val(); //资产类型
+            /*zc_zcmc=$("#zc_zcmc").val(); //资产名称
+            zc_jldw=$("#zc_jldw").val(); //计量单位
+            zc_ggxh=$("#zc_ggxh").val(); //规格型号*/
+            zc_sqwxbm=$("#zc_sqwxbm").val(); //申请处室
+            zc_sqly=$("#zc_sqly").val(); //申请维修理由
+            zc_wxsj=$("#zc_wxsj").val(); //维修时间
+            zc_note=$("#zc_note").val();  //备注
+            zc_sqr=$("#zc_sqr").val(); //申请人
+            check_val = [];
+            for(k in obj){
+                if(obj[k].checked)
+                    check_val.push(obj[k].value);
+            }
+            zc_id=check_val;
+            if (!zc_lx || !zc_sqwxbm || !zc_wxsj || !zc_sqly || !zc_sqr || !zc_id){
+                alert("信息不完整，请检查！");
+                return false;
+            }else{
+                $.ajax({
+                    type:"POST",
+                    url:"/Home/WxManage/Addinfo",
+                    data:{"zc_lx":zc_lx,
+                            "zc_sqwxbm":zc_sqwxbm,
+                            "zc_sqly":zc_sqly,
+                            "zc_wxsj":zc_wxsj,
+                            "zc_note":zc_note,
+                            "zc_sqr":zc_sqr,
+                            "zc_id":check_val,
+                            "zc_lx":zc_lx},
+                    success:function (result, state) { //成功调用回调信息
+                        alert(result);
+                        window.location.reload();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                        //alert(textStatus);
+                    },
+                    timeout: 60000,
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                        alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    }
+                })
+            }
+        }
+    </script>
+    <div class="col-md-12" >
+
+        <form class="navbar-form" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+            <div class="form-group form-inline" >
+                <label>选择设备类型：</label>
+                <select name="sb_lx" id="sb_lx" class="form-control" data-rule="required" >
+                    <option value="">请选择</option>
+                    <option value="dzsb_tb">电子设备</option>
+                    <option value="dqsb_tb">机械器具</option>
+                    <option value="fwkp_tb">房产</option>
+                    <option value="ysgj_tb">运输工具</option>
+                    <option value="qtzc_tb">其他</option>
+                </select>
+            <input type="text" class="form-control" placeholder="设备信息检索......" name="keyword" value="{$keyword}">
+                <input type="hidden" value="S" name="act"/>
+                <button class="btn btn-success" type="submit" >搜索</button>
+            </div>
+        </form>
+        <hr />
+    </div>
+    <form class="form-horizontal" method="post" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+    <div class="col-md-4" id="sb_list" >
+        <div style="margin-top: 0px">
+            <div class="panel panel-default">
+                <div class="panel-heading" id="list_sbtitle">设备信息</div>
+                <div class="panel-body" id="list_sbdata" style="line-height: 30px">
+                    <foreach name='InfoData' item='Info' >
+                        <input type="checkbox" name="sb_id" id="sb_id" value="{$Info.id}" style='vertical-align:middle; margin-top:0;' onchange="Search()">
+                        <a tabindex='0'  role='button' data-placement='right' data-toggle='popover' data-trigger='focus' title='详细信息'
+                           data-content='生产厂家：{$Info.zc_sccj}<br />
+                                       出厂产品编号：{$Info.zc_cccpbh}<br />
+                                       生产日期：<php>if (Info["zc_scrq"]=="") :</php>没有记录<php>else :</php>{$Info.zc_scrq}<php>endif ;</php><br />
+                                       计量单位：{$Info.zc_jldw}<br />
+                                       购建日期：{$Info.zc_gjrq|strtotime|date="Y-m-d",###}<br />
+                                       入帐日期：{$Info.zc_qyrq|strtotime|date="Y-m-d",###}<br />
+                                       启用日期：{$Info.zc_qyrq|strtotime|date="Y-m-d",###}<br />
+                                       条形码：{$Info.zc_txm}<br />
+                                       责  &nbsp;任 人：{$Info.zc_zrr}<br />
+                                       是否闲置：<span style="color:ff0000">{$Info.zc_sfxz}</span><br />
+                                        '>{$Info.zc_mc}{$Info.zc_pp}{$Info.zc_xh}</a><br />
+                    </foreach>
+                </div>
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover({
+                            html:true,
+                        })
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8" id="tijiao" style="display: none">
+
+            <input type="hidden" value="A" name="act" />
+            <INPUT type="hidden" name="zc_lx" id="zc_lx" value="{$sblx}">
+           <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">申请处室 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+            <input type="text" class="form-control" name="zc_sqwxbm" id="zc_sqwxbm" placeholder="请输入申请处室" value="{$globar_user:user_comp}" data-rule="required"/>
+        </div><br/><!--END-->
+        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">申请人 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+
+        <input type="text" class="form-control" name="zc_sqr" id="zc_sqr" placeholder="请输入申请人" data-rule="required" value="{$globar_user:user_name}" data-rule="required"/>
+    </div><br/><!--END-->
+        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">申请维修理由 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+
+            <textarea class="form-control" style="height: 100px" name="zc_sqly" id="zc_sqly" placeholder="请输入申请维修理由" data-rule="required"></textarea>
+        </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">维修时间 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+
+            <input type="text" readonly class=" form-control" name="zc_wxsj" id="zc_wxsj" placeholder="请选择维修时间" data-rule="required"/>
+        </div><br/><script>
+            $("#zc_wxsj").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                language:"zh-CN",
+                minView:"month"
+            });
+        </script><!--END--><!--<lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">维修图片 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+            <input type="file" id="exampleInputFile" name="zc_photo" id="zc_photo">
+            <p class="help-block">请上传JPG/PNG/GIF格式的图片.</p>
+        </div>&lt;!&ndash;END&ndash;&gt;--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">备注 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+
+            <textarea class="form-control" style="height: 100px" name="zc_note" id="zc_note" placeholder="请输入备注"></textarea>
+        </div><br/><!--END-->    <br />
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"></lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+            <button type="button" class="btn btn-danger" onclick="Submit()">提交信息</button>
+            <button type="reset" class="btn btn-default">重置</button>
+            <span class="label label-warning">{$errorInfo}</span>
+            <span class="label label-success">{$sussInfo}</span>
+        </div>
+    </div>
+    </form>
+</block>

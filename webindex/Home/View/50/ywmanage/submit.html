@@ -1,0 +1,29 @@
+<!-- Modal -->
+<div class="modal fade" id="Submodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel" style="color:#ff0000"><span class="glyphicon glyphicon-tags" style="color: #cccccc"></span> &nbsp;提示</h4>
+            </div>
+            <div class="modal-body">
+                信息在提交后将不能修改，请确认！
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回修改</button>
+                <button type="submit" class="btn btn-primary" id="crmsubmit">确认提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kjtd_from_left" style="margin-top: 10px"></div>
+<div class="kjtd_from_right" style="margin-top: 10px">
+    <button class="btn btn-warning" type="reset">重新填写</button>
+    <button class="btn btn-success" type="button" data-loading-text="提交中..." id="Submit" autocomplete="off"
+            data-toggle="modal" data-target="#Submodal"
+    >保存提交</button>
+
+    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+    <span class="label label-success" id="sussInfo">{$sussInfo}</span>
+</div>

@@ -1,0 +1,57 @@
+<extend name="glxh/index/base_top"  title="专家详细页面"/>
+<block name="customer">
+
+    <div class="sea_Kj">
+        <div class="col-md-12 column" style="text-align: left">
+            <div class="row clearfix">
+                <div class="col-md-9 column" style="text-align: left">
+                    <ul class="breadcrumb" style="text-align: left;padding-left: 30px;background: #ffffff;">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                        <li>
+                            &nbsp;<a href="/index.php/home/zjsea/search/">专家信息中心</a>
+                        </li>
+
+                        <li>
+                            专家详细信息
+                        </li>
+                    </ul>
+
+                        <foreach name="info_data" item="zj" >
+
+                            <div class="media">
+                                <div class="media-left" style="padding-left: 45px">
+                                    <a href="#">
+                                        <img class="media-object" <php>if ($zj["zj_photo"]=="") :</php>src="__PUBLIC__/glxh/images/logo.png" <php>else :</php>src="/{$zj.zj_photo}" style="width: 150px" ;<php>endif ;</php> alt="{$zj.cg_wcrxm}"  >
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{$zj.cg_wcrxm}<span style="font-size: 12px;color: #0f0f0f"> (<php>if ($zj['cg_wcrzyzc']!="") :</php>从事{$zj.cg_wcrzyzc}专业<php>endif ;</php>）</span></h4>
+                                    <br />
+                                    <php> if( $zj['cg_wcrchj'] != "" ):</php>
+                                    <ul class="list-group">
+
+                                        <li class="list-group-item list-group-item-warning" style="font-size: 13px">
+                                            曾获奖项：{$zj.cg_wcrchj}
+                                        </li>
+                                    </ul>
+                                    <php> endif;</php>
+                                    <hr/>
+                                    <div style="line-height: 25px">
+                                        主要成果：<?php $i = 0;?>
+                                        <foreach name="cg_data" item="cg" >
+                                            <?php $i++;?>
+                                            <h5><a href="/index.php/home/cgsea/search_dal/?id={$cg.id}" target="_blank">{$i}. {$cg.cg_cgmc}</a> <span class="label label-default">({$cg.cg_wcsj|strtotime|date="Y-m",###})</span></h5>
+                                            <li style="font-size: 12px">主要完成人：{$cg.cg_zywcr} </li>
+                                        </foreach>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                </div>
+                <div class="col-md-3 column">
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</block>

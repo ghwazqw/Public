@@ -1,0 +1,280 @@
+<extend name="manage/index/base" />
+<block name="customer">
+    <div style="width: 99%;margin: 0px auto;" id="div1">
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+        <div id="comp" class="col-xs-12 col-md-12" style="height:300px;border: 1px auto #000000"></div>
+        <div id="cgxx" class="col-xs-12 col-md-6" style="height:300px;border: 1px auto #000000"></div>
+        <div id="zjxx" class="col-xs-12 col-md-6" style="height:300px;"></div>
+
+        <!--<div id="map" class="col-xs-12 col-md-12" style="height:500px;"><img src="__PUBLIC__/manage/images/map.png" width="100%"/><</div>-->
+    </div>
+<!-- ECharts单文件引入 -->
+<!--<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>-->
+    <script src="__PUBLIC__/bs/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '__PUBLIC__/bs/build/dist'
+            }
+        });
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('comp'));
+
+                var option = {
+                    title : {
+                        text: '部门维修TOP10',
+                        subtext: '维修金额总计{$WxCount}'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['维修次数','维修金额']
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : [
+                            <foreach name='WxInfo' item='Info' >
+                                '{$Info.zc_sqwxbm}',
+                            </foreach>
+                            ]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            axisLabel : {
+                                formatter: '{value} '
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'维修金额',
+                            type:'line',
+                            data:[
+                                <foreach name='WxInfo' item='Info' >
+                            {$Info.zc_fsje},
+                        </foreach>],
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大维修金额'},
+                                    {type : 'min', name: '最小维修金额'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均维修金额'}
+                                ]
+                            }
+                        },
+                        {
+                            name:'维修次数',
+                            type:'line',
+                            data:[<foreach name='WxInfo' item='Info' >
+                            {$Info.wx_count},
+                        </foreach>],
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均维修次数'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+<script type="text/javascript">
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: '__PUBLIC__/bs/build/dist'
+        }
+    });
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('cgxx'));
+
+                var option = {
+                    title:{ //左侧标题配置
+                        text:'{$cg_title}',
+                        subtext: '{$cg_subtitle}'
+                    },
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['设备数据统计','维修金额']
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: false},
+                            dataView : {show: false, readOnly: false},
+                            magicType : {show: false, type: ['line']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ["电子设备","机械器具","运输工具","其他设备"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"设备数据统计",
+                            "type":"bar",
+                            "data":['{$DzsbCount}', '{$DqsbCount}', '{$YsgjCount}', '{$QtsbCount}'],
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            /*markLine : {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }*/
+                        },
+                        /*{
+                            "name":"维修金额",
+                            "type":"bar",
+                            "data":['{$hj_2011}', '{$hj_2012}', '{$hj_2013}', '{$hj_2014}', '{$hj_2015}', '{$hj_2016}'],
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                           /!* markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }*!/
+                        }*/
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+    );
+</script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+
+            }
+        });
+
+        // 使用
+        require(
+                [
+                    'echarts',
+                    'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('zjxx'));
+
+                    var option = {
+                        title : {
+                            text: '{$zj_title}',
+                            subtext: '{$zj_subtitle}',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient : 'vertical',
+                            x : 'left',
+                            data:['职工宿舍','办公用房','发行库','其他房屋']
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: false},
+                                dataView : {show: false, readOnly: false},
+                                magicType : {
+                                    show: false,
+                                    type: ['pie', 'funnel'],
+                                    option: {
+                                        funnel: {
+                                            x: '25%',
+                                            width: '50%',
+                                            funnelAlign: 'left',
+                                            max: {$zj_gw}
+                                        }
+                                    }
+                                },
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        series : [
+                            {
+                                name:'{$zj_title}',
+                                type:'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:'{$zj_gw}', name:'职工宿舍'},
+                                    {value:'{$zj_qn}', name:'办公用房'},
+                                    {value:'{$zj_zj}', name:'发行库'},
+                                    {value:'{$zj_qt}', name:'其他房屋'},
+
+                                ]
+                            }
+                        ]
+                    };
+
+                    // 为echarts对象加载数据
+                    myChart.setOption(option);
+                }
+        );
+    </script>
+
+</block>

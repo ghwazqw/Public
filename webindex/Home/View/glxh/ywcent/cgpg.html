@@ -1,0 +1,147 @@
+<extend name="glxh/index/base_user"  title=""/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 750px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class="lan_qukuai" style="padding-left: 20px"><span class="glyphicon glyphicon-thumbs-up"></span> <b style="margin-left: 10px">成果评估需求</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>基本信息</li>
+                        <li>知识产权</li>
+                        <li>其他证明材料</li>
+                        <li>联系信息</li>
+
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 370px;">
+                        <div class="kjtd_from_left">成果名称：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_cgmc" value="" placeholder="请输入成果名称" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left">成果类型：</div>
+                        <div class="kjtd_from_right">
+                            <input type="checkbox"  value="技术" style="vertical-align:middle; margin-top:0;" name="gl_cglx" data-rule="checked"> <span style="font-size: 13px;">技术</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="产品" style="vertical-align:middle; margin-top:0;" name="gl_cglx"> <span style="font-size: 13px">产品</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="材料" style="vertical-align:middle; margin-top:0;" name="gl_cglx"> <span style="font-size: 13px">材料</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="设备" style="vertical-align:middle; margin-top:0;" name="gl_cglx"> <span style="font-size: 13px">设备</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="gl_cglx"> <span style="font-size: 13px">其他</span>
+                        </div>
+
+                        <div class="kjtd_from_left" style="height: 100px">成果简介：</div>
+                        <div class="kjtd_from_right" style="height:100px">
+                            <textarea class="kttd_from_text" name="gl_cgjj" data-rule="length(~500)" placeholder="成果原理、关键技术或工艺流程、适用性分析、创新点"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">应用情况：</div>
+                        <div class="kjtd_from_right" style="height:100px">
+                            <textarea class="kttd_from_text" name="gl_yyqk" data-rule="length(~500)" placeholder="项目名称、应用规模、应用效果简述"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">推广前景：</div>
+                        <div class="kjtd_from_right" style="height:100px">
+                            <textarea class="kttd_from_text" name="gl_tgqj" data-rule="length(~500)" placeholder="技术优势、经济效益简述"></textarea>
+                        </div>
+                    </div>
+                    <!--2-->
+                    <div style="height: 290px">
+                        <div class="kjtd_from_left"  >专利技术：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="radio"  value="专利技术" style="vertical-align:middle; margin-top:0;" name="gl_zljs"> <span style="font-size: 13px;">是专利技术</span>
+                        </div>
+                        <div class="kjtd_from_left"  >专利所属地区：</div>
+                        <div class="kjtd_from_right" >
+                            <select class="form-control" style="width: 250px" name="gl_zlssdq">
+                                <option>中国</option>
+                                <option>US美国</option>
+                                <option>EP欧专局</option>
+                                <option>WO世知组织</option>
+                                <option>JP日本</option>
+                                <option>DE德国</option>
+                                <option>FR法国</option>
+                                <option>GB英国</option>
+                                <option>CH瑞士</option>
+                                <option>SE瑞典</option>
+                                <option>KR韩国</option>
+                                <option>NL荷兰</option>
+                                <option>IT意大利</option>
+                                <option>AU澳大利亚</option>
+                                <option>IN印度</option>
+                                <option>ZA南非</option>
+                                <option>CA加拿大</option>
+                                <option>RU俄罗斯</option>
+                                <option>其他国家、地区</option>
+                            </select>
+                        </div>
+                        <div class="kjtd_from_left"  >专利类型：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="radio"  value="发明" style="vertical-align:middle; margin-top:0;" name="gl_zllx"> <span style="font-size: 13px;">发明</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="实用新型" style="vertical-align:middle; margin-top:0;" name="gl_zllx"> <span style="font-size: 13px;">实用新型</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="外观专利" style="vertical-align:middle; margin-top:0;"  name="gl_zllx"> <span style="font-size: 13px;">外观专利</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="软件著作权" style="vertical-align:middle; margin-top:0;" name="gl_zllx"> <span style="font-size: 13px;">软件著作权</span>&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="kjtd_from_left"  >专利号/申请号：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_zlh" value="" placeholder="请输入专利号/申请号" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left"  > 专利简介：</div>
+                        <div class="kjtd_from_right" style="height: 97px">
+                            <textarea class="kttd_from_text" name="gl_zljj" ></textarea>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="kjtd_from_left"  >其他专利技术：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_qtzljs" value="" placeholder="请输入专利号/申请号" class="form-control" style="width: 250px"/>
+                        </div>
+                    </div>
+                    <!--3-->
+                    <div style="height: 150px">
+                        <div class="kjtd_from_left"  style="height: 60px">检测报告：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="gl_jcbg" >
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 60px">获奖证书：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="gl_hjzs" >
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 60px">用户报告：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="gl_yhbg" >
+                        </div>
+                    </div>
+                    <!--4-->
+                    <div style="height: 350px">
+                        <include file="glxh/ywcent/lx_us" />
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

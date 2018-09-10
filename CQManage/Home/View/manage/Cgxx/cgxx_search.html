@@ -1,0 +1,77 @@
+<extend name="manage/index/base" />
+<block name="customer">
+
+    <div style="width: 99%;margin: 0px auto;">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+
+                <form class="navbar-form navbar-left" method="post">
+                    <div class="form-group" style="line-height: 40px;margin-left: -10px">
+                      编号：<input type="text" class="form-control" placeholder="{$keyword}" value="{$bh}" name="bh_keyword">
+                      名称：<input type="text" class="form-control" placeholder="{$keyword}" value="{$name}" name="name_keyword">
+                      所在地区：<input type="text" class="form-control" placeholder="{$keyword}" value="{$dq}" name="dq_keyword">
+                        完 成 &nbsp;人：<input type="text" class="form-control" placeholder="{$keyword}" value="{$wcr}" name="wcr_keyword">
+                        完成单位：<input type="text" class="form-control" placeholder="{$keyword}" value="{$wcdw}" name="wcdw_keyword"><br />
+
+                        分类：<input type="text" class="form-control" placeholder="{$keyword}" value="{$fl}" name="fl_keyword">
+                        专业：<input type="text" class="form-control" placeholder="{$keyword}" value="{$fx}" name="fx_keyword">
+                        推荐单位：<input type="text" class="form-control" placeholder="{$keyword}" value="{$tjdw}" name="tjdw_keyword">
+                        完成时间：<input type="text" class="form-control" placeholder="{$keyword}" value="{$wcsj}" name="wcsj_keyword">
+                        关 键 &nbsp;词：<input type="text" class="form-control" placeholder="{$keyword}" value="{$gjc}" name="gjc_keyword">
+                        <br />
+                        来源：<input type="text" class="form-control" placeholder="{$keyword}" value="{$ly}" name="ly_keyword">
+                        简介：<input type="text" class="form-control" placeholder="{$keyword}" value="{$jj}" name="jj_keyword">
+                        奖励年度：<input type="text" class="form-control" placeholder="{$keyword}" value="{$nd}" name="nd_keyword">
+                        奖励等级：<input type="text" class="form-control" placeholder="{$keyword}" value="{$dj}" name="dj_keyword">
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </div>
+                    <div style="text-align: left;margin-top: 20px;float: none">当前成果信息数量 <span style="color: red">{$count}</span>条,每页显示{$pagecount}条</div>
+                </form>
+
+                <table class="layui-table" lay-even="" lay-skin="row" style="font-size: 12px">
+                    <thead>
+                    <tr>
+                        <th>NO.</th>
+                        <th>成果名称</th>
+                        <th>地区</th>
+                        <th>完成时间</th>
+                        <th>所属类型</th>
+                        <th>课题来源</th>
+                    </tr>
+                    </thead>
+                    <php>if( $count > 0  ):</php>
+                    <foreach name="info_data" item="cg" >
+
+                        <tr style="font-size: 12px">
+
+                            <td style="white-space: nowrap;font-size: 12px">{$cg.cg_xmbh}</td>
+                            <td style="font-size: 12px"><a href="/index.php/home/cgxx/cgxx_dal?id={$cg.id}">{$cg.cg_cgmc}</a></td>
+                            <td style="font-size: 12px">{$cg.cg_dq}</td>
+                            <td style="white-space: nowrap;font-size: 12px">{$cg.cg_wcsj|strtotime|date="Y年m月",###}</td>
+                            <td style="font-size: 12px">{$cg.cg_xkflmc}</td>
+                            <td style="font-size: 12px">{$cg.cg_ktly}</td>
+
+                        </tr>
+                    </foreach>
+                    <php>else:</php>
+                    <tr style="font-size: 12px">
+                        <td><span style="color: red" >没有找到成果信息。</span></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+                    <php> endif;</php>
+
+                </table>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</block>

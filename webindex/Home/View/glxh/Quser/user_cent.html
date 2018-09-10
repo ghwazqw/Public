@@ -1,0 +1,128 @@
+<extend name="glxh/index/base_top"  title="用户注册"/>
+<block name="customer">
+       <div class="user_cnet_bg"></div>
+    <div class="user_cnet_kj">
+    <include file="glxh/Quser/user_nav_list" />
+        <div class="user_cnet_kj_cent">
+            <div class="user_cnet_kj_content">当前位置：<a href="/">首页</a>  -> 用户中心</div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="__PUBLIC__/glxh/images/logo.png" alt="..." style="width: 64px">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h6>GR20170102{$globar_user:user_id}</h6>
+                    <h4 style="color: #01a8ee">{$globar_user:user_xm} <span class="label label-warning" style="height: 18px;font-size: 9px;background: #f08200">会员等级:普通会员</span></h4>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar"
+                             aria-valuenow="{$info}" aria-valuemin="0" aria-valuemax="100" style="width: {$info}%;">
+                            {$info}%
+                        </div>
+                    </div>
+                    <p style="font-size: 12px"></p>
+
+                </div>
+                <hr />
+                <div class="panel panel-primary">
+                    <div class="panel-heading" >我的业务中心</div>
+                    <div class="panel-body" style="line-height: 20px">
+                        <!--业务信息信息-->
+                        <php>if ($count>0) :</php>
+                        <foreach name='Ywxxdata' item='Info' >
+                        <?php
+                        $num=" <span class='badge' style='background-color: #ff0000;'>";
+                            $num.=$Info['num'];
+                            $num.="</span>";
+                            $num.="<br />";
+                        switch($Info['gl_ywlx'])
+                        {
+
+                            //成果入库
+                            case "quser_cgrk_tb":
+                            echo "<a href='/home/ywlist/cgrk_manage' style='height: 35px'>您提交的'<span style='color:#ff0000'>成果入库需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                            //成果需求
+                            case "quser_xqsq_tb":
+                            echo "<a href='/home/ywlist/xqsq_manage'>您提交的'<span style='color:#ff0000'>成果需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                            //供需对接
+                            case "gjxq_tb":
+                            echo "<a href='/home/ywlist/gjxq_manage' style='height: 35px'>您提交的'<span style='color:#ff0000'>供需对接需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                            //会议会展
+                            case "quser_hyxq_tb":
+                            echo "<a href='/home/ywlist/hyxq_manage'>您提交的'<span style='color:#ff0000'>会议会展需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                            //技术咨询
+                            case "quser_kjzx_tb":
+                            echo "<a href='/home/ywlist/kjzx_manage'>您提交的'<span style='color:#ff0000'>技术咨询需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                            //科研咨询
+                            case "quser_kyzx_tb":
+                            echo "<a href='/home/ywlist/kyzx_manage'>您提交的'<span style='color:#ff0000'>科研咨询需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                            //成果评估
+                            case "quser_cgpg_tb":
+                            echo "<a href='/home/ywlist/cgpg_manage'>您提交的'<span style='color:#ff0000'>成果评估需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+
+                            //企业融资需求
+                            case "quser_rzxq_tb":
+                            echo "<a href='/home/ywlist/rzxq_manage'>您提交的'<span style='color:#ff0000'>企业融资需求</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                            //投资意向
+                            case "quser_tzxq_tb":
+                            echo "<a href='/home/ywlist/tzxq_manage'>您提交的'<span style='color:#ff0000'>投资意向</span>'信息有更新</a>";
+                            echo $num;
+                            echo "<div style='margin-top: -20px;padding-bottom: -10px;'><hr /></div>";
+                            break;
+                        }
+                        ?>
+                        </foreach>
+                        <php>else :</php>
+                        还没有任何信息，点击左侧菜单积极参与吧！
+                        <php>endif ;</php>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="panel panel-primary" style="border: 1px solid #f08300">
+                    <div class="panel-heading" style="background: #f08300;border: 1px solid #f08300">我的活动中心</div>
+                    <div class="panel-body" style="line-height: 25px">
+                        即将举办的活动：<br />
+                        <foreach name='Hdxx' item='Info' >
+                         <a href="#">{$Info.gl_mc}，主办方：{$Info.gl_zbf}，报名载止日期：{$Info.gl_bmjssj|strtotime|date="Y年m月d日",###}</a>
+                        <a href="/home/Quser/hybm?hy_id={$Info.id}"><span class="label label-success" style="height: 18px;font-size: 10px;">我要报名</span></a>
+                        </foreach>
+                    </div>
+                </div>
+
+            </div>
+            </foreach>
+        </div>
+
+        <div class="user_cnet_kj_right">
+            <div class="user_cnet_kj_you">
+                {:W('Info/load',array(8))}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</block>

@@ -1,0 +1,282 @@
+<extend name="glxh/index/base_user"  title="融资需求"/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 950px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class="lan_qukuai" style="padding-left: 20px"><span class="glyphicon glyphicon-tower"></span> <b style="margin-left: 10px">成果入库申请</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>成果信息</li>
+                        <li>知识产权</li>
+                        <li>成果应用状态及交易信息</li>
+                        <li>联系信息</li>
+
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 230px;">
+                        <div class="kjtd_from_left">成果名称：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_cgmc" value="" placeholder="请输入成果名称" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left">关键词：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_gjc" value="" placeholder="请输入关键词" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left">成果体现形式：</div>
+                        <div class="kjtd_from_right">
+                            <input type="checkbox"  value="技术" style="vertical-align:middle; margin-top:0;" name="gl_cgtxxs" data-rule="checked"> <span style="font-size: 13px;">技术</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="工艺" style="vertical-align:middle; margin-top:0;" name="gl_cgtxxs"> <span style="font-size: 13px">工艺</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="材料" style="vertical-align:middle; margin-top:0;" name="gl_cgtxxs"> <span style="font-size: 13px">材料</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="设备" style="vertical-align:middle; margin-top:0;" name="gl_cgtxxs"> <span style="font-size: 13px">设备</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="gl_cgtxxs"> <span style="font-size: 13px">其他</span>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 80px">应用领域：</div>
+                        <div class="kjtd_from_right" style="height: 80px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+
+                                <p style="font-size:13px;line-height: 28px;padding-left: 3px;color: #929292">
+                                    <span>
+                                        <input type="checkbox"  value="道路工程" style="vertical-align:middle; margin-top:0;" name="gl_yyly" data-rule="checked"> 道路工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="桥梁工程" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 桥梁工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="隧道工程" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 隧道工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="监测检测" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 监测检测&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="灾害防护" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 灾害防护&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="运营管理" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 运营管理&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="智慧公路" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 智慧公路&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="环保绿化" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 环保绿化&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="交安设施" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 交安设施&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="gl_yyly" id="gl_yyly"> 其他
+                                        <input type="text" placeholder="" class="input_je"></span>
+
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">适用范围：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_syfw" value="" placeholder="适用范围" class="kjtd_from_input"/>
+                        </div>
+                    </div>
+                    <!--2!-->
+                    <div style="height: 600px">
+                        <div class="kjtd_from_left"  >专利技术：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="radio" id="gl_zljs" value="1" onchange="ch()" style="vertical-align:middle; margin-top:0;" name="gl_zljs"> <span style="font-size: 13px;">是</span>
+                            <input type="radio" id="gl_fljs" value="0" onchange="ch()" style="vertical-align:middle; margin-top:0;" name="gl_zljs" checked> <span style="font-size: 13px;">否</span>
+                        </div>
+                        <script>
+                            function ch() {
+                                var gl_zljs=$("input[name='gl_zljs']:checked").val();
+                                if (gl_zljs==1){
+                                    $("#gl_zlssdq").removeAttr("disabled");
+                                    $("#gl_zllx").removeAttr("disabled");
+                                    $("#gl_zljj").removeAttr("disabled");
+                                    $("#gl_zlh").removeAttr("disabled");
+                                    $("#addzl").show();
+                                }else{
+                                    $("#gl_zlssdq").attr("disabled",true);
+                                    $("#gl_zllx").attr("disabled",true);
+                                    $("#gl_zljj").attr("disabled",true);
+                                    $("#gl_zlh").attr("disabled",true);
+                                    $("#addzl").hide();
+                                    $("#zj1").hide();
+                                    //$("#addzl").show();
+                                    $("#qt").show();
+                                    $("#qt1").show();
+                                    $("#addz2").hide();
+                                }
+                            }
+                        </script>
+                        <div class="kjtd_from_left"  >专利所属地区：</div>
+                        <div class="kjtd_from_right" >
+                            <select class="form-control" style="width: 250px" name="gl_zlssdq" id="gl_zlssdq" disabled>
+                                <option>中国</option>
+                                <option>US美国</option>
+                                <option>EP欧专局</option>
+                                <option>WO世知组织</option>
+                                <option>JP日本</option>
+                                <option>DE德国</option>
+                                <option>FR法国</option>
+                                <option>GB英国</option>
+                                <option>CH瑞士</option>
+                                <option>SE瑞典</option>
+                                <option>KR韩国</option>
+                                <option>NL荷兰</option>
+                                <option>IT意大利</option>
+                                <option>AU澳大利亚</option>
+                                <option>IN印度</option>
+                                <option>ZA南非</option>
+                                <option>CA加拿大</option>
+                                <option>RU俄罗斯</option>
+                                <option>其他国家、地区</option>
+                            </select>
+                        </div>
+                        <div class="kjtd_from_left"  >专利类型：</div>
+                        <div class="kjtd_from_right" >
+                            <select class="form-control" style="width: 250px" name="gl_zllx" id="gl_zllx" disabled>
+                                <option value="发明">发明</option>
+                                <option value="实用新型">实用新型</option>
+                                <option value="外观专利">外观专利</option>
+                                <option value="软件著作权">软件著作权</option>
+                            </select>
+                        </div>
+                        <div class="kjtd_from_left"  >专利号/申请号：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_zlh" id="gl_zlh" disabled value="" placeholder="请输入专利号/申请号" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left"  > 专利简介：</div>
+                        <div class="kjtd_from_right" style="height: 97px">
+                            <textarea class="kttd_from_text" name="gl_zljj" id="gl_zljj" disabled=""></textarea>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="kjtd_from_left"  id="qt">其他专利技术：</div>
+                        <div class="kjtd_from_right" id="qt1">
+                            <a href="#" onclick="zj()" ><i id="addzl" class="glyphicon glyphicon-plus" style="display: none"></i></a>
+                        </div>
+                        <div class="kjtd_from_left"  id="qt2"></div>
+                        <div class="kjtd_from_right" id="qt3">
+                            <a href="#" onclick="jzj()" ><i id="addz2" class="glyphicon glyphicon-minus" style="display: none"></i></a>
+                        </div>
+                        <script>
+                            function zj() {
+                                $("#zj1").show();
+                                $("#addzl").hide();
+                                $("#qt").hide();
+                                $("#qt1").hide();
+                                $("#addz2").show();
+                            }
+                            function jzj() {
+                                $("#zj1").hide();
+                                $("#addzl").show();
+                                $("#qt").show();
+                                $("#qt1").show();
+                                $("#addz2").hide();
+                            }
+                        </script>
+                        <div id="zj1" style="display: none">
+                            <div class="kjtd_from_left"  >专利所属地区：</div>
+                            <div class="kjtd_from_right" >
+                                <select class="form-control" style="width: 250px" name="gl_zlssdq" id="gl_zlssdq1">
+                                    <option>中国</option>
+                                    <option>US美国</option>
+                                    <option>EP欧专局</option>
+                                    <option>WO世知组织</option>
+                                    <option>JP日本</option>
+                                    <option>DE德国</option>
+                                    <option>FR法国</option>
+                                    <option>GB英国</option>
+                                    <option>CH瑞士</option>
+                                    <option>SE瑞典</option>
+                                    <option>KR韩国</option>
+                                    <option>NL荷兰</option>
+                                    <option>IT意大利</option>
+                                    <option>AU澳大利亚</option>
+                                    <option>IN印度</option>
+                                    <option>ZA南非</option>
+                                    <option>CA加拿大</option>
+                                    <option>RU俄罗斯</option>
+                                    <option>其他国家、地区</option>
+                                </select>
+                            </div>
+                            <div class="kjtd_from_left"  >专利类型：</div>
+                            <div class="kjtd_from_right" >
+                                <select class="form-control" style="width: 250px" name="gl_zllx" id="gl_zllx1">
+                                    <option value="发明">发明</option>
+                                    <option value="实用新型">实用新型</option>
+                                    <option value="外观专利">外观专利</option>
+                                    <option value="软件著作权">软件著作权</option>
+                                </select>
+                            </div>
+                            <div class="kjtd_from_left"  >专利号/申请号：</div>
+                            <div class="kjtd_from_right" >
+                                <input type="text" name="gl_zlh" id="gl_zlh1" value="" placeholder="请输入专利号/申请号" class="form-control" style="width: 250px"/>
+                            </div>
+                            <div class="kjtd_from_left"  > 专利简介：</div>
+                            <div class="kjtd_from_right" style="height: 97px">
+                                <textarea class="kttd_from_text" name="gl_zljj" id="gl_zljj1"></textarea>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!--3-->
+                    <div style="height: 730px">
+                        <div class="kjtd_from_left" >成果简介：</div>
+                        <div class="kjtd_from_right" >
+                            <textarea id="content" name="gl_cgjj" class="ckeditor" placeholder="成果原理、关键技术或工艺流程、适用性分析、创新点"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="margin-top: 280px">应用情况：</div>
+                        <div class="kjtd_from_right" style="margin-top: 280px">
+                            <textarea class="kttd_from_text" name="gl_yyqk" placeholder="项目名称、应用规模、应用效果简述"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="margin-top: 50px;height: 95px" >推广前景：</div>
+                        <div class="kjtd_from_right" style="margin-top: 50px;height: 95px">
+                            <textarea class="kttd_from_text" name="gl_tgqj" placeholder="技术优势、经济效益简述"></textarea>
+                        </div>
+
+                        <div class="kjtd_from_left"  >技术评估价值： </div>
+                        <div class="kjtd_from_right" >
+                            <input type="file" class="form-control" aria-describedby="basic-addon3" name="gl_jspgjz" >
+                            <p>上传技术评估报告，有利于提高您技术的可信度，有助于技术推广，材料格式为jpg、png、word、pdf</p>
+                        </div>
+                        <div class="kjtd_from_left"  >成果应用状态：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="radio"  value="产业化" style="vertical-align:middle; margin-top:0;" name="gl_cgyyzt"> <span style="font-size: 13px;">产业化</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="小批量" style="vertical-align:middle; margin-top:0;" name="gl_cgyyzt"> <span style="font-size: 13px;">小批量</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="试用" style="vertical-align:middle; margin-top:0;"  name="gl_cgyyzt"> <span style="font-size: 13px;">试用</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="未应用" style="vertical-align:middle; margin-top:0;" name="gl_cgyyzt"> <span style="font-size: 13px;">未应用</span>&nbsp;&nbsp;&nbsp;
+                        </div>
+
+                        <div class="kjtd_from_left">应用地区：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_yydq" value="" placeholder="应用地区" class="kjtd_from_input"/>
+                        </div>
+
+                        <div class="kjtd_from_left"  style="height: 60px">技术图片：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="gl_jstp" >
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 60px">成熟度证明材料上传：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="gl_csdzmcl" >
+                        </div>
+
+                    </div>
+                    <!--4-->
+                    <div style="height: 350px">
+                        <include file="glxh/ywcent/lx_us" />
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

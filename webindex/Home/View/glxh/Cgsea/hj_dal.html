@@ -1,0 +1,56 @@
+<extend name="glxh/index/base"  title=""/>
+<block name="customer">
+
+<div class="sea_Kj"style="margin-top: 20px">
+
+    <div style="width: 80%;height: 3px;background: #e5e5e5;margin-top: 20px;margin: 0 auto;margin-bottom: 5px">
+
+    </div>
+    <div style="width: 80%;margin-top: 50px;margin: 0 auto;font-size: 14px;color: #9f9f9f;margin-bottom: 50px">
+
+            <i class="fa fa-home" style=""></i> <a href="/" >首页</a>--><a href="/index.php/Home/Cgsea/cgtg" >交通运输部科技成果推广目录</a> -> {$cg_zsbh}年度
+
+    </div>
+    <div style="width: 70%;margin-top: 10px;margin: 0 auto;text-align: center">
+        <p style="color: #b24726;font-size: 24px">{$cg_zsbh}年度交通运输建设科技成果推广目录</p>
+        <hr style="margin-top: -3px">
+        <p style="color: #575757;font-size: 14px;margin-top: -15px">来源：中华人民共和国交通运输部</php></p>
+        <br />
+        <table style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px;border: 1px solid #000000;color: #000000">
+
+            <tr style="background: #dfebfe;color: #4b6db0;height: 40px;font-size: 14px;border: 1px solid #000000">
+                <td style="width: 50px;text-align: center;border: 1px solid #000000">序号</td>
+                <td style="border: 1px solid #000000">成果名称</td>
+                <td style="border: 1px solid #000000">第一申报单位</td>
+                <td style="border: 1px solid #000000">证书编号</td>
+
+            </tr>
+            <php>if( $count > 0  ):</php>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="zj" >
+                <?php $i++;?>
+                <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;border: 1px solid #000000" >
+                    <td style="width: 50px;text-align: center;border: 1px solid #000000">{$i}</td>
+                    <td style="border: 1px solid #000000;text-align: left;padding-left: 3px">{$zj.cg_mc}</td>
+                    <td style="border: 1px solid #000000;text-align: left;padding-left: 3px">{$zj.cg_sbdw}</td>
+                    <td style="border: 1px solid #000000">{$zj.cg_zsbh}</td>
+                </tr>
+
+            </foreach>
+            <php>else:</php>
+            <tr style="font-size: 12px">
+                <td></td>
+                <td><span style="color: red" >“{$keyword}”</span> <br />通过查询，没有信息。</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <php> endif;</php>
+
+        </table>
+        <div class="cg_download" id="cg_download"><a href="__PUBLIC__/Uploads/HJ/{$cg_zsbh}.<php>if ($cg_zsbh==2016 || $cg_zsbh==2015) :</php>doc<php>else :</php>pdf<php>endif ;</php>" target="_blank"><span style="color: #ffffff"> 详细文件下载</span></a></div>
+    </div>
+
+
+</div>
+    <div class="clear"></div>
+</block>

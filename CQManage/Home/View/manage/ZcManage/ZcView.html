@@ -1,0 +1,341 @@
+<extend name="manage/index/base_user" title="电子设备"/>
+
+<block name="customer">
+<script>
+    function Sellx() {
+        var lx_table=$("#zc_lx").val();
+        var zc_rjlx = $("#zc_rjlx");
+        if (!lx_table){
+            // 下拉框禁用
+            $("#zc_rjlx").prop("disabled", true);
+        }else{
+            $("#zc_rjlx").prop("disabled", false);
+            var url = "/Home/ZcManage/ZclxSelect?lx=" + lx_table;
+            $.getJSON(url,function (data) {
+                if (data==""){
+                    //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                    //("#zc_rjlx").prop("disabled", true);
+                    zc_rjlx.find("option").remove();
+                    var tempOption = document.createElement("option");
+                    tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    zc_rjlx.append(tempOption);
+                    zc_rjlx.prop("disabled", true);
+                }
+                else{
+                    //遍历回传到的Json数据，取出二级分类信息
+                    zc_rjlx.find("option").remove();
+                    var tempOption = document.createElement("option");
+                    tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    zc_rjlx.append(tempOption);
+                    $.each(data,function (i,value) {
+                        var tempOption = document.createElement("option");
+                        tempOption.value = value.id;
+                        tempOption.innerHTML  = value.cglx_mc;
+                        zc_rjlx.append(tempOption);
+                    })
+                }
+            })
+        }
+    }
+    function mcselect() {
+        var rjlx_table=$("#zc_rjlx").val();
+        var zc_mc = $("#zc_mc");
+        //alert(rjlx_table);
+        if (!zc_mc){
+            // 下拉框禁用
+            //$("#zc_mc").prop("disabled", true);
+        }else{
+            $("#zc_mc").prop("disabled", false);
+            var url = "/Home/ZcManage/ZcmcSelect?lx=" + rjlx_table;
+            $.getJSON(url,function (data) {
+                if (data==""){
+                    //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                    //("#zc_mc").prop("disabled", true);
+                    zc_mc.find("option").remove();
+                    var tempOption = document.createElement("option");
+                    tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    zc_mc.append(tempOption);
+                    //zc_mc.prop("disabled", true);
+                }
+                else{
+                    //遍历回传到的Json数据，取出二级分类信息
+                    zc_mc.find("option").remove();
+                    var tempOption = document.createElement("option");
+                    tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    zc_mc.append(tempOption);
+                    $.each(data,function (i,value) {
+                        var tempOption = document.createElement("option");
+                        tempOption.value = value.cglx_mc;
+                        tempOption.innerHTML  = value.cglx_mc;
+                        zc_mc.append(tempOption);
+                    })
+                }
+            })
+        }
+    }
+</script>
+
+    <div class="row clearfix" style="font-size: 12px">
+
+<div class="col-md-12 col-xs-12" nowrap>
+    <form class="navbar-form" method="post" id="Searchfrom" >
+        <div class="form-group form-inline" style="height: 40px;line-height: 40px">
+            <label>卡片范围：</label>
+            <select name="zc_zt" id="zc_zt" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" <php>if ($zc_zt==1) :</php>selected<php>endif ;</php>>正常卡片</option>
+                <option value="100" <php>if ($zc_zt==100) :</php>selected<php>endif ;</php>>非正常卡片</option>
+            </select>
+            <label>资产编号</label>
+            <input type="text" class="form-control" placeholder="请输入资产编号......" name="zc_bh" value="{$zc_bh}">
+            <label>所属机构</label>
+            <input type="text" class="form-control" placeholder="中国人民银行重庆营业管理部" readonly>
+            <label>资产类型</label>
+            <select name="zc_lx" id="zc_lx" class="form-control" onchange="Sellx()">
+                <option value="">请选择</option>
+                <option value="dzsb_tb" <php>if ($zc_lx=="dzsb_tb") :</php>selected<php>endif ;</php>>电子设备</option>
+                <option value="dqsb_tb" <php>if ($zc_lx=="dqsb_tb") :</php>selected<php>endif ;</php>>机械器具</option>
+                <option value="ysgj_tb" <php>if ($zc_lx=="ysgj_tb") :</php>selected<php>endif ;</php>>运输工具</option>
+                <option value="qtzc_tb" <php>if ($zc_lx=="qtzc_tb") :</php>selected<php>endif ;</php>>其他设备</option>
+            </select>
+            <label>二级分类</label>
+            <select class="form-control" name="zc_rjlx" id="zc_rjlx" disabled onchange="mcselect()">
+                <!--<option value="">请选择</option>-->
+            </select>
+            <br />
+            <label>资产名称</label>
+            <select class="form-control" name="zc_mc" id="zc_mc" >
+                <!--<option value="">请选择</option>-->
+            </select>
+            <label>原值</label>
+            <input type="text" class="form-control" name="zc_yz" id="zc_yz" placeholder="请输入原值" value="{$zc_yz}" />
+            <label>单价</label>
+            <input type="text" class="form-control" placeholder="请输入资产编码......" name="keyword" value="{$keyword}">
+            <label>安装成本</label>
+            <input type="text" class="form-control" name="zc_azcb" id="zc_azcb" placeholder="请输入安装成本" value="{$zc_azcb}" />
+            <label>是否折旧标志</label>
+            <select name="zc_sfzjbz" id="zc_sfzjbz" class="form-control">
+                <option value="" select">请选择</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+            </select>
+            <br />
+            <label>折旧年限类型</label>
+            <select name="zc_zjnxlx" id="zc_zjnxlx" class="form-control">
+                <option value="" select">请选择</option>
+                <!--                <option value="1">是</option>
+                                <option value="0">否</option>-->
+            </select>
+            <label>累计折旧</label>
+            <input type="text" class="form-control" name="zc_ljzj" id="zc_ljzj" placeholder="请输入累计折旧" value="{$zc_ljzj}"/>
+            <label>本期折旧</label>
+            <input type="text" class="form-control" name="zc_bqzj" id="zc_bqzj" placeholder="请输入本期折旧" value="{$zc_bqzj}" />
+            <label>购建日期</label>
+            <input type="text" readonly class=" form-control" name="zc_gjrq" id="zc_gjrq" placeholder="请选择购建日期" value="{$zc_gjrq}" />
+            <script>
+                $("#zc_gjrq").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script>
+            <label>入帐日期</label>
+            <input type="text" readonly class=" form-control" name="zc_rzrq" id="zc_rzrq" placeholder="请选择入帐日期" value="{$zc_rzrq}"/>
+            <script>
+                $("#zc_rzrq").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script>
+            <br />
+            <label>启用日期</label>
+            <input type="text" readonly class=" form-control" name="zc_qyrq" id="zc_qyrq" placeholder="请选择启用日期" value="{$zc_qyrq}"/>
+            <script>
+                $("#zc_qyrq").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script>
+            <label>出帐日期</label>
+            <input type="text" readonly class=" form-control" name="zc_czrq" id="zc_czrq" placeholder="请选择出帐日期" value="{$zc_czrq}"/>
+            <script>
+                $("#zc_czrq").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script>
+            <label>取得方式</label>
+            <select name="zc_qdfs" id="zc_qdfs" class="form-control">
+                <option value="" select>请选择</option>
+                                <option value="总行集中采购调拨">总行集中采购调拨</option>
+                                <option value="本级集中采购自用">本级集中采购自用</option>
+                <option value="分散采购">分散采购</option>
+                <option value="在建工程转固定资产">在建工程转固定资产</option>
+            </select>
+            <label>闲置状态</label>
+            <select name="zc_sfxz" id="zc_sfxz" class="form-control">
+                <option value="" select>请选择</option>
+                <option value="是">是</option>
+                <option value="否">否</option>
+            </select>
+            <label>财产管理部门</label>
+            <select name="zc_ccglbm" id="zc_ccglbm" class="form-control">
+                <option value="">请选择</option>
+                <option value="科技处">科技处</option>
+                <option value="后勤服务中心">后勤服务中心</option>
+            </select>
+            <br />
+            <label>财产使用部门</label>
+            <select name="zc_ccsybm" id="zc_ccsybm" class="form-control">
+                <option value="">请选择</option>
+                <foreach name='CompInfo' item='Info' >
+                    <option value="{$Info.cglx_mc}" <php>if ($keyword==$Info['cglx_mc']) :</php>selected<php>endif ;</php>>{$Info.cglx_mc}</option>
+                </foreach>
+            </select>
+            <label>责任人</label>
+            <input type="text" class="form-control" name="zc_zrr" id="zc_zrr" placeholder="请输入责任人" value="{$zc_zrr}"/>
+            <label>资产登记人</label>
+            <input type="text" class="form-control" placeholder="请输入资产登记人" name="zc_zcdjr" id="zc_zcdjr" value="{$zc_zcdjr}">
+            <label>批复单号</label>
+            <input type="text" class="form-control" name="zc_pfdh" id="zc_pfdh" placeholder="请输入批复单号" value="{$zc_pfdh}" />
+            <label>条形码</label>
+            <input type="text" class="form-control" name="zc_txm" id="zc_txm" placeholder="请输入条形码" value="{$zc_txm}" />
+            <br />
+            <button class="btn btn-danger" type="submit"><b>搜索信息</b></button>
+        </div>
+    </form>
+
+        <h5 style="width: 98%;margin-left: 10px;margin-top: 250px;padding-left: 20px;margin-bottom: -10px">共检索到{$Count}条数据信息</h5>
+    <div id='dzsbInfo' >
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="width: 98%;margin-left: 10px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>品牌</th>
+                <th nowrap>型号</th>
+                <!--<th nowrap>生产日期</th>-->
+                <!--<th nowrap>生产厂家</th>
+                <th nowrap>出厂产品编号</th>
+                <th nowrap>用途</th>-->
+                <th nowrap>资产编号</th>
+                <!--<th nowrap>资产类型</th>-->
+                <th nowrap>资产二级分类</th>
+                <th nowrap>资产名称</th>
+                <th nowrap>计量单位</th>
+                <th nowrap>原值</th>
+                <th nowrap>净值</th>
+                <!--<th nowrap>是否折旧标志</th>
+                <th nowrap>折旧年限类型</th>
+                <th nowrap>累计折旧</th>
+                <th nowrap>本期折旧</th>-->
+                <th nowrap>购建日期</th>
+                <th nowrap>入帐日期</th>
+                <th nowrap>启用日期</th>
+                <th nowrap>取得方式</th>
+                <th nowrap>财产使用部门</th>
+                <th nowrap>是否闲置</th>
+                <!--<th nowrap>财产管理部门</th>-->
+                <!--<th nowrap>条形码</th>-->
+                <th nowrap>责任人</th>
+                <!--<th nowrap>批复单号</th>-->
+                <th nowrap>卡片说明</th>
+                <!--<th nowrap>出帐日期</th>
+                <th nowrap>出帐类型</th>
+                <th nowrap>出帐原因</th>-->
+                <!--<th nowrap>状态</th>-->
+
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <?php $zc_yzhj+=$Info['zc_yz'];?>
+                <?php $zc_jzhj+=$Info['zc_jz'];?>
+                <?php $cswxje+=$Info['wxje'];?>
+                <tr>
+                    <td>{$i}</td>
+                    <td nowrap>{$Info.zc_pp}</td>
+                    <td nowrap>{$Info.zc_xh}</td>
+                    <!--<td nowrap>{$Info.zc_scrq|strtotime|date="Y-m-d",###}</td>-->
+                    <!--<td nowrap>{$Info.zc_sccj}</td>
+                    <td nowrap>{$Info.zc_cccpbh}</td>
+                    <td nowrap>{$Info.zc_yt}</td>-->
+                    <td nowrap>{$Info.zc_bh}</td>
+                    <!--<td nowrap>{$Info.zc_lx}</td>-->
+                    <td nowrap>{$Info.zc_rjlx}</td>
+                    <td nowrap>{$Info.zc_mc}</td>
+                    <td nowrap>{$Info.zc_jldw}</td>
+                    <td nowrap style="text-align: right">{$Info.zc_yz}</td>
+                    <td nowrap style="text-align: right">{$Info.zc_jz}</td>
+                    <!--<td nowrap>{$Info.zc_sfzjbz}</td>
+                    <td nowrap>{$Info.zc_zjnxlx}</td>
+                    <td nowrap>{$Info.zc_ljzj}</td>
+                    <td nowrap>{$Info.zc_bqzj}</td>-->
+                    <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                    <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                    <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                    <td nowrap>{$Info.zc_qdfs}</td>
+                    <td nowrap>{$Info.zc_ccsybm}</td>
+                    <td nowrap>{$Info.zc_sfxz}</td>
+                    <!--<td nowrap>{$Info.zc_ccglbm}</td>-->
+                    <!--<td nowrap>{$Info.zc_txm}</td>-->
+                    <td nowrap>{$Info.zc_zrr}</td>
+                    <!--<td nowrap>{$Info.zc_pfdh}</td>-->
+                    <td nowrap>{$Info.zc_kpsm}</td>
+                    <!--<td nowrap>{$Info.zc_czrq|strtotime|date="Y-m-d",###}</td>
+                    <td nowrap>{$Info.zc_czlx}</td>
+                    <td nowrap>{$Info.zc_czyy}</td>-->
+                    <!--<td nowrap>
+                        <include file="manage/ZcManage/sb_zt" />
+                    </td>-->
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popover"]').popover()
+                        })
+                    </script>
+                </tr>
+            </foreach>
+            <!--<tr style="background: ">
+                <td>合计</td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap style="text-align: right">{$zc_yzhj}</td>
+                <td nowrap style="text-align: right">{$zc_jzhj}</td>
+
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+
+                <td nowrap></td>
+
+                <td nowrap>{$cswxje}</td>
+
+                <td nowrap>
+
+                </td>
+            </tr>-->
+        </table>
+    </div>
+</div>
+    </block>

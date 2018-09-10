@@ -1,0 +1,95 @@
+<extend name="50/index/base" title="会议信息管理"/>
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="/home/manage">管理中心</a>
+            </li>
+            <li>
+                <a href="/home/Manage/hyxx_manage">会议信息管理</a>
+            </li>
+            <li>
+                <a href="#">信息增加</a>
+            </li>
+
+        </ul>
+
+        <!-- Table -->
+        <div class="col-md-12" style="padding-left: 10px">
+            <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+                <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">会议名称 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                <input type="text" class="form-control" name="gl_mc" id="gl_mc" placeholder="请输入会议名称" data-rule="required"/>
+            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">主办方 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                <input type="text" class="form-control" name="gl_zbf" id="gl_zbf" placeholder="请输入主办方" data-rule="required"/>
+            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">地点 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+                <textarea class="form-control" style="height: 100px" name="gl_dd" id="gl_dd" placeholder="请输入地点" data-rule="required"></textarea>
+            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">开始时间 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+                <input type="text" readonly class=" form-control" name="gl_kssj" id="gl_kssj" placeholder="请选择开始时间" data-rule="开始时间:required;datetime"/>
+            </div><br/><script>
+                $("#gl_kssj").datetimepicker({
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                });
+            </script><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">结束时间 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+                <input type="text" readonly class=" form-control" name="gl_jssj" id="gl_jssj" placeholder="请选择结束时间" data-rule="结束时间:required;datetime;match(gt, gl_kssj, date)"/>
+            </div><br/><script>
+                $("#gl_jssj").datetimepicker({
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">报名开始日期 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+                <input type="text" readonly class=" form-control" name="gl_bmkssj" id="gl_bmkssj" placeholder="请选择报名开始日期" data-rule="报名开始日期:required;date"/>
+            </div><br/><script>
+                $("#gl_bmkssj").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">报名结束日期 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+                <input type="text" readonly class=" form-control" name="gl_bmjssj" id="gl_bmjssj" placeholder="请选择报名结束日期" data-rule="报名结束日期:required;date;match(gt, gl_bmkssj, date)"/>
+            </div><br/><script>
+                $("#gl_bmjssj").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script><!--END-->    <br />
+                <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">报名结束时间 : </lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+                <button type="submit" class="btn btn-success">保存</button>
+                <button type="reset" class="btn btn-default">重置</button>
+                <span class="label label-warning">{$errorInfo}</span>
+                <span class="label label-success">{$sussInfo}</span>
+            </div>
+
+            </form>
+        </div>
+        </div>
+    <br /><br /><br />
+
+</block>

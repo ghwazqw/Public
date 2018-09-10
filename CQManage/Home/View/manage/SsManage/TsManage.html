@@ -1,0 +1,304 @@
+<extend name="manage/index/base_user" title="养护信息管理"/>
+<block name="customer">
+
+    <div class="box">
+    <div class="box-body">
+        <php>if (!$keyword) :</php>
+        <php>else :</php>
+        <div class="col-md-12 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#" onClick="javascript :history.back(-1);"> <span class="glyphicon glyphicon-th"></span> 楼宇信息</a>
+                </li>
+                <li class="active">
+                    <span class="glyphicon glyphicon-home"></span> 房屋信息列表
+                </li>
+            </ul>
+        </div>
+        <php>endif ;</php>
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="房屋信息搜索......" name="keyword" value="">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">搜索</button>
+                </div>
+            </form>
+            <!--<div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                </ul>
+            </div>-->
+        </div>
+        <script>
+            function TsSummit(fjid,ryid,ryname,rzrq,dqrq,fjmj,zj,zjksyf,nxlx) {
+                //alert(fjid);
+                $("#ryname").html(ryname);
+                $("#ListTale").html("");
+                $("#rzrq").val(rzrq); //入住日期
+                $("#dqrq").val(dqrq); //到期日期
+                //$("#ry_ttrq").val(dqrq); //腾退日期
+                $("#fjid").val(fjid); //房间ID
+                $("#subname").val(ryname); //人员姓名
+                $("#fjmj").val(fjmj); //房间面积
+                $("#zjxx").val(zj); //租金信息
+                $("#zjksyf").val(zjksyf); //租金开始月份
+                $("#nxlx").val(nxlx); //年限类型
+                var url = "/home/SsManage/RzInfoList?fjid=" + fjid+"&name="+ ryname;
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        $("#ListTale").append("<tr><td>该房间本年度没有租金信息。</td></tr>");
+                    }
+                    else{
+                        //遍历回传到的Json数据
+                        $("#ListTale").append("<tr style=\"background: #8bc5eb; color: #ffffff\">\n" +
+                            /*"                                    <th nowrap>序号</th>\n" +*/
+                            "                                    <th nowrap>人员姓名</th>\n" +
+                            /*"                                    <th nowrap>年限类型</th>\n" +*/
+                            "                                    <!--<th nowrap>房间ID</th>-->\n" +
+                            "                                    <th nowrap>年份</th>\n" +
+                            "                                    <th nowrap>租金</th>\n" +
+                            "                                    <!--<th nowrap>主表ID</th>-->\n" +
+                            "                                    <th nowrap>状态</th>\n" +
+                            "                                </tr>");
+                        var sum=0;
+                        $.each(data,function (i,value) {
+                            if (value.nx_lx==4){
+                                $("#nxlx").val(4);
+                            }else{
+                                var lx="协议租金";
+                            };
+                            sum += Number(value.zj);
+                            if (value.zt==0){
+                                var zt="未缴";
+                                $("#ListTale").append("<tr><td>"+value.ry_name+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td >"+zt+"</td></tr>");//在table最后面添加一行
+                            }else{
+                                var zt="已缴";
+                                $("#ListTale").append("<tr><td>"+value.ry_name+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td >"+zt+"</td></tr>");//在table最后面添加一行
+
+                            };
+                        });
+                        sum=sum.toFixed(2); //格式化显示2位小数
+                        $("#ListTale").append("<tr><td style='text-align: center'>合计</td><td colspan='2' style='text-align: right;'>￥"+sum+"</td><td></td></tr>");
+                    }
+                });
+            }
+        </script>
+        <div class="modal fade" id="TsSub" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+            <div class="modal-dialog" style="width: 900px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <span id="ryname"></span> 办理退宿
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="height: 400px">
+                        <div class="col-md-7">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">操作卡片</div>
+                                <div class="panel-body">
+                                    <form id="ttform" class="form-inline" action="/Home/SsManage/TsSubmit" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                                        <div class="form-group" style="width: 50%;float: left">
+                                            <label style="width: 40%;text-align: left">入住日期：</label>
+                                            <input type="text" class="form-control" style="width: 50%" placeholder="入住日期" id="rzrq" name="rzrq" readonly>
+                                            <input type="hidden" class="form-control" style="width: 50%" placeholder="人员姓名" id="subname" name="subname" readonly>
+                                            <input type="hidden" class="form-control" style="width: 50%" placeholder="房间ID" id="fjid" name="fjid" readonly>
+                                            <input type="hidden" class="form-control" style="width: 50%" placeholder="房间面积" id="fjmj" name="fjmj" readonly>
+                                            <input type="hidden" class="form-control" style="width: 50%" placeholder="房间租金" id="zjxx" name="zjxx" readonly>
+                                            <input type="hidden" class="form-control" id="zjksyf" name="zjksyf" placeholder="开始收费月份" readonly />
+                                            <input type="hidden" id="nxlx" name="nxlx" value="" />
+                                        </div>
+                                        <div class="form-group" style="width: 50%;float: left">
+                                            <label style="width: 40%;text-align: right">到期日期：</label>
+                                            <input type="text" class="form-control" style="width: 50%" placeholder="到期日期" id="dqrq" name="dqrq" readonly>
+                                            <input type="hidden" name="id" value="{$Info.id}">
+                                        </div>
+                                        <div class="form-group" style="width: 100%;float: left">
+                                            <label style="width: 100%;text-align: left">腾退日期：</label>
+                                            <input type="text" class="form-control" style="width: 95%" placeholder="腾退日期" id="ry_ttrq" onclick="Rqbj()" name="ry_ttrq" readonly>
+                                        </div>
+                                        <script>
+                                            $("#ry_ttrq").datetimepicker({
+                                                format: "yyyy-mm-dd",
+                                                autoclose: true,
+                                                todayBtn: true,
+                                                language:"zh-CN",
+                                                minView:"month"
+                                            });
+                                            function Rqbj() {
+                                                var ry_ttrq=$("#ry_ttrq").val();
+                                                var dqrq=$("#dqrq").val();
+                                                var rzrq=$("#rzrq").val();
+                                                var start=new Date(rzrq.replace("-", "/").replace("-", "/"));
+                                                var end=new Date(ry_ttrq.replace("-", "/").replace("-", "/"));
+                                                if (end<start){
+                                                    alert ("选择错误");
+                                                    $("#ry_ttrq").val("");
+                                                }
+                                            }
+                                        </script>
+                                        <script>
+                                            function Sub() {
+                                                $("#sfsj").val("");
+
+                                                //日期函数
+                                                Date.prototype.Format = function (fmt) {
+                                                    var o = {
+                                                        "M+": this.getMonth() + 1, //月份
+                                                        "d+": this.getDate(), //日
+                                                        "H+": this.getHours(), //小时
+                                                        "m+": this.getMinutes(), //分
+                                                        "s+": this.getSeconds(), //秒
+                                                        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                                                        "S": this.getMilliseconds() //毫秒
+                                                    };
+                                                    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                                                    for (var k in o)
+                                                        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                                                    return fmt;
+                                                };
+                                                var t=$("#ry_ttrq").val(); //接收腾退日期
+                                                var nowTime=new Date(t); //转换成日期型数据
+                                                nowTime.setMonth(nowTime.getMonth());
+                                                var ty=nowTime.Format("yyyy");
+                                                var tm=nowTime.Format("MM");
+                                                var td=nowTime.Format("dd");
+                                                var d= new Date(ty, tm, 0);
+                                                var dygs=d.getDate(); //当月天数
+                                                var sjts=Number(dygs-td); //是否满足15天
+                                                if (sjts>=15){
+                                                    nowTime.setMonth(nowTime.getMonth(t)-1);
+                                                    var kssfyf=nowTime.Format("yyyy-MM-dd"); //收费月份
+                                                    $("#sfsj").val(kssfyf);
+                                                }else{
+
+                                                    var kssfyf=nowTime.Format("yyyy-MM-dd"); //收费月份
+                                                    $("#sfsj").val(kssfyf);
+                                                }
+                                                if (!$("#ry_ttrq").val()) {
+                                                    alert("腾退日期必须填写。");
+                                                    return false;
+                                                }
+                                                var ry_ttrq=$("#ry_ttrq").val();
+                                                var rzrq=$("#rzrq").val(); //入住日期
+                                                var dqrq=$("#dqrq").val(); //到期日期
+                                                //检测小于入住日期人提示错误
+                                                var start=new Date(rzrq.replace("-", "/").replace("-", "/"));
+                                                var end=new Date(ry_ttrq.replace("-", "/").replace("-", "/"));
+                                                if (end<start){
+                                                    alert ("腾退日期不能小于入住日期");
+                                                    $("#ry_ttrq").val("");
+                                                    return false;
+                                                }
+                                                //检测大于到期日期提示错误
+                                                var start=new Date(dqrq.replace("-", "/").replace("-", "/"));
+                                                var end=new Date(ry_ttrq.replace("-", "/").replace("-", "/"));
+                                                if (end>start){
+                                                    alert ("腾退日期不能大于到期日期");
+                                                    $("#ry_ttrq").val("");
+                                                    return false;
+                                                }
+                                            $("#ttform").submit();
+                                            };
+                                        </script>
+                                        <div style="width: 100%;text-align: center">
+                                            <input type="hidden" id="sfsj" name="sfsj" value="">
+                                            <button type="button" onclick="Sub()" class="btn btn-success" style="margin-top: 20px">提交保存</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">租金信息列表</div>
+                                <div class="panel-body">
+                                    <table id="ListTale" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div  style="width: 97%;margin: 0 auto">
+            <!-- /.box-header -->
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>房间名称</th>
+                <th nowrap>人员姓名</th>
+                <th nowrap>身份证号</th>
+                <th nowrap>性别</th>
+                <th nowrap>人员类型</th>
+                <!--<th nowrap>所属房间id</th>-->
+                <th nowrap>房间面积</th>
+                <th nowrap>入住日期</th>
+                <th nowrap>到期日期</th>
+                <th nowrap>腾退日期</th>
+
+                <th nowrap>合同类型</th>
+                <th nowrap>月租金</th>
+
+                <th nowrap>开始收费月份</th>
+                <th nowrap>结束收费月份</th>
+                <th nowrap>状态</th>
+                <th nowrap>备注</th>
+                <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                    <td style="text-align: center">{$i}</td>
+                    <td><a href="?keyword={$Info.ry_ssfjname}">{$Info.ry_ssfjname}</a></td>
+                    <td>{$Info.ry_name}</td>
+                    <td>{$Info.ry_sfzh}</td>
+                    <td>{$Info.ry_xb}</td>
+                    <td><php>if ($Info['ry_lxid']==1) :</php>普通人员<php>else :</php>交流干部<php>endif ;</php></td>
+                    <!--<td>{$Info.ry_ssfjid}</td>-->
+
+                    <td>{$Info.ry_ssfjmj}</td>
+                    <td>{$Info.ry_rzrq}</td>
+                    <td>{$Info.ry_dqrq}</td>
+                    <td>{$Info.ry_ttrq}</td>
+                    <td>{$Info.ht_nxlx}({$Info.ht_nx}年)</td>
+                    <td>{$Info.ht_zj}</td>
+                    <td>{$Info.kssfyf|strtotime|date="Y-m",###}</td>
+                    <td>{$Info.jssfyf|strtotime|date="Y-m",###}</td>
+                    <td><a href="#" type="button" class="btn btn-success btn-xs">住宿中</a></td>
+                    <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.bz}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                    <td><a href="#TsSub" data-toggle="modal" onclick="TsSummit({$Info.ry_ssfjid},{$Info.id},'{$Info.ry_name}','{$Info.ry_rzrq}','{$Info.ry_dqrq}',{$Info.ry_ssfjmj},{$Info.ht_zj},'{$Info.kssfyf}','{$Info.ht_nxlx}')" title="办理退宿"><span class="glyphicon glyphicon-log-out"></span></a> </td>
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popover"]').popover()
+                        })
+                    </script>
+
+
+                </tr>
+            </foreach>
+        </table>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+</block>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+	<link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+	<link href="__PUBLIC__/glxh/css/css.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script type="text/javascript" src="__PUBLIC__/bs/js/jquery1.9.1.js" ></script>
+	<script type="text/javascript" src="__PUBLIC__/bs/js/bootstrap.min.js" ></script>
+	<block name="title"><title>{$title}</title></block>
+
+</head>
+	<body>
+	<!--顶端信息-->
+	<include file="glxh/Common/navbar_login" />
+	<!--LOGO及搜索框信息-->
+	<form name="searchform" method="post" >
+	<div id=nav-bg>
+		<div id=nav-content>
+			<div class="col-md-1 column" style="text-align: right;padding-right: 0px">
+				<a href="/"><img src="__PUBLIC__/glxh/images/logo.png" style="vertical-align: middle;" ></a>
+			</div>
+			<div class="col-md-7 column nav-title" >
+				中国公路科技成果转化平台<br><span class="nav-title-EN">China Highway Technology Transfer & Commercialization Platform</span>
+			</div>
+			<div class="col-md-4 column row" style="text-align: center;">
+					<div class="col-lg-6" >
+						<div class="input-group" style="height: 40px;line-height: 40px;margin-top: 30px">
+							<div class="input-group-btn" style="height: 40px;line-height: 40px">
+								<select class="btn btn-default dropdown-toggle select_box" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="lx">
+									<option value="" <php> if ($lx=="") :</php>selected<php>endif ;</php> >请选择</option>
+									<option value="cgxx" <php> if ($lx=="cgxx") :</php>selected<php>endif ;</php>>科研成果</option>
+									<option value="zjxx" <php> if ($lx=="zjxx") :</php>selected<php>endif ;</php>>专家资源</option>
+
+								</select>
+							</div><!-- /btn-group -->
+							<input type="text" class="form-control"  style="height: 40px;width: 400px;border:2px solid #eb6100;border-left: none;
+							border-right: none;line-height: 40px" name="keyword" <php> if($keyword==""): //资料信息</php>placeholder="共有资料({$zjcount+$count})项" <php> else:</php>placeholder="{$keyword}"<php> endif;</php>>
+								<div class="input-group-btn">
+									<input type="submit" name="submit" value="搜索" class="srh_btn">
+								</div>
+
+						</div><!-- /input-group -->
+						<div style="margin-top: 0px;text-align: left;height: 30px;padding-bottom: 30px;line-height: 30px;width: 500px">热门搜索：<a href="/index.php/home/cgsea/search/?keyword=沥青路面" style="color: #000000;">沥青路面</a> <a href="/index.php/home/cgsea/search/?keyword=车辙" style="color: #000000;">车辙</a> <a href="/index.php/home/cgsea/search/?keyword=隧道" style="color: #000000;">隧道</a> <a href="/index.php/home/cgsea/search/?keyword=智能交通" style="color: #000000;">智能交通</a> <a href="/index.php/home/cgsea/search/?keyword=节能减排" style="color: #000000;">节能减排</a> <a href="/index.php/home/cgsea/search/?keyword=绿色公路" style="color: #000000;">绿色公路</a></div>
+					</div><!-- /.col-lg-6 -->
+		</div>
+	</div>
+	</div>
+</form>
+
+

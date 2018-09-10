@@ -1,0 +1,47 @@
+<extend name="glxh/index/base_user" title="科研咨询信息"/>
+<block name="customer">
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+    <div class="kjtd_kj" style="height: 850px">
+        <!-- Default panel contents -->
+
+        <include file="glxh/Quser/user_nav_list" />
+
+        <!-- Table -->
+        <div class="kjtd_kj_right" style="width:78%">
+            <div class="kjtd_title">
+                <div class=lan_qukuai>&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/glxh/images/rz_tu.png">&nbsp;&nbsp;<b>科研咨询需求</b> </div>
+                <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+            </div>
+            <br /><br /><br />
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+            <tr style="background: #347ab7; color: #ffffff">
+                <th nowrap>序号</th>
+                <th >咨询内容</th><th >拟参加单位</th><th >研究领域</th><th >拟立项日期</th><th >计划结题日期</th><th >经费预算</th>                        <th nowrap>状态</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >                    <?php $i++;?>                    <tr>
+                <td>{$i}</td>
+                <td><a href="/home/ywcent/kyzx_list?id={$Info.id}">{$Info.gl_zxnr}</a></td><td>{$Info.gl_ncjdw}</td><td>{$Info.gl_yjly}</td><td>{$Info.gl_nlxrq}</td><td>{$Info.gl_jhjtrq}</td><td style="text-align: right">{$Info.gl_jfys}万元</td><td>
+                <php>if ($Info['gl_hdzt']==1):</php><span ><a href="#" data-toggle="modal">等待客服回复</a></span>
+                <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+                <span class="label label-success">{$sussInfo}</span>
+                <php>endif ;</php>
+                <php>if ($Info['gl_hdzt']==5):</php>等待补充资料<php> endif;</php>
+                <php>if ($Info['gl_hdzt']==0):</php><span style="color: red">已退回</span><php> endif;</php>
+                <php>if ($Info['gl_hdzt']==10):</php><span style="color:green">已通过</span><php> endif;</php>
+            </td>
+            </tr>
+            </foreach>                </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+        </div>
+</div>
+</block>

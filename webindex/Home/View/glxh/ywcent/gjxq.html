@@ -1,0 +1,118 @@
+<extend name="glxh/index/base_user"  title="融资需求"/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 750px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class="lan_qukuai" style="padding-left: 20px"><span class="glyphicon glyphicon-random"></span> <b style="margin-left: 10px">供需对接需求</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>基本信息</li>
+                        <li>联系信息</li>
+
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 390px;">
+                        <div class="kjtd_from_left">产品名称：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="cg_cpmc" value="" data-rule="required" id="cg_cpmc" placeholder="请输入产品名称" class="col-md5 col-xs-5 form-control" style="width: 50%"/>
+                        </div>
+
+                        <div class="kjtd_from_left">产品体现形式：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" value="技术" name="gl_txxs" style="vertical-align:middle; margin-top:0;" data-rule="checked"/>  技术
+                                    <input type="checkbox" value="工艺" name="gl_txxs" style="vertical-align:middle; margin-top:0;"/>  工艺
+                                    <input type="checkbox" value="材料" name="gl_txxs" style="vertical-align:middle; margin-top:0;"/>  材料
+                                    <input type="checkbox" value="设备" name="gl_txxs" style="vertical-align:middle; margin-top:0;"/>  设备
+                                    <input type="checkbox" value="其他" name="gl_txxs" style="vertical-align:middle; margin-top:0;"/>  其他
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 90px">应用领域：</div>
+                        <div class="kjtd_from_right" style="height: 90px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+
+                                <p style="font-size:13px;line-height: 28px;padding-left: 3px;color: #929292">
+                                    <span>
+                                        <input type="checkbox"  value="道路工程" style="vertical-align:middle; margin-top:0;" name="gl_yyly" data-rule="checked"> 道路工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="桥梁工程" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 桥梁工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="隧道工程" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 隧道工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="监测检测" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 监测检测&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="灾害防护" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 灾害防护&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="运营管理" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 运营管理&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="智慧公路" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 智慧公路&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="环保绿化" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 环保绿化&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="交安设施" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 交安设施&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="gl_yyly" > 其他&nbsp;&nbsp;&nbsp;
+                                    </span>
+
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 100px">产品简介：</div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            <textarea class="kttd_from_text" name="gl_cpjj" placeholder="产品概述、技术指标" data-rule="required,length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 60px">检测报告：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="gl_jcbg" >
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 40px;margin-top: -15px">适用区域：</div>
+                        <div class="kjtd_from_right" style="height: 40px;margin-top: -15px">
+                            <textarea class="kttd_from_text" name="gl_syqy" style="height: 30px"></textarea>
+                        </div>
+                        <div class="kjtd_from_left">产品推广形式：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="代理推广" name="gl_tgxs" checked data-rule="checked">  代理推广
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="共同推广" name="gl_tgxs">  共同推广
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="平台推广" name="gl_tgxs">  平台推广
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="其他" name="gl_tgxs">  其他
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--2-->
+                    <div style="height: 350px">
+                        <include file="glxh/ywcent/lx_us" />
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

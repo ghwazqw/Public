@@ -1,0 +1,53 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <script>
+        var detail_data=[
+                <foreach  name="dal_data" item="info">
+                [{$info.info_id},'{$info.im_key}','{$info.im_value}'],
+        </foreach>
+        [-1,'','']
+        ];
+        //alert(detail_data.length);
+        function getMeta(info_id,im_key,defaultvalue)
+        {
+            for(var i=0;i<detail_data.length;i++)
+            {
+                if(detail_data[i][0]==info_id && detail_data[i][1]==im_key )
+                    return detail_data[i][2];
+            }
+            if(defaultvalue)
+                return defaultvalue;
+            else
+                return "没有数据";
+        }
+        //  var a=[[1,'3',],[]]
+    </script>
+    <div style="width: 90%;margin: 0px auto;">
+        <foreach name="main_data" item="M_dat" >
+    <div class="media">
+        <div class="media-left">
+            <a href="#">
+                <img class="media-object" src="__PUBLIC__/glxh/images/logo.png" alt="..." style="width: 64px">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4><a class="media-heading" href="/index.php/home/newstest/news_dal/?id={$M_dat.info_id}">{$M_dat.info_title}</a></h4>
+            <!--<h4><a class="media-heading" href="{:U('Newstest/News_dal',array('info_id'=>$M_dat['info_id']))}">{$M_dat.info_title}</a></h4><!-->
+            <p>{$M_dat.info_note}</p>
+
+            <!--<span>点击量：<script>document.write(getMeta({$M_dat.info_id},'views'));</script></span>
+                                <span>评论数：<script>document.write(getMeta({$M_dat.info_id},'review'));</script></span>
+                <span>来源：<script>document.write(getMeta({$M_dat.info_id},'laiYyan'));</script></span>
+                <span>类型：<php> if($M_dat["info_type"]==1):</php>通知公告<php> endif;</php><php> if($M_dat["info_type"]==2):</php>政策解读<php> endif;</php></span>-->
+                <a href="/index.php/home/newstest/news_edit/?id={$M_dat.info_id}"> 编辑信息</a> <a href="?Act=mu&meta={$M_dat.info_id}" title="删除数据" onclick="return confirm('确认需要删除吗');"> 删除信息</a></p>
+                </p>
+        </div>
+    </div>
+        </foreach>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+        <!-- Split button -->
+
+    </div>
+</block>

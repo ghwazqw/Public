@@ -1,0 +1,166 @@
+<extend name="glxh/index/base_top" />
+<block name="customer">
+	<div style="width: 90%;margin: 0 auto">
+	<div class="col-md-12 column">
+		<div class="col-lg-9" style="margin-bottom: 20px;">
+		<form name="searchform" method="get">
+			<div class="input-group">
+
+				<input type="text" class="form-control" name="keyword" aria-label="Text input with multiple buttons" style="height: 39px;border: 1px solid #ed6d48;"
+				<php> if($keyword==""): //资料信息</php>placeholder="共有资料({$count})项" <php> else:</php>value="{$keyword}"<php> endif;</php>>
+				<div class="input-group-btn" >
+					<button type="submit" class="btn btn-default" style="height: 39px;border: 1px solid #ed6d48;background: #ed6d48;color: #ffffff;margin-bottom: 1px">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					</button>
+
+
+				</div>
+
+			</div><!-- /.input-group -->
+
+		</form>
+			</div>
+		<div class="clear"></div>
+		<div class="tabbable" id="tabs-879199">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#panel-1" data-toggle="tab">成果信息 <span class="badge" style="background: #ff0000;color: #ffffff">{$count}</span></a>
+				</li>
+				<li>
+					<a href="#panel-2" data-toggle="tab">专家信息 <span class="badge" style="background: #ff0000;color: #ffffff">{$zj_count}</span></a>
+				</li>
+				<li>
+					<a href="#panel-5" data-toggle="tab">资讯信息 <span class="badge" style="background: #ff0000;color: #ffffff">{$news_count}</span></a>
+				</li>
+				<!--<li>
+					<a href="#panel-3" data-toggle="tab">需求信息 <span class="badge" style="background: #ff0000;color: #ffffff">{$xq_count}</span></a>
+				</li>
+				<li>
+					<a href="#panel-4" data-toggle="tab">供给信息</a>
+				</li>-->
+
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="panel-1" style="width: 94%;margin: 0 auto">
+					<div style="width:100%;text-align: right;padding-right: 10px"></div>
+					<foreach name="info_data" item="cg" >
+					<div class="media" style="margin-top: 20px">
+						<div class="media-body">
+							<h4 class="media-heading"><a href="/index.php/home/cgsea/search_dal?id={$cg.id}" style="color: #4b6db0">
+								<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$cg['cg_cgmc']);
+								?>
+							</a></h4>
+							<p style="line-height: 25px">
+								<?php
+								$xmjj=mb_substr($cg['cg_xmjj'],0,200,"UTF8");
+								echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$xmjj);
+								?>
+								......</p>
+							<p style="margin-top: -5px;font-size: 12px;color: #2c96da;">项目编号：{$cg.cg_xmbh} 地区：<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$cg['cg_dq']);
+								?> 完成时间：{$cg.cg_wcsj|strtotime|date="Y年",###} 所属分类：
+								<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$cg['cg_xkflmc']);
+								?></p>
+						</div>
+					</div>
+						</foreach>
+					<ul class="pagination">
+						{$pagebar}
+					</ul>
+				</div>
+
+				<div class="tab-pane" id="panel-2" style="width: 94%;margin: 0 auto">
+					<div style="width:100%;text-align: right;padding-right: 10px"></div>
+					<foreach name="zj_data" item="zj" >
+						<div class="media" style="margin-top: 20px">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="/index.php/home/zjsea/zj_dal?id={$zj.id}&type=3" style="color: #4b6db0">
+									<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$zj['cg_wcrxm']);
+									?>
+								</a></h4>
+								<p style="line-height: 25px">
+									工作单位：<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$zj['cg_wcrgzdw']);
+									?>&nbsp;&nbsp;&nbsp;&nbsp;主要成就：<?php
+								$xmjj=mb_substr($zj['cg_wcrchj'],0,200,"UTF8");
+								echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$xmjj);
+									?>
+									</p>
+								<p style="margin-top: -5px;font-size: 12px;color: #2c96da;">地区：<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$zj['cg_wcrjg']);
+									?> 从事专业：
+									<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$zj['cg_wcrzyzc']);
+									?>专业</p>
+							</div>
+						</div>
+					</foreach>
+					<ul class="pagination">
+						{$zj_pagebar}
+					</ul>
+				</div>
+					<div class="tab-pane " id="panel-5" style="width: 94%;margin: 0 auto">
+						<div style="width:100%;text-align: right;padding-right: 10px"></div>
+						<foreach name="news_data" item="news" >
+							<div class="media" style="margin-top: 20px">
+								<div class="media-body">
+									<h4 class="media-heading"><a href="/index.php/home/news/news_dal/?id={$news.info_id}" style="color: #4b6db0">
+										<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$news['info_title']);
+										?>
+									</a></h4>
+									<p style="line-height: 25px">
+										<?php
+								$xmjj=mb_substr($news['info_note'],0,200,"UTF8");
+								echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$xmjj);
+										?>
+										......</p>
+									<p style="margin-top: -5px;font-size: 12px;color: #2c96da;">资讯来源：{$news.info_user}  发布时间：{$news.info_date|strtotime|date="Y年h月d日",###}
+
+								</div>
+							</div>
+						</foreach>
+						<ul class="pagination">
+							{$news_pagebar}
+						</ul>
+					</div>
+				<div class="tab-pane " id="panel-3" style="width: 94%;margin: 0 auto">
+					<div style="width:100%;text-align: right;padding-right: 10px"></div>
+					<foreach name="xq_data" item="xq" >
+						<div class="media" style="margin-top: 20px">
+							<div class="media-body">
+								<h4 class="media-heading"><a href="/index.php/home/zjsea/zj_dal?id={$zj.id}&type=3" style="color: #4b6db0">
+									<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$xq['gl_xqmc']);
+									?>
+								</a></h4>
+								<p style="line-height: 25px">
+									工作单位：<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$zj['cg_wcrgzdw']);
+									?>&nbsp;&nbsp;&nbsp;&nbsp;主要成就：<?php
+								$xmjj=mb_substr($zj['cg_wcrchj'],0,200,"UTF8");
+								echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$xmjj);
+									?>
+								</p>
+								<p style="margin-top: -5px;font-size: 12px;color: #2c96da;">地区：<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$zj['cg_wcrjg']);
+									?> 从事专业：
+									<?php
+									echo str_replace($keyword,"<span style=color:#ff0000>".$keyword."</span>",$zj['cg_wcrzyzc']);
+									?>专业</p>
+							</div>
+						</div>
+					</foreach>
+					<ul class="pagination">
+						{$news_pagebar}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="clear"></div>
+</block>

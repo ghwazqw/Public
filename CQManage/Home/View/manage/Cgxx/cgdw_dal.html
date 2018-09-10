@@ -1,0 +1,44 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <div style="width: 90%;margin: 0px auto;">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><a href="/index.php/Home/Cgxx/cgwcdw_list/">成果单位信息</a>-->机构详细信息</div>
+        <p></p>
+        <table class="table" id="table">
+            <foreach name="info_data" item="cg" >
+            <tr>
+                <td style="text-align: left"><h4>{$cg.cgwc_wcdw}</h4>
+                    <h5 style="line-height: 25px;text-align: left"><span class="label label-primary">所属成果编号：<a href="/index.php/Home/cgxx/cgxx_class/?keyword={$cg.cgwc_xmbh}" target="_blank" style="color: #fff;">{$cg.cgwc_xmbh}</a>
+                        项目中排名：{$cg.cgwc_pm} 单位属性：{$cg.cgwc_dwsx}</span>
+                        <br/>
+                        <span class="label label-info">联系人：{$cg.cgwc_lxr} 联系电话：{$cg.cgwc_lxdh} 电子邮箱：{$cg.cgwc_dzxx}</span>
+                        <br/>
+
+                        </h5>
+                         </td>
+
+            </tr>
+
+                <tr>
+                  <td ><h5 style="line-height: 25px">{$cg.cgwc_jscx}</h5></td>
+
+                </tr>
+                <tr>
+                    <td ><h5 style="line-height: 25px">相关单位信息：<br />
+                        <?php $i = 0;?>
+                        <foreach name="dal_data" item="dw" >
+                            <?php $i++;?>
+                            <div style="padding-left: 20px">
+                            <a href="/index.php/Home/Cgxx/cgdw_dal/?id={$dw.id}&bh={$dw.cgwc_xmbh}" style="color: #000;">{$i}.{$dw.cgwc_wcdw}</a><br />
+                            </div>
+                        </foreach></h5></td>
+
+                </tr>
+            </foreach>
+
+        </table>
+</div>
+</div>
+    </div>
+</block>

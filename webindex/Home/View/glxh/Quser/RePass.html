@@ -1,0 +1,86 @@
+<extend name="glxh/index/base_user"  title="用户注册"/>
+<block name="customer">
+    <script type="text/javascript">
+
+        function Sub() {
+           var pass=$("#textPwd").val();
+           var repass=$("#rePwd").val();
+           var txtcode=$("#txtcode").val();
+           if (!pass || !repass || !pass){
+                alert("信息填写不完整，请全部填写");
+                return false;
+           }
+           else{
+               if (pass!=repass){
+                   alert("两次输入的密码不一致，请重新输入！");
+                   return false;
+               }else{
+                   $("#form1").submit();
+               }
+           }
+        }
+
+    </script>
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px ">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+    <div class="wd2">
+        <p class="mt20">
+            当前位置：<a href="/">首页</a> >> 用户密码找回
+        </p>
+        <div class="mt10">
+
+            <div class="ssd_Xsd_xdxrx">
+
+                <p>
+                    <span class=" glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    <span class="ls fz16 b fl mt10 pl20">重置密码</span>
+                </p>
+                <hr/>
+                <div style="padding-left: 40px">
+                    <form method="post" id="form1" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right_effect',timely:1}">
+                        <h5><strong>重置密码</strong></h5>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" style="width:33%">第一步：正确填写注册时的邮箱</div>
+                            <div class="progress-bar progress-bar-warning" style="width:33%">第二步：接收邮件点击链接</div>
+                            <div class="progress-bar progress-bar-success" style="width:34%"><strong>第三步：重置密码</strong></div>
+                        </div>
+                        <div class="form-inline" style="height: 70px">
+                            <label>请输入新密码</label><br/>
+                            <input type="password" class="form-control" name="textPwd" id="textPwd" placeholder="6-20位字母、数字、符号的组合" style="width: 50%" data-rule="required" >
+                            <span id="pass_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="pass_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="form-inline" style="height: 70px">
+                            <label>请再次输入密码</label><br/>
+                            <input type="password" class="form-control" name="tPwd" id="rePwd" placeholder="6-20位字母、数字、符号的组合" style="width: 50%" data-rule="required" >
+                            <input type="hidden" name="id" value="{$id}"/>
+                            <span id="repass_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="repass_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <div class="form-inline" style="height: 70px">
+                            <label>输入验证码</label><br/>
+                            <input type="text" class="form-control" name="txtcode" id="txtcode" placeholder="请输入验证码信息" >
+                            <img src="/index.php/home/index/vercode" style="width: 130px;height: 32px;cursor: pointer"  onclick="this.src='/index.php/home/index/vercode?id='+Math.random();" title="点击刷新"/>
+                            <span id="code_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="code_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <button type="button" class="btn btn-danger"  id="Submit" autocomplete="off" onclick="Sub()">提交</button>
+                        <!--<a role="button" class="btn btn-danger" data-loading-text="提交中..." id="regSubmit" autocomplete="off">提交</a>-->
+                        <button type="reset" class="btn btn-default">重置</button>
+
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</block>

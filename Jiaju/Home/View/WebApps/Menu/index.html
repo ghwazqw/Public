@@ -1,0 +1,227 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
+
+    <!--Model表单开始-->
+    <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form role="form" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            菜单信息增加
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group"><label>菜单所属</label>
+                            <select id="sjid" name="menu_sjid" class="form-control">
+                                <option value="">请选择</option>
+                                <foreach name='MenuInfo' item='Info' >
+                                <option value="{$Info.id}">{$Info.menu_mc}</option>
+                                </foreach>
+                            </select>
+                        </div>
+
+                        <div class="form-group"><label>菜单名称</label><input type="text" class="form-control" name="menu_mc" id="mc" placeholder="请输入菜单名称" data-rule="required" /></div>
+                        <div class="form-group"><label>图标</label><input type="text" class="form-control" name="menu_icon" id="icon" placeholder="请输入图标" data-rule="required" /></div>
+                        <div class="form-group"><label>链接地址</label><input type="text" class="form-control" name="menu_link" id="link" placeholder="请输入链接地址" data-rule="required" /></div>
+                        <div class="form-group"><label>加载分割线</label>
+                            <select name="menu_sffg" id="sffg" class="form-control">
+                                <option value="1">是</option>
+                                <option value="0" selected>否</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>是否有效</label>
+                            <select name="menu_sfyx" id="sfyx" class="form-control">
+                                <option value="1" selected>有效</option>
+                                <option value="0">无效</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+    </div>
+    <!--表单结束-->
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/"><i class="fa fa-home" aria-hidden="true"></i> 管理系统首页</a>
+            </li>
+
+            <li class="active">
+                <a href="#">菜单信息管理</a>
+            </li>
+
+        </ul>
+
+        <div class="col-md-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <i class="fa fa-list-ul" aria-hidden="true"></i> 菜单信息列表
+                    <a href="#form-1" class="btn btn-warning btn-xs" role="button" data-toggle="modal"><i class="fa fa-calendar" aria-hidden="true"></i> 新增菜单</a>
+                </div>
+                <div class="panel-body">
+                 <div id="jstree" ></div>
+                </div>
+            </div>
+        </div>
+        <div id="menudal" class="col-md-9">
+
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> 菜单信息编辑
+                        <a href="#" onclick="delinfo()" class="btn btn-danger btn-xs" role="button"><i class="fa fa-trash" aria-hidden="true"></i> 删除菜单</a>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="menu_mc" class="col-sm-2 control-label">菜单名称</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" id="menu_mc" name="menu_mc" placeholder="">
+                                <input type="hidden" name="id" id="id" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu_icon" class="col-sm-2 control-label">菜单图标</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" id="menu_icon" name="menu_icon" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="menu_link" class="col-sm-2 control-label">挂接模块</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" id="menu_link" name="menu_link" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="menu_sffg" class="col-sm-2 control-label">加载分割线</label>
+                            <div class="col-sm-10">
+                                <select name="menu_sffg" id="menu_sffg" class="form-control">
+                                    <option>请选择</option>
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <label for="menu_sfyx" class="col-sm-2 control-label">是否有效</label>
+                                <div class="col-sm-10">
+                                    <select name="menu_sfyx" id="menu_sfyx" class="form-control">
+                                        <option>请选择</option>
+                                        <option value="1">有效</option>
+                                        <option value="0">无效</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-inline">
+                        <button type="submit" class="btn btn-success">信息提交</button>
+                        <button type="reset" class="btn btn-default">重置表单</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+        </div>
+
+    </div>
+    <script>
+        $('#jstree').jstree({
+            'core' : {
+                'data' : {
+                    "url" : "/Menu/menutree",
+                    "dataType" : "json", // needed only if you do not supply JSON headers
+                },
+
+                "check_callback": true,
+                "themes": {
+                    "theme": "classic",
+                    "dots": true,
+                    "icons": false,
+                    "stripes" : true
+                },
+
+            },
+            "plugins": [ //插件
+                "search", //允许插件搜索
+                //"sort", //排序插件
+                "state", //状态插件
+                //"types", //类型插件
+                //"unique", //唯一插件
+                //"wholerow" //整行插件
+            ],
+
+            "types": {
+                "default": { //设置默认的icon 图
+                    "icon": "glyphicon glyphicon-folder-close",
+                }
+            },
+
+        });
+        //单击事件
+        $("#jstree").bind('changed.jstree',function (e, data) {
+            var iid=data.instance.get_node(data.selected[0]).id;
+            var url = "/Restful/MenuDal?id=" + iid;
+            $.getJSON(url,function (data) {
+                $.each(data,function (i, value) {
+                    $("#id").val(value.id);
+                    $("#menu_mc").val(value.menu_mc);
+                    $("#menu_icon").val(value.menu_icon);
+                    $("#menu_link").val(value.menu_link);
+                    //alert(value.menu_sffg);
+                    if (value.menu_sfyx==1){
+                        $("#menu_sfyx").find("option[value='1']").prop("selected",true);
+                    }else{
+                        $("#menu_sfyx").find("option[value='0']").prop("selected",true);
+                    }
+                    if (value.menu_sffg==1){
+                        $("#menu_sffg").find("option[value='1']").prop("selected",true);
+                    }else{
+                        $("#menu_sffg").find("option[value='0']").prop("selected",true);
+                    }
+
+                    //alert(value.menu_mc);
+                })
+            })
+        });
+        //删除信息确认
+        function delinfo() {
+            var i=$("#id").val();
+            if (!i){
+                alert("请选择一个菜单!");
+                return false;
+            }else{
+                var massage=confirm("删除后不可恢复，请确认!");
+                if (massage==true){
+                    $.ajax({
+                        type : "get",
+                        url:"/Menu/MenuDel",
+                        data:{"table":"auth_menu_tb","id":i},
+                        success:function (result, state) { //成功调用回调信息
+                            alert(result);
+                            window.location.reload();
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                            //alert(textStatus);
+                        },
+                        timeout: 60000,
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                            alert("服务器响应超时，请稍候重试：" + errorThrown);
+                            return false;
+                        }
+                    })
+                }
+            }
+
+        }
+    </script>
+</block>

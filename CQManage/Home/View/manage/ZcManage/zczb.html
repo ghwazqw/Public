@@ -1,0 +1,153 @@
+<div class="col-md-12" style="margin-top: -10px;line-height: 45px">
+
+    <lable style="width: 12%;text-align: right">资产编号 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_bh" id="zc_bh" placeholder="请输入资产编号" data-rule="required"/>
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">资产类型 : </lable>
+    <select style="width: 12%;text-align: left" class="form-control" name="zc_lx" id="zc_lx" onchange="changeData()" data-rule="required">
+        <option value='' selected>请选择类型</option>
+        <foreach name="class_info" item="info" >
+            <option value="{$info.id}">{$info.cglx_mc}</option>
+        </foreach>
+    </select>
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">二级分类 : </lable>
+    <select style="width: 12%;text-align: left" class="form-control" name="zc_rjlx" id="zc_rjlx" onchange="rjfl()" disabled data-rule="required">
+        <!--<option value="">请选择</option>-->
+    </select>
+    <input type="hidden" name="zc_lxname" id="zc_lxname" />
+    <script>
+        function rjfl() {
+            var info=$("#zc_lx").find("option:selected").text();
+            $("#zc_lxname").val(info);
+            $("#zc_mc").val(info);
+        }
+    </script>
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">资产名称 : </lable>
+    <input type="text" style="width: 12%;text-align: left" class="form-control" name="zc_mc" id="zc_mc" placeholder="请输入资产名称" data-rule="required"/>
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">计量单位 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_jldw" id="zc_jldw" placeholder="请输入计量单位" data-rule="required"/>
+    <!--End IF--><br />
+    <lable style="width: 12%;text-align: right">原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_yz" id="zc_yz" placeholder="请输入原值" />
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">净&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值 : </lable>
+    <input type="text" style="width: 12%;text-align: left" class="form-control" name="zc_jz" id="zc_jz" placeholder="请输入净值"  />
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">安装成本 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_azcb" id="zc_azcb" placeholder="请输入安装成本" />
+
+    <lable style="width: 12%;text-align: right">折旧标志 : </lable>
+    <select style="width: 12%;text-align: left" class="form-control" name="zc_sfzjbz" id="zc_sfzjbz" >
+        <option value="1">是</option>
+        <option value="0">否</option>
+    </select>
+
+    <lable style="width: 12%;text-align: right">累计折旧 : </lable>
+    <input type="text" style="width: 12%;text-align: left" class="form-control" name="zc_ljzj" id="zc_ljzj" placeholder="请输入累计折旧"/>
+    <!--End IF-->
+    <br />
+    <lable style="width: 12%;text-align: right">年限类型 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_zjnxlx" id="zc_zjnxlx" placeholder="请输入折旧年限类型" />
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">本期折旧 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_bqzj" id="zc_bqzj" placeholder="请输入本期折旧" />
+
+    <lable style="width: 12%;text-align: right">购建日期 : </lable>
+    <input style="width: 12%;text-align: left" type="text" readonly class=" form-control" name="zc_gjrq" id="zc_gjrq" placeholder="请选择购建日期" data-rule="required"/>
+    <script>
+        $("#zc_gjrq").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            language:"zh-CN",
+            minView:"month"
+        });
+    </script>
+    <lable style="width: 12%;text-align: right">入帐日期 : </lable>
+    <input style="width: 12%;text-align: left" type="text" readonly class=" form-control" name="zc_rzrq" id="zc_rzrq" placeholder="请选择入帐日期" data-rule="required"/>
+    <script>
+        $("#zc_rzrq").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            language:"zh-CN",
+            minView:"month"
+        });
+    </script>
+    <lable style="width: 12%;text-align: right">启用日期 : </lable>
+    <input style="width: 12%;text-align: left" type="text" readonly class=" form-control" name="zc_qyrq" id="zc_qyrq" placeholder="请选择启用日期" data-rule="required"/>
+    <script>
+        $("#zc_qyrq").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            language:"zh-CN",
+            minView:"month"
+        });
+    </script>
+    <br />
+    <lable style="width: 12%;text-align: right">取得方式 : </lable>
+    <select name="zc_qdfs" style="width: 12%;text-align: left" id="zc_qdfs" class="form-control">
+        <option value="" select>请选择</option>
+        <option value="总行集中采购调拨">总行集中采购调拨</option>
+        <option value="本级集中采购自用">本级集中采购自用</option>
+        <option value="分散采购">分散采购</option>
+        <option value="在建工程转固定资产">在建工程转固定资产</option>
+    </select>
+
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">使用部门 : </lable>
+    <select style="width: 12%;text-align: left" name="zc_ccsybm" id="zc_ccsybm" class="form-control">
+        <option value="">请选择</option>
+        <foreach name='CompInfo' item='Info' >
+            <option value="{$Info.cglx_mc}" <php>if ($keyword==$Info['cglx_mc']) :</php>selected<php>endif ;</php>>{$Info.cglx_mc}</option>
+        </foreach>
+    </select>
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">管理部门 : </lable>
+    <select style="width: 12%;text-align: left" name="zc_ccglbm" id="zc_ccglbm" class="form-control">
+        <option value="">请选择</option>
+        <option value="科技处">科技处</option>
+        <option value="后勤服务中心">后勤服务中心</option>
+    </select>
+    <lable style="width: 12%;text-align: right">是否闲置 : </lable>
+    <select style="width: 12%;text-align: left" name="zc_sfxz" id="zc_sfxz" class="form-control">
+        <option value="否" selected>否</option>
+        <option value="是" >是</option>
+    </select>
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">条 &nbsp;形 &nbsp;码 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_txm" id="zc_txm" placeholder="请输入条形码" />
+    <br />
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">责 &nbsp;任 &nbsp;人: </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_zrr" id="zc_zrr" placeholder="请输入责任人" data-rule="required" />
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">批复单号 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_pfdh" id="zc_pfdh" placeholder="请输入批复单号" />
+    <!--End IF-->
+    <lable style="width: 12%;text-align: right">出帐日期 : </lable>
+    <input style="width: 12%;text-align: left" type="text" readonly class=" form-control" name="zc_czrq" id="zc_czrq" placeholder="请选择出帐日期"/>
+    <script>
+        $("#zc_czrq").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            language:"zh-CN",
+            minView:"month"
+        });
+    </script>
+
+    <lable style="width: 12%;text-align: right">出帐类型 : </lable>
+    <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_czlx" id="zc_czlx" placeholder="请输入出帐类型" \/>
+    <br />
+    <div style="margin-top: 5px">
+        <lable style="width: 12%;text-align: right">卡片说明 : </lable>
+        <textarea style="width: 39%;text-align: left" class="form-control" name="zc_kpsm" id="zc_kpsm" placeholder="请输入卡片说明"></textarea>
+        <lable style="width: 12%;text-align: right">出帐原因 : </lable>
+        <textarea class="form-control" style="width: 40%;text-align: left" name="zc_czyy" id="zc_czyy" placeholder="请输入出帐原因"></textarea>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<extend name="glxh/index/base_top"  title="基金信息详细页面"/>
+<block name="customer">
+
+    <foreach name="meta_data" item="M_dat" >
+    <ul class="breadcrumb" style="text-align: left;padding-left: 100px;background: #ffffff;">
+			<span class="glyphicon glyphicon-th-list"></span>
+             <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                基金信息
+            </li>
+
+
+        </ul>
+    
+<div style="width: 95%;margin: 0 auto;line-height: 30px">
+    <div class="col-md-3 column">
+        {:W('Info/load',array(24))}
+    </div>
+    <div class="col-md-9 column">
+    <div class="articleContent" style="text-align: center">
+        <!--<h2 class="title" style="color: #b8300f">
+            {$M_dat.info_title}
+        </h2>
+        <hr />-->
+
+        <div id="contentTxt" style="text-align: center">
+            {$M_dat.info_content}
+            <p>
+            </p>
+        </div>
+    </div>
+
+</div>
+    </div>
+        </foreach>
+
+    <div style="width: 100%;word-wrap: break-word; word-break: normal;clear:both;float:none;"></div>
+    <div class="clear"></div>
+</block>

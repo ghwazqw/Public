@@ -1,0 +1,130 @@
+<script>
+
+    $(document).ready(function(){
+        //联系人
+        $("#gl_xqmc").blur(function(){
+            var gl_lxr = $("#gl_lxr").val();
+            if (gl_lxr=="" ){
+                $("#gl_lxr").attr('placeholder',"此项为必填");
+                $("#gl_lxr").css('border',"1px solid #ff0000");
+            }
+            else{
+                $("#gl_xqmc").css('border',"1px solid #0785e9");
+            }
+        })
+        $("#gl_dh").blur(function(){
+            var gl_dh = $("#gl_dh").val();
+            var gl_sj = $("#gl_sj").val();
+            var gl_yx = $("#gl_yx").val();
+            if (gl_dh=="" && gl_sj=="" && gl_yx==""){
+                $("#gl_dh").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_dh").css('border',"1px solid #ff0000");
+                $("#gl_sj").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_sj").css('border',"1px solid #ff0000");
+                $("#gl_yx").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_yx").css('border',"1px solid #ff0000");
+            }
+            else{
+                $("#gl_dh").css('border',"1px solid #0785e9");
+                $("#gl_sj").css('border',"1px solid #0785e9");
+                $("#gl_yx").css('border',"1px solid #0785e9");
+            }
+        })
+        $("#gl_sj").blur(function(){
+            var gl_dh = $("#gl_dh").val();
+            var gl_sj = $("#gl_sj").val();
+            var gl_yx = $("#gl_yx").val();
+            if (gl_dh=="" && gl_sj=="" && gl_yx==""){
+                $("#gl_dh").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_dh").css('border',"1px solid #ff0000");
+                $("#gl_sj").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_sj").css('border',"1px solid #ff0000");
+                $("#gl_yx").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_yx").css('border',"1px solid #ff0000");
+            }
+            else{
+                $("#gl_dh").css('border',"1px solid #0785e9");
+                $("#gl_sj").css('border',"1px solid #0785e9");
+                $("#gl_yx").css('border',"1px solid #0785e9");
+            }
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (gl_sj!=""){
+            if (!myreg.test($("#gl_sj").val())){
+                //alert('请输入有效的手机号码！');
+                $("#sjerrorInfo").html("手机号输入错误");
+                return false;
+            }
+            }
+            else{
+            $("#errorInfo").html("");
+            }
+        })
+
+        $("#gl_yx").blur(function(){
+            var gl_dh = $("#gl_dh").val();
+            var gl_sj = $("#gl_sj").val();
+            var gl_yx = $("#gl_yx").val();
+            if (gl_dh=="" && gl_sj=="" && gl_yx==""){
+                $("#gl_dh").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_dh").css('border',"1px solid #ff0000");
+                $("#gl_sj").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_sj").css('border',"1px solid #ff0000");
+                $("#gl_yx").attr('placeholder',"电话、手机、邮箱至少输入一项");
+                $("#gl_yx").css('border',"1px solid #ff0000");
+            }
+            else{
+                $("#gl_dh").css('border',"1px solid #0785e9");
+                $("#gl_sj").css('border',"1px solid #0785e9");
+                $("#gl_yx").css('border',"1px solid #0785e9");
+            }
+
+        })
+    })
+</script>
+<div class="form-inline" role="form">
+<div class="kjtd_from_left"  >联系人： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_lxr" value="{$globar_user:user_xm}" placeholder="联系人" class="form-control" style="width: 250px"/> <span style="color:red">*</span>
+    <input type="hidden" name="gl_cjr" value="{$globar_user:user_name}">
+</div>
+<div class="kjtd_from_left"  >工作单位： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_gzdw" value="" placeholder="工作单位" class="form-control" style="width: 250px"/>
+</div>
+<div class="kjtd_from_left"  >职务： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_zw" value="" placeholder="职务" class="form-control" style="width: 250px"/>
+</div>
+<div class="kjtd_from_left"  >电话： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_dh" value="" placeholder="电话" class="form-control" style="width: 250px" id="gl_dh"/>
+    <span style="color:red">*</span>
+</div>
+
+
+<div class="kjtd_from_left"  >手机： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_sj" value="" placeholder="手机" class="form-control" style="width: 250px" id="gl_sj" onkeyup='this.value=this.value.replace(/\D/gi,"")'/>
+    <span style="color:red">*</span> <span class="label label-warning" id="sjerrorInfo">{$errorInfo}</span>
+</div>
+<div class="kjtd_from_left"  >邮箱： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_yx" value="" placeholder="邮箱" class="form-control" style="width: 250px" id="gl_yx"/>
+    <span style="color:red">*</span>
+</div>
+<div class="kjtd_from_left"  >传真： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_cz" value="" placeholder="传真" class="form-control" style="width: 250px"/>
+</div>
+<div class="kjtd_from_left"  >联系地址： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_lxdz" value="" placeholder="联系地址" class="form-control" style="width: 250px"/>
+</div>
+<div class="kjtd_from_left"  >邮编： </div>
+<div class="kjtd_from_right" >
+    <input type="text" name="gl_yb" value="" placeholder="邮编" class="form-control" style="width: 250px" maxlength="6" onkeyup='this.value=this.value.replace(/\D/gi,"")'/>
+</div>
+</div>
+<div class="kjtd_from_left"></div>
+<div class="kjtd_from_right">
+</div>

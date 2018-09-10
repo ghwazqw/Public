@@ -1,0 +1,64 @@
+<extend name="glxh/index/base_user" title="用户管理"/>
+
+<block name="customer">
+
+
+   <!--{$fo.column_name}/{$fo.column_comment}/{$fo.data_type}<br />-->
+
+        <div class="form-inline" style="text-align: left;">
+
+            <form method="post">
+                <label>数据库表</label>
+            <select name="table" class="selectpicker show-tick form-control" id="table" >
+                <option value ="">请选择</option>
+                <foreach name="Table" item="T" >
+                    <option value ="{$T.table_name}">{$T.table_comment}({$T.table_name})</option>
+                </foreach>
+            </select>
+            <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+            </form>
+        </div>
+<hr />
+    <!--<table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+        <tr style="background: #8bc5eb;color:#fff">
+            <foreach name="formname" item="fo" >
+            <th nowrap>{$fo.column_comment}</th>
+            </foreach>
+        </tr>
+    </table>-->
+
+<pre>
+    <div class="col-md-12" style="padding-left: 10px;height: 1500px">
+            <?php
+            $for_start="<#foreach name='InfoData' item='InfoData' >";
+            ?>
+            <php>echo str_replace("#","",$for_start);</php>
+    <foreach name="formname" item="fo" >
+        <?php
+        $col_name=$fo['column_name'];
+        $max_len=$fo['character_maximum_length'];
+        $col_type=$fo['data_type'];
+        $comment=$fo['column_comment'];
+        $info_name='{#InfoData.';
+               $info_name.=$fo['column_name'];
+               $info_name.='}';
+
+        $comment=explode("|",$comment);
+        //lable样式
+        $comment=$comment[0];
+        $lable='<lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>'.$comment.'</b>：</lable>';
+
+        ?>
+        {$lable}<div class="col-sm-4 input-group input-group-sm"><php>echo str_replace("#","$",$info_name);</php></div>
+        <br /><!--end-->
+
+        </foreach>
+            <?php
+                    $for_end="<#/foreach>";
+            ?>
+            <php>echo str_replace("#","",$for_end);</php>
+    <br />
+        </div>
+    </pre>
+    <p></p>
+</block>

@@ -1,0 +1,222 @@
+<extend name="manage/index/base_user" title="维修信息查询"/>
+
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+    <div class="row clearfix" style="font-size: 12px">
+        <div class="modal fade" id="spform" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="title">
+                            <span id="sbmc"></span> | 审批信息查询
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="spinfo" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="col-md-12 col-xs-12" nowrap>
+                <div class="input-group" style="text-align: right">
+                    <form class="navbar-form navbar-left" method="get">
+                    <input type="text" class="form-control" placeholder="维修信息搜索......" name="keyword" value="{$keyword}">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                    </form>
+                    <div class="btn-group" style="margin-top: 8px">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">功能列表</span>
+                        </button>
+                        <ul class="dropdown-menu">
+
+                            <li >
+                                <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出信息"><span class="glyphicon glyphicon-download"></span> 导出信息</a>
+                            </li>
+                            <script>
+                                function expinfo(){
+                                    var myDate = new Date();
+                                    $("#exp").table2excel({
+                                        exclude: ".noExl",
+                                        name: "Excel Document Name.xlsx",
+                                        filename: myDate.toLocaleString()+".xls",
+                                        exclude_img: true,
+                                        exclude_links: true,
+                                        exclude_inputs: false
+                                    });
+                                }
+                            </script>
+
+                        </ul>
+
+                    </div>
+                </div>
+    <div id='div1'>
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>类型</th>
+                <th nowrap>资产名称</th>
+                <th nowrap>资产编号</th>
+                <th nowrap>申请维修时间</th>
+                <th nowrap>申请处室</th>
+                <th nowrap>申请维修理由</th>
+                <th nowrap>申请人</th>
+                <th nowrap>维修时间</th>
+                <th nowrap>维修金额</th>
+                <th nowrap>状态</th>
+                <th nowrap>备注</th>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td>
+                    <?php
+                if ($Info['sblx']=='ysgj_tb')
+                echo "运输工具";
+                elseif ($Info['sblx']=='dqsb_tb')
+                echo "机械器具";
+                elseif ($Info['sblx']=='dzsb_tb')
+                echo "电子设备";
+                elseif ($Info['sblx']=='qtzc_tb')
+                echo "其他设备";
+                elseif ($Info['sblx']=='fwkp_tb')
+                echo "房屋";
+                ?>
+                </td>
+                    <td>{$Info.sbmc}</td>
+                    <td>{$Info.sbbh}</td>
+                <td>{$Info.zc_sqwxsj|strtotime|date="Y-m-d",###}</td>
+                <td>{$Info.zc_sqwxbm}</td>
+                <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='维修申请理由' data-content='{$Info.zc_sqly}'><span class='glyphicon glyphicon-folder-open'></span></a>
+                </td>
+                <td>{$Info.zc_sqr}</td>
+                <td>{$Info.zc_wxsj|strtotime|date="Y-m-d",###}</td>
+                <td style="text-align: right">￥{$Info.zc_fsje}</td>
+                    <td>
+                        <if condition="$Info.spzt eq 0">维修记录，无状态信息<else />
+                        <a href="#spform" role="button" data-toggle="modal" title="审批过程记录查询" onclick="spview({$Info.id},'{$Info.sbmc}')">
+                        <if condition="$Info.spzt eq 100">已完工确认</if>
+                        <if condition="$Info.spzt eq 2">已提交，等待审批</if>
+                        <if condition="$Info.spzt eq 99">审批通过，维修中</if>
+                        </a>
+                        </if>
+                    </td>
+                    <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.zc_note}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+
+            </tr>
+            </foreach>
+        </table>
+
+    </div>
+    <table id="exp" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px;display: none">
+        <tr style="background: #8bc5eb; color: #ffffff">
+            <th nowrap>序号</th>
+            <th nowrap>类型</th>
+            <th nowrap>资产名称</th>
+            <th nowrap>资产编号</th>
+            <th nowrap>申请维修时间</th>
+            <th nowrap>申请处室</th>
+            <th nowrap>申请维修理由</th>
+            <th nowrap>申请人</th>
+            <th nowrap>维修时间</th>
+            <th nowrap>维修金额</th>
+            <th nowrap>状态</th>
+            <th nowrap>备注</th>
+        </tr>
+        <?php $i = 0;?>
+        <foreach name='InfoData' item='Info' >
+            <?php $i++;?>
+            <tr>
+                <td>{$i}</td>
+                <td>
+                    <?php
+                if ($Info['sblx']=='ysgj_tb')
+                echo "运输工具";
+                elseif ($Info['sblx']=='dqsb_tb')
+                echo "机械器具";
+                elseif ($Info['sblx']=='dzsb_tb')
+                echo "电子设备";
+                elseif ($Info['sblx']=='qtzc_tb')
+                echo "其他设备";
+                elseif ($Info['sblx']=='fwkp_tb')
+                echo "房屋";
+                ?>
+                </td>
+                <td>{$Info.sbmc}</td>
+                <td>&nbsp;{$Info.sbbh}</td>
+                <td>{$Info.zc_sqwxsj|strtotime|date="Y-m-d",###}</td>
+                <td>{$Info.zc_sqwxbm}</td>
+                <td>
+                    {$Info.zc_sqly}
+                </td>
+                <td>{$Info.zc_sqr}</td>
+                <td>{$Info.zc_wxsj|strtotime|date="Y-m-d",###}</td>
+                <td style="text-align: right">￥{$Info.zc_fsje}</td>
+                <td>
+                    <if condition="$Info.spzt eq 0">维修记录，无状态信息<else />
+                        <a href="#spform" role="button" data-toggle="modal" title="审批过程记录查询" onclick="spview({$Info.id},'{$Info.sbmc}')">
+                            <if condition="$Info.spzt eq 100">已完工确认</if>
+                            <if condition="$Info.spzt eq 2">已提交，等待审批</if>
+                            <if condition="$Info.spzt eq 99">审批通过，维修中</if>
+                        </a>
+                    </if>
+                </td>
+                <td>{$Info.zc_note}</td>
+
+            </tr>
+        </foreach>
+    </table>
+</div>
+            <ul class="pagination">
+                {$pagebar}
+            </ul>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+<script>
+    function spview(id,sbmc) {
+        $("#sbmc").html(sbmc);
+        var url="/home/ZcManage/GetZcSpInfo?log_id="+id;
+        $("#spinfo").html("");
+        $("#spinfo").html("<tr style=\"background: #8bc5eb; color: #ffffff\">\n" +
+            "                            <th>提交人</th>\n" +
+            "                            <th>提交时间</th>\n" +
+            "                            <th>状态</th>\n" +
+            "                            <th>信息</th>\n" +
+            "\n" +
+            "                        </tr>");
+        /*$("#spinfo").append("<tr id='load'><td colspan='4'>数据正在加载中，请稍候...</td></tr>");*/
+        $.getJSON(url,function (data) {
+            $("#spinfo").parent('tr').remove();
+            $.each(data,function (i,value) {
+                if (value.sp_zt==100){
+                    var sp_zt="已完工确认";
+                }else if (value.sp_zt==99){
+                    var sp_zt="审批通过，维修中";
+                }else if (value.sp_zt==2){
+                    var sp_zt="提交维修审批，审批中";
+                }
+                var tr="<tr>" +
+                    "<td>"+value.sp_tjr+"</td>" +
+                    "<td>"+value.sp_sj+"</td>" +
+                    "<td>"+sp_zt+"</td>" +
+                    "<td>"+value.sp_yj+"</td>" +
+                    "</tr>";
+                $("#spinfo").append(tr);
+            })
+        })
+    }
+</script>
+    </block>

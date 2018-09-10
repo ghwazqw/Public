@@ -1,0 +1,89 @@
+<extend name="50/index/base" />
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+
+                <div><span class="glyphicon glyphicon glyphicon-user"> <a href="/">首页</a>-->成果信息数据中心</span></div>
+                <form class="navbar-form navbar-left" method="get" action="/index.php/home/cgxx/cgxx_class">
+                    <div class="form-group">
+                       <select class="selectpicker show-tick form-control" name="lx">
+                           <option value="" <php> if ($lx=="") :</php>selected<php>endif ;</php> >请选择</option>
+                           <option value="xmbh" <php> if ($lx=="xmbh") :</php>selected<php>endif ;</php>>项目编号</option>
+                           <option value="cgmc" <php> if ($lx=="cgmc") :</php>selected<php>endif ;</php>>成果名称</option>
+                           <option value="gjz" <php> if ($lx=="gjz") :</php>selected<php>endif ;</php>>关键词</option>
+                           <option value="xmjj" <php> if ($lx=="xmjj") :</php>selected<php>endif ;</php>>简介</option>
+                           <option value="zywcr" <php> if ($lx=="zywcr") :</php>selected<php>endif ;</php>>主要完成人</option>
+                       </select> <input type="text" class="form-control" placeholder="{$keyword}" name="keyword">
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </div>
+                    <button class="btn btn-primary" type="button">
+                        成果信息数量 <span class="badge">{$count}</span>
+                    </button>
+                </form>
+
+                <table id="myTable" cellpadding="0" cellpadding="0" class="table table-hover" style="font-size: 12px">
+                    <thead>
+                    <th axis="string">成果编号</th>
+                    <th axis="string">成果名称</th>
+                    <th axis="string">地区</th>
+                    <th axis="string">所属类型</th>
+                    <th axis="date">Down</th>
+                    </thead>
+                    <tbody>
+                    <php>if( $count > 0  ):</php>
+                    <foreach name="info_data" item="cg" >
+
+                        <tr style="font-size: 12px" id="{$cg.id}">
+
+                            <td>{$cg.cg_xmbh}</td>
+                            <td><a href="/index.php/home/cgxx/cgxx_dal?id={$cg.id}">{$cg.cg_cgmc}</a></td>
+                            <td>{$cg.cg_dq}</td>
+                            <td>{$cg.cg_xkflmc}</td>
+                            <td><a href="__PUBLIC__/glxh/downloads/{$cg.cg_xmbh}.pdf" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
+
+                        </tr>
+                    </foreach>
+                    <php>else:</php>
+                    <tr style="font-size: 12px">
+                        <td><span style="color: red" >“{$keyword}”</span> <br />通过对“成果名称、关键词、成果分类、简介、主要完成人”的查询，该关键字下没有成果信息。</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <php> endif;</php>
+                    </tbody>
+                    </tfoot>
+                </table>
+                <script type="text/javascript">
+                    var myTable = {};
+                    window.addEvent('domready', function(){
+                        myTable = new sortableTable('myTable', {overCls: 'over'/*, onClick: function(){alert(this.id)}*/});
+                    });
+                </script>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+
+            </div>
+            <div class="col-xs-6 col-md-4">
+                <div><span class="glyphicon glyphicon-th-list"> 成果信息分类</span></div>
+                <hr/>
+                <foreach name="class_data" item="class" >
+                    <h5><span ><a href="?keyword={$class.cglx_mc}">{$class.cglx_mc}</a></span></h5>
+                    <p style="font-size:13px;line-height: 25px">
+                    <foreach name="class_mtea_data" item="meta" >
+                        <php> if( $meta['cglx_sjid'] == $class['id'] ):</php>
+                        <a href="?keyword={$meta.cglx_mc}">{$meta.cglx_mc}</a>
+                        <php> endif;</php>
+                    </foreach>
+                    </p>
+                </foreach>
+
+
+            </div>
+        </div>
+    </div>
+</block>

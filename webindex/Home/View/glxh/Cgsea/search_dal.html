@@ -1,0 +1,168 @@
+<extend name="glxh/index/base"  title="成果搜索"/>
+<block name="customer">
+    <script>
+        function printHTML(page)
+        {
+            var bodyHTML=window.document.body.innerHTML;
+            window.document.body.innerHTML=$(page).html();
+            window.print();
+            window.document.body.innerHTML=bodyHTML;
+        }
+    </script>
+<div class="sea_Kj">
+    <div class="sea_dal_Kj_left">
+        <div class="cg_rk_bq"><a href="/index.php/home/ywcent/cgrk" style="color: #ffffff">科技成果入库申请</a></div>
+        <div class="cg_gjc_title">成果节点</div>
+        <div class="cg_gjc_title_ul">
+            <li style="list-style: none">  <a href="#zhaiyao" ><i class="fa fa-home fa-fw"></i> 成果摘要</a></li>
+            <li style="list-style: none"><a href="#gjc" ><i class="fa fa-book fa-fw"></i> 关键词</a></li>
+            <li style="list-style: none"><a href="#dw" ><i class="fa fa-clipboard fa-fw"></i> 主要完成单位</a></li>
+            <li style="list-style: none"><a href="#wcr" ><i class="fa fa-indent fa-fw"></i> 主要完成人</a></li>
+            <li style="list-style: none"><a href="#sj" ><i class="fa fa-table fa-fw"></i> 成果完成时间</a></li>
+            <li style="list-style: none"><a href="#ly" ><i class="fa fa-file-text-o fa-fw"></i> 课题来源</a></li>
+            <li style="list-style: none"><a href="#jx" ><i class="fa fa-bullseye fa-fw"></i> 所获奖项</a></li>
+
+        </div>
+        <div class="cg_gjc_title">相关成果</div>
+        <div class="cg_gjc_title_ul">
+            <li><a href="#" >目前还没有信息</a></li>
+        </div>
+    </div>
+    </div>
+    <!--右框架!-->
+    <div class="sea_dal_Kj_right" id="div2">
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><a href="/index.php/Home/cgsea/search/">成果信息列表</a>-->成果详细信息</div>
+        <foreach name="info_data" item="cg" >
+           <div class="cg_dal_title">{$cg.cg_cgmc}</div>
+            <div class="cg_dal_title_lx">所属分类：{$cg.cg_xkflmc} <br />专业方向：{$cg.cg_zyfx}</div>
+            <div class="mt90 sdf_xsd_Xdeex tr" style="text-align: right;padding-right: 20px">
+                <!--<a href="#"> <i class="fa fa-plus"></i> 关注 </a>&nbsp;-->
+                <!--<a href="#"> <i class="fa fa-cogs"></i> 分享 </a>-->
+                <!--<a href="#"> <i class="fa fa-star"></i> 收藏 </a>&nbsp;-->
+                <a href="javascript:printHTML('#div1')"> <i class="fa fa-sign-out"></i> 打印 </a>
+            </div>
+            <hr style="border:none;border-bottom:1px dashed #0886ea;height: 1px"/>
+            <div class="cg_dal_dw" ><li><a name="dw">主要完成单位</a></li></div>
+            <div class="cg_dal_dw_content"><span style="color:#045fbc">
+                <php>$source = $cg['cg_zywcdw'];//按逗号分离字符串
+                    $dw = explode(',',$source);
+                </php>
+                <php>
+                    for($index=0;$index<count($dw);$index++)
+                    {
+                    </php>
+                {$dw[$index]} |
+                <php>
+                }
+                ;</php>
+                </span></div>
+            <div class="cg_dal_dw" ><li><a name="wcr">主要完成人</a></li></div>
+
+            <div class="cg_dal_dw_content">
+                <php>$source = $cg['cg_zywcr'];//按逗号分离字符串
+                    $dw = explode(',',$source);
+                </php>
+
+                <php>
+                    for($index=0;$index<count($dw);$index++)
+                    {
+                </php>
+                <a href="/index.php/Home/zjsea/search/?keyword={$dw[$index]}" target="_blank"> <span style="color:#045fbc">{$dw[$index]}</span></a> |
+                <php>
+                    }
+                    ;</php>
+            </div>
+            <div class="cg_dal_dw" ><li><a name="sj">成果完成时间</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="ly">课题来源</a>
+
+            </li>
+            </div>
+            <div class="cg_dal_dw_content"><span style="color:#045fbc">{$cg.cg_wcsj|strtotime|date="Y年m月",###}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {$cg.cg_ktly}
+            </span></div>
+            <div class="cg_dal_dw" ><li><a name="sj">奖励年度</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="jx">所获奖项</a>
+            </li>
+            </div>
+            <div class="cg_dal_dw_content"><span style="color:#045fbc">{$cg.cg_jlnd}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$cg.cg_jldj}
+            </span></div>
+            <foreach name="jl_data" item="jl" >
+                <div class="cg_dal_dw_content"><span style="color:#045fbc">{$jl.jl_hjsj|strtotime|date="Y年",###} {$jl.jl_jlmc} {$jl.jl_jldj}
+                {$jl.jl_sjbm}</span></div>
+                <br/>
+            </foreach>
+            <div class="cg_dal_dw" ><li><a name="zhaiyao">成果摘要</a></li></div>
+            <div class="cg_dal_content" style="line-height: 30px;font-size: 16px">{$cg.cg_xmjj}</div>
+            <div class="cg_download" id="cg_download"><span style="color: #ffffff"> 详细文件下载</span></div>
+            <div class="cg_dal_gjc" ><a name="gjc">关键词：<span style="color:#045fbc">{$cg.cg_gjz}</span></a></div>
+
+        </foreach>
+
+</div>
+    <div class="sea_dal_Kj_right" id="div1" style="display:none">
+
+        <foreach name="info_data" item="cg" >
+            <div class="cg_dal_title">{$cg.cg_cgmc}</div>
+            <div class="cg_dal_title_lx">所属分类：{$cg.cg_xkflmc} <br />专业方向：{$cg.cg_zyfx}</div>
+            <div class="mt90 sdf_xsd_Xdeex tr" style="text-align: right;padding-right: 20px">
+
+
+            </div>
+            <hr style="border:none;border-bottom:1px dashed #0886ea;height: 1px"/>
+            <div class="cg_dal_dw" ><li>主要完成单位</li></div>
+            <div class="cg_dal_dw_content"><span style="color:#045fbc">
+                <php>$source = $cg['cg_zywcdw'];//按逗号分离字符串
+                    $dw = explode(',',$source);
+                </php>
+                <php>
+                    for($index=0;$index<count($dw);$index++)
+                    {
+                    </php>
+                {$dw[$index]} |
+                <php>
+                }
+                ;</php>
+                </span></div>
+            <div class="cg_dal_dw" ><li>主要完成人</li></div>
+
+            <div class="cg_dal_dw_content">
+                <php>$source = $cg['cg_zywcr'];//按逗号分离字符串
+                    $dw = explode(',',$source);
+                </php>
+
+                <php>
+                    for($index=0;$index<count($dw);$index++)
+                    {
+                </php>
+                <span style="color:#045fbc">{$dw[$index]}</span> |
+                <php>
+                    }
+                    ;</php>
+            </div>
+            <div class="cg_dal_dw" ><li>成果完成时间</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;课题来源
+
+            </li>
+            </div>
+            <div class="cg_dal_dw_content"><span style="color:#045fbc">{$cg.cg_wcsj|strtotime|date="Y年m月",###}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {$cg.cg_ktly}
+            </span></div>
+            <div class="cg_dal_dw" ><li>所获奖项
+            </li>
+            </div>
+            <div class="cg_dal_dw_content"><span style="color:#045fbc">{$cg.cg_jlnd}{$cg.cg_jldj}
+            </span></div>
+            <foreach name="jl_data" item="jl" >
+                <div class="cg_dal_dw_content"><span style="color:#045fbc">{$jl.jl_hjsj|strtotime|date="Y年",###} {$jl.jl_jlmc} {$jl.jl_jldj}
+                {$jl.jl_sjbm}</span></div>
+                <br/>
+            </foreach>
+            <div class="cg_dal_dw" ><li>成果摘要</li></div>
+            <div class="cg_dal_content" style="line-height: 30px;font-size: 16px">{$cg.cg_xmjj}</div>
+            <div class="cg_download" id="cg_download"><span style="color: #ffffff"> 详细文件下载</span></div>
+            <div class="cg_dal_gjc" >关键词：<span style="color:#045fbc">{$cg.cg_gjz}</span></div>
+
+        </foreach>
+
+    </div>
+    <div class="clear"></div>
+</block>

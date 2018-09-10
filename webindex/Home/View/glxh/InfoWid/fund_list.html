@@ -1,0 +1,9 @@
+<div class="panel panel-default">
+    <div class="list-group">
+         <a href="#" class="list-group-item active"><i class="fa fa-money"></i> {$w_title}</a>
+
+            <foreach name="w_data" item="d">
+                <a href="/index.php/home/news/fund_dal/?id={$d.info_id}" class="list-group-item">{$d.info_title}</a>
+            </foreach>
+    </div>
+</div>

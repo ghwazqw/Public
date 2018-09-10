@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="list-group">
+        <a href="#" class="list-group-item active" style="background: #42b035">{$w_title}</a>
+            <foreach name="w_data" item="d">
+                <a href="{$d.info_link}" class="list-group-item">{$d.info_title}
+                    <php>if ($d["info_sl"]!=0): </php><span class="badge">{$d.info_sl}</span><php> endif; </php></a>
+            </foreach>
+
+    </div>
+</div>
+

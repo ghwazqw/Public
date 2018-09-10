@@ -1,0 +1,59 @@
+<extend name="glxh/index/base"  title="需求详细信息"/>
+<block name="customer">
+
+       <div class="user_cnet_bg"></div>
+	<div class="row clearfix">
+		<div class="col-md-2 column">
+			<include file="glxh/Quser/user_navy_list" />
+		</div>
+		<foreach name="meta_data" item="U" >
+		<div class="col-md-10 column" style="padding-bottom: 15px;">
+			<div style="margin-top: 15px;">返回列表 --> 需求详情</div>
+			<ul style="background: #63affa;width: 98%;height: 20px;">
+				<li class="jindu" <php>if ($U['gl_hdzt']==1) :</php>style="background:#1e6ebc"<php>endif ;</php>>已受理</li>
+				<li style="width: 2px;float: left;background: #fff;height: 20px;"></li>
+				<li class="jindu" <php>if ($U['gl_hdzt']==5) :</php>style="background:#1e6ebc"<php>endif ;</php>>正在进行中</li>
+				<li style="width: 2px;float: left;background: #fff;height: 20px;"></li>
+				<li class="jindu" <php>if ($U['gl_hdzt']==10) :</php>style="background:#1e6ebc"<php>endif ;</php>>已通过</li>
+				<li style="width: 2px;float: left;background: #fff;height: 20px;"></li>
+				<li class="jindu" <php>if ($U['gl_hdzt']==10) :</php>style="background:#1e6ebc"<php>endif ;</php>>已完成</li>
+				<li style="width: 2px;float: left;background: #fff;height: 20px;"></li>
+    			<li class="jindu" style="width: 18%;">已结束</li>
+			</ul>
+
+			<div style="width: 98%;height: 150px;background: #f5f5f5;padding-left: 20px;padding-top: 15px;">
+				 <label style="font-size: 12px;">需求内容: </label><SPAN> {$U.gl_hdxq}</SPAN><BR />
+				 <label style="font-size: 12px;"> 需求类型:</label><SPAN> {$U.gl_hdlx}</SPAN> <label style="font-size: 12px;"> 活动形式:</label><SPAN> {$U.gl_hdxs}</SPAN><BR />
+				 <label style="font-size: 12px;"> 提交时间:</label><SPAN> {$U.gl_cjsj}</SPAN>
+				 <label style="font-size: 12px;"> 状态:</label><SPAN>
+				<php>if ($U['gl_hdzt']==1) :</php>等待回复。<php>endif ;</php>
+				<php>if ($U['gl_hdzt']==5) :</php>请您填写补充资料。<a href="#act_hf" data-toggle="modal">点此</a><php>endif ;</php>
+				<php>if ($U['gl_hdzt']==10) :</php>需求已通过，请您注意接听电话和邮件。<php>endif ;</php>
+				<php>if ($U['gl_hdzt']==0) :</php>被退回，感谢您的提交。<php>endif ;</php>
+			</SPAN>
+				<foreach name="main_data" item="U" >
+				<include file="glxh/Quser/huifu" />
+					</foreach>
+			</div>
+			<div class="panel panel-primary" style="border: 1px solid #f08300;width: 98%;margin-top: 15px">
+				<div class="panel-heading" style="background: #f08300;border: 1px solid #f08300;">沟通记录</div>
+				<div class="panel-body" style="padding-left: 20px">
+					{$globar_user:user_xm}于{$U.gl_cjsj}，提交本需求。
+					<hr style="border: none;border-bottom: 1px dashed #cccccc;width: 99%;text-align: center;margin-left: 0px"/>
+					<foreach name="detail_data" item="U" >
+					<p>
+						<php>if ($U['gl_ywcjr']!=$U['gl_hfr']) :</php>客户服务专员<php>else :</php>{$globar_user:user_xm}<php>endif ;</php>：{$U.gl_content}<br />
+						<span style="text-align: right">回复时间：{$U.gl_hfsj}</span>
+
+					</p>
+						</foreach>
+				</div>
+
+
+			</div>
+		</div>
+		</foreach>
+	</div>
+</div>
+
+</block>

@@ -1,0 +1,220 @@
+<extend name="glxh/index/base_user"  title="成果入库"/>
+<block name="customer">
+    <script type="text/javascript">
+        CKEDITOR.replace( 'content' ,{ //这里的 content就是上面我们设置的textarea或者input元素的id
+                    filebrowserBrowseUrl:'__PUBLIC__/Ckeditor/ckfinder.html',//设置上传图片的页面为ckfinder.html
+                    filebrowserImageBrowseUrl:'__PUBLIC__/Ckeditor/ckfinder.html?type=Images',
+                    filebrowserFlashBrowseUrl: '__PUBLIC__/Ckeditor/ckfinder.html?type=Flash',
+                    filebrowserUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                    filebrowserImageUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                    filebrowserFlashUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Flash',
+                }
+        );
+
+    </script>
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#calendar").bootstrapDatepickr();
+            $("#calendar1").bootstrapDatepickr({date_format: "d-m-Y"});
+            $("#calendar2").bootstrapDatepickr({date_format: "l, do F Y"});
+        });
+    </script>
+<div class="kjtd_kj" style="height: 1350px">
+    <div class="kjtd_kj_left">
+        <div class="user_cnet_kj_menu">
+            {:W('Info/load',array(5))}
+            {:W('Info/load',array(6))}
+            {:W('Info/load',array(7))}
+        </div>
+    </div>
+    <div class="kjtd_kj_right">
+<div class="kjtd_title">
+    <img src="__PUBLIC__/glxh/images/bdhj.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/" style="color: #957d7d;">返回首页》</a>
+</div>
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current">一、成果信息</li>
+        <li>二、知识产权</li>
+        <li>三、成果应用状态及交易信息</li>
+        <li>四、联系信息</li>
+    </div>
+    <div class="kjtd_qc"></div>
+    <span class="label label-warning">{$errorInfo}</span>
+    <span class="label label-success">{$sussInfo}</span>
+    <div id="xxzx_content">
+        <!--TAB标签一-->
+        <ul style="display:block;" >
+            <form method="post" enctype="multipart/form-data">
+                    <div class="kjtd_from">
+                        <!--行1!-->
+                        <div class="kjtd_from_left">成果名称：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="cg_cgmc" value="" placeholder="请输入成果名称" class="kjtd_from_input"/>
+                        </div>
+                        <div class="kjtd_from_left">关键词：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="cg_gjz" value="" placeholder="请输入关键词" class="kjtd_from_input"/>
+                        </div>
+                        <div class="kjtd_from_left">成果体现形式：</div>
+                        <div class="kjtd_from_right">
+                            <input type="checkbox"  value="新技术" style="vertical-align:middle; margin-top:0;" name="cg_xkflmc"> <span style="font-size: 13px;">新技术</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="新产品" style="vertical-align:middle; margin-top:0;" name="cg_xkflmc"> <span style="font-size: 13px">新产品</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="新材料" style="vertical-align:middle; margin-top:0;" name="cg_xkflmc"> <span style="font-size: 13px">新材料</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="新设备" style="vertical-align:middle; margin-top:0;" name="cg_xkflmc"> <span style="font-size: 13px">新设备</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="cg_xkflmc"> <span style="font-size: 13px">其他</span>
+                        </div>
+                        <div class="kjtd_from_left">应用领域：</div>
+                        <div class="kjtd_from_right">
+                            <input type="checkbox"  value="公路" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">公路</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="桥梁" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">桥梁</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="隧道" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">隧道</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="交通安全" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">交通安全</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="系统开发" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">系统开发</span>&nbsp;&nbsp;&nbsp;<br/>
+                            <input type="checkbox"  value="信息采集" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">信息采集</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="新材料" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">新材料</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="新装备" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">新装备</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="高效节能" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">高效节能</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="环境保护" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">环境保护</span>&nbsp;&nbsp;&nbsp;<br />
+                            <input type="checkbox"  value="试验检测" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">试验检测</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">其他</span>&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                        <div class="kjtd_from_left" style="margin-top: 50px" >成果简介：</div>
+                        <div class="kjtd_from_right" style="margin-top: 50px">
+                            <textarea id="content" name="cg_xmjj" class="ckeditor"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="margin-top: 280px">成果核心创新点：</div>
+                        <div class="kjtd_from_right" style="margin-top: 280px">
+                            <textarea class="kttd_from_text" name="cg_cxd" ></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="margin-top: 50px" >成果使用指南：</div>
+                        <div class="kjtd_from_right" style="margin-top: 50px">
+                            <textarea class="kttd_from_text" name="cg_syzn"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="margin-top: 50px">成果应用案例：</div>
+                        <div class="kjtd_from_right" style="margin-top: 50px">
+                            <textarea class="kttd_from_text" name="cg_yyal"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="margin-top: 50px" >成果应用状态：</div>
+                        <div class="kjtd_from_right" style="margin-top: 50px">
+                            <input type="radio"  value="产业化" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">产业化</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="小批量" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">小批量</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="试用" style="vertical-align:middle; margin-top:0;"  name="cg_yyzt"> <span style="font-size: 13px;">试用</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="未应用" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">未应用</span>&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="kjtd_from_left"  >成熟度及证明材料：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="radio"  value="正在研发" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">正在研发</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="已有样品" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">已有样品</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="通过小试" style="vertical-align:middle; margin-top:0;"  name="cg_yyzt"> <span style="font-size: 13px;">通过小试</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="通过中试" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">通过中试</span>&nbsp;&nbsp;&nbsp;
+                            <input type="radio"  value="可以量产"  style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">通过中试</span>&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 60px">证明文件上传：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="info_photo" >
+                        </div>
+                    </div>
+
+            </form>
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+            <div class="kjtd_from_left"  >专利技术：</div>
+            <div class="kjtd_from_right" >
+                <input type="radio"  value="1" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">是专利技术</span>
+            </div>
+            <div class="kjtd_from_left"  >专利所属地区：</div>
+            <div class="kjtd_from_right" >
+                <select class="form-control" style="width: 250px">
+                    <option>中国</option>
+                    <option>US美国</option>
+                    <option>EP欧专局</option>
+                    <option>WO世知组织</option>
+                    <option>JP日本</option>
+                    <option>DE德国</option>
+                    <option>FR法国</option>
+                    <option>GB英国</option>
+                    <option>CH瑞士</option>
+                    <option>SE瑞典</option>
+                    <option>KR韩国</option>
+                    <option>NL荷兰</option>
+                    <option>IT意大利</option>
+                    <option>AU澳大利亚</option>
+                    <option>IN印度</option>
+                    <option>ZA南非</option>
+                    <option>CA加拿大</option>
+                    <option>RU俄罗斯</option>
+                    <option>其他国家、地区</option>
+                </select>
+            </div>
+            <div class="kjtd_from_left"  >专利类型：</div>
+            <div class="kjtd_from_right" >
+                <input type="radio"  value="发明" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">发明</span>&nbsp;&nbsp;&nbsp;
+                <input type="radio"  value="实用新型" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">实用新型</span>&nbsp;&nbsp;&nbsp;
+                <input type="radio"  value="外观专利" style="vertical-align:middle; margin-top:0;"  name="cg_yyzt"> <span style="font-size: 13px;">外观专利</span>&nbsp;&nbsp;&nbsp;
+                <input type="radio"  value="软件著作权" style="vertical-align:middle; margin-top:0;" name="cg_yyzt"> <span style="font-size: 13px;">软件著作权</span>&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="kjtd_from_left"  >专利号/申请号：</div>
+            <div class="kjtd_from_right" >
+                <input type="text" name="cg_cgmc" value="" placeholder="请输入成果名称" class="form-control" style="width: 250px"/>
+            </div>
+            <div class="kjtd_from_left"  >专利授权日期：</div>
+            <div class="kjtd_from_right" >
+                <input type="text" id="calendar1" value="" class="form-control" style="width: 250px" readonly="readonly" name="info_date" >
+            </div>
+
+        </ul>
+        <!--TAB标签三-->
+        <ul style="display:none;">
+            <div class="kjtd_from_left"  >转让方式： <span style="color: red">*</span></div>
+            <div class="kjtd_from_right" style="font-size: 12px">
+                <input type="checkbox"  value="完全转让" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">完全转让</span>&nbsp;&nbsp;&nbsp;
+                <span style="font-size: 13px"> 价格：</span><input type="text" value="" style="width: 100px;height: 25px" class="kjtd_from_input"> 万元&nbsp;&nbsp;&nbsp;
+                <input type="checkbox"  value="面议" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;"> 面议</span>
+            </div>
+            <div class="kjtd_from_right" style="font-size: 12px">
+                <input type="checkbox"  value="许可转让" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">许可转让</span>&nbsp;&nbsp;&nbsp;
+                <span style="font-size: 13px"> 价格：</span><input type="text" value="" style="width: 100px;height: 25px" class="kjtd_from_input"> 万元&nbsp;&nbsp;&nbsp;
+                <input type="checkbox"  value="面议" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;"> 面议</span>
+            </div>
+            <div class="kjtd_from_right" style="font-size: 12px">
+                <input type="checkbox"  value="技术入股" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">技术入股</span>&nbsp;&nbsp;&nbsp;
+                <span style="font-size: 13px"> 价格：</span><input type="text" value="" style="width: 100px;height: 25px" class="kjtd_from_input"> 万元&nbsp;&nbsp;&nbsp;
+                <input type="checkbox"  value="面议" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;"> 面议</span>
+            </div>
+            <div class="kjtd_from_left"  style="margin-top: 40px">技术评估价值： </div>
+            <div class="kjtd_from_right" >
+                <input type="file" class="form-control" aria-describedby="basic-addon3" name="info_photo" >
+            </div>
+
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+
+            <include file="glxh/ywcent/lx_us" />
+
+        </ul>
+    </div>
+        <include file="glxh/ywcent/submit" />
+</div>
+   </div>
+</block>

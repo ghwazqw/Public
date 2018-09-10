@@ -1,0 +1,39 @@
+<extend name="50/index/base" title="用户管理"/>
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="#">管理中心</a>
+            </li>
+            <li>
+                <a href="#">成果入库信息管理</a>
+            </li>
+            <li class="active">
+                <a href="#"> <span class="label label-info glyphicon glyphicon-plus">  </a></span>
+            </li>
+        </ul>
+
+        <!-- Table -->
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+            <tr style="background: #347ab7; color: #ffffff">
+                <th nowrap>序号</th>
+                <th >成果名称</th><th >关键词</th><th >成果体现形式</th><th >应用领域</th><th >适用范围</th><th >应用地区</th>                        <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >                    <?php $i++;?>                    <tr>
+                <td>{$i}</td>
+                <td><a href="/home/ywmanage/cgrk?id={$Info.id}">{$Info.gl_cgmc}</a></td><td>{$Info.gl_gjc}</td><td>{$Info.gl_cgtxxs}</td><td>{$Info.gl_yyly}</td><td>{$Info.gl_syfw}</td><td>{$Info.gl_yydq}</td><td></td>
+            </tr>
+            </foreach>                </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+
+</block>

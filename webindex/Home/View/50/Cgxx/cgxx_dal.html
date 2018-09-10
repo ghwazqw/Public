@@ -1,0 +1,50 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <div style="width: 90%;margin: 0px auto;">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><a href="/index.php/Home/Cgxx/cgxx_class/">成果信息列表</a>-->成果详细信息</div>
+        <p></p>
+        <table class="table" id="table">
+            <foreach name="info_data" item="cg" >
+            <tr>
+                <td style="text-align: left"><h4>{$cg.cg_cgmc}</h4>
+                    <h5 style="line-height: 25px;text-align: left"><span class="label label-primary">成果编号：{$cg.cg_xmbh}  推荐单位： {$cg.cg_tjdw} 完成时间：{$cg.cg_wcsj|strtotime|date="Y年m月",###}</span>
+                        <br/>
+                        <span class="label label-info">主要完成单位：<a href="/index.php/Home/cgxx/cgwcdw_list/?xm_bh={$cg.cg_xmbh}" target="_blank" style="color: #fff;">{$cg.cg_zywcdw}</a></span>
+                        <br/>
+                        <span class="label label-success">主要完成人：<a href="/index.php/Home/Zjxx/Zjwcr_list/?xm_bh={$cg.cg_xmbh}" target="_blank" style="color: #fff;">{$cg.cg_zywcr}</a> </span>
+                        </h5>
+                         </td>
+
+            </tr>
+
+                <tr>
+                  <td ><h5 style="line-height: 25px">{$cg.cg_xmjj}</h5></td>
+
+                </tr>
+                <tr>
+                    <td ><h5 style="line-height: 25px"><span class="label label-danger">关键词：{$cg.cg_gjz}</span></h5></td>
+
+                </tr>
+                <tr>
+                    <td ><h5 style="line-height: 25px"><b>地区：</b>{$cg.cg_dq} <b>学科分类名称：</b>{$cg.cg_xkflmc} <b>专业方向：</b>{$cg.cg_zyfx}
+                        <b>课题来源：</b>{$cg.cg_ktly}
+                    <br />
+                        <b>奖励年度：</b>{$cg.cg_jlnd} <b>奖励等级：</b>{$cg.cg_jldj}
+                        <br />
+                        <foreach name="jl_data" item="jl" >
+                            <b>奖励年度：</b>{$jl.jl_hjsj|strtotime|date="Y年",###} {$jl.jl_jlmc} &nbsp;&nbsp;&nbsp;<b> 奖励等级：</b>{$jl.jl_jldj}
+                            &nbsp;&nbsp;&nbsp;<b> 授奖部门：</b>{$jl.jl_sjbm}
+                            <br/>
+                            </foreach>
+                    </h5></td>
+
+                </tr>
+            </foreach>
+
+        </table>
+</div>
+</div>
+    </div>
+</block>

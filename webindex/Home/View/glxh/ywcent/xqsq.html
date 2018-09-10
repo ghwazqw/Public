@@ -1,0 +1,117 @@
+<extend name="glxh/index/base_user"  title="融资需求"/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 750px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class="lan_qukuai" style="padding-left: 20px"><span class="glyphicon glyphicon-education"></span> <b style="margin-left: 10px">需求信息发布</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>基本信息</li>
+                        <li>联系信息</li>
+
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 490px;">
+                        <div class="kjtd_from_left" style="height: 100px">需求内容：<span class="title2 hide">还可以输入<span>140</span>字</span></div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            <textarea class="kttd_from_text" name="gl_xqnr"
+                                      id="gl_xqnr" placeholder="需求内容" data-rule="required,length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left">需求类型：</div>
+                        <div class="kjtd_from_right">
+                            <input type="checkbox"  value="技术" style="vertical-align:middle; margin-top:0;" name="gl_xqlx" data-rule="checked"> <span style="font-size: 13px;">技术</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="工艺" style="vertical-align:middle; margin-top:0;" name="gl_xqlx"> <span style="font-size: 13px">工艺</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="材料" style="vertical-align:middle; margin-top:0;" name="gl_xqlx"> <span style="font-size: 13px">材料</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="设备" style="vertical-align:middle; margin-top:0;" name="gl_xqlx"> <span style="font-size: 13px">设备</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="gl_xqlx"> <span style="font-size: 13px">其他</span>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 80px">需求领域：</div>
+                        <div class="kjtd_from_right" style="height: 80px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+
+                                <p style="font-size:13px;line-height: 28px;padding-left: 3px;color: #929292">
+                                    <span>
+                                        <input type="checkbox"  value="道路工程" style="vertical-align:middle; margin-top:0;" name="gl_xqly" data-rule="checked"> 道路工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="桥梁工程" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 桥梁工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="隧道工程" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 隧道工程&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="监测检测" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 监测检测&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="灾害防护" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 灾害防护&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="运营管理" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 运营管理&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="智慧公路" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 智慧公路&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="环保绿化" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 环保绿化&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="交安设施" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 交安设施&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="gl_xqly" > 其他
+                                        <input type="text" placeholder="" class="input_je">
+                                    </span>
+
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">项目简介：<span class="title2 hide">还可以输入<span>140</span>字</span></div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            <textarea class="kttd_from_text" name="gl_xmjj"
+                                      id="gl_xmjj" placeholder="" data-rule="length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">需求描述：<span class="title2 hide">还可以输入<span>140</span>字</span></div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            <textarea class="kttd_from_text" data-rule="length(~500)" name="gl_xqms"
+                                      id="gl_xqms" placeholder="请重点描述目前在生产过程中遇到的问题？希望达成的技术指标？目前采用什么材料及技术？"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" >投入预算：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" placeholder="请输入金额" class="input_je" name="gl_trys" data-rule="required;integer[+1]; range[~10000]"><font color="#369fd9">万元人民币</font>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 45px">截止日期：</div>
+                        <div class="kjtd_from_right" style="height: 45px">
+                            <input type="text" id="gl_jzrq" value="{$date_show}" class="form-control" style="width: 200px" name="gl_jzrq" data-rule="required;date;" readonly>
+                            <script>
+                                $("#gl_jzrq").datetimepicker({
+                                    format: "yyyy-mm-dd",
+                                    autoclose: true,
+                                    todayBtn: true,
+                                    language:"zh-CN",
+                                    minView:"month"
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                    <div style="height: 350px">
+                        <include file="glxh/ywcent/lx_us" />
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

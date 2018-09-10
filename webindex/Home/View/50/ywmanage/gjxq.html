@@ -1,0 +1,105 @@
+<extend name="50/index/base_ywmanage"  title="需求信息"/>
+<block name="customer">
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+
+    </script>
+
+
+
+    
+
+<div class="kjtd_kj" style="margin-top: 15px">
+
+
+    <ul class="breadcrumb">
+        <li>
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="#">管理中心</a>
+        </li>
+        <li>
+            <a href="/home/manage/gjxq_manage">供需对接信息管理</a>
+        </li>
+        <li class="active">
+            <a href="#">供需对接详细信息</a>
+        </li>
+
+    </ul>
+    <foreach name='InfoData' item='InfoData' >
+        <div class="clear"></div>
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current">一、基本信息</li>
+        <li>二、联系信息</li>
+        <li>三、信息状态及回复</li>
+    </div>
+    <div class="kjtd_qc"></div>
+    <div id="xxzx_content">
+        <!--TAB标签一-->
+        <ul style="display:block;" >
+
+                    <div class="kjtd_from">
+                        <!--行1!-->
+
+                        <div class="kjtd_from_left">产品名称：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_cpmc}                        </div>
+
+                        <div class="kjtd_from_left">产品体现形式：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_txxs}
+                        </div>
+                        <div class="kjtd_from_left" style="height: 90px">应用领域：</div>
+                        <div class="kjtd_from_right" style="height: 90px">
+                            {$InfoData.gl_yyly}
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 100px">产品简介：</div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            {$InfoData.gl_cpjj}                        </div>
+                        <div class="kjtd_from_left"  style="height: 60px">检测报告：</div>
+                        <div class="kjtd_from_right" style="height: 60px">
+                            <a href="/{$InfoData.gl_jcbg}" target="_blank">下载</a>                      </div>
+                        <div class="kjtd_from_left"  style="height: 40px;margin-top: -15px">适用区域：</div>
+                        <div class="kjtd_from_right" style="height: 40px;margin-top: -15px">
+                            {$InfoData.gl_syqy}                       </div>
+                        <div class="kjtd_from_left">产品推广形式：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                {$InfoData.gl_tgxs}
+                            </div>
+                        </div>
+                    </div>
+
+
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/lx_us" />
+        </ul>
+        <!--TAB标签六!-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/hfzx" />
+        </ul>
+
+    </div>
+        </foreach>
+</div>
+
+    <div class="clear"></div>
+</block>

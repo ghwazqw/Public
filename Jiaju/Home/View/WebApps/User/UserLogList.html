@@ -1,0 +1,124 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+
+    <div class="container-fluid" style="margin-top: 60px">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">管理系统首页</a>
+            </li>
+
+            <li class="active">
+                <a href="#">管理员登录信息列表</a>
+            </li>
+
+        </ul>
+        <div id="toolbar">
+            <div class="btn-group">
+
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu" style="margin-top: -8px">
+                    <li >
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+               data-classes="table table-hover"
+               data-show-columns="true"
+               data-height="600"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-toolbar="#toolbar"
+        ></table>
+        <script>
+            $('#exp').bootstrapTable({
+                columns: [{
+                    checkbox: true
+                },
+                    { field: 'id', title: '序号.', formatter: function (value, row, index) {
+                            //return index + 1;
+                            return (index+1);
+                        },
+                        width:50,
+                        align: 'center'
+                    },
+                    { field: 'user_name', title: '用户名',class: 'editinfo',
+                        align: 'left'},
+                    {field:'log_date',title:'登录时间',align:'left'},
+                    {field:'log_type',title:'登录类型',align:'left',formatter:function (value) {
+                        if (value=='Error'){
+                            return '<span class="label label-danger">登录失败</span>';
+                        }else{
+                            return '<span class="label label-success">登录成功</span>';
+                        }
+
+                        }},
+                    { field: 'log_info', title: '详细信息',align: 'left'},
+                    { field: 'user_ip', title: '登录IP',align: 'left'}
+                ],
+
+
+                url:'/restful/UserLogInfo', //请求地址
+                method: 'get', //请求方式
+                datatype:'json', //返回数据格式
+                //striped: true,       //是否显示行间隔色
+                height:760,//高度调整
+                undefinedText:'--', //数据为空时的显示内容
+                /*工具栏处理*/
+                toolbar: '#toolbar',//指定工具栏
+                toolbarAlign:'left', //工具样位置
+                striped: true, //是否显示行间隔色
+                //earchText:'请输入搜索内容', //搜索默认文字
+
+
+                /*分页处理*/
+                dataField: "data", //读取后端给出的JSON中的数据记录集合，必须与后端保证一致
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                pagination:true,//是否分页
+                //clickToSelect: true, //
+                queryParamsType:'limit',//查询参数组织方式
+                //contentType: "application/x-www-form-urlencoded",//发送到服务器的数据编码类型
+                sidePagination:'server',//指定服务器端分页
+                pageSize:50,//单页记录数
+                pageList:[25,50,100,500,'All'],//分页步进值
+                data_local: "zh-US",//表格汉化
+                showRefresh:true,//刷新按钮
+                showColumns:true,
+                sortOrder:'',  //排序规则
+                sortName:'id' //排序字段
+                //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+
+            });
+        </script>
+        <script>
+            function expinfo(){
+                var myDate = new Date();
+                $("#exp").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name.xls",
+                    filename: myDate.toLocaleString()+".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: false
+                });
+            }
+            $(function () {
+                $('[data-toggle="popover"]').popover(
+                    {
+                        trigger: 'hover',//鼠标以上时触发弹出提示框
+                        html: true,//开启html 为true的话，data-content里就能放html代码了
+                    }
+
+                )
+            })
+        </script>
+    </div>
+</block>

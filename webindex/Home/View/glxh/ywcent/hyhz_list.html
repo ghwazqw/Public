@@ -1,0 +1,95 @@
+<extend name="glxh/index/base_user"  title="融资需求"/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 750px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class=lan_qukuai>&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/glxh/images/rz_tu.png">&nbsp;&nbsp;<b>会议会展信息</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">首页</a> /  <a href="/home/Quser/user_cent" style="color: #957d7d;">用户中心</a>  /  <a href="/home/ywlist/hyxq_manage" style="color: #957d7d;">会议会展信息列表</a></div>
+                </div>
+                <br /><br /><br />
+                <foreach name='InfoData' item='InfoData' >
+                    <div id="wizard">
+                        <ol>
+                            <li>基本信息</li>
+                            <li>联系信息</li>
+                            <li>信息状态及回复</li>
+                        </ol>
+                        <!--1!-->
+                        <div style="height: 300px;">
+                            <div class="kjtd_from_left" style="height: 100px">会议需求描述：</div>
+                            <div class="kjtd_from_right" style="height: 100px">
+                               {$InfoData.gl_xqms}
+                            </div>
+                            <div class="kjtd_from_left">会议会展类型：</div>
+                            <div class="kjtd_from_right">
+                                <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                    <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                        {$InfoData.gl_hylx}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="kjtd_from_left">会议会展方向：</div>
+                            <div class="kjtd_from_right">
+                                <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                    <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                        {$InfoData.gl_hyfx}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="kjtd_from_left">会议意向城市：</div>
+                            <div class="kjtd_from_right">
+                                <div style="height: 30px">
+                                    {$InfoData.gl_hycs}
+                                </div>
+                            </div>
+                            <div class="kjtd_from_left">会议意向日期：</div>
+                            <div class="kjtd_from_right">
+                                <div style="height: 30px">
+                                    {$InfoData.gl_hyrq}
+                                </div>
+                            </div>
+
+                            <div class="kjtd_from_left" >会议预算：</div>
+                            <div class="kjtd_from_right" >
+                                {$InfoData.gl_hyys}万元
+                            </div>
+                        </div>
+
+                        <!--2-->
+                        <div style="height: 350px">
+                            <include file="50/ywmanage/lx_us" />
+                        </div>
+                        <!--3-->
+                        <div style="height: 350px">
+                            <include file="glxh/ywcent/hfzx" />
+                        </div>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

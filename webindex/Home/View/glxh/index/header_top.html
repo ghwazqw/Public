@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+	<link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+	<link href="__PUBLIC__/glxh/css/css.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script type="text/javascript" src="__PUBLIC__/bs/js/jquery1.9.1.js" ></script>
+	<script type="text/javascript" src="__PUBLIC__/bs/js/mootools.js" ></script>
+	<script type="text/javascript" src="__PUBLIC__/bs/js/sortableTable.js" ></script>
+	<script type="text/javascript" src="__PUBLIC__/bs/js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="__PUBLIC__/bs/js/locales/bootstrap-datetimepicker.zh-CN.js" ></script>
+	<script type="text/javascript" src="__PUBLIC__/bs/Validator/jquery.validator.js?local=zh-CN" ></script>
+	<block name="keywords"><meta name="keywords" Content="{$keywords}"></block>
+	<block name="Description"><meta name="Description" Content="{$Description}"></block>
+	<block name="title"><title>{$title}</title></block>
+
+</head>
+<body>
+<!--顶端信息-->
+<include file="glxh/Common/navbar_login" />
+<!--LOGO及搜索框信息-->
+
+	<div id=nav-bg>
+		<div id=nav-content>
+			<div class="col-md-1 column" style="text-align: right;padding-right: 0px">
+				<a href="/"> <img src="__PUBLIC__/glxh/images/logo.png" style="vertical-align: middle;" ></a>
+			</div>
+			<div class="col-md-7 column nav-title" >
+				中国公路科技成果转化平台<br><span class="nav-title-EN">China Highway Technology Transfer & Commercialization Platform</span>
+			</div>
+			<div class="col-md-4 column row" style="text-align: center;">
+				<div class="col-lg-6" >
+
+
+				</div><!-- /.col-lg-6 -->
+			</div>
+		</div>
+	</div>
+{~$qnavbar=w("Nav/qdef")}
+
+<div class="sd_uiuyyt_xsdfxfx" >
+	<foreach name="qnavbar" item="nav" >
+		<a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+	</foreach>
+
+</div>
+
+
+
+
+

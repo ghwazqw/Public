@@ -1,0 +1,127 @@
+<extend name="manage/index/base_user" title=""/>
+<block name="customer">
+    <script>
+        function printHTML(page)
+        {
+            var bodyHTML=window.document.body.innerHTML;
+            window.document.body.innerHTML=$(page).html();
+            window.print();
+            window.document.body.innerHTML=bodyHTML;
+        }
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+    <div class="box">
+    <div class="box-body">
+
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="房屋信息搜索......" name="keyword" value="{$keyword}">
+                <select name="nf" class="form-control">
+                    <option value="">请选择入住年份</option>
+                    <option value="{$nfxx}"  <php>if ($nfxx==$nf) :</php>selected<php>endif ;</php>>{$nfxx}</option>
+                    <option value="{$nfxx+1}" <php>if ($nfxx+1==$nf) :</php>selected<php>endif ;</php>>{$nfxx+1}</option>
+                    <option value="{$nfxx+2}" <php>if ($nfxx+2==$nf) :</php>selected<php>endif ;</php>>{$nfxx+2}</option>
+                    <option value="{$nfxx+3}" <php>if ($nfxx+3==$nf) :</php>selected<php>endif ;</php>>{$nfxx+3}</option>
+                    <option value="{$nfxx+4}" <php>if ($nfxx+4==$nf) :</php>selected<php>endif ;</php>>{$nfxx+4}</option>
+                    <option value="{$nfxx+5}" <php>if ($nfxx+5==$nf) :</php>selected<php>endif ;</php>>{$nfxx+5}</option>
+                    <option value="{$nfxx+6}" <php>if ($nfxx+6==$nf) :</php>selected<php>endif ;</php>>{$nfxx+6}</option>
+                    <option value="{$nfxx+7}" <php>if ($nfxx+7==$nf) :</php>selected<php>endif ;</php>>{$nfxx+7}</option>
+                    <option value="{$nfxx+8}" <php>if ($nfxx+8==$nf) :</php>selected<php>endif ;</php>>{$nfxx+8}</option>
+                    <option value="{$nfxx+9}" <php>if ($nfxx+9==$nf) :</php>selected<php>endif ;</php>>{$nfxx+9}</option>
+                    <option value="{$nfxx+10}" <php>if ($nfxx+10==$nf) :</php>selected<php>endif ;</php>>{$nfxx+10}</option>
+                    <option value="{$nfxx+11}" <php>if ($nfxx+11==$nf) :</php>selected<php>endif ;</php>>{$nfxx+11}</option>
+                    <option value="{$nfxx+12}" <php>if ($nfxx+12==$nf) :</php>selected<php>endif ;</php>>{$nfxx+12}</option>
+                    <option value="{$nfxx+13}" <php>if ($nfxx+13==$nf) :</php>selected<php>endif ;</php>>{$nfxx+13}</option>
+                    <option value="{$nfxx+14}" <php>if ($nfxx+14==$nf) :</php>selected<php>endif ;</php>>{$nfxx+14}</option>
+                    <option value="{$nfxx+15}" <php>if ($nfxx+15==$nf) :</php>selected<php>endif ;</php>>{$nfxx+15}</option>
+
+                </select>
+
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">搜索</button>
+                </div>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li >
+                        <a href="javascript:printHTML('#div1')" role="button" data-toggle="modal"  title="打印"><span class="glyphicon glyphicon-print"></span> 打印</a>
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出"><span class="glyphicon glyphicon-download"></span> 导出</a>
+                        <script>
+                            function expinfo(){
+                                var myDate = new Date();
+                                $("#exp").table2excel({
+                                    exclude: ".noExl",
+                                    name: "Excel Document Name.xlsx",
+                                    filename: myDate.toLocaleString()+".xls",
+                                    exclude_img: true,
+                                    exclude_links: true,
+                                    exclude_inputs: false
+                                });
+                            }
+                        </script>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id='div1'>
+    <div  style="width: 97%;margin: 0 auto">
+            <!-- /.box-header -->
+        <table id="exp" class="table table-hover table-bordered table-condensed table-responsive table-striped"  style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>房间名称</th>
+                <th nowrap>人员姓名</th>
+                <th nowrap>年限类型</th>
+                <!--<th nowrap>房间ID</th>-->
+                <th nowrap>年份</th>
+                <th nowrap>租金</th>
+                <!--<th nowrap>主表ID</th>-->
+                <th nowrap>租金状态</th>
+
+                <!--<th nowrap>操作</th>-->
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <?php $zjhj+=$Info['zj'];?>
+                <tr>
+                <td>{$i}</td>
+                    <td>{$Info.homename}</td>
+                <td>{$Info.ry_name}</td>
+                    <td>{$Info.nx_lx}</td>
+                    <!--<td>{$Info.fj_id}</td>-->
+                    <td>{$Info.nf}年</td>
+                    <td style="text-align: right">￥ {$Info.zj}</td>
+                    <!--<td>{$Info.zb_id}</td>-->
+                    <td><php>if ($Info['zt']==1) :</php>已缴<php>else :</php>未缴<php>endif ;</php></td>
+                    <!--<td></td>-->
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover()
+                    })
+                </script>
+            </tr>
+            </foreach>
+            <tr>
+                <td>合计</td>
+                <td colspan="5" style="text-align: right">￥ {$zjhj|number_format=###, 2, '.', ''}</td>
+                <td></td>
+            </tr>
+        </table>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+            </div>
+        </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+</block>

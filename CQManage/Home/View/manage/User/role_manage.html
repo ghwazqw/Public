@@ -1,0 +1,164 @@
+<extend name="manage/index/base" title="用户管理"/>
+
+<block name="customer">
+    <script type="text/javascript">
+        function delinfo(data) {
+            if(confirm("请确认是否删除，该操作不可恢复！")){
+                //alert(data);
+                location.href="/home/User/Delrole?table=qx_role_tb&id="+data;
+            }
+        }
+        function editinfo(id,role_name,role_note,role_sfyx) {
+            $("#edit_id").val(id);
+            $("#editrole_name").val(role_name);
+            $("#editrole_note").val(role_note);
+            //$("#editrole_sfyx").val(role_sfyx);
+            if (role_sfyx==1){
+                $("[name='role_sfyx']").attr("checked",'true');
+            };
+        }
+    </script>
+
+    <div class="row clearfix">
+            <!--增加信息弹出-->
+            <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <form role="form" method="post">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                增加角色信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                                <div class="form-group">
+                                    <label>角色名称：</label><input type="text" class="form-control" name="role_name" />
+                                </div>
+                                <div class="form-group">
+                                    <label>角色说明：</label><textarea class="form-control" name="role_note"></textarea>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" name="role_sfyx" checked value="1"/>是否有效</label>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+
+                </div>
+                </form>
+            </div>
+        <!--编辑信息弹出-->
+        <div class="modal fade" id="form-edit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" action="/home/User/EditRole">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="Label">
+                                编辑角色信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label>角色名称：</label>
+                                <input type="text" class="form-control" name="role_name" id="editrole_name"/>
+                                <input type="hidden" value="" id="edit_id" name="id" />
+                            </div>
+                            <div class="form-group">
+                                <label>角色说明：</label><textarea class="form-control" name="role_note" id="editrole_note"></textarea>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="editrole_sfyx" name="role_sfyx" value="1"/>是否有效</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+<div class="col-md-12 col-xs-12" nowrap>
+
+                <div class="input-group" style="text-align: right">
+                    <form class="navbar-form navbar-left" method="get">
+                    <input type="text" class="form-control" placeholder="角色名称搜索......" name="keyword" value="{$keyword}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                    </div>
+                    </form>
+                    <div class="btn-group" style="margin-top: 8px">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">功能列表</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <foreach name="oper_data" item="oper" >
+                                <php>if ($oper['oper_sffg']==1) :</php><li role="separator" class="divider"></li><php>endif ;</php>
+                                <li <php>if ($oper['oper_sfky']==0) :</php>class="disabled"<php>endif ;</php>>
+                                <a href="{$oper.oper_code}<php>if ($oper['oper_parameter']!='') :</php>?{$oper['oper_parameter']}={$keyword}<php>endif ;</php>"
+                                   {$oper.oper_role} {$oper.oper_model} <php>if ($oper['oper_sfky']==0) :</php>onClick="return confirm('权限不够，无法使用该功能！');"<php>endif ;</php> title="{$oper.oper_note}">{$oper.oper_ico} {$oper.oper_name}</a>
+                                </li>
+                                {$oper.oper_js}
+                            </foreach>
+                             </ul>
+                    </div>
+                </div>
+
+</div>
+    <div id='div1' class="col-md-12">
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb;color:#fff">
+                <th>NO.</th>
+                <th>角色名称</th>
+                <th>角色说明</th>
+                <th>当前状态</th>
+                <th>操作</th>
+            </tr>
+            <foreach name="info_data" item="role" >
+                <tr>
+                    <td>{$role.id}</td>
+                    <td>{$role.role_name}</td>
+                    <td>{$role.role_note}</td>
+                    <td><php>if ($role['role_sfyx']!=1) :</php><span style="color: #ff0000">无效</span><php>else :</php>有效<php>endif ;</php></td>
+                    <td>
+                        <div class="btn-group btn-group-xs" role="group" >
+                            <button type="button" class="btn btn-success" href="#form-edit"  data-toggle="modal" title="编辑" onclick="editinfo({$role.id},'{$role.role_name}','{$role.role_note}','{$role.role_sfyx}')"><span class="glyphicon glyphicon-edit"></span></button>
+                            <button type="button" class="btn btn-warning" onclick="delinfo({$role.id})" title="删除"><span class="glyphicon glyphicon-trash"></span></button>
+                            <!--<button type="button" class="btn btn-danger" onclick="onalert({$role.id},'{$role.role_name}')" title="权限查询"><span class="glyphicon glyphicon-edit"></span></button>-->
+                        </div>
+                    </td>
+                </tr>
+
+                </foreach>
+        </table>
+    </div>
+            <ul class="pagination">
+                {$pagebar}
+            </ul>
+    <script>
+        function onalert(id,name) {
+            layui.use('layer', function() {
+                var $ = layui.jquery,
+                    layer = layui.layer;
+                layer.open({
+                    title: name+'权限管理(Authority Manage)',
+                    maxmin: true,
+                    type: 2,
+                    content: '/Home/Jcxx/UserInfo',
+                    area: ['900px', '550px'],
+                    shadeClose: false
+                });
+            });
+        }
+    </script>
+    </block>

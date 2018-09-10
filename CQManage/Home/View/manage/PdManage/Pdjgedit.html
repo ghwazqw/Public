@@ -1,0 +1,109 @@
+<extend name="manage/index/base_user" title="盘点结果上传"/>
+
+<block name="customer">
+
+    <div class="col-md-12 col-xs-12" nowrap>
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="盘点结果信息搜索......" name="keyword" value="{$keyword}">
+                <input type="hidden" name="zt" id="zt" value="0">
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+        </div>
+
+        <div id='div1'>
+            <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                <tr style="background: #8bc5eb; color: #ffffff">
+                    <th nowrap>序号</th>
+                    <!--<th nowrap>盘点计划ID</th>-->
+                    <th nowrap>一级分类</th>
+                    <th nowrap>资产二级分类</th>
+                    <th nowrap>资产名称</th>
+                    <th nowrap>品牌型号</th>
+                    <th nowrap>使用部门</th>
+                    <!--<th nowrap>图片</th>-->
+                    <th nowrap>资产编号</th>
+                    <th nowrap>库存数量</th>
+                    <!--<th nowrap>总数</th>-->
+                    <th nowrap>计量单位</th>
+                    <th nowrap>盘点结果</th>
+                    <th nowrap>启用日期</th>
+                    <th nowrap>是否闲置</th>
+                    <th nowrap>盘点状态</th>
+                    <!--<th nowrap>使用状态</th>-->
+
+                    <!--<th nowrap>净值</th>
+                    <th nowrap>责任人</th>
+                    <th nowrap>操作</th>-->
+                </tr>
+                <?php $i = 0;?><br/>
+                <foreach name='InfoData' item='Info' >
+                    <?php $i++;?>
+                    <tr>
+                    <td>{$i}</td>
+                    <!--<td>{$Info.zb_id}</td>-->
+                    <td>{$Info.firstClassify}</td>
+                    <td>{$Info.secondClassify}</td>
+                        <td>{$Info.goodsName}</td>
+                        <td>{$Info.goodsModel}</td>
+
+                    <td>{$Info.usingDept}</td>
+                    <!--<td>{$Info.goodsImage}</td>-->
+                    <td>{$Info.goodsNO}</td>
+                    <td>{$Info.goodsStockNum}</td>
+                    <!--<td>{$Info.totalNum}</td>-->
+                    <td>{$Info.goodsUnitValue}</td>
+                    <td>
+                        <input id="edit{$Info.id}" type="text" onkeyup='this.value=this.value.replace(/[^\d.]/g,"")' value="{$Info.stdNumber}" style="width: 30px" onchange="subedit{$Info.id}({$Info.id})"/>
+                        <script>
+                            function subedit{$Info.id}(id) {
+                                var editinfo=$("#edit{$Info.id}").val();
+                                //alert(editinfo);
+                                $.ajax({
+                                    type:"post",
+                                    url:"/Home/PdManage/Pdjgedit",
+                                    data:{"num":editinfo,"id":id},
+                                    success:function (re, state) { //成功调用回调信息
+                                        alert(re);
+                                        //window.parent.location.reload();
+                                        window.location.reload();
+                                    },
+                                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                        //alert(textStatus);
+                                    },
+                                    timeout: 60000,
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                        alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                        return false;
+                                    }
+                                })
+                            }
+                        </script>
+                    </td>
+                    <td>{$Info.enableDate|strtotime|date="Y-m-d",###}</td>
+                    <td>{$Info.isIdle}</td>
+                        <td><if condition="$Info.stdNumber eq 1 ">
+                            <a href="#" class="btn btn-success btn-xs disabled" role="button">正常</a>
+                            <else/>
+                            <a href="#" class="btn btn-warning btn-xs disabled" role="button">盘亏</a>
+                        </if></td>
+                    <!--<td>{$Info.goodsStatus}</td>-->
+
+                    <!--<td>{$Info.net}</td>
+                    <td>{$Info.responsible}</td>
+                    <td></td>-->
+
+                </tr>
+                </foreach>
+            </table>
+            <script>
+                $(function () {
+                    $('[data-toggle="popover"]').popover()
+                })
+            </script>
+        </div>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+</block>

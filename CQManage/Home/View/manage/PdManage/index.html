@@ -1,0 +1,645 @@
+<extend name="manage/index/base_user" title="设备信息管理"/>
+<block name="customer">
+
+    <script type="text/javascript">
+        //checkbox 全选/取消全选
+        var isCheckAll = false;
+        function DzsbCheck() {
+            if (isCheckAll) {
+                $("input[name='Dzsb_id']").each(function() {
+                    this.checked = false;
+                });
+                isCheckAll = false;
+            } else {
+                $("input[name='Dzsb_id']").each(function() {
+                    this.checked = true;
+                });
+                isCheckAll = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        //checkbox 全选/取消全选
+        var dqisCheckAll = false;
+        function DqsbCheck() {
+            if (dqisCheckAll) {
+                $("input[name='Dqsb_id']").each(function() {
+                    this.checked = false;
+                });
+                dqisCheckAll = false;
+            } else {
+                $("input[name='Dqsb_id']").each(function() {
+                    this.checked = true;
+                });
+                dqisCheckAll = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        //checkbox 全选/取消全选
+        var ysisCheckAll = false;
+        function YssbCheck() {
+            if (ysisCheckAll) {
+                $("input[name='Ysgj_id']").each(function() {
+                    this.checked = false;
+                });
+                ysisCheckAll = false;
+            } else {
+                $("input[name='Ysgj_id']").each(function() {
+                    this.checked = true;
+                });
+                ysisCheckAll = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        //checkbox 全选/取消全选
+        var qtisCheckAll = false;
+        function QtsbCheck() {
+            if (qtisCheckAll) {
+                $("input[name='Qtsb_id']").each(function() {
+                    this.checked = false;
+                });
+                qtisCheckAll = false;
+            } else {
+                $("input[name='Qtsb_id']").each(function() {
+                    this.checked = true;
+                });
+                qtisCheckAll = true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function SelectInfo() {
+            var dep=$("#comp").val();
+            //alert(dep);
+            if (!$("#comp").val()) {
+                alert("请选择需要盘点的部门！");
+                return false;
+            }else{
+                $("#depName").val(dep);
+            }
+            var mydate = new Date();
+            var str = "" + mydate.getFullYear() + "-";
+            str += (mydate.getMonth()+1) + "-";
+            str += mydate.getDate()+2;
+            $("#stTime").val(str);
+            Dzsb_id = document.getElementsByName("Dzsb_id"); //电子设备
+            Dqsb_id = document.getElementsByName("Dqsb_id"); //机械器具
+            Ysgj_id = document.getElementsByName("Ysgj_id"); //运输工具
+            Qtsb_id = document.getElementsByName("Qtsb_id"); //其他设备
+            checkDz_val = [];
+            checkDq_val = [];
+            checkYs_val = [];
+            checkQt_val = [];
+            //电子设备循环
+            for(Z in Dzsb_id){
+                if(Dzsb_id[Z].checked)
+                    checkDz_val.push(Dzsb_id[Z].value);
+            }
+            $("#pd_dzsb").val(checkDz_val);
+            //dzzc_id=checkDz_val;
+            //机械器具循环
+            for(Q in Dqsb_id){
+                if(Dqsb_id[Q].checked)
+                    checkDq_val.push(Dqsb_id[Q].value);
+            };
+            $("#pd_dqsb").val(checkDq_val);
+            //运输工具循环
+            for(Y in Ysgj_id){
+                if(Ysgj_id[Y].checked)
+                    checkYs_val.push(Ysgj_id[Y].value);
+            };
+            $("#pd_ysgj").val(checkYs_val);
+            //其他循环
+            for(T in Qtsb_id){
+                if(Qtsb_id[T].checked)
+                    checkQt_val.push(Qtsb_id[T].value);
+            };
+            $("#pd_qtsb").val(checkQt_val);
+
+            if (checkDz_val.length==0 && checkDq_val.length==0 && checkQt_val.length==0 && checkYs_val.length==0){
+                alert("请至少选择一个设备");
+                return false;
+            }else{
+                    $('#form-1').modal();
+            };
+            console.log(checkDq_val);
+
+        }
+    </script>
+    <script type="text/javascript">
+        function Search() {
+            $("#Search_form").submit();
+        }
+        function Searchfrom() {
+            $("#Searchfrom").submit();
+        }
+    </script>
+
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+
+    <!--Model表单开始-->
+    <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form role="form" method="post" action="/home/PdManage/AddPdjhInfo" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            制作盘点计划
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                       <!-- <div class="form-group">
+                            <label>盘点计划编号</label>
+                            <input type="text" class="form-control" name="stNO" id="stNO" placeholder="盘点计划编号" value="" data-rule="required" />
+                        </div>-->
+                        <div class="form-group">
+                            <label>盘点创建人</label>
+                            <input type="text" class="form-control" name="stUser" id="stUser" placeholder="请输入盘点创建人" value="{$globar_user:user_xm}" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>计划盘点日期</label>
+                            <input type="text" readonly class=" form-control" name="stTime" id="stTime" placeholder="计划盘点日期"/>
+                        </div>
+                        <script>
+                        $("#stTime").datetimepicker({
+                            format: "yyyy-mm-dd",
+                            autoclose: true,
+                            todayBtn: true,
+                            language:"zh-CN",
+                            minView:"month"
+                        });
+                    </script>
+                        <div class="form-group">
+                            <label>部门名称</label>
+                            <input type="text" readonly class="form-control" name="depName" id="depName" placeholder="请输入部门名称" value="{$keyword}" data-rule="required" />
+                            <input type="hidden" name="pd_dzsb" id="pd_dzsb" value="">
+                            <input type="hidden" name="pd_dqsb" id="pd_dqsb" value="">
+                            <!--<input type="text" name="pd_dzsb" id="pd_dzsb" value="">-->
+                            <input type="hidden" name="pd_ysgj" id="pd_ysgj" value="">
+                            <input type="hidden" name="pd_qtsb" id="pd_qtsb" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--表单结束-->
+    <div class="col-md-12" >
+        <form class="navbar-form" method="post" onchange="Searchfrom()" id="Searchfrom" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+            <div class="form-group form-inline" >
+                <label>选择部门：</label>
+                <select name="comp" id="comp" class="form-control">
+                    <option value="">请选择</option>
+                    <foreach name='CompInfo' item='Info' >
+                        <option value="{$Info.cglx_mc}" <php>if ($comp==$Info['cglx_mc']) :</php>selected<php>endif ;</php>>{$Info.cglx_mc}</option>
+                    </foreach>
+                </select>
+                <!--<button class="btn btn-success" type="submit" >搜索</button>-->
+                <input type="text" class="form-control" placeholder="设备信息搜索......" name="keyword" value="{$keyword}">
+                <button class="btn btn-default" type="submit">搜索</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-success" onclick="SelectInfo()"><span class="glyphicon glyphicon-send"></span> 生成盘点计划</button>
+            </div>
+        </form>
+        <hr />
+
+        <div class="tabbable" id="tabs-823527">
+            <ul class="nav nav-tabs active">
+                <li class="active">
+                    <a href="#panel-1" data-toggle="tab">电子设备<span style="color: #ff0000">({$Dz_count})</span> </a>
+                </li>
+                <li >
+                    <a href="#panel-2" data-toggle="tab">机械器具<span style="color: #ff0000">({$Dq_count})</span></a>
+                </li>
+                <!--<li >
+                    <a href="#panel-3" data-toggle="tab">房产<span style="color: #ff0000">({$Dz_count})</span></a>
+                </li>-->
+                <li >
+                    <a href="#panel-4" data-toggle="tab">运输工具<span style="color: #ff0000">({$Ys_count})</span></a>
+                </li>
+                <li >
+                    <a href="#panel-5" data-toggle="tab">其他<span style="color: #ff0000">({$Qt_count})</span></a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="panel-1">
+                    <!--表格开始-->
+                    <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                        <tr style="background: #8bc5eb; color: #ffffff">
+                            <th nowrap style="text-align: center"><input type="checkbox" onclick="DzsbCheck()" /></th>
+
+                            <!--<th nowrap>生产日期</th>-->
+                            <!--<th nowrap>生产厂家</th>
+                            <th nowrap>出厂产品编号</th>
+                            <th nowrap>用途</th>-->
+                            <th nowrap>资产编号</th>
+                            <!--<th nowrap>资产类型</th>-->
+                            <!--<th nowrap>资产二级分类</th>-->
+                            <th nowrap>资产名称(计量单位)</th>
+                            <th nowrap>品牌</th>
+                            <th nowrap>型号</th>
+                            <!--<th nowrap>计量单位</th>-->
+                            <!--<th nowrap>原值</th>-->
+                            <th nowrap>净值</th>
+                            <!--<th nowrap>是否折旧标志</th>
+                            <th nowrap>折旧年限类型</th>
+                            <th nowrap>累计折旧</th>
+                            <th nowrap>本期折旧</th>-->
+                            <th nowrap>购建日期</th>
+                            <th nowrap>入帐日期</th>
+                            <th nowrap>启用日期</th>
+                            <th nowrap>取得方式</th>
+                            <th nowrap>财产使用部门</th>
+                            <th nowrap>是否闲置</th>
+                            <!--<th nowrap>财产管理部门</th>-->
+                            <!--<th nowrap>条形码</th>-->
+                            <th nowrap>责任人</th>
+                            <!--<th nowrap>批复单号</th>-->
+                            <th nowrap>卡片说明</th>
+                            <!--<th nowrap>出帐日期</th>
+                            <th nowrap>出帐类型</th>
+                            <th nowrap>出帐原因</th>-->
+                            <!--<th nowrap>状态</th>-->
+                        </tr>
+                        <?php $i = 0;?><br/>
+                        <foreach name='DzsbInfo' item='Info' >
+                            <?php $i++;?>
+                            <?php $zc_yzhj+=$Info['zc_yz'];?>
+                            <?php $zc_jzhj+=$Info['zc_jz'];?>
+                            <tr>
+                                <td style="text-align: center"><input type="checkbox" name="Dzsb_id" value="{$Info.id}" ></td>
+
+                                <!--<td nowrap>{$Info.zc_scrq|strtotime|date="Y-m-d",###}</td>-->
+                                <!--<td nowrap>{$Info.zc_sccj}</td>
+                                <td nowrap>{$Info.zc_cccpbh}</td>
+                                <td nowrap>{$Info.zc_yt}</td>-->
+                                <td nowrap>{$Info.zc_bh}</td>
+                                <!--<td nowrap>{$Info.zc_lx}</td>-->
+                                <!--<td nowrap>{$Info.zc_rjlx}</td>-->
+                                <td nowrap>{$Info.zc_mc}({$Info.zc_jldw})</td>
+                                <td nowrap>{$Info.zc_pp}</a></td>
+                                <td nowrap>{$Info.zc_xh}</td>
+                               <!-- <td nowrap>{$Info.zc_jldw}</td>-->
+                                <!--<td nowrap style="text-align: right">{$Info.zc_yz}</td>-->
+                                <td nowrap style="text-align: right"><a tabindex='0' role='button' data-placement='right' data-toggle='popover' data-trigger='focus' title='原值' data-content='{$Info.zc_yz}'>{$Info.zc_jz}</a></td>
+                                <!--<td nowrap>{$Info.zc_sfzjbz}</td>
+                                <td nowrap>{$Info.zc_zjnxlx}</td>
+                                <td nowrap>{$Info.zc_ljzj}</td>
+                                <td nowrap>{$Info.zc_bqzj}</td>-->
+                                <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_qdfs}</td>
+                                <td nowrap>{$Info.zc_ccsybm}</td>
+                                <td nowrap>{$Info.zc_sfxz}</td>
+                                <!--<td nowrap>{$Info.zc_ccglbm}</td>-->
+                                <!--<td nowrap>{$Info.zc_txm}</td>-->
+                                <td nowrap>{$Info.zc_zrr}</td>
+                                <!--<td nowrap>{$Info.zc_pfdh}</td>-->
+                                <td nowrap><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='卡片说明' data-content='{$Info.zc_kpsm}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                                <!--<td nowrap>{$Info.zc_czrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_czlx}</td>
+                                <td nowrap>{$Info.zc_czyy}</td>-->
+                                <!--<td nowrap>
+                                    <include file="manage/ZcManage/sb_zt" />
+                                </td>-->
+
+                            </tr>
+                        </foreach>
+                    </table>
+                    <!--表格结束-->
+                </div>
+                <div class="tab-pane " id="panel-2">
+                    <!--表格开始-->
+                    <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                        <tr style="background: #8bc5eb; color: #ffffff">
+                            <th nowrap style="text-align: center"><input type="checkbox" onclick="DqsbCheck()" /></th>
+
+                            <!--<th nowrap>生产日期</th>-->
+                            <!--<th nowrap>生产厂家</th>
+                            <th nowrap>出厂产品编号</th>
+                            <th nowrap>用途</th>-->
+                            <th nowrap>资产编号</th>
+                            <!--<th nowrap>资产类型</th>-->
+                            <!--<th nowrap>资产二级分类</th>-->
+                            <th nowrap>资产名称(计量单位)</th>
+                            <th nowrap>品牌</th>
+                            <th nowrap>型号</th>
+                            <!--<th nowrap>计量单位</th>-->
+                            <!--<th nowrap>原值</th>-->
+                            <th nowrap>净值</th>
+                            <!--<th nowrap>是否折旧标志</th>
+                            <th nowrap>折旧年限类型</th>
+                            <th nowrap>累计折旧</th>
+                            <th nowrap>本期折旧</th>-->
+                            <th nowrap>购建日期</th>
+                            <th nowrap>入帐日期</th>
+                            <th nowrap>启用日期</th>
+                            <th nowrap>取得方式</th>
+                            <th nowrap>财产使用部门</th>
+                            <th nowrap>是否闲置</th>
+                            <!--<th nowrap>财产管理部门</th>-->
+                            <!--<th nowrap>条形码</th>-->
+                            <th nowrap>责任人</th>
+                            <!--<th nowrap>批复单号</th>-->
+                            <th nowrap>卡片说明</th>
+                            <!--<th nowrap>出帐日期</th>
+                            <th nowrap>出帐类型</th>
+                            <th nowrap>出帐原因</th>-->
+                            <!--<th nowrap>状态</th>-->
+                        </tr>
+                        <?php $i = 0;?><br/>
+                        <foreach name='DqsbInfo' item='Info' >
+                            <?php $i++;?>
+                            <?php $zc_yzhj+=$Info['zc_yz'];?>
+                            <?php $zc_jzhj+=$Info['zc_jz'];?>
+                            <tr>
+                                <td style="text-align: center"><input type="checkbox" name="Dqsb_id" value="{$Info.id}"  ></td>
+
+                                <!--<td nowrap>{$Info.zc_scrq|strtotime|date="Y-m-d",###}</td>-->
+                                <!--<td nowrap>{$Info.zc_sccj}</td>
+                                <td nowrap>{$Info.zc_cccpbh}</td>
+                                <td nowrap>{$Info.zc_yt}</td>-->
+                                <td nowrap>{$Info.zc_bh}</td>
+                                <!--<td nowrap>{$Info.zc_lx}</td>-->
+                                <!--<td nowrap>{$Info.zc_rjlx}</td>-->
+                                <td nowrap>{$Info.zc_mc}({$Info.zc_jldw})</td>
+                                <td nowrap>{$Info.zc_pp}</td>
+                                <td nowrap>{$Info.zc_xh}</td>
+                                <!-- <td nowrap>{$Info.zc_jldw}</td>-->
+                                <!--<td nowrap style="text-align: right">{$Info.zc_yz}</td>-->
+                                <td nowrap style="text-align: right"><a tabindex='0' role='button' data-placement='right' data-toggle='popover' data-trigger='focus' title='原值' data-content='{$Info.zc_yz}'>{$Info.zc_jz}</a></td>
+                                <!--<td nowrap>{$Info.zc_sfzjbz}</td>
+                                <td nowrap>{$Info.zc_zjnxlx}</td>
+                                <td nowrap>{$Info.zc_ljzj}</td>
+                                <td nowrap>{$Info.zc_bqzj}</td>-->
+                                <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_qdfs}</td>
+                                <td nowrap>{$Info.zc_ccsybm}</td>
+                                <td nowrap>{$Info.zc_sfxz}</td>
+                                <!--<td nowrap>{$Info.zc_ccglbm}</td>-->
+                                <!--<td nowrap>{$Info.zc_txm}</td>-->
+                                <td nowrap>{$Info.zc_zrr}</td>
+                                <!--<td nowrap>{$Info.zc_pfdh}</td>-->
+                                <td nowrap><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='卡片说明' data-content='{$Info.zc_kpsm}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                                <!--<td nowrap>{$Info.zc_czrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_czlx}</td>
+                                <td nowrap>{$Info.zc_czyy}</td>-->
+                                <!--<td nowrap>
+                                    <include file="manage/ZcManage/sb_zt" />
+                                </td>-->
+
+                            </tr>
+                        </foreach>
+                    </table>
+                    <!--表格结束-->
+                </div>
+                <!--<div class="tab-pane " id="panel-3">
+                    <p>
+                        选项卡三内容
+                    </p>
+                </div>-->
+                <div class="tab-pane " id="panel-4">
+                    <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                        <tr style="background: #8bc5eb; color: #ffffff">
+                            <th nowrap style="text-align: center"><input type="checkbox"  onclick="YssbCheck()" /></th>
+
+                            <!-- <th nowrap>净载重量</th>
+                             <th nowrap>底盘品牌</th>
+                             <th nowrap>底盘型号</th>
+                             <th nowrap>车辆牌照号</th>
+                             <th nowrap>车辆座数</th>-->
+                            <!--<th nowrap>发动机编号</th>
+                            <th nowrap>车架号</th>-->
+                            <!--<th nowrap>生产日期</th>
+                            <th nowrap>生产厂家</th>
+                            <th nowrap>出厂产品编号</th>
+                            <th nowrap>车上颜色</th>-->
+                           <!-- <th nowrap>排气量</th>
+                            <th nowrap>累计行驶公里</th>
+                            <th nowrap>吨位</th>-->
+                            <!--<th nowrap>机构代码</th>-->
+                            <!--<th nowrap>机构名称</th>
+                            <th nowrap>机构行政级别</th>
+                            <th nowrap>机构行政级别细项</th>-->
+                            <th nowrap>资产编号</th>
+                            <!--<th nowrap>资产类型</th>
+                            <th nowrap>类型ID</th>-->
+                            <th nowrap>资产二级分类</th>
+                            <!--<th nowrap>二级类型ID</th>-->
+                            <th nowrap>资产名称</th>
+                            <th nowrap>改装车品牌</th>
+                            <th nowrap>改装车型号</th>
+                            <!--<th nowrap>计量单位</th>-->
+                            <!--<th nowrap>原值</th>
+                            <th nowrap>单价</th>-->
+                            <!--<th nowrap>其中:安装成本</th>-->
+                            <th nowrap>净值</th>
+                            <!-- <th nowrap>是否折旧标志</th>
+                             <th nowrap>折旧年限类型</th>-->
+                            <!--<th nowrap>累计折旧</th>
+                            <th nowrap>本期折旧</th>-->
+                            <th nowrap>购建日期</th>
+                            <th nowrap>入帐日期</th>
+                            <th nowrap>启用日期</th>
+                            <th nowrap>取得方式</th>
+                            <th nowrap>财产使用部门</th>
+                            <th nowrap>是否闲置</th>
+                            <!--<th nowrap>财产管理部门</th>-->
+                            <!--<th nowrap>条形码</th>-->
+                            <th nowrap>责任人</th>
+                            <!-- <th nowrap>批复单号</th>
+                            <th nowrap>卡片说明</th>
+                           <th nowrap>出帐日期</th>
+                            <th nowrap>出帐类型</th>
+                            <th nowrap>出帐原因</th>-->
+                            <th nowrap>资产登记人</th>
+                            <!-- <th nowrap>备注</th>-->
+                            <th nowrap>状态</th>
+                        </tr>
+                        <?php $i = 0;?><br/>
+                        <foreach name='YssbInfo' item='Info' >
+                            <?php $i++;?>
+                            <tr>
+                            <td><input type="checkbox" name="Ysgj_id" value="{$Info.id}"></td>
+
+                            <!--<td nowrap>{$Info.zc_jzzl}</td>
+                            <td nowrap>{$Info.zc_dppp}</td>
+                            <td nowrap>{$Info.zc_dpxh}</td>
+                            <td nowrap>{$Info.zc_clpzh}</td>
+                            <td nowrap>{$Info.zc_clzs}</td>-->
+                            <!--<td nowrap>{$Info.zc_fdxbh}</td>
+                            <td nowrap>{$Info.zc_cjh}</td>-->
+                            <!--<td nowrap>{$Info.zc_scrq}</td>
+                            <td nowrap>{$Info.zc_sccj}</td>
+                            <td nowrap>{$Info.zc_cccpbh}</td>
+                            <td nowrap>{$Info.zc_csys}</td>-->
+                            <!--<td nowrap>{$Info.zc_pql}</td>
+                            <td nowrap>{$Info.zc_ljxsgl}</td>
+                            <td nowrap>{$Info.zc_dw}</td>-->
+                            <!--<td nowrap>{$Info.zc_jgdm}</td>-->
+                            <!--<td nowrap>{$Info.zc_jgmc}</td>
+                            <td nowrap>{$Info.zc_jgxzjb}</td>
+                            <td nowrap>{$Info.zc_jgxzjbxx}</td>-->
+                            <td nowrap>{$Info.zc_bh}</td>
+                            <!--<td nowrap>{$Info.zc_lx}</td>
+                            <td nowrap>{$Info.zc_lxid}</td>-->
+                            <td nowrap>{$Info.zc_rjlx}</td>
+                            <!--<td nowrap>{$Info.zc_rjlxid}</td>-->
+                            <td nowrap>{$Info.zc_mc}</td>
+                                <td nowrap><a tabindex='0' role='button' data-placement='right' data-toggle='popover' data-trigger='focus' title='车辆详细信息'
+                                              data-content='
+                                   发动机编号:{$Info.zc_cjh}<br />
+                                   车架号:{$Info.zc_cjh}<br />
+                                   排气量:{$Info.zc_pql}<br />
+                                   累计行驶公里:{$Info.zc_ljxsgl}<br />
+                                   吨位:{$Info.zc_dw}<br />
+                                    '>{$Info.zc_gzcpp}</a></td>
+                                <td nowrap>{$Info.zc_gzcxh}</td>
+                            <!--<td nowrap>{$Info.zc_jldw}</td>-->
+                            <!--<td nowrap>{$Info.zc_yz}</td>
+                            <td nowrap>{$Info.zc_dj}</td>-->
+                            <!--<td nowrap>{$Info.zc_azcb}</td>-->
+                            <td nowrap><a tabindex='0' role='button' data-placement='right' data-toggle='popover' data-trigger='focus' title='价值信息'
+                                          data-content='
+                                   原值:{$Info.zc_yz}<br />
+                                   单价:{$Info.zc_dj}<br />
+                                    '>{$Info.zc_jz}</a></td>
+                            <!--<td nowrap>{$Info.zc_sfzjbz}</td>
+                            <td nowrap>{$Info.zc_zjnxlx}</td>-->
+                            <!--<td nowrap>{$Info.zc_ljzj}</td>
+                            <td nowrap>{$Info.zc_bqzj}</td>-->
+                            <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                            <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                            <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                            <td nowrap>{$Info.zc_qdfs}</td>
+                            <td nowrap>{$Info.zc_ccsybm}</td>
+                            <td nowrap>{$Info.zc_sfxz}</td>
+                            <!--<td nowrap>{$Info.zc_ccglbm}</td>-->
+                            <!--<td nowrap>{$Info.zc_txm}</td>-->
+                            <td nowrap>{$Info.zc_zrr}</td>
+                            <!--<td nowrap>{$Info.zc_pfdh}</td>
+                            <td nowrap>{$Info.zc_kpsm}</td>-->
+                            <!--<td nowrap>{$Info.zc_czrq}</td>
+                            <td nowrap>{$Info.zc_czlx}</td>
+                            <td nowrap>{$Info.zc_czyy}</td>-->
+                            <td nowrap></td>
+                            <!--<td nowrap>{$Info.zc_bz}</td>-->
+                            <td nowrap>
+                                <include file="manage/ZcManage/sb_zt" />
+                            </td>
+
+                        </tr>
+                        </foreach>
+                    </table>
+                </div>
+                <div class="tab-pane " id="panel-5">
+                    <!--表格开始-->
+                    <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                        <tr style="background: #8bc5eb; color: #ffffff">
+                            <th nowrap style="text-align: center"><input type="checkbox" onclick="QtsbCheck()" /></th>
+
+                            <!--<th nowrap>生产日期</th>-->
+                            <!--<th nowrap>生产厂家</th>
+                            <th nowrap>出厂产品编号</th>
+                            <th nowrap>用途</th>-->
+                            <th nowrap>资产编号</th>
+                            <!--<th nowrap>资产类型</th>-->
+                            <!--<th nowrap>资产二级分类</th>-->
+                            <th nowrap>资产名称(计量单位)</th>
+                            <th nowrap>品牌</th>
+                            <th nowrap>型号</th>
+                            <!--<th nowrap>计量单位</th>-->
+                            <!--<th nowrap>原值</th>-->
+                            <th nowrap>净值</th>
+                            <!--<th nowrap>是否折旧标志</th>
+                            <th nowrap>折旧年限类型</th>
+                            <th nowrap>累计折旧</th>
+                            <th nowrap>本期折旧</th>-->
+                            <th nowrap>购建日期</th>
+                            <th nowrap>入帐日期</th>
+                            <th nowrap>启用日期</th>
+                            <th nowrap>取得方式</th>
+                            <th nowrap>财产使用部门</th>
+                            <th nowrap>是否闲置</th>
+                            <!--<th nowrap>财产管理部门</th>-->
+                            <!--<th nowrap>条形码</th>-->
+                            <th nowrap>责任人</th>
+                            <!--<th nowrap>批复单号</th>-->
+                            <th nowrap>卡片说明</th>
+                            <!--<th nowrap>出帐日期</th>
+                            <th nowrap>出帐类型</th>
+                            <th nowrap>出帐原因</th>-->
+                            <!--<th nowrap>状态</th>-->
+                        </tr>
+                        <?php $i = 0;?><br/>
+                        <foreach name='QtsbInfo' item='Info' >
+                            <?php $i++;?>
+                            <?php $zc_yzhj+=$Info['zc_yz'];?>
+                            <?php $zc_jzhj+=$Info['zc_jz'];?>
+                            <tr>
+                                <td style="text-align: center"><input type="checkbox" name="Qtsb_id" value="{$Info.id}"></td>
+
+                                <!--<td nowrap>{$Info.zc_scrq|strtotime|date="Y-m-d",###}</td>-->
+                                <!--<td nowrap>{$Info.zc_sccj}</td>
+                                <td nowrap>{$Info.zc_cccpbh}</td>
+                                <td nowrap>{$Info.zc_yt}</td>-->
+                                <td nowrap>{$Info.zc_bh}</td>
+                                <!--<td nowrap>{$Info.zc_lx}</td>-->
+                                <!--<td nowrap>{$Info.zc_rjlx}</td>-->
+                                <td nowrap>{$Info.zc_mc}({$Info.zc_jldw})</td>
+                                <td nowrap>{$Info.zc_pp}</td>
+                                <td nowrap>{$Info.zc_xh}</td>
+                                <!-- <td nowrap>{$Info.zc_jldw}</td>-->
+                                <!--<td nowrap style="text-align: right">{$Info.zc_yz}</td>-->
+                                <td nowrap style="text-align: right"><a tabindex='0' role='button' data-placement='right' data-toggle='popover' data-trigger='focus' title='原值' data-content='{$Info.zc_yz}'>{$Info.zc_jz}</a></td>
+                                <!--<td nowrap>{$Info.zc_sfzjbz}</td>
+                                <td nowrap>{$Info.zc_zjnxlx}</td>
+                                <td nowrap>{$Info.zc_ljzj}</td>
+                                <td nowrap>{$Info.zc_bqzj}</td>-->
+                                <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_qdfs}</td>
+                                <td nowrap>{$Info.zc_ccsybm}</td>
+                                <td nowrap>{$Info.zc_sfxz}</td>
+                                <!--<td nowrap>{$Info.zc_ccglbm}</td>-->
+                                <!--<td nowrap>{$Info.zc_txm}</td>-->
+                                <td nowrap>{$Info.zc_zrr}</td>
+                                <!--<td nowrap>{$Info.zc_pfdh}</td>-->
+                                <td nowrap><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='卡片说明' data-content='{$Info.zc_kpsm}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                                <!--<td nowrap>{$Info.zc_czrq|strtotime|date="Y-m-d",###}</td>
+                                <td nowrap>{$Info.zc_czlx}</td>
+                                <td nowrap>{$Info.zc_czyy}</td>-->
+                                <!--<td nowrap>
+                                    <include file="manage/ZcManage/sb_zt" />
+                                </td>-->
+                                <script>
+                                    $(function () {
+                                        $('[data-toggle="popover"]').popover({
+                                            html:true,
+                                        })
+                                    })
+                                </script>
+                            </tr>
+                        </foreach>
+                    </table>
+                    <!--表格结束-->
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

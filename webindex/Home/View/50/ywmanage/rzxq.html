@@ -1,0 +1,179 @@
+<extend name="50/index/base_ywmanage"  title="成果评估"/>
+<block name="customer">
+
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+    <style>
+        p{
+        text-indent:2em;    /*每个P段落，首行空出两个空格，即缩进两个字符*/
+        }
+    </style>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" >
+
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/">首页</a>
+                </li>
+                <li>
+                    <a href="#">管理中心</a>
+                </li>
+                <li>
+                    <a href="/home/manage/rzxq_manage">创业融资信息管理</a>
+                </li>
+                <li class="active">
+                    <a href="#">融资详细信息</a>
+                </li>
+
+            </ul>
+            <foreach name='InfoData' item='InfoData' >
+            <div class="kjtd_title_list" id="kjtd_title_list">
+                    <li class="current">一、基本信息</li>
+                    <li>二、融资信息</li>
+                    <li>三、项目简介</li>
+                    <li>四、融资方简介</li>
+                    <li>五、联系信息</li>
+                    <li>六、信息状态及回复</li>
+                </div>
+                <div class="kjtd_qc"></div>
+                <span class="label label-warning">{$errorInfo}</span>
+                <span class="label label-success">{$sussInfo}</span>
+                <div id="xxzx_content">
+                    <!--TAB标签一-->
+                    <ul style="display:block;" >
+
+                        <div class="kjtd_from">
+                            <!--行1!-->
+                            <div class="kjtd_from_left">机构性质：</div>
+                            <div class="kjtd_from_right">
+                                <span>{$InfoData.gl_jgxz}</span>
+                            </div>
+                            <div class="kjtd_from_left" >项目名称：</div>
+                            <div class="kjtd_from_right" >
+                                {$InfoData.gl_xmmc}
+                            </div>
+                            <div class="kjtd_from_left" >合作单位：</div>
+                            <div class="kjtd_from_right" >
+                                {$InfoData.gl_hzdw}
+                            </div>
+                            <div class="kjtd_from_left" >项目总投资金额：</div>
+                            <div class="kjtd_from_right" >
+                                {$InfoData.gl_xmztzje}万元                            </div>
+                            <div class="kjtd_from_left" style="height: 140px">项目应用领域：</div>
+                            <div class="kjtd_from_right" style="height: 140px">
+                                <div style="width: 100%;border: 1px dashed #cccccc">
+                                    {$InfoData.gl_xmyyly}
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+                    </ul>
+                    <!--TAB标签二-->
+                    <ul style="display:none;">
+                        <div class="kjtd_from_left" >预融资金额：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_yrzje}万元                        </div>
+                        <div class="kjtd_from_left"  style="height: 105px">资金用途：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            {$InfoData.gl_zjyt}                        </div>
+                        <div class="kjtd_from_left" style="height: 140px">项目应用地域：</div>
+                        <div class="kjtd_from_right" style="height: 140px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+                                {$InfoData.gl_xmyydy}
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 55px">融资方式：</div>
+                        <div class="kjtd_from_right" style="height: 55px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+                                {$InfoData.gl_rzfs}
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">资金来源：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_zjly}
+                        </div>
+                        <div class="kjtd_from_left">资金投入方式：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                {$InfoData.gl_zjtrfs}
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">共担资金风险：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                {$InfoData.gl_gdzjfx}
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">共同经营管理：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                {$InfoData.gl_gtjygl}
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">项目回报周期：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                {$InfoData.gl_zmhbzq}
+                            </div>
+                        </div>
+                    </ul>
+                    <!--TAB标签四-->
+                    <ul style="display:none;">
+                        <div class="container" style="line-height: 25px">
+                        <h4>项目应用范围：</h4>
+                            <p>{$InfoData.gl_xmyyfw}</p>
+                        <h4>项目已有条件：</h4>
+                            <p>{$InfoData.gl_xmyytj}</p>
+                        <h4>项目前景分析：</h4>
+                            <p>{$InfoData.gl_xmqjfx}</p>
+                        </div>
+                    </ul>
+                    <!--TAB标签四-->
+                    <ul style="display:none;">
+                        <div class="container" style="line-height: 25px">
+                        <h4>项目单位(人)：</h4>
+                        <p> {$InfoData.gl_xmdw}  </p>
+                            <h4>团队介绍：</h4>
+                            <p>{$InfoData.gl_tdjs}</p>
+                            <h4>产品运营：</h4>
+                        <p>{$InfoData.gl_cpyy} </p>
+                        <h4>商业计划书：</h4>
+                        <p><php>if (!$InfoData['gl_syjhs']) :</php>没有上传商业计划书<php>else :</php><a href="/{$InfoData.gl_syjhs}" target="_blank">下载</a>
+                            <php>endif ;</php></p>
+                            </div>
+                    </ul>
+                    <!--TAB标签五!-->
+                    <ul style="display:none;">
+                        <include file="50/ywmanage/lx_us" />
+                    </ul>
+                    <!--TAB标签六!-->
+                    <ul style="display:none;">
+                        <include file="50/ywmanage/hfzx" />
+                    </ul>
+                </div>
+</foreach>
+        </div>
+    </form>
+</block>

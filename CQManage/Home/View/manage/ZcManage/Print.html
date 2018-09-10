@@ -1,0 +1,85 @@
+<extend name="manage/index/base" title="用户管理"/>
+
+<block name="customer">
+
+<script language="javascript" src="__PUBLIC__/printjs/jquery-1.4.4.min.js"></script>
+    <script language="javascript" src="__PUBLIC__/printjs/jquery.jqprint-0.3.js"></script>
+    <script language="javascript">
+
+        function aa(){
+            pagesetup_null() ;
+            $("#ddd").jqprint();
+        }
+    </script>
+    <script language="JavaScript">
+        var hkey_root,hkey_path,hkey_key
+        hkey_root="HKEY_CURRENT_USER"
+        hkey_path="//Software//Microsoft//Internet Explorer//PageSetup//"
+        //设置网页打印的页眉页脚为空
+        function pagesetup_null(){
+            try{
+                var RegWsh = new ActiveXObject("WScript.Shell")
+                hkey_key="header";
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"");
+                hkey_key="footer";
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"");
+                print();
+            }catch(e){}
+        }
+        //设置网页打印的页眉页脚为默认值
+        function pagesetup_default(){
+            try{
+                var RegWsh = new ActiveXObject("WScript.Shell")
+                hkey_key="header" ;
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"&w&b页码，&p/&P");
+                hkey_key="footer";
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"&u&b&d");
+                print();
+            }catch(e){}
+        }
+    </script>
+    <div class="col-md-12 col-xs-12" nowrap>
+         <h4><i class="glyphicon glyphicon-qrcode"></i> RFID标签打印预览</h4>
+        <hr />
+        <div id="ddd">
+            <foreach name='Info' item='Info' >
+                <div style="border: 1px solid #000;width: 93mm;height: 23mm">
+                    <div style="width: 24mm;float: left"><img src="/home/index/qrcode?data={$Info.zc_bh}" style="width: 22mm;"/></div>
+                    <div style="width: 68mm;float: right">
+                        <table style="border: 1px solid #000;border-right:none;border-top:none;border-bottom: none;width: 100%">
+                            <tr>
+                                <td style="width: 100%;font-size: 11px;border-bottom: 1px solid #000;height: 20px;padding-left: 2px" collapse="4">
+                                    资产名称：{$Info.zc_mc}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%;font-size: 11px;border-bottom: 1px solid #000;padding-left: 2px">
+                                    一级分类
+                                </td>
+                                <td style="width: 20%;font-size: 11px;border-bottom: 1px solid #000;border-right:1px solid #000;padding-left: 2px">
+                                    一级分类
+                                </td>
+                                <td style="width: 20%;font-size: 11px;border-bottom: 1px solid #000;padding-left: 2px">
+                                    一级分类
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 100%;font-size: 11px;padding-left: 2px" collapse="4">
+                                    资产名称：{$Info.zc_mc}
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--<div style="page-break-after:always;"></div>-->
+                <div style="height: 3mm"></div>
+
+            </foreach>
+        </div>
+        <input type="button" onclick="aa()" value="打印"/>
+    </div>
+
+
+</block>

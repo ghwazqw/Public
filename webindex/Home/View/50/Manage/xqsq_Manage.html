@@ -1,0 +1,48 @@
+<extend name="50/index/base" title="需求管理"/>
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="#">管理中心</a>
+            </li>
+            <li>
+                <a href="#">需求申请信息管理</a>
+            </li>
+            <li class="active">
+                <a href="#"> <span class="label label-info glyphicon glyphicon-plus">  </span></a>
+            </li>
+        </ul>
+
+        <!-- Table -->
+        <div>
+            <form class="navbar-form navbar-left" method="post">
+        <input type="text" class="form-control" placeholder="{$keyword}" name="keyword" >
+        <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+        </div>
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+            <tr style="background: #347ab7; color: #ffffff">
+                <th nowrap>序号</th>
+                <th >需求内容</th><th >需求类型</th><th >需求领域</th><th >投入预算</th><th >需求描述</th><th >截止日期</th>                        <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td><a href="/home/ywmanage/xqsq?id={$Info.id}">{$Info.gl_xqnr}</a></td><td>{$Info.gl_xqlx}</td><td>{$Info.gl_xqly}</td><td style="text-align: right">{$Info.gl_trys}万元</td><td>{$Info.gl_xqms}</td><td>{$Info.gl_jzrq|strtotime|date="Y-m-d",###}</td><td></td>
+            </tr>
+            </foreach>
+        </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+
+</block>

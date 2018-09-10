@@ -1,0 +1,101 @@
+<extend name="50/index/base_ywmanage"  title="科研咨询"/>
+<block name="customer">
+
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+
+
+<div class="kjtd_kj" style="height: 900px">
+    <ul class="breadcrumb">
+        <li>
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="#">管理中心</a>
+        </li>
+        <li>
+            <a href="/home/Manage/kyzx_manage">科研咨询信息管理</a>
+        </li>
+        <li class="active">
+            <a href="#"> 科研咨询详细信息</a>
+        </li>
+    </ul>
+    <foreach name='InfoData' item='InfoData' >
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current">一、基本信息</li>
+        <li>二、联系信息</li>
+        <li>三、信息状态及回复</li>
+    </div>
+    <div class="kjtd_qc"></div>
+    <span class="label label-warning">{$errorInfo}</span>
+    <span class="label label-success">{$sussInfo}</span>
+    <div id="xxzx_content">
+        <!--TAB标签一-->
+        <ul style="display:block;" >
+
+                    <div class="kjtd_from">
+                        <!--行1!-->
+                        <div class="kjtd_from_left" style="height: 50px">咨询内容：</div>
+                        <div class="kjtd_from_right" style="height: 50px">
+                            {$InfoData.gl_zxnr}
+                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">项目简介：</div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            {$InfoData.gl_xmjj}
+                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">意向创新点描述：</div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            {$InfoData.gl_yxcxdms}
+                        </div>
+                        <div class="kjtd_from_left">拟参加单位：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_ncjdw}
+                        </div>
+                        <div class="kjtd_from_left" style="height: 80px">研究领域：</div>
+                        <div class="kjtd_from_right" style="height: 80px">
+                            {$InfoData.gl_yjly}
+                        </div>
+                        <div class="kjtd_from_left">拟立项日期：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_nlxrq}
+                        </div>
+                        <div class="kjtd_from_left">计划结题日期：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_jhjtrq}
+                        </div>
+                        <div class="kjtd_from_left" >经费预算：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_jfys}万元
+                        </div>
+                   </div>
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/lx_us" />
+        </ul>
+        <!--TAB标签六!-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/hfzx" />
+        </ul>
+   </div>
+    </foreach>
+</div>
+
+</block>

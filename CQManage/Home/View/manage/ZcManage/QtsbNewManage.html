@@ -1,0 +1,221 @@
+<extend name="manage/index/base_user" title="电子设备"/>
+<block name="customer">
+    <div class="container-fluid">
+
+
+        <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+
+        <div id="toolbar">
+            <div class="btn-group">
+
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu" style="margin-top: -8px">
+                    <li >
+                        <a href="/home/ZcManage/DzsbEditor?lx=96" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                    <li >
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
+                    </li>
+                    <li >
+                        <a href="/home/ZcManage/qtsbManage_All" title="导出全部"><span class="glyphicon glyphicon-play-circle"></span> 导出全部信息</a>
+                    </li>
+                    <li >
+                        <a href="/home/ZcManage/ExcelUp?lx=qt" title="导入信息"><span class="glyphicon glyphicon-upload"></span> Excel导入信息</a>
+                    </li>
+
+
+                </ul>
+                <form class="navbar-form navbar-left" method="get" onchange="Searchfrom()" id="Searchfrom" style="margin-top: 0px">
+                    <select name="comp" id="comp" class="form-control">
+                        <option value="">请选择使用部门</option>
+                        <foreach name='CompInfo' item='Info' >
+                            <option value="{$Info.cglx_mc}" <php>if ($comp==$Info['cglx_mc']) :</php>selected<php>endif ;</php>>{$Info.cglx_mc}</option>
+                        </foreach>
+                    </select>
+                </form>
+
+            </div>
+
+        </div>
+        <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+               data-classes="table table-hover"
+               data-show-columns="true"
+               data-height="600"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-toolbar="#toolbar"
+        ></table>
+        <script>
+            Date.prototype.Format = function (fmt) { //author: meizz
+                var o = {
+                    "M+": this.getMonth() + 1, //月份
+                    "d+": this.getDate(), //日
+                    "H+": this.getHours(), //小时
+                    "m+": this.getMinutes(), //分
+                    "s+": this.getSeconds(), //秒
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                    "S": this.getMilliseconds() //毫秒
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            };
+            $('#exp').bootstrapTable({
+                columns: [/*{
+                    checkbox: true
+                },*/
+                    { field: 'id', title: '序号.', formatter: function (value, row, index) {
+                            //return index + 1;
+                            return (index+1);
+                        },
+                        width:50,
+                        align: 'center'
+                    },
+                    { field: 'zc_pp', title: '品牌',/*formatter: function (value,row) {
+                        //return index + 1;
+                        return '<a href="'+row.id+'">'+value+'</a>';
+                        //console.log(row)
+                    }*/},
+                    { field: 'zc_xh', title: '型号' },
+                    { field: 'zc_bh', title: '资产编号' },
+                    { field: 'zc_rjlx', title: '资产二级分类' },
+                    { field: 'zc_mc', title: '资产名称' },
+                    { field: 'zc_jldw', title: '单位' },
+                    { field: 'zc_yz', title: '原值',align:'right'},
+                    { field: 'zc_jz', title: '净值',align:'right'},
+                    { field: 'zc_gjrq', title: '购建日期',formatter:function (value) {
+                        var time=new Date(value).Format("yyyy-MM-dd");
+                        return time;
+                        } },
+                    { field: 'zc_rzrq', title: '入帐日期' ,formatter:function (value) {
+                            var time=new Date(value).Format("yyyy-MM-dd");
+                            return time;
+                        }},
+                    { field: 'zc_qyrq', title: '启用日期' ,formatter:function (value) {
+                            var time=new Date(value).Format("yyyy-MM-dd");
+                            return time;
+                        }},
+                    /*{ field: 'zc_qdfs', title: '取得方式' },*/
+                    { field: 'zc_ccsybm', title: '财产使用部门' },
+                    /*{ field: 'zc_sfxz', title: '是否闲置' },*/
+                    { field: 'zc_zrr', title: '责任人' },
+                    /*{ field: 'zc_qyrq', title: '卡片说明' },*/
+                    { field: 'wxzje',
+                        title: '维修金额',
+                        class: 'editinfo',
+                        align: 'right',
+                        formatter: function (value, row, index) {
+                            return "<a href=\"#\" name=\"CsWxje\" data-type=\"text\" data-pk=\""+row.Id+"\" data-title=\"初始维修金额维护\">" + value + "</a>";
+                        }
+
+                    },
+                    { field: 'zc_zt', title: '状态',formatter:function (value) {
+                            if (value==1){
+                                return '<span class="label label-success">在用</span>'
+                            }
+                        }},
+
+                    /*{ field: 'id', title: '操作',formatter:function (value) {
+                            return '';
+                        } },*/
+
+                ],
+
+                onClickRow: function (row, $element) {
+                    curRow = row;
+                    //alert(curRow);
+                },
+                onLoadSuccess: function (aa, bb, cc) {
+                    $("#exp a").editable({
+                        url: function (params) {
+                            var sName = $(this).attr("name");
+                            curRow[sName] = params.value;
+                            //alert(curRow);
+                            $.ajax({
+                                type: 'POST',
+                                url: "/Home/Restful/QtsbInfoList",
+                                data: curRow,
+                                //dataType: 'JSON',
+                                success: function (data, textStatus, jqXHR) {
+                                    alert(data);
+                                },
+                                error: function () { alert("error");}
+                            });
+                        },
+                        type: 'text'
+                    });
+                },
+
+                url:'/Home/Restful/QtsbInfoList', //请求地址
+                method: 'get', //请求方式
+                datatype:'json', //返回数据格式
+                striped: true,       //是否显示行间隔色
+                height:760,//高度调整
+                undefinedText:'--', //数据为空时的显示内容
+                /*工具栏处理*/
+                toolbar: '#toolbar',//指定工具栏
+                toolbarAlign:'left', //工具样位置
+                striped: true, //是否显示行间隔色
+                //earchText:'请输入搜索内容', //搜索默认文字
+
+
+                /*分页处理*/
+                dataField: "rows", //读取后端给出的JSON中的数据记录集合，必须与后端保证一致
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                pagination:true,//是否分页
+                //clickToSelect: true, //
+                queryParamsType:'limit',//查询参数组织方式
+                //contentType: "application/x-www-form-urlencoded",//发送到服务器的数据编码类型
+                sidePagination:'server',//指定服务器端分页
+                pageSize:50,//单页记录数
+                pageList:[25,50,100,500,'All'],//分页步进值
+                data_local: "zh-US",//表格汉化
+                showRefresh:true,//刷新按钮
+                showColumns:true,
+                sortOrder:'desc',  //排序规则
+                sortName:'id', //排序字段
+                //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+                /* showExport: false,  //是否显示导出按钮
+                 buttonsAlign:"right",  //按钮位置
+                 exportTypes:['excel','csv'],  //导出文件类型
+                 exportDataType: "basic",
+                 Icons:'glyphicon-export',
+                 fileName: 'UV_statistic_table',
+                 /!*exportOptions:{
+                     ignoreColumn: [0,1],  //忽略某一列的索引
+                     fileName: '总台帐报表',  //文件名称设置
+                     worksheetName: 'sheet1',  //表格工作区名称
+                     tableName: '总台帐报表',
+                     excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+                     //onMsoNumberFormat: DoOnMsoNumberFormat
+                 },*!/*/
+            });
+        </script>
+        <script>
+            function expinfo(){
+                var myDate = new Date();
+                $("#exp").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name.xls",
+                    filename: myDate.toLocaleString()+".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: false
+                });
+            }
+            function Searchfrom() {
+                var comp=$("#comp").val();
+                /*alert(comp);
+                return false;*/
+                $('#exp').bootstrapTable('refresh', {
+                    url: '/Home/Restful/SbInfoList?comp='+comp,
+                });
+            }
+        </script>
+</block>

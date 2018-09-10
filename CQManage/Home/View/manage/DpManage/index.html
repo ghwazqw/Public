@@ -1,0 +1,174 @@
+<extend name="manage/index/base_user" title="设备信息管理"/>
+<block name="customer">
+    <script type="text/javascript">
+        window.onload = function(){
+                $("#sb_list").hide();
+                $("#fengpei").hide();
+            }
+            <foreach name='RyInfoData' item='Info' >
+    function rydata{$Info.id}() {
+        var t{$Info.id}=$("#{$Info.id}").html();
+        var v="<span class='glyphicon glyphicon-user'></span> {$Info.ry_xm} <small>所属部门：{$Info.ry_bm}{$Info.ry_ks}，职务：{$Info.ry_zw}，办公电话：{$Info.ry_bgdh}，手机号码：{$Info.ry_sjhm}</small>";
+        var tt="";
+        var did={$Info.id};
+        $("#sbxx_ryname").val(did);
+        //alert(ry_name);
+        $("#ryxx_list").html(v);
+        $("#ryxx_content").html(tt);
+            $.ajax({
+                type:"POST",
+                url:"/home/dpManage/ry_zcsb",
+                data:{"id":did},
+                success:function(result,state){ //成功调用回调信息
+                    $("#sb_list").show();
+                    if (result!=''){
+                        $("#ryzcsb").html("");
+                        $("#ryzcsb").append("<a href='#' class='list-group-item active'>已分配的设备信息</a>");
+                        $.each(result,function (i,value) {
+                            $("#ryxx_sbxx").hide();
+                            //$("#ryxx_sbxx").html("以经分配下列设备");
+                            $("#ryzcsb").append("<a href='#' class='list-group-item'>"+value.zcsb_lx+"</a>");
+                            $("#ryzcsb").show();
+                        })
+                    }else{
+                        $("#ryxx_sbxx").show();
+                        $("#ryzcsb").hide();
+                        $("#ryxx_sbxx").html("<mark>还没有分配任何资产设备。</mark>");
+                        return false;
+                    }
+                },
+                complete:function(XMLHttpRequest, textStatus){  //调用后返回信息
+                    //alert(textStatus);
+                },
+                timeout:60000,
+                error:function(XMLHttpRequest, textStatus, errorThrown){  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试"+errorThrown);
+                }
+            }
+            )
+    }
+    </foreach>
+        //读取设备信息
+        function sbinfoData(rowNum,clomnNum) {
+            var lx=$("#sb_lx").val();
+            var lx_title=$("#sb_lx").find("option:selected").text();
+            $("#fengpei").show();
+            //alert(lx);
+            $("#sbxx_lx").val(lx_title);
+            $("#sbxx_lxid").val(lx);
+            $.ajax({
+                type: "POST",
+                url: "/home/dpManage/ZcsbData",
+                data: {"lx": lx},
+                success: function (result, state) { //成功调用回调信息
+                    $("#list_sbdata").html("");
+                    $("#list_sbtitle").html("");
+                    $("#list_sbtitle").html(lx_title+'信息');
+                    $.each(result,function (i,value) {
+                        $("#list_sbdata").append("<input type='checkbox' value='"+value.id+"' style='vertical-align:middle; margin-top:0;' name='SbzcSelect' /> "+value.zc_mc+"("+value.zc_pp+value.zc_xh+")"+"&nbsp;&nbsp;&nbsp;&nbsp;");
+                    })
+
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                    //alert(textStatus);
+                },
+                timeout: 60000,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试" + errorThrown);
+                }
+            })
+        }
+        //提交分配信息
+        function fengpei() {
+            obj = document.getElementsByName("SbzcSelect");
+            check_val = [];
+            for(k in obj){
+                if(obj[k].checked)
+                    check_val.push(obj[k].value);
+            }
+            //var SbzcSelect=$("input[name='SbzcSelect']:checked").val();
+            //alert(check_val);
+            //$("#sbxx_id").val(check_val);
+            var ryid=$("#sbxx_ryname").val();
+            var sblx=$("#sbxx_lx").val();
+            var sblxid=$("#sbxx_lxid").val();
+            //var sbid=check_val;
+            if (!ryid || !sblx || !sblxid || sblx=="请选择" || check_val=="" ){
+                alert("信息不完整，请选择");
+                return false;
+            }else{
+                $.ajax({
+                    type:"POST",
+                    url:"/home/dpManage/DpAddInfo",
+                    data:{"ryid":ryid,"sblx":sblx,"sblxid":sblxid,"sbid":check_val},
+                    success:function (result, state) { //成功调用回调信息
+                       alert(result);
+                        window.location.reload();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                        //alert(textStatus);
+                    },
+                    timeout: 60000,
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                        alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    }
+                })
+            }
+        }
+    </script>
+    <style type="text/css">
+
+    </style>
+    <div class="col-md-12"  style="border: 1px solid #0000">
+
+        <div class="col-md-3" style="text-align: left;padding-left: 0px">
+        <form class="navbar-form" method="post">
+            <input type="text" class="form-control" placeholder="人员信息检索......" name="keyword" value="{$keyword}" >
+            <input type="hidden" value="s">
+                <button class="btn btn-success" type="submit">搜索</button>
+        </form>
+        </div>
+        <div class="col-md-9" style="height: 52px;line-height: 52px;">
+        <foreach name='RyInfoData' item='Info' >
+                <a href="#" id="{$Info.id}" onclick="rydata{$Info.id}()">{$Info.ry_xm}.{$Info.ry_bm}</a> |&nbsp;
+        </foreach>
+        </div>
+
+        <div class="col-md-12" >
+            <h4 id="ryxx_list"></h4>
+
+
+        </div>
+        <div id="sb_list">
+        <div class="col-md-3"  >
+            <span id="ryxx_sbxx"></span>
+            <div>
+                <a id="ryzcsb"></a>
+            </div>
+        </div>
+        <div class="col-md-9" >
+            <div class="form-group form-inline" >
+            <label for="sb_lx">选择设备类型：</label>
+            <select name="sb_lx" id="sb_lx" class="form-control" id="sb_lx" onchange="sbinfoData()">
+                <option value="dzsb_tb">请选择</option>
+                <option value="dzsb_tb">电子设备</option>
+                <option value="dqsb_tb">机械器具</option>
+                <option value="fwkp_tb">房产</option>
+                <option value="ysgj_tb">运输工具</option>
+                <option value="qtzc_tb">其他</option>
+            </select>
+        </div>
+            <div id="Dzsb" style="margin-top: 0px">
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="list_sbtitle">设备信息</div>
+                    <div class="panel-body" id="list_sbdata" style="line-height: 30px"></div>
+                    <input type="hidden" value="" id="sbxx_ryname" name="sbxx_ryname"/>
+                    <input type="hidden" value="" id="sbxx_lx" name="sbxx_lx"/>
+                    <input type="hidden" value="" id="sbxx_lxid" name="sbxx_lxid"/>
+                </div>
+            </div>
+            <button class="btn btn-danger" type="button" id="fengpei" onclick="fengpei()">分配</button>
+        </div>
+        </div>
+    </div>
+</block>

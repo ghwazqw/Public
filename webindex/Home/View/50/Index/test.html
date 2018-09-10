@@ -1,0 +1,31 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <script type="text/javascript" src="js/jquery.js" ></script>
+    <script>
+        $(function(){
+            i={$keyword};
+            toRed(i);
+        });
+
+        function toRed(content){
+            var bodyHtml = $("body").html();
+            console.info(bodyHtml);
+            var x = bodyHtml.replace(new RegExp(content,"gm"),"<font color='red' >"+content+"</font>")
+            $("body").html(x);
+            console.info(x);
+        }
+    </script>
+
+    <div>
+        哈哈哈哈哈哈我是。。。。。。。。。。。
+        <div>asdasd  a我是。。。。。。、、
+            <p><a href="https://www.baidu.com/s?wd=%E9%98%BF%E6%96%AF%E8%BE%BE&tn=44039180_cpr&fenlei=mv6quAkxTZn0IZRqIHckPjm4nH00T1YzmWR3nj0knHRLmHwhmyRv0ZwV5Hcvrjm3rH6sPfKWUMw85HfYnjn4nH6sgvPsT6KdThsqpZwYTjCEQLGCpyw9Uz4Bmy-bIi4WUvYETgN-TLwGUv3EnHf1PjTvnH0sn1bsnWbsPjD1rf" target="_blank" class="baidu-highlight">阿斯达</a>实打实的我是
+
+                <span>asd asd 我是</span>
+            </p>
+        </div>
+    </div>
+    <p>我是asdljkalsdkjklajsdljlajkds</p>
+    <div>asdkh我是afsgfgfgg</div>
+
+</block>

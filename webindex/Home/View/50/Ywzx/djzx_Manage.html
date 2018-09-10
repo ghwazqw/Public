@@ -1,0 +1,80 @@
+<extend name="50/index/base" title="用户管理"/>
+<block name="customer">
+    <script>
+    $("#btn3").click(function(){
+    $("#test3").val("Dolly Duck");
+    });
+    </script>
+
+    <div style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="#">管理中心</a>
+            </li>
+            <li>
+                <a href="#">业务管理中心</a>
+            </li>
+            <li>
+                <a href="#">供需对接信息管理</a>
+            </li>
+        </ul>
+
+        <!-- Table -->
+        <table class="table table-bordered table-hover">
+            <tr style="background: #347ab7; color: #ffffff">
+                <td style="width: 50px">序号</td>
+                <td>活动类型</td>
+                <td >活动形式</td>
+                <td>提交用户</td>
+                <td>活动需求</td>
+                <td>联系人</td>
+                <td>需求状态</td>
+                <td>操 作</td>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="U" >
+                <?php $i++;?>
+
+                <include file="50/Index/huifu" />
+
+            <tr id="{$i}">
+                <td>{$i}</td>
+                <td style="width: 100px;">{$U.gl_hdlx}</td>
+                <td style="width: 100px;">{$U.gl_hdxs}</td>
+                <td style="width: 100px;">{$U.gl_cjr}</td>
+                <td>{$U.gl_hdxq}</td>
+                <td><a href="#" title="{$U.gl_dh}"> {$U.gl_lxr}({$U.gl_yx})</a></td>
+                <td> <php>if ($U['gl_hdzt']==1):</php><span ><a href="#act_hf{$i}" data-toggle="modal">等待您的回复</a></span>
+                    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+                    <span class="label label-success">{$sussInfo}</span>
+                    <php>endif ;</php>
+                     <php>if ($U['gl_hdzt']==5):</php>等待补充资料<php> endif;</php>
+                    <php>if ($U['gl_hdzt']==0):</php><span style="color: red">已退回</span><php> endif;</php>
+                    <php>if ($U['gl_hdzt']==10):</php><span style="color:green">已通过</span><php> endif;</php>
+                </td>
+                <td>{:W('Info/load',array(9))}</a>
+                </td>
+            </tr>
+                <foreach name="meta_data" item="me" >
+                    <php>if ($me['nav_sjid']==$menu['id']):</php>
+                <tr >
+                    <td>{$me.nav_show}</td>
+                    <td >&nbsp;&nbsp;&nbsp;&nbsp;{$me.nav_name}</td>
+                    <td><php>if ($me['nav_jb']==2):</php>二级菜单<php> endif;</php></td>
+                    <td>{$me.nav_link}</td>
+                    <td><a href="#"> <php>if ($me['nav_sfyx']==1):</php><span > 有效</span><php >else :</php><span style="color:red">无效</span><php> endif;</php></a></td>
+                    <td>1111</td>
+                </tr>
+                <php> endif;</php>
+                    </foreach>
+
+            </foreach>
+
+        </table>
+    </div>
+</block>

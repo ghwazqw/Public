@@ -1,0 +1,126 @@
+<extend name="glxh/index/base_top"  title="成果搜索"/>
+<block name="customer">
+<div class="sea_Kj">
+    <div class="sea_Kj_left">
+        <div class="lx-about" >
+            <div class="lx-sea-div"><img src="__PUBLIC__/glxh/images/menu-about-ico.png"> <a href="/" style="color: #ffffff;"> 首页</a> --> 全部分类
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/index.php/home/cgsea" style="color: #ffffff;">高级检索</a></div>
+
+                <form name="searchform" method="get" action="/index.php/home/cgsea/search/">
+                    <div class="col-md-8 column row" style="text-align: right;">
+                        <div class="col-lg-6" >
+                            <div class="input-group" style="height: 40px;line-height: 40px;margin-top: 7px">
+                                <div class="input-group-btn" style="height: 40px;line-height: 40px">
+                                    <select class="btn btn-default dropdown-toggle select_box" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="lx">
+                                        <option value="" <php> if ($lx=="") :</php>selected<php>endif ;</php> >请选择</option>
+                                        <option value="xmbh" <php> if ($lx=="xmbh") :</php>selected<php>endif ;</php>>项目编号</option>
+                                        <option value="cgmc" <php> if ($lx=="cgmc") :</php>selected<php>endif ;</php>>成果名称</option>
+                                        <option value="gjz" <php> if ($lx=="gjz") :</php>selected<php>endif ;</php>>关键词</option>
+                                        <option value="xmjj" <php> if ($lx=="xmjj") :</php>selected<php>endif ;</php>>简介</option>
+                                        <option value="zywcr" <php> if ($lx=="zywcr") :</php>selected<php>endif ;</php>>主要完成人</option>
+
+                                    </select>
+                                </div><!-- /btn-group -->
+                                <input type="text" class="form-control"  style="height: 40px;width: 400px;border:2px solid #eb6100;border-left: none;
+							border-right: none;line-height: 40px" name="keyword" <php> if($keyword==""): //资料信息</php>placeholder="共有资料(10{$count})项" <php> else:</php>value="{$keyword}"<php> endif;</php>>
+                                <div class="input-group-btn">
+                                    <input type="submit" name="submit" value="搜索" class="srh_btn">
+                                </div>
+
+                            </div><!-- /input-group -->
+
+                        </div><!-- /.col-lg-6 -->
+                    </div>
+                </form>
+
+        </div>
+        <p style="height: 60px"></p>
+        <div class="sea_lx">分组浏览：</div>
+        <div class="sea_lx_1" style="padding-left: 103px">
+            <foreach name="class_data" item="class" >
+                <p style="font-size:13px;line-height: 28px;color: #1C93EB">
+                    <span><a href="?keyword={$class.cglx_mc}" style="color:  #1C93EB">{$class.cglx_mc}</a>：</span>
+                    <foreach name="class_mtea_data" item="meta" >
+                        <php> if( $meta['cglx_sjid'] == $class['id'] ):</php>
+                        <a href="?keyword={$meta.cglx_mc}" style="margin-left:8px;color:  #1C93EB" >{$meta.cglx_mc}</a>
+                        <php> endif;</php>
+                    </foreach>
+                </p>
+            </foreach>
+        </div>
+        <hr class="sea_hr"/>
+        <div >
+            <span class="fr mt20 mr10 fz12">共有{$count}条结果,每页显示25条数据</span>
+
+        </div>
+        <table id="myTable" class="table-hover table-striped" style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px">
+            <thead style="background: #1C93EB;color: #ffffff;height: 40px;font-size: 14px;height: 30px;">
+                <th style="width: 50px;text-align: center;" axis="number" >序号 <i class="fa fa-sort"></i></th>
+                <!--<td style="text-align: center">完成时间</td>-->
+                <th style="text-align: center" axis="string">成果名称 <i class="fa fa-sort"></i></th>
+                <th axis="string">地区 <i class="fa fa-sort"></i></th>
+                <th style="text-align: center;padding-left: 15px" axis="date">完成时间 <i class="fa fa-sort"></i></th>
+                <th style="text-align: center" axis="string">学科分类 <i class="fa fa-sort"></i></th>
+            </thead>
+            <tbody>
+            <php>if( $count > 0  ):</php>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="cg" >
+                <?php $i++;?>
+                <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;" id="{$i}">
+                    <td style="width: 50px;text-align: center">{$i}</td>
+                    <!--<td style="white-space: nowrap;text-align: right">{$cg.cg_wcsj|strtotime|date="Y年m月",###}</td>-->
+                    <td style="padding-left: 15px"><a href="/index.php/home/cgsea/search_dal?id={$cg.id}" style="color: #4b6db0">{$cg.cg_cgmc}</a></td>
+                    <td>{$cg.cg_dq|mb_substr=0,2,'UTF-8'}</td>
+                    <td style="text-align: center;padding-left: 15px">{$cg.cg_wcsj|strtotime|date="Y年",###}</td>
+                    <td style="padding-left: 15px;text-align: left">{$cg.cg_xkflmc|mb_substr=0,30,'UTF-8'}</td>
+                </tr>
+
+            </foreach>
+            <php>else:</php>
+            <tr style="font-size: 12px">
+                <td></td>
+                <td><span style="color: red" >“{$keyword}”</span> <br />通过对“成果名称、关键词、成果分类”的查询，没有成果信息。</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <php> endif;</php>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+            var myTable = {};
+            window.addEvent('domready', function(){
+                myTable = new sortableTable('myTable', {overCls: 'over'/*, onClick: function(){alert(this.id)}*/});
+            });
+        </script>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+    <!--右框架!-->
+    <div class="sea_Kj_right">
+        <div class="cg_rk_bq"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <a href="/index.php/home/ywcent/cgrk" style="color: #ffffff">科技成果入库申请</a></div>
+        <div class="cg_gjc_title">热门关键词 </div>
+        <div class="cg_gjc_title_ul">
+        <li style="list-style-type:none;"><a href="?keyword=沥青路面" class="btn btn-danger btn-xs" >沥青路面</a>
+            <a href="?keyword=车辙" class="btn btn-danger btn-xs" >车辙</a>
+            <a href="?keyword=隧道" class="btn btn-danger btn-xs" >隧道</a>
+           <!-- <a href="?keyword=智能交通" class="btn btn-danger btn-xs" >智能交通</a>-->
+            <a href="?keyword=节能减排" class="btn btn-danger btn-xs" >节能减排</a>
+            <a href="?keyword=绿色公路" class="btn btn-danger btn-xs" >绿色公路</a>
+            </li>
+
+        </div>
+        <div class="cg_gjc_title">为您推荐 </div>
+        <div class="cg_gjc_title_ul">
+            <li><a href="?keyword=" >目前还没有推荐信息</a></li>
+
+
+        </div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+
+</block>

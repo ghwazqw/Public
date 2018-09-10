@@ -1,0 +1,281 @@
+<extend name="manage/index/base_user" title="机械器具"/>
+
+<block name="customer">
+    <script type="text/javascript">
+        //checkbox 全选/取消全选
+        var isCheckAll = false;
+        function DzsbCheck() {
+            if (isCheckAll) {
+                $("input[name='Dzsb_id']").each(function() {
+                    this.checked = false;
+                });
+                isCheckAll = false;
+            } else {
+                $("input[name='Dzsb_id']").each(function() {
+                    this.checked = true;
+                });
+                isCheckAll = true;
+            }
+        }
+        function Searchfrom() {
+            $("#Searchfrom").submit();
+        }
+    </script>
+    <script type="text/javascript">
+        function SelectInfo() {
+            Dzsb_id = document.getElementsByName("Dzsb_id"); //电子设备
+            Dqsb_id = document.getElementsByName("Dqsb_id"); //机械器具
+            Ysgj_id = document.getElementsByName("Ysgj_id"); //运输工具
+            Qtsb_id = document.getElementsByName("Qtsb_id"); //其他设备
+            checkDz_val = [];
+            checkDq_val = [];
+            checkYs_val = [];
+            checkQt_val = [];
+            //电子设备循环
+            for(Z in Dzsb_id){
+                if(Dzsb_id[Z].checked)
+                    checkDz_val.push(Dzsb_id[Z].value);
+            }
+            $("#pd_dzsb").val(checkDz_val);
+
+            //dzzc_id=checkDz_val;
+            //机械器具循环
+            if (checkDz_val.length==0 && checkDq_val.length==0 && checkQt_val.length==0 && checkYs_val.length==0){
+                alert("请至少选择一个设备");
+                return false;
+            }else{
+                var dzsb_id=$("#pd_dzsb").val();
+                window.location.href="/home/ZcManage/RfidPrint?sbtb=dzsb_tb&sbid="+dzsb_id;
+            };
+            //console.log(dzsb_id);
+
+        }
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+    <div class="row clearfix" style="font-size: 12px">
+        <!--删除数据确认-->
+        <div class="modal fade" id="form-A30148" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="get">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabe2">
+                                删除信息确认
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            该操作不可恢复，请确认！
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                            <button type="submit" class="btn btn-danger">确认</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+<div class="col-md-12 col-xs-12" nowrap>
+
+                <div class="input-group" style="text-align: right">
+                    <form class="navbar-form navbar-left" method="get" onchange="Searchfrom()" id="Searchfrom">
+                        <select name="comp" id="comp" class="form-control">
+                            <option value="">请选择</option>
+                            <foreach name='CompInfo' item='Info' >
+                                <option value="{$Info.cglx_mc}" <php>if ($comp==$Info['cglx_mc']) :</php>selected<php>endif ;</php>>{$Info.cglx_mc}</option>
+                            </foreach>
+                        </select>
+                    <input type="text" class="form-control" placeholder="机械器具搜索......" name="keyword" value="{$keyword}">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                    </form>
+                    <div class="btn-group" style="margin-top: 8px">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">功能列表</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li >
+                                <a href="/home/ZcManage/DqsbEditor?lx=87" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                            </li>
+                            <li >
+<!--
+                                <a href="/home/ExpInfo/DqsbExp" role="button" data-toggle="modal"  title="导出信息" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span> 导出信息</a>
+-->
+                                <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
+                                <a href="/home/ZcManage/JxqjManage_All" title="导出全部"><span class="glyphicon glyphicon-play-circle"></span> 导出全部信息</a>
+                            </li>
+                            <li >
+                                <a href="/home/ZcManage/ExcelUp?lx=dq" title="导入信息"><span class="glyphicon glyphicon-upload"></span> Excel导入信息</a>
+                            </li>
+                            <script>
+                                function expinfo(){
+                                    var myDate = new Date();
+                                    $("#exp").table2excel({
+                                        exclude: ".noExl",
+                                        name: "Excel Document Name.xlsx",
+                                        filename: myDate.toLocaleString()+".xls",
+                                        exclude_img: true,
+                                        exclude_links: true,
+                                        exclude_inputs: false
+                                    });
+                                }
+                            </script>
+                             </ul>
+
+                    </div>
+                    <div class="btn-group" style="text-align: left;padding-top: 9px;padding-left: 20px">共有{$count}条信息，每页显示{$page_count}条，共有{$page_ys}页。</div>
+                </div>
+
+
+    <div id='div1'>
+        <table id="exp" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>品牌</th>
+                <th nowrap>型号</th>
+                <!--<th nowrap>生产日期</th>-->
+                <!--<th nowrap>生产厂家</th>
+                <th nowrap>出厂产品编号</th>
+                <th nowrap>用途</th>-->
+                <th nowrap>资产编号</th>
+                <!--<th nowrap>资产类型</th>-->
+                <th nowrap>资产二级分类</th>
+                <th nowrap>资产名称</th>
+                <th nowrap>计量单位</th>
+                <th nowrap>原值</th>
+                <th nowrap>净值</th>
+                <!--<th nowrap>是否折旧标志</th>
+                <th nowrap>折旧年限类型</th>
+                <th nowrap>累计折旧</th>
+                <th nowrap>本期折旧</th>-->
+                <th nowrap>购建日期</th>
+                <th nowrap>入帐日期</th>
+                <th nowrap>启用日期</th>
+                <th nowrap>取得方式</th>
+                <th nowrap>财产使用部门</th>
+                <th nowrap>是否闲置</th>
+                <!--<th nowrap>财产管理部门</th>-->
+                <!--<th nowrap>条形码</th>-->
+                <th nowrap>责任人</th>
+                <!--<th nowrap>批复单号</th>-->
+                <th nowrap>卡片说明</th>
+                <!--<th nowrap>出帐日期</th>
+                <th nowrap>出帐类型</th>
+                <th nowrap>出帐原因</th>-->
+                <th nowrap>初始维修金额</th>
+                <th nowrap>状态</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <?php $zc_yzhj+=$Info['zc_yz'];?>
+                <?php $zc_jzhj+=$Info['zc_jz'];?>
+                <tr>
+                <td>{$i}</td>
+                <td nowrap>{$Info.zc_pp}</td>
+                <td nowrap>{$Info.zc_xh}</td>
+                <!--<td nowrap>{$Info.zc_scrq|strtotime|date="Y-m-d",###}</td>-->
+                <!--<td nowrap>{$Info.zc_sccj}</td>
+                <td nowrap>{$Info.zc_cccpbh}</td>
+                <td nowrap>{$Info.zc_yt}</td>-->
+                <td nowrap>{$Info.zc_bh}</td>
+                <!--<td nowrap>{$Info.zc_lx}</td>-->
+                <td nowrap>{$Info.zc_rjlx}</td>
+                <td nowrap>{$Info.zc_mc}</td>
+                <td nowrap>{$Info.zc_jldw}</td>
+                <td nowrap style="text-align: right">{$Info.zc_yz}</td>
+                <td nowrap style="text-align: right">{$Info.zc_jz}</td>
+                <!--<td nowrap>{$Info.zc_sfzjbz}</td>
+                <td nowrap>{$Info.zc_zjnxlx}</td>
+                <td nowrap>{$Info.zc_ljzj}</td>
+                <td nowrap>{$Info.zc_bqzj}</td>-->
+                <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_qdfs}</td>
+                <td nowrap>{$Info.zc_ccsybm}</td>
+                <td nowrap>{$Info.zc_sfxz}</td>
+                <!--<td nowrap>{$Info.zc_ccglbm}</td>-->
+                <!--<td nowrap>{$Info.zc_txm}</td>-->
+                <td nowrap>{$Info.zc_zrr}</td>
+                <!--<td nowrap>{$Info.zc_pfdh}</td>-->
+                <td nowrap>{$Info.zc_kpsm}</td>
+                <!--<td nowrap>{$Info.zc_czrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_czlx}</td>
+                <td nowrap>{$Info.zc_czyy}</td>-->
+                    <td nowrap>
+                        <input type="text" name="cswxje" id="cswxje{$Info.id}" onkeyup='this.value=this.value.replace(/[^\d.]/g,"")' value="{$Info.wxje}" style="width: 60px" onchange="EditInfo{$Info.id}({$Info.id})"/>
+                    </td>
+                    <script>
+                        function EditInfo{$Info.id}(data) {
+                            var wxje=$("#cswxje{$Info.id}").val();
+                            var id=data;
+                            //alert(id + wxje);
+                            $.ajax({
+                                type:"post",
+                                url:"/Home/ZcManage/Cswxje",
+                                data:{"wxje":wxje,"id":id,"table":"dqsb_tb"},
+                                success:function (re, state) { //成功调用回调信息
+                                    alert(re);
+                                    //window.parent.location.reload();
+                                    //window.location.reload();
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                    //alert(textStatus);
+                                },
+                                timeout: 60000,
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                    return false;
+                                }
+                            })
+                        }
+                    </script>
+                <td nowrap>
+                    <include file="manage/ZcManage/sb_zt" />
+                </td>
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover()
+                    })
+                </script>
+            </tr>
+            </foreach>
+            <!--<tr style="background: ">
+                <td>合计</td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap style="text-align: right">{$zc_yzhj}</td>
+                <td nowrap style="text-align: right">{$zc_jzhj}</td>
+
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+
+                <td nowrap></td>
+
+                <td nowrap></td>
+
+                <td nowrap>
+
+                </td>
+            </tr>-->
+        </table>
+
+    </div>
+            <ul class="pagination" style="padding-left: 5px">
+                {$pagebar}
+            </ul>
+</div>
+    </block>

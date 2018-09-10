@@ -1,0 +1,71 @@
+<extend name="glxh/index/base_top"  title="成果搜索"/>
+<block name="customer">
+    <div class="sea_Kj">
+
+            <div class="sea_lx" style="padding-left: 50px"><a href="/">首页</a> ->成果信息高级检索</div>
+            <div class="sea_lx_1">
+                <form class="navbar-form navbar-left" method="post">
+                    <div class="form-group" style="line-height: 40px">
+                        项目编号：<input type="text" class="form-control" placeholder="{$keyword}" value="{$bh}" name="bh_keyword">
+                        成果名称：<input type="text" class="form-control" placeholder="{$keyword}" value="{$name}" name="name_keyword">
+                        所在地区：<input type="text" class="form-control" placeholder="{$keyword}" value="{$dq}" name="dq_keyword">
+                        完 成 &nbsp;人：<input type="text" class="form-control" placeholder="{$keyword}" value="{$wcr}" name="wcr_keyword"><br />
+                        完成单位：<input type="text" class="form-control" placeholder="{$keyword}" value="{$wcdw}" name="wcdw_keyword">
+                        推荐单位：<input type="text" class="form-control" placeholder="{$keyword}" value="{$tjdw}" name="tjdw_keyword">
+                        完成时间：<input type="text" class="form-control" placeholder="{$keyword}" value="{$wcsj}" name="wcsj_keyword">
+                        关 键 &nbsp;词：<input type="text" class="form-control" placeholder="{$keyword}" value="{$gjc}" name="gjc_keyword"><br />
+                        分类名称：<input type="text" class="form-control" placeholder="{$keyword}" value="{$fl}" name="fl_keyword">
+                        专业方向：<input type="text" class="form-control" placeholder="{$keyword}" value="{$fx}" name="fx_keyword">
+                        课题来源：<input type="text" class="form-control" placeholder="{$keyword}" value="{$ly}" name="ly_keyword">
+                        项目简介：<input type="text" class="form-control" placeholder="{$keyword}" value="{$jj}" name="jj_keyword"><br />
+                        奖励年度：<input type="text" class="form-control" placeholder="{$keyword}" value="{$nd}" name="nd_keyword">
+                        奖励等级：<input type="text" class="form-control" placeholder="{$keyword}" value="{$dj}" name="dj_keyword">
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </div>
+                    <div style="text-align: left;margin-top: 20px;float: none">当前成果信息数量 <span style="color: red">{$count}</span>条,每页显示{$pagecount}条</div>
+                </form>
+            </div>
+            <table class="table-hover table-striped" style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px">
+                <tr style="background: #1C93EB;color: #ffffff;height: 40px;font-size: 14px;height: 30px">
+                    <td style="width: 50px;text-align: center;">序号</td>
+                    <!--<td style="text-align: center">完成时间</td>-->
+                    <td style="text-align: center">成果名称</td>
+                    <td >地区</td>
+                    <td style="text-align: center;padding-left: 15px">完成时间</td>
+                    <td style="text-align: center">学科分类</td>
+
+
+                </tr>
+                <php>if( $count > 0  ):</php>
+                <?php $i = 0;?>
+                <foreach name="info_data" item="cg" >
+                    <?php $i++;?>
+                    <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;">
+                        <td style="width: 50px;text-align: center">{$i}</td>
+                        <!--<td style="white-space: nowrap;text-align: right">{$cg.cg_wcsj|strtotime|date="Y年m月",###}</td>-->
+                        <td style="padding-left: 15px"><a href="/index.php/home/cgsea/search_dal?id={$cg.id}" style="color: #4b6db0">{$cg.cg_cgmc}</a></td>
+                        <td>{$cg.cg_dq|mb_substr=0,2,'UTF-8'}</td>
+                        <td style="text-align: center;padding-left: 15px">{$cg.cg_wcsj|strtotime|date="Y年",###}</td>
+                        <td style="padding-left: 15px;text-align: left">{$cg.cg_xkflmc|mb_substr=0,30,'UTF-8'}</td>
+                    </tr>
+
+                </foreach>
+                <php>else:</php>
+                <tr style="font-size: 12px">
+                    <td></td>
+                    <td><span style="color: red" >“{$keyword}”</span> <br />通过对“成果名称、关键词、成果分类”的查询，没有成果信息。</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <php> endif;</php>
+
+            </table>
+            <ul class="pagination">
+                {$pagebar}
+            </ul>
+
+        <div class="clear"></div>
+    </div>
+
+</block>

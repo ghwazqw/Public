@@ -1,0 +1,322 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+
+<block name="customer">
+
+    <script>
+        function delinfo(data) {
+            if(confirm("请确认是否删除，该操作不可恢复！")){
+                //alert(data);
+                location.href="/Home/ZcManage/Htdel?table=ht_tb&id="+data;
+            }
+        }
+    </script>
+    <div class="row clearfix" style="font-size: 12px">
+        <!--增加信息弹出-->
+        <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                增加合同信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group"><label>合同类型</label>
+                                <select class="form-control" name="ht_lx" id="ht_lx ">
+                                    <option value='' selected>请选择类型</option>
+                                    <option value='1'>维修合同</option>
+                                    <option value='2'>保养合同</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>合同名称</label>
+                                <input type="text" class="form-control" name="ht_mc" id="ht_mc" placeholder="请输入合同名称" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>签署方</label>
+                                <input type="text" class="form-control" name="ht_qsf" id="ht_qsf" placeholder="请输入签署方" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>合同金额</label>
+                                <input type="text" class="form-control" name="ht_je" id="ht_je" placeholder="请输入合同金额" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>付款方式</label>
+                                <select class="form-control" name="ht_fkfs" id="ht_fkfs" onchange="FsSelect()">
+                                    <option value='1' select>一次付清</option>
+                                    <option value='2'>两次付清</option>
+                                    <option value='3'>三次付清</option>
+                                    <option value='4'>四次付清</option>
+                                    <option value='5'>五次付清</option>
+                                </select>
+                            </div>
+                            <script>
+                                function FsSelect() {
+                                    var fsselect=$("#ht_fkfs").val();
+                                    $fs_1=$("#fs_1");
+                                    $fs_2=$("#fs_2");
+                                    $fs_3=$("#fs_3");
+                                    $fs_4=$("#fs_4");
+                                    $fs_5=$("#fs_5");
+                                    //alert(fsselect);
+                                    if (fsselect==1){
+                                        $fs_1.slideDown();
+                                        $fs_2.slideUp();
+                                        $fs_3.slideUp();
+                                        $fs_4.slideUp();
+                                        $fs_5.slideUp();
+                                        $("#ht_tsj").val("");
+                                        $("#ht_tje").val("");
+                                        $("#ht_csj").val("");
+                                        $("#ht_cje").val("");
+                                        $("#ht_ssj").val("");
+                                        $("#ht_sje").val("");
+                                        $("#ht_wje").val("");
+                                        $("#ht_wsj").val("");
+                                    }else if (fsselect==2){
+                                        $fs_1.slideDown();
+                                        $fs_2.slideDown();
+                                        $fs_3.slideUp();
+                                        $fs_4.slideUp();
+                                        $fs_5.slideUp();
+                                        $("#ht_csj").val("");
+                                        $("#ht_cje").val("");
+                                        $("#ht_ssj").val("");
+                                        $("#ht_sje").val("");
+                                        $("#ht_wje").val("");
+                                        $("#ht_wsj").val("");
+                                    }else if (fsselect==3){
+                                        $fs_1.slideDown();
+                                        $fs_2.slideDown();
+                                        $fs_3.slideDown();
+                                        $fs_4.slideUp();
+                                        $fs_5.slideUp();
+                                        $("#ht_ssj").val("");
+                                        $("#ht_sje").val("");
+                                        $("#ht_wje").val("");
+                                        $("#ht_wsj").val("");
+                                    }else if (fsselect==4){
+                                        $fs_1.slideDown();
+                                        $fs_2.slideDown();
+                                        $fs_3.slideDown();
+                                        $fs_4.slideDown();
+                                        $fs_5.slideUp();
+                                        $("#ht_wje").val("");
+                                        $("#ht_wsj").val("");
+                                    }else if (fsselect==5){
+                                        $fs_1.slideDown();
+                                        $fs_2.slideDown();
+                                        $fs_3.slideDown();
+                                        $fs_4.slideDown();
+                                        $fs_5.slideDown();
+                                    }
+                                }
+                            </script>
+                            <div class="clear"></div>
+                            <div class="form-group" style="margin-bottom: 10px" id="fs_1">
+                                <input type="text" style="width: 49%;float: left" readonly class=" form-control form-inline" name="ht_osj" id="ht_osj" placeholder="请选择第一次付款日期">
+                                <script>
+                                    $("#ht_osj").datetimepicker({
+                                        format: "yyyy-mm-dd",
+                                        autoclose: true,
+                                        todayBtn: true,
+                                        language:"zh-CN",
+                                        minView:"month"
+                                    });
+                                </script>
+                                <input type="text" style="width: 50%;float: right" class="form-control form-inline" name="ht_oje" id="ht_oje" placeholder="请选择第一次付款金额">
+                            </div>
+                            <div class="clear"></div>
+                            <div class="form-group" style="display:none;margin-bottom: 10px" id="fs_2">
+                                <input type="text" style="width: 49%;float: left" readonly class=" form-control form-inline" name="ht_tsj" id="ht_tsj" placeholder="请选择第二次付款日期">
+                                <script>
+                                    $("#ht_tsj").datetimepicker({
+                                        format: "yyyy-mm-dd",
+                                        autoclose: true,
+                                        todayBtn: true,
+                                        language:"zh-CN",
+                                        minView:"month"
+                                    });
+                                </script>
+                                <input type="text" style="width: 50%;float: right" class="form-control form-inline" name="ht_tje" id="ht_tje" placeholder="请选择第二次付款金额">
+                            </div>
+                            <div class="clear"></div>
+                            <div class="form-group" style="display:none;margin-bottom: 10px" id="fs_3">
+                                <input type="text" style="width: 49%;float: left" readonly class=" form-control form-inline" name="ht_csj" id="ht_csj" placeholder="请选择第三次付款日期">
+                                <script>
+                                    $("#ht_csj").datetimepicker({
+                                        format: "yyyy-mm-dd",
+                                        autoclose: true,
+                                        todayBtn: true,
+                                        language:"zh-CN",
+                                        minView:"month"
+                                    });
+                                </script>
+                                <input type="text" style="width: 50%;float: right" class="form-control form-inline" name="ht_cje" id="ht_cje" placeholder="请选择第三次付款金额">
+                            </div>
+                            <div class="clear"></div>
+                            <div class="form-group" style="display:none;margin-bottom: 10px" id="fs_4">
+                                <input type="text" style="width: 49%;float: left" readonly class=" form-control form-inline" name="ht_ssj" id="ht_ssj" placeholder="请选择第四次付款日期">
+                                <script>
+                                    $("#ht_ssj").datetimepicker({
+                                        format: "yyyy-mm-dd",
+                                        autoclose: true,
+                                        todayBtn: true,
+                                        language:"zh-CN",
+                                        minView:"month"
+                                    });
+                                </script>
+                                <input type="text" style="width: 50%;float: right" class="form-control form-inline" name="ht_sje" id="ht_sje" placeholder="请选择第四次付款金额">
+                            </div>
+                            <div class="clear"></div>
+                            <div class="form-group" style="display:none;margin-bottom: 10px" id="fs_5">
+                                <input type="text" style="width: 49%;float: left" readonly class=" form-control form-inline" name="ht_wsj" id="ht_wsj" placeholder="请选择第五次付款日期">
+                                <script>
+                                    $("#ht_wsj").datetimepicker({
+                                        format: "yyyy-mm-dd",
+                                        autoclose: true,
+                                        todayBtn: true,
+                                        language:"zh-CN",
+                                        minView:"month"
+                                    });
+                                </script>
+                                <input type="text" style="width: 50%;float: right" class="form-control form-inline" name="ht_wje" id="ht_wje" placeholder="请选择第五次付款金额">
+                            </div>
+                            <div class="form-group" style="margin-top: 5px">
+                                <label>开始日期</label>
+                                <input type="text" readonly class=" form-control" name="ht_kssj" id="ht_kssj" placeholder="请选择开始日期"/>
+                            </div>
+                            <script>
+                                $("#ht_kssj").datetimepicker({
+                                    format: "yyyy-mm-dd",
+                                    autoclose: true,
+                                    todayBtn: true,
+                                    language:"zh-CN",
+                                    minView:"month"
+                                });
+                            </script>
+                            <div class="form-group"><label>结束日期</label><input type="text" readonly class=" form-control" name="ht_jssj" id="ht_jssj" placeholder="请选择结束日期"/></div><script>
+                            $("#ht_jssj").datetimepicker({
+                                format: "yyyy-mm-dd",
+                                autoclose: true,
+                                todayBtn: true,
+                                language:"zh-CN",
+                                minView:"month"
+                            });
+                        </script>
+                            <div class="form-group"><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">合同附件 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                                <input id="exampleInputFile" name="zc_photo" type="file">
+                                <p class="help-block">请上传DOC/ZIP/RAR/PDF类型的文件.</p>
+                            </div><!--END-->
+
+                                <div class="form-group">
+
+
+                                    <label>备注</label><textarea class="form-control" style="height: 100px" name="ht_bz" id="ht_bz" placeholder="请输入备注"></textarea></div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" class="btn btn-primary">保存</button>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <!--删除数据确认-->
+        <div class="modal fade" id="form-A30148" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="get">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabe2">
+                                删除信息确认
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            该操作不可恢复，请确认！
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                            <button type="submit" class="btn btn-danger">确认</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12" nowrap>
+
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="合同名称搜索......" name="keyword" value="{$keyword}">
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                    <li >
+                        <a href="/home/ZcManage/HtExp" role="button" data-toggle="modal"  title="导出信息" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span> 导出信息</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div id='div1' style="width: 96%;margin: 0 auto">
+
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped " >
+            <tr style="background: #8bc5eb; color: #ffffff;font-size: 12px" >
+                <th nowrap>序号</th>
+                <th nowrap>合同名称</th>
+                <th nowrap>签署方</th>
+                <th nowrap>合同金额</th>
+                <th nowrap>付款方式</th>
+                <th nowrap>开始日期</th>
+                <th nowrap>结束日期</th>
+                <th nowrap>备注</th>
+                <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr style="font-size: 12px">
+                    <td>{$i}</td>
+                    <td>{$Info.ht_mc}</td>
+                    <td>{$Info.ht_qsf}</td>
+                    <td style="text-align: right">￥{$Info.ht_je}</td>
+                    <td>{$Info.ht_fkfs}</td>
+                    <td>{$Info.ht_kssj|strtotime|date="Y-m-d",###}</td>
+                    <td>{$Info.ht_jssj|strtotime|date="Y-m-d",###}</td>
+                    <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.ht_bz}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                    <td><php>if ($Info['ht_htfj']!="") :</php><a href="/{$Info.ht_htfj}" target="_blank" title="附件下载"><span class="glyphicon glyphicon-download-alt"></span></a><php>endif ;</php>
+                        <a href="/Home/ZcManage/HtEditor?id={$Info.id}" title="编辑数据"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="#" onclick="delinfo({$Info.id})" title="删除数据"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popover"]').popover()
+                        })
+                    </script>
+                </tr>
+            </foreach>
+        </table>
+
+    </div>
+    <ul class="pagination">
+        {$pagebar}
+    </ul>
+
+</block>

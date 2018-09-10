@@ -1,0 +1,95 @@
+<extend name="manage/index/base" />
+<block name="customer">
+    <php> if($type==3): //行业专家顾问</php>
+    <div style="width: 99%;margin: 0px auto;">
+        <foreach name="info_data" item="zj" >
+        <div  class="glyphicon glyphicon-th"> <a href="/index.php/Home/zjxx/zjwcr_list/">专家信息中心</a>-->{$zj.cg_wcrxm}专家详细信息</div>
+        <br/><br/>
+        <div style="width: 90%;margin: 0px auto;">
+
+
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" <php>if ($zj["zj_photo"]=="") :</php>src="__PUBLIC__/glxh/images/logo.png" <php>else :</php>src="/{$zj.zj_photo}" style="width: 150px" ;<php>endif ;</php> alt="{$zj.cg_wcrxm}"  >
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{$zj.cg_wcrxm}<span style="font-size: 12px;color: #0f0f0f"> ({$zj.cg_wcrxb}，{$zj.cg_wcrcsny|strtotime|date="Y年m月",###}出生，{$zj.cg_wcrsfzh})；{$zj.cg_wcrzgxl}，{$zj.cg_wcrdp}，{$zj.cg_wcrgzdw}{$zj.cg_wcrxzzw}。</span></h4>
+                        <br />
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-success" style="font-size: 13px">
+                            办公电话：<php> if( $zj['cg_wcrbgdh'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrbgdh}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;工作单位：<php> if( $zj['cg_wcrgzdw'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrgzdw}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;从事专业：<php> if( $zj['gl_zjcszygjc'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zjcszygjc}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;籍贯：<php> if( $zj['cg_wcrjg'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrjg}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;技术职称：<php> if( $zj['cg_wcrjszc'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrjszc}<php> endif;</php>
+                            </li>
+                            <li class="list-group-item list-group-item-info" style="font-size: 13px">
+                            通讯地址：{$zj.cg_wcrtxdz} &nbsp;&nbsp;&nbsp;&nbsp;邮政编码：{$zj.cg_wcryzbm}
+                            &nbsp;&nbsp;&nbsp;&nbsp;电子邮箱：{$zj.cg_wcrdzyx}
+                                &nbsp;&nbsp;&nbsp;&nbsp;移动电话：{$zj.cg_wcryddh}
+                            </li>
+                            <li class="list-group-item list-group-item-warning" style="font-size: 13px">
+                                曾获奖项：<php> if( $zj['cg_wcrchj'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrchj}<php> endif;</php>
+                            </li>
+                        </ul>
+                        <hr/>
+                        <div style="line-height: 25px">
+                            主要成果：<?php $i = 0;?>
+                            <foreach name="cg_data" item="cg" >
+                                <?php $i++;?>
+                                <h5><a href="/index.php/home/cgxx/cgxx_dal/?id={$cg.id}">{$i}. {$cg.cg_cgmc}</a> <span class="label label-default">({$cg.cg_wcsj|strtotime|date="Y年m月",###})</span></h5>
+                                <li style="font-size: 12px">主要完成人：{$cg.cg_zywcr} </li>
+                            </foreach>
+                        </div>
+                    </div>
+                </div>
+            </foreach>
+        </div>
+    </div>
+
+
+
+    <php> else: //专家</php>
+    <div style="width: 90%;margin: 0px auto;">
+        <foreach name="info_data" item="zj" >
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><php>if ($zj['gl_zjlx']==2): </php><a href="/?a=Zjxx_list&c=Zjxx&type={$zj.gl_zjlx}">专家委员信息</a><php>else: </php><a href="/?a=Zjxx_list&c=Zjxx&type={$zj.gl_zjlx}">青年专家信息</a><php> endif; </php>-->专家详细信息</div>
+        <br/><br/>
+        <div style="width: 90%;margin: 0px auto;">
+
+
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" <php>if ($zj["gl_zjphoto"]=="") :</php>src="__PUBLIC__/glxh/images/logo.png" <php>else :</php>src="/{$zj.gl_zjphoto}" style="width: 150px" ;<php>endif ;</php> alt="{$zj.gl_zjxm}"  >
+
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{$zj.gl_zjxm}<span style="font-size: 12px;color: #0f0f0f"> ({$zj.zjlx_mc})</span></h4>
+                        <p>{$M_dat.info_note}</p>
+                        <p ><span>
+                            性别：<php> if( $zj['gl_zjxb'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zjxb}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;职级职务：<php> if( $zj['gl_zjzw'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zjzw}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;工作单位：<php> if( $zj['gl_zjgzdw'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zjgzdw}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;从事专业：<php> if( $zj['gl_zjcszygjc'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zjcszygjc}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;所在省份：<php> if( $zj['gl_zjsf'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zjsf}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;：<php> if( $zj['gl_zwhzw'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zwhzw}<php> endif;</php>
+                        </span></p>
+                        <hr/>
+                        <div style="line-height: 25px">
+                            主要成果：<?php $i = 0;?>
+                            <foreach name="cg_data" item="cg" >
+                                <?php $i++;?>
+                                <h5><a href="/index.php/home/cgxx/cgxx_dal/?id={$cg.id}" >{$i}. {$cg.cg_cgmc}</a> <span class="label label-default">({$cg.cg_wcsj|strtotime|date="Y年m月",###})</span></h5>
+                                <li style="font-size: 12px">主要完成人：{$cg.cg_zywcr} </li>
+                            </foreach>
+                        </div>
+                    </div>
+                </div>
+            </foreach>
+        </div>
+    </div>
+    <php> endif;</php>
+</block>

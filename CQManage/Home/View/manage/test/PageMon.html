@@ -1,0 +1,382 @@
+<extend name="manage/index/base_user" title="表单配置管理"/>
+
+<block name="customer">
+<div class="container">
+<h3>自动化表单配置</h3>
+
+        <div class="form-inline" style="text-align: left">
+
+            <form method="post">
+                <label>数据库表</label>
+                <select name="table" class="selectpicker show-tick form-control" id="table" >
+                    <option value ="">请选择</option>
+                    <foreach name="Table" item="T" >
+                        <option value ="{$T.table_name}">{$T.table_comment}({$T.table_name})</option>
+                    </foreach>
+                </select>
+                <label>表单类型</label>
+                <select name="lx" class="selectpicker show-tick form-control" id="lx" >
+                    <option value ="">请选择</option>
+                        <option value ="1">独占行表单</option>
+                        <option value ="2">内联行表单</option>
+                        <option value ="3">弹出Model表单</option>
+                </select>
+            <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+            </form>
+        </div>
+<hr />
+    <php>if ($lx==1 || $lx=='') :</php>
+    <!--独占表单表开始-->
+    <div class="col-md-12" style="padding-left: 10px">
+        <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+    <foreach name="formname" item="fo" >
+
+    <?php
+        $col_name=$fo['column_name'];
+        $max_len=$fo['character_maximum_length'];
+        $col_type=$fo['data_type'];
+        $comment=$fo['column_comment'];
+        $comment=explode("|",$comment);
+
+         //文本框
+        if ($col_type=="varchar"){
+        if (!$comment[1] ){
+        if ($max_len<=255){
+            $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+        <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'" data-rule="required"/>
+        </div><br/>';
+        }
+    elseif ($max_len>255 &&$max_len<=1000){
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+    <textarea class="form-control" style="height: 100px" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"></textarea>
+</div><br/>';
+    }
+    elseif ($max_len>1000){
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+    <textarea class="ckeditor form-control" style="height: 100px" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"></textarea>
+</div><br/>';
+    }
+             //echo $InputTxt;
+        }
+        //数字型
+        elseif ($comment[1]=="int") {
+        $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-sound-6-1"></span>
+        </span>
+         <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+          </div><br/>';
+        //echo $InputTxt;
+        }
+        //二维码
+       elseif ($comment[1]=="Dcode") {
+       $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-qrcode"></span>
+        </span>
+        <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+        </div><br/>';
+        //echo $InputTxt;
+        }
+    //文件上传
+    elseif ($comment[1]=="File") {
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+    <input type="file" id="exampleInputFile" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'">
+    <p class="help-block">请上传DOC/PDF/RAR/ZIP类型的文件.</p>
+    </div>';
+    echo $FileUp;
+    }
+    //条形码
+    elseif ($comment[1]=="Rcode") {
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+    <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+</div><br/>';
+    //echo $InputTxt;
+    }
+
+        }
+    //小数类型
+    $InputNumber='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+    <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+    <div class="input-group-addon">.00</div>
+</div><br/>';
+        //日期选择框
+        if ($col_type=="datetime"){
+        //$col_date_id="$('#".$fo['column_name']."')";
+        //echo $col_date_id;
+        $InputDate='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+         <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+         <input type="text" readonly class=" form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请选择'.$comment[0].'"/>
+          </div><br/>';
+        //echo $InputDate;
+        $ActJs='<script>
+        $("#'.$fo['column_name'].'").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        language:"zh-CN",
+            minView:"month"
+        });
+        </script>';
+        //echo $ActJs;
+        }
+        //下拉选择
+        if ($comment[1]=="LxSelect"){
+          $col_type=$comment[1];
+          $select='<div class="col-sm-6 input-group-sm" style=""><select class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].' ">';
+           $tb_name=$comment[2];
+            $id_mc=$comment[3];
+            $lx_mc=$comment[4];
+           $tb= M($tb_name);
+           $ret=$tb->where()->select();
+           //var_export($ret);
+            //echo $tb->_sql();
+        $select.="<option value='' selected>请选择类型</option>";
+        foreach($ret as $s_data){
+        $select.="<option value='".$s_data[$id_name]."'>".$s_data[$lx_mc]."</option>";
+        }
+            $select.="</select></div><br />";
+        //echo $select;
+        }
+        //单选按钮
+        if ($comment[1]=="RadioSelect"){
+        $col_type=$comment[1];
+        $RadioSelect='<div class="col-sm-6 input-group-sm" style=""><label class="radio-inline"><input type="radio"  value="1" checked name="'.$fo['column_name'].'" id="'.$fo['column_name'].'"/>有效</label>
+        <label class="radio-inline"><input type="radio"  value="0" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'"/> 无效</label> </div>';
+        //echo $RadioSelect;
+        }
+        //lable样式
+        $comment=$comment[0];
+        $LableTxt='<lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">'.$comment.' : </lable>';
+        switch($col_type)
+        {
+        case "varchar":
+        echo $LableTxt.$InputTxt;
+        echo "<!--END-->";
+        break;
+        case "datetime":
+        echo $LableTxt.$InputDate.$ActJs;
+        echo "<!--END-->";
+        break;
+        case "LxSelect";
+        echo $LableTxt.$select."<br />";
+        echo "<!--END-->";
+        break;
+        case "RadioSelect";
+        echo $LableTxt .$RadioSelect."<br />";
+        echo "<!--END-->";
+        break;
+        case "double":
+        echo $LableTxt.$InputNumber.$ActJs;
+        echo "<!--END-->";
+        break;
+
+        }
+    ;?>
+        </foreach>
+    <br />
+    {$LableTxt}
+    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+    <button type="submit" class="btn btn-success">保存</button>
+    <button type="reset" class="btn btn-default">重置</button>
+        </div>
+
+    </form>
+        </div>
+
+    <!--独占表单结束-->
+    <php>elseif ($lx==2) :</php>
+    正在建设中...
+    <php>elseif ($lx==3) :</php>
+
+    <span style="text-align: center"><a href="#form-1"  role="button" data-toggle="modal"  >效果展示</a></span>
+    <!--Model表单开始-->
+    <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form role="form" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            增加****信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <foreach name="formname" item="fo" >
+                        <?php
+        $col_name=$fo['column_name'];
+        $max_len=$fo['character_maximum_length'];
+        $col_type=$fo['data_type'];
+        $comment=$fo['column_comment'];
+        $comment=explode("|",$comment);
+
+        //文本框
+        if ($col_type=="varchar"){
+            if (!$comment[1] ){
+            $comment=$comment[0];
+                //长度为255及以下的
+                if ($max_len<=255){
+                $input='<div class="form-group"><label>';
+                 $input.=$comment;
+                 $input.='</label><input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment.'" data-rule="required" /></div>';
+                 echo $input;
+                }
+                //长度为255以上1000以下
+                elseif ($max_len>255 &&$max_len<=1000){
+                    $input='<div class="form-group"><label>';
+                    $input.=$comment;
+                    $input.='</label><textarea class="form-control" style="height: 100px" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment.'"></textarea></div>';
+                    echo $input;
+                    }
+                //长度为1000以上的
+                elseif (max_len>1000){
+                $input='<div class="form-group"><label>';
+                $input.=$comment;
+                $input.='</label><textarea class="ckeditor form-control" style="height: 100px" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment.'"></textarea></div>';
+                //echo $input;
+                    }
+             }
+        }
+        //日期选择框
+        if ($col_type=="datetime" ){
+        $comment=$comment[0];
+        $input='<div class="form-group"><label>';
+        $input.=$comment;
+        $input.='</label><input type="text" readonly class=" form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请选择'.$comment.'"/></div>';
+        echo $input;
+        $ActJs='<script>
+        $("#'.$fo['column_name'].'").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            language:"zh-CN",
+            minView:"month"
+        });
+        </script>';
+        echo $ActJs;
+        }
+        //数字型
+        if ($col_type=="double" ){
+            $comment=$comment[0];
+            $input='<div class="form-group"><label>';
+            $input.=$comment;
+            $input.='</label><input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment.'" data-rule="required" /></div>';
+            echo $input;
+        }
+        //下拉选择
+        if ($comment[1]=="LxSelect"){
+            $col_type=$comment[1];
+            $select='<div class="form-group"><label>';
+            $select.=$comment[0];
+            $select.='</label><select class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].' ">';
+            $tb_name=$comment[2];
+            $id_mc=$comment[3];
+            $lx_mc=$comment[4];
+            $tb= M($tb_name);
+            $ret=$tb->where()->select();
+            //var_export($ret);
+            //echo $tb->_sql();
+            $select.="<option value='' selected>请选择类型</option>";
+            foreach($ret as $s_data){
+            $select.="<option value='".$s_data[$id_name]."'>".$s_data[$lx_mc]."</option>";
+            }
+            $select.="</select></div>";
+            echo $select;
+        }
+
+        ?>
+                        </foreach>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--表单结束-->
+    <php>endif ;</php>
+    <br />
+    <div style="width: 49%;float: left">
+        <p >后台表单增加(ADD)代码,当前表名<mark>({$TableName})</mark>：</p>
+        <pre class="prettyprint linenums" style="width: 100%;height: 300px">
+            //增加信息
+            function Add****(){
+                $AddData=D("{$TableName}");  //注意去除前缀
+            <foreach name="formname" item="fo" >
+                $AddData->{$fo.column_name}=I("{$fo.column_name}"); //{$fo.column_comment}<br />
+            </foreach>
+                $AddData->add();
+            }
+    </pre>
+    </div>
+    <div style="width: 49%;float: right">
+        <p >后台表单编辑(Edit)代码,当前表名<mark>({$TableName})</mark>：</p>
+        <pre style="width: 100%;height: 300px">
+            //编辑信息
+            function Edit****(){
+                $id=I("id");
+                $EditData=D("{$TableName}");  //注意去除前缀
+            <foreach name="formname" item="fo" >
+                $EditData->{$fo.column_name}=I("{$fo.column_name}"); //{$fo.column_comment}<br />
+            </foreach>
+                $EditData->save()->where("id=$id");
+            }
+
+    </pre>
+    </div>
+    <div style="width: 49%;float: left">
+        <p >后台表单导出(Excel)代码,当前表名<mark>({$TableName})</mark>：</p>
+
+        <pre style="width: 100%;height: 300px">
+            /*导出Excel信息*/
+	function expExcel($where){
+		$this->_keyword=I("keyword");
+		if ($this->_keyword!=""){
+            <foreach name="formname" item="fo" >
+                $where["{$fo.column_name}"]  = array('like',"%$this->_keyword%");  //{$fo.column_comment}<br />
+            </foreach>
+                $where['_logic']='OR';
+            }
+
+		$m = M ('{$TableName}');  //
+		// $datas['order_p_name'] = $p_name;
+		$data = $m->where($where)->order("id DESC")->select();
+		foreach ($data as $k => $v)
+		{
+			$data[$k]['id']=$v['id'];
+		}
+		//var_export($data);
+		//exit;
+		//用vendor导入PHPExcel类库
+		vendor("PHPExcel.PHPExcel");
+		$filename="{$TableName}信息表";
+		$headArr=array("ID"<foreach name="formname" item="fo" >
+            ,"<php>
+            $comment=$fo['column_comment'];
+            $comment=explode("|",$comment);
+            echo $comment[0]</php>"
+            </foreach>);
+		$getExcel=new ExcelAPI();
+		$getExcel->getExcel($filename,$headArr,$data);
+	}
+    </pre>
+    </div>
+
+    </div>
+</block>

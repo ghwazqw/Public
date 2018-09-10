@@ -1,0 +1,246 @@
+<extend name="glxh/index/base_user"  title="会议需求"/>
+<block name="customer">
+
+
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $("#AddChr").click(function() {
+                var gl_hdid=$("#gl_hdid").val();
+                var gl_dwmc=$("#gl_dwmc").val();
+                var gl_txdz=$("#gl_txdz").val();
+                var gl_ssap=$("#gl_ssap").val();
+                var gl_lxr=$("#gl_lxr").val();
+                var gl_lxdh=$("#gl_lxdh").val();
+                var gl_dzyx=$("#gl_dzyx").val();
+                $("#AddChry").html("正在提交...");
+                $("#AddChry").prop("disabled",true);
+                $.ajax({
+                    type:"POST",
+                    url:"/home/Quser/ChryAdd",
+                    data:{
+                        "gl_hdid":gl_hdid,
+                        "gl_dwmc":gl_dwmc,
+                        "gl_txdz":gl_txdz,
+                        "gl_ssap":gl_ssap,
+                        "gl_lxr":gl_lxr,
+                        "gl_lxdh":gl_lxdh,
+                        "gl_dzyx":gl_dzyx,
+                    },
+                    complete:function(XMLHttpRequest, textStatus){  //调用后返回信息
+                        $("#AddChry").html("提交");
+                        $("#AddChry").prop("disabled",false);
+                    },
+                    timeout:8000,
+                    error:function(XMLHttpRequest, textStatus, errorThrown){  //失败后调用回调信息
+                        alert("出错，具体为"+textStatus);},
+                    success:function(result,state){
+                        window.location.reload();
+                    }
+
+
+                })
+            });
+            $("#AddChry").click(function() {
+                var gl_dwid=$("#gl_dwid").val();
+                var gl_chrxm=$("#gl_chrxm").val();
+                var gl_bmzw=$("#gl_bmzw").val();
+                var gl_xb=$("#gl_xb").val();
+                var gl_sj=$("#gl_sj").val();
+                var gl_yx=$("#gl_yx").val();
+                var gl_bz=$("#gl_bz").val();
+                $("#AddChry").html("正在提交...");
+                $("#AddChry").prop("disabled",true);
+                $.ajax({
+                    type:"POST",
+                    url:"/home/Quser/ChrAdd",
+                    data:{
+                        "gl_dwid":gl_dwid,
+                        "gl_chrxm":gl_chrxm,
+                        "gl_bmzw":gl_bmzw,
+                        "gl_xb":gl_xb,
+                        "gl_sj":gl_sj,
+                        "gl_yx":gl_yx,
+                        "gl_bz":gl_bz,
+                    },
+                    complete:function(XMLHttpRequest, textStatus){  //调用后返回信息
+                        $("#AddChry").html("提交");
+                        $("#AddChry").prop("disabled",false);
+                    },
+                    timeout:8000,
+                    error:function(XMLHttpRequest, textStatus, errorThrown){  //失败后调用回调信息
+                        alert("出错，具体为"+textStatus);},
+                    success:function(result,state){
+                        location.reload();
+                    }
+
+
+                })
+            });
+         })
+
+    </script>
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+    <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+<div class="kjtd_kj" style="height: 750px">
+    <div class="kjtd_kj_left">
+        <div class="user_cnet_kj_menu">
+            {:W('Info/load',array(5))}
+            {:W('Info/load',array(6))}
+            {:W('Info/load',array(7))}
+        </div>
+    </div>
+    <div class="kjtd_kj_right" style="width: 77%">
+
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current"><a href="/">首页</a> -> <a href="/home/Quser/user_cent">用户中心</a> -> 会议报名信息</li>
+    </div>
+    <div class="kjtd_qc"></div>
+    <div id="xxzx_content" style="padding-left: 8px">
+        <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+        <foreach name='Userdata' item='Info'>
+        <!--TAB标签一-->
+                    <foreach name='Hdxx' item='Infodata' >
+                        <address style="line-height: 22px">
+                            <strong>主办方：</strong>{$Infodata.gl_zbf}<br>
+                            <strong>举办地点：</strong>{$Infodata.gl_dd}<br />
+                            <strong>举办时间：</strong><abbr title="Phone">从</abbr> {$Infodata.gl_kssj|strtotime|date="Y年m月d日 H:m:s",###}<abbr title="Phone">到</abbr>{$Infodata.gl_jssj|strtotime|date="Y年m月d日 H:m:s",###}</u>
+                        </address>
+                       <input type="hidden" class="form-control" name="gl_hdid" id="gl_hdid" placeholder="请输入单位名称" data-rule="required" value="{$Infodata.id}"/>
+                    </foreach>
+
+            <php>if ($count>0) :</php>
+
+                    <foreach name='Bmxx' item='Infodata' >
+                        <address style="line-height: 22px">
+                        <strong>参会单位：</strong>{$Infodata.gl_dwmc}<br>
+                        <strong>报名时间：</strong>{$Infodata.gl_bmsj|strtotime|date="Y年m月d日 H:m:s",###}<br>
+                        <abbr title="Phone">P：</abbr>{$Infodata.gl_lxdh}<br>联系人：{$Infodata.gl_lxr}
+                        <strong>Email：</strong><a href="mailto:#">{$Infodata.gl_dzyx}</a><br />
+                        <strong>食宿安排：</strong>{$Infodata.gl_ssap}
+                       </address>
+                        <input type="hidden" class="form-control" name="gl_dwid" id="gl_dwid" value="{$Infodata.id}"/>
+                    </foreach>
+            <table style="width: 95%" class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+                <tr style="background: #347ab7; color: #ffffff">
+                    <th nowrap>序号</th>
+                    <th >姓名</th><th >部门/职务</th><!--<th >性别</th>--><th >手机</th><th >邮箱</th><th >备注</th>
+                </tr>
+                <?php $i = 0;?><br/>
+                <foreach name='Chrxx' item='Info' >                    <?php $i++;?>                    <tr>
+                    <td>{$i}</td>
+                    <td>{$Info.gl_chrxm}</td><td>{$Info.gl_bmzw}</td><!--<td>{$Info.gl_xb}</td>--><td>{$Info.gl_sj}</td><td>{$Info.gl_yx}</td><td>{$Info.gl_bz}</td>
+                </tr>
+                </foreach>                </table>
+            <div class="col-md-12 form-inline" style="padding-left: 0px;line-height: 35px">
+                <lable class="control-label" style="text-align: right;font-size: 14px">姓名 : </lable>
+                <div class="input-group input-group-sm" style="padding-left: 15px">
+                    <input type="text" class="form-control" name="gl_chrxm" id="gl_chrxm" placeholder="请输入姓名" data-rule="required"/>
+                </div>
+                &nbsp;&nbsp;<lable class=" control-label" style="text-align: right;font-size: 14px">部门/职务 : </lable>
+                <div class="input-group input-group-sm" style="padding-left: 15px">
+                    <input type="text" class="form-control" name="gl_bmzw" id="gl_bmzw" placeholder="请输入部门/职务" data-rule="required"/>
+                </div>
+                &nbsp;&nbsp;<lable class=" control-label" style="text-align: right;font-size: 14px">手机 : </lable>
+                <div class="input-group input-group-sm" style="padding-left: 15px">
+                    <input type="text" class="form-control" name="gl_sj" id="gl_sj" placeholder="请输入手机" />
+                </div>
+
+                <lable class=" control-label" style="text-align: right;font-size: 14px">邮箱 : </lable>
+                <div class="input-group input-group-sm" style="padding-left: 15px">
+                    <input type="text" class="form-control" name="gl_yx" id="gl_yx" placeholder="请输入邮箱" />
+                </div><br />
+                <lable class=" control-label" style="text-align: right;font-size: 14px">备注 : </lable>
+                <div class="input-group input-group-sm" style="padding-left: 15px" >
+                    <input type="text" class="form-control"  name="gl_bz" id="gl_bz" placeholder="请输入备注"  style="width: 755px;"/>
+                </div>
+                <button type="button" class="btn btn-success" id="AddChry" style="height: 32px;">增加</button>
+            </div>
+
+
+            <php>else :</php>
+                    <div class="kjtd_from">
+                        <!--行1!-->
+                        <div class="col-md-12" style="padding-left: 10px">
+
+                                <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">单位名称 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                                <input type="text" class="form-control" name="gl_dwmc" id="gl_dwmc" placeholder="请输入单位名称" data-rule="required" value="{$Info.user_comp}"/>
+                            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">通讯地址 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+                                <textarea class="form-control" style="height: 100px" name="gl_txdz" id="gl_txdz" placeholder="请输入通讯地址" value="{$Info.user_lxdz}"></textarea>
+                            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">食宿安排 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+                                <input type="text" class="form-control" value="统一安排食宿，住宿费用自理" name="gl_ssap" id="gl_ssap" />
+                            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">联系人 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                                <input type="text" class="form-control" name="gl_lxr" id="gl_lxr" placeholder="请输入联系人" data-rule="required" value="{$Info.user_xm}"/>
+                            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">联系电话 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                                <input type="text" class="form-control" name="gl_lxdh" id="gl_lxdh" placeholder="请输入联系电话" data-rule="required" value="{$Info.user_sj}"/>
+                            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">电子邮箱 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                                <input type="text" class="form-control" name="gl_dzyx" id="gl_dzyx" placeholder="请输入电子邮箱" data-rule="email" value="{$Info.user_yx}"/>
+                            </div><br/><!--END-->    <br />
+                                <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"> </lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+
+                            </div>
+                            <lable class=" control-label" style="text-align: right;font-size: 14px"></lable>    <div class="input-group-sm" style="padding-left: 15px" >
+                            <button type="button" class="btn btn-success" id="AddChr">增加</button>
+
+                        </div>
+
+                    </div>
+        <php>endif ;</php>
+
+
+
+
+
+        </foreach>
+
+    </div>
+
+</div>
+</div>
+        </form>
+    <div class="clear"></div>
+</block>

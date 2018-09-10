@@ -1,0 +1,54 @@
+<extend name="50/index/base" title="菜单管理"/>
+<block name="customer">
+
+    <div class="panel panel-default" style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><span class="glyphicon glyphicon-th-list"> 管理中心</span> --> 菜单管理 <span class="label label-info glyphicon glyphicon-plus"> 新增</span></div>
+        <div class="panel-body">
+            <p>在此您可以调整系统的后端菜单信息，调整后“刷新”即获得变化，请慎用。</p>
+        </div>
+
+        <!-- Table -->
+        <table class="table table-bordered table-hover">
+            <tr style="background: #347ab7; color: #ffffff">
+                <td style="width: 50px">序号</td>
+                <td>菜单名称</td>
+                <td style="width: 80px">菜单级别</td>
+                <td>链接地址</td>
+                <td>菜单状态</td>
+                <td>操作</td>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="menu" >
+                <?php $i++;?>
+            <tr id="{$i}">
+                <td>{$i}</td>
+                <td>{$menu.nav_name}</td>
+                <td><php>if ($menu['nav_jb']==1):</php>一级菜单<php> endif;</php></td>
+                <td>{$menu.nav_link}</td>
+                <td><a href="#"> <php>if ($menu['nav_sfyx']==1):</php><span > 有效</span><php>else :</php><span style="color:red">无效</span><php> endif;</php></a></td>
+                <td><a href="/index.php/home/menu/?act=delete&id={$menu.id}" title="删除数据"><span class="glyphicon glyphicon-remove" id="del"></span></a>
+                    <a href="#" title="编辑数据"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="#" title="置为无效"><span class="glyphicon glyphicon-minus"></span></a>
+                </td>
+            </tr>
+                <foreach name="meta_data" item="me" >
+                    <php>if ($me['nav_sjid']==$menu['id']):</php>
+                <tr >
+                    <td>{$me.nav_show}</td>
+                    <td >&nbsp;&nbsp;&nbsp;&nbsp;{$me.nav_name}</td>
+                    <td><php>if ($me['nav_jb']==2):</php>二级菜单<php> endif;</php></td>
+                    <td>{$me.nav_link}</td>
+                    <td><a href="#"> <php>if ($me['nav_sfyx']==1):</php><span > 有效</span><php >else :</php><span style="color:red">无效</span><php> endif;</php></a></td>
+                    <td><a href="/index.php/home/menu/?act=delete&id={$me.id}" title="删除数据"><span class="glyphicon glyphicon-remove"></span></a>
+                        <a href="#" title="编辑数据"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="#" title="置为无效"><span class="glyphicon glyphicon-minus"></span></a></td>
+                </tr>
+                    <php> endif;</php>
+                    </foreach>
+                </foreach>
+
+        </table>
+    </div>
+
+</block>

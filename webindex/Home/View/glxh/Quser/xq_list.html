@@ -1,0 +1,53 @@
+<extend name="glxh/index/base"  title="用户注册"/>
+<block name="customer">
+       <div class="user_cnet_bg"></div>
+
+	<div class="row clearfix">
+		<div class="col-md-2 column">
+			<include file="glxh/Quser/user_navy_list" />
+		</div>
+		<div class="col-md-10 column">
+			<table class="table table-bordered table-hover" style="margin-top: 15px;width: 98%;">
+	<tr style="background: #f08300; color: #ffffff">
+		<td style="width: 4%">序号</td>
+                <td style="width: 6.5%;">活动类型</td>
+                <td style="width: 6.5%;">活动形式</td>
+                <td style="width: 10%;">需求类型</td>
+                <td style="width: 12%;">提交时间</td>
+                <td style="width: 37%;">需求内容</td>
+                <td style="width: 13%;">需求状态</td>
+                <td style="width: 11%;">操 作</td>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="U" >
+                <?php $i++;?>
+
+            <tr id="{$i}">
+                <td>{$i}</td>
+                <td >{$U.gl_hdlx}</td>
+                <td >{$U.gl_hdxs}</td>
+                <td><php>if ($U["gl_ywlx"]=='quser_gxdj_tb') :</php>供需对接需求<php>else :</php>会议会展需求<php>endif ;</php></td> 
+                <td>{$U.gl_cjsj|strtotime|date="Y年m月d日",###}</td>   
+                <td>{$U.gl_hdxq}</td> 
+                <td> <php>if ($U['gl_hdzt']==1):</php><span ><a href="#act_hf{$i}" data-toggle="modal">已提交，等待回复</a></span>
+                    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+                    <span class="label label-success">{$sussInfo}</span>
+                    <php>endif ;</php>
+                     <php>if ($U['gl_hdzt']==5):</php>等待进一步确认 <span class="badge" style="background: green;">1</span><php> endif;</php>
+                    <php>if ($U['gl_hdzt']==0):</php><span style="color: red">已退回</span><php> endif;</php>
+                    <php>if ($U['gl_hdzt']==10):</php><span style="color:green">
+  
+                    	已通过 <span class="badge" style="background: red;">1</span>
+                    </span><php> endif;</php>
+                </td>
+                <td><a href="detail?bm={$U.id}&type={$U.gl_hdzt}" title="{$U.gl_dh}"> 详细信息</a> | <a href="#" title="{$U.gl_dh}">删除</a></td>
+               
+            </tr>
+                
+            </foreach>
+
+        </table>
+		</div>
+	</div>
+</div>
+</block>

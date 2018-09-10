@@ -1,0 +1,27 @@
+<extend name="glxh/index/base_user"  title="关于我们"/>
+<block name="customer">
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <div style="height: 40px"></div>
+    <div style="width: 1200px;margin: 0 auto;">
+        <div style="width: 300px;float: left;">
+            {:W('Info/load',array(18))}
+        </div>
+        <div style="width: 70%;float: right;">
+            <foreach name="meta_data" item="M_dat" >
+                <div style="width: 100%;text-align: center;color: #01a8ef;font-size: 18px;">{$M_dat.info_title}</div>
+                <hr />
+                <div style="width: 100%;text-align: center;color: #000000;font-size: 14px">
+                    <php>if ($M_dat["info_title"]=='成果转化平台' || $M_dat["info_title"]=='资源优势' || $M_dat["info_title"]=='平台规划目标') :</php><span style="text-align: left;width: 90%;line-height: 30px">{$M_dat.info_content}</span><php>else :</php><img src="/{$M_dat.info_photo}" style="width: 600px"/><php>endif ;</php></div>
+                </foreach>
+        </div>
+    </div>
+    <div class="clear"></div>
+</block>

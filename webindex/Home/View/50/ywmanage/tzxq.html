@@ -1,0 +1,133 @@
+<extend name="50/index/base_ywmanage"  title="成果评估"/>
+<block name="customer">
+
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+
+
+    <div class="kjtd_kj" style="height: 900px">
+
+<div class="kjtd_title">
+    <ul class="breadcrumb">
+        <li>
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="#">管理中心</a>
+        </li>
+        <li>
+            <a href="/home/Manage/tzxq_manage">投资需求信息管理</a>
+        </li>
+        <li class="active">
+            <a href="#"> 投资需求详细信息</a>
+        </li>
+    </ul>
+    <foreach name='InfoData' item='InfoData' >
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current">一、投资需求</li>
+        <li>二、投资人基本信息</li>
+        <li>三、投资人联系信息</li>
+        <li>四、信息状态及回复</li>
+    </div>
+
+    <div class="kjtd_qc"></div>
+    <span class="label label-warning">{$errorInfo}</span>
+    <span class="label label-success">{$sussInfo}</span>
+    <div id="xxzx_content">
+        <!--TAB标签一-->
+        <ul style="display:block;" >
+
+                    <div class="kjtd_from">
+                        <!--行1!-->
+                        <div class="kjtd_from_left">拟投资项目：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_ntzxm}
+                        </div>
+                        <div class="kjtd_from_left" >拟投资规模：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_ntzgm}
+                        </div>
+                        <div class="kjtd_from_left" style="height: 140px">拟投资地区：</div>
+                        <div class="kjtd_from_right" style="height: 140px">
+                            {$InfoData.gl_ntzdq}
+                        </div>
+                        <div class="kjtd_from_left" >拟投资方式：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_ntzfs}
+                        </div>
+                        <div class="kjtd_from_left" >拟投资阶段：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_ntzjd}
+                        </div>
+                        <div class="kjtd_from_left" >拟投资企业性质：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_ntzqyxz}
+                        </div>
+                        <div class="kjtd_from_left" >股权结构要求：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_gqjgyq}
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 105px">过去投资经验：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            {$InfoData.gl_gxtzjy}                        </div>
+                        <div class="kjtd_from_left" >是否有过合作：</div>
+                        <div class="kjtd_from_right" >
+                            {$InfoData.gl_sfyghz}
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 105px">其他投资要求：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            {$InfoData.gl_qttzyq}                        </div>
+                    </div>
+
+
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+            <div class="kjtd_from_left" >投资人名称：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_tzrmc}            </div>
+            <div class="kjtd_from_left" >注所地(住所)：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_zsd}            </div>
+            <div class="kjtd_from_left" >注册资本：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_zczb}万元            </div>
+            <div class="kjtd_from_left" >投资人类型：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_tzrlx}
+            </div>
+            <div class="kjtd_from_left"  style="height: 105px">备注：</div>
+            <div class="kjtd_from_right" style="height: 105px">
+                {$InfoData.gl_bz}            </div>
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/lx_us" />
+        </ul>
+        <!--TAB标签六!-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/hfzx" />
+        </ul>
+
+    </div>
+    </foreach>
+</div>
+
+</block>

@@ -1,0 +1,17 @@
+<extend name="glxh/index/base_user"  title="用户注册"/>
+<block name="customer">
+        {~$qnavbar=w("Nav/qdef")}
+
+        <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px ">
+            <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+            </foreach>
+
+        </div>
+<div class="container">
+    <div class="jumbotron">
+        <h3>重置密码的邮件已发送至您的邮箱,请注意查收!</h3>
+        <p><a class="btn btn-primary btn-lg" href="/" role="button">返回首页</a></p>
+    </div>
+</div>
+</block>

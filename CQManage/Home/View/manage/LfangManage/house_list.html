@@ -1,0 +1,256 @@
+<extend name="manage/index/base_user" title="养护信息管理"/>
+<block name="customer">
+    <script type="text/javascript">
+        function delinfo(data,ryid) {
+            if(confirm("请确认是否删除，该操作不可恢复！")){
+                //alert(data);
+                location.href="/Home/LfangManage/delhouseinfo?table=house_tb&id="+data;
+            }
+        };
+
+    </script>
+    <script type="text/javascript">
+        function editinfo(id,buildingid,homename,zclb,zcbm,fzrq,fczbh,glyxm,mj,zlwz,szlc,nolur,huxing) {
+            //alert(homename);
+            $("#edit_id").val(id);
+            $("#buildingid_id").val(buildingid);
+            $("#edit_homename").val(homename);
+            $("#edit_zclb").val(zclb);
+            $("#edit_zcbm").val(zcbm);
+            $("#edit_fzrq").val(fzrq);
+            $("#edit_fczbh").val(fczbh);
+            $("#edit_glyxm").val(glyxm);
+            $("#edit_mj").val(mj);
+            $("#edit_zlwz").val(zlwz);
+            $("#edit_szlc").val(szlc);
+            $("#edit_nolur").val(nolur);
+            $("#edit_huxing").val(huxing);
+        }
+        function link(id) {
+            window.location.href="/home/LfangManage/Fjian?id="+id;
+        }
+    </script>
+    <div class="box">
+    <div class="box-body">
+        <php>if (!$keyword) :</php>
+        <php>else :</php>
+        <div class="col-md-12 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#" onClick="javascript :history.back(-1);"> <span class="glyphicon glyphicon-th"></span> 楼宇信息</a>
+                </li>
+                <li class="active">
+                    <span class="glyphicon glyphicon-home"></span> 房屋信息列表
+                </li>
+            </ul>
+        </div>
+        <php>endif ;</php>
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="房屋信息搜索......" name="keyword" value="">
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--Model表单开始-->
+        <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" action="/Home/LfangManage/AddHouse" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                增加房间信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>所属楼宇</label>
+                                <select name="buildingid" id="buildingid" class="form-control">
+                                    <option value="" selected>请选择</option>
+                                    <foreach name='LoufData' item='Info'>
+                                        <option value="{$Info.id}">{$Info.buing_name}</option>
+                                    </foreach>
+                                </select>
+                            </div>
+                            <div class="form-group"><label>坐落位置</label><input type="text" class="form-control" name="zlwz" id="zlwz" placeholder="请输入坐落位置" data-rule="required" /></div>
+                            <div class="form-group"><label>户型</label><input type="text" class="form-control" name="huxing" id="huxing" placeholder="请输入户型" data-rule="required" /></div>
+                            <div class="form-group">
+                                <label>资产类型</label>
+                                <select name="zclb" id="zclb" class="form-control">
+                                    <option value="" selected>请选择</option>
+                                    <option value="办公用房" >办公用房</option>
+                                    <option value="职工宿舍" >职工宿舍</option>
+                                    <option value="发行库" >发行库</option>
+                                    <option value="其他房屋" >其他房屋</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>发证日期：</label>
+                                <input type="text" readonly class=" form-control" name="fzrq" id="fzrq" placeholder="请选择发证日期" data-rule="required"/>
+                                <script>
+                                    $("#fzrq").datetimepicker({
+                                        format: "yyyy-mm-dd",
+                                        autoclose: true,
+                                        todayBtn: true,
+                                        language:"zh-CN",
+                                        minView:"month"
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group"><label>证书编号</label><input type="text" class="form-control" name="fczbh" id="fczbh" placeholder="请输入证书编号" data-rule="required" /></div>
+                            <div class="form-group"><label>房间名称</label><input type="text" class="form-control" name="homename" id="homename" placeholder="请输入房间名称" data-rule="required" /></div>
+                            <div class="form-group"><label>资产编码</label><input type="text" class="form-control" name="zcbm" id="zcbm" placeholder="请输入资产编码" data-rule="required;integer" /></div>
+                            <div class="form-group"><label>管理员姓名</label><input type="text" class="form-control" name="glyxm" id="glyxm" placeholder="请输入管理员姓名" data-rule="required" /></div>
+                            <div class="form-group"><label>面积</label><input type="text" class="form-control" name="mj" id="mj" placeholder="请输入面积" data-rule="required;range(10~10000)" /></div>
+                            <div class="form-group"><label>土地使用性质</label><input type="text" class="form-control" name="nolur" id="nolur" placeholder="请输入土地使用性质" data-rule="required" /></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--编辑表单开始-->
+        <div class="modal fade" id="edit-from" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" action="/Home/LfangManage/EditHouse" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="Label">
+                                编辑房间信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>所属楼宇</label>
+                                <select name="buildingid" id="buildingid_id" class="form-control">
+                                    <option value="" selected>请选择</option>
+                                    <foreach name='LoufData' item='Info'>
+                                        <option value="{$Info.id}">{$Info.buing_name}</option>
+                                    </foreach>
+                                </select>
+                                <input type="hidden" name="id" id="edit_id" value="" />
+                            </div>
+                            <div class="form-group"><label>坐落位置</label><input type="text" class="form-control" name="zlwz" id="edit_zlwz" placeholder="请输入坐落位置" data-rule="required" /></div>
+                            <div class="form-group"><label>户型</label><input type="text" class="form-control" name="huxing" id="edit_huxing" placeholder="请输入户型" /></div>
+                            <div class="form-group">
+                                <label>资产类型</label>
+                                <select name="zclb" id="edit_zclb" class="form-control">
+                                    <option value="" selected>请选择</option>
+                                    <option value="办公用房" >办公用房</option>
+                                    <option value="职工宿舍" >职工宿舍</option>
+                                    <option value="发行库" >发行库</option>
+                                    <option value="其他房屋" >其他房屋</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>发证日期：</label>
+                                <input type="text" readonly class=" form-control" name="fzrq" id="edit_fzrq" placeholder="请选择发证日期" data-rule="required"/>
+                                <script>
+                                    $("#edit_fzrq").datetimepicker({
+                                        format: "yyyy-mm-dd",
+                                        autoclose: true,
+                                        todayBtn: true,
+                                        language:"zh-CN",
+                                        minView:"month"
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group"><label>证书编号</label><input type="text" class="form-control" name="fczbh" id="edit_fczbh" placeholder="请输入证书编号" data-rule="required" /></div>
+                            <div class="form-group"><label>房间名称</label><input type="text" class="form-control" name="homename" id="edit_homename" placeholder="请输入房间名称" data-rule="required" /></div>
+                            <div class="form-group"><label>资产编码</label><input type="text" class="form-control" name="zcbm" id="edit_zcbm" placeholder="请输入资产编码" data-rule="required;integer" /></div>
+                            <div class="form-group"><label>管理员姓名</label><input type="text" class="form-control" name="glyxm" id="edit_glyxm" placeholder="请输入管理员姓名" data-rule="required" /></div>
+                            <div class="form-group"><label>面积</label><input type="text" class="form-control" name="mj" id="edit_mj" placeholder="请输入面积" data-rule="required;range(10~10000)" /></div>
+                            <div class="form-group"><label>土地使用性质</label><input type="text" class="form-control" name="nolur" id="edit_nolur" placeholder="请输入土地使用性质" data-rule="required" /></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <div  style="width: 97%;margin: 0 auto">
+            <!-- /.box-header -->
+                <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                    <tr style="background: #8bc5eb; color: #ffffff;font-size: 12px">
+                        <th style="width: 5%;">编号</th>
+                        <th >房间名称</th>
+                        <th >资产类别</th>
+                        <th >资产编码</th>
+                        <th >发证日期</th>
+                        <th >证号编号</th>
+                        <th >财产保管人</th>
+                        <th >坐落位置</th>
+                        <th >面积</th>
+                        <th >所在楼层</th>
+                        <th style="width: 8%">土地使用性质</th>
+                        <th style="width: 8%">操作</th>
+                        <!--<th style="width: 4%">Down</th>-->
+                    </tr>
+                    <tbody>
+                    <php>if( $count > 0  ):</php>
+                    <foreach name="info_data" item="cg" >
+                        <tr style="font-size: 12px">
+
+                            <td style="text-align: center">{$cg.id}</td>
+                            <td><a href="Fjian?id={$cg.id}" title="房间详细信息">{$cg.homename}</a></td>
+                            <td>{$cg.zclb}</td>
+                            <td>{$cg.zcbm}</td>
+                            <td>{$cg.fzrq}</td>
+                            <td>{$cg.fczbh}</td>
+                            <td>{$cg.glyxm}</td>
+                            <td>{$cg.zlwz}</td>
+                            <td style="text-align: right">{$cg.mj}㎡</td>
+                            <td>{$cg.szlc}</td>
+                            <td>{$cg.nolur}</td>
+                            <td>
+                                <div class="btn-toolbar" role="toolbar">
+                                <div class="btn-group">
+                                    <button type="button" onclick="editinfo({$cg.id},{$cg.buildingid},'{$cg.homename}','{$cg.zclb}','{$cg.zcbm}','{$cg.fzrq}','{$cg.fczbh}','{$cg.glyxm}','{$cg.mj}','{$cg.zlwz}','{$cg.szlc}','{$cg.nolur}','{$cg.huxing}')" class="btn btn-default btn-xs" href="#edit-from"  data-toggle="modal" title="编辑信息" aria-label="Left Align"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                                    <button type="button" onclick="delinfo({$cg.id})" class="btn btn-default btn-xs" data-toggle="modal" title="删除信息" aria-label="Justify"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                    <button type="button" onclick="link({$cg.id})" class="btn btn-default btn-xs" title="房间具体信息" ><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></button>
+                                </div>
+                            </div></td>
+
+                        </tr>
+                    </foreach>
+                    <php>else:</php>
+                    </tbody>
+
+                </table>
+                    <span style="color: red" >“{$keyword}”</span>该关键字下没有信息。
+                <br/><br/><br/>
+                    <php> endif;</php>
+
+                    </tbody>
+
+                </table>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+</block>

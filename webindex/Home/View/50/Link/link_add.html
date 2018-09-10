@@ -1,0 +1,57 @@
+<extend name="50/index/base" />
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><a href="/index.php/Home/link/link_list/">友情链接信息管理</a>-->友情链接信息增加</div>
+        <br />
+        <span class="label label-warning">{$errorInfo}</span>
+        <span class="label label-success">{$sussInfo}</span>
+        <br />
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-9 column" style="padding-left: 30px">
+                    <form method="post"  id="loginform" class="form-line" role="form" enctype="multipart/form-data">
+
+
+
+                        <div class="form-group">
+                            <label for="basic-url">链接名称</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon4">链接名称</span>
+                                <input type="text" class="form-control" id="basic-url1" aria-describedby="basic-addon3" name="info_title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="basic-url2">链接图片上传<span style="font-size: 12px"> "请上传尺寸为173*46的图片"</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon5">链接图片上传</span>
+                                <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="info_photo" >
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="basic-url3">链接地址</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" >链接地址</span>
+                                <input type="text" class="form-control" id="basic-url3" aria-describedby="basic-addon3" name="info_link" placeholder="只需要输入www.****.com即可">
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="basic-url">资讯内容</label>
+                            <textarea id="content" name="content" class="ckeditor"></textarea>
+                        </div>-->
+
+
+                        <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+                        <button type="reset" class="btn btn-default">重置</button>
+                        <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+
+                    </form>
+                </div>
+                <div class="col-md-3 column">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</block>

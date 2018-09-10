@@ -1,0 +1,149 @@
+<extend name="manage/index/base_user" title="设备信息管理"/>
+
+
+<block name="customer">
+    <script type="text/javascript">
+
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        function changeData() {
+            var v=$("#zc_lx").find("option:selected").val();
+            var t=$("#zc_lx").find("option:selected").text();
+            $("#zc_mc").val(t);
+            var zc_rjlx = $("#zc_rjlx");
+            if (!v){
+                // 下拉框禁用
+                ("#zc_rjlx").prop("disabled", true);
+            }else{
+                $("#zc_rjlx").prop("disabled", false);
+                var url = "?id=" + v;
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                        //("#zc_rjlx").prop("disabled", true);
+                        zc_rjlx.find("option").remove();
+                        var tempOption = document.createElement("option");
+                        tempOption.value = '';
+                        tempOption.innerHTML  = '请选择';
+                        zc_rjlx.append(tempOption);
+                        zc_rjlx.prop("disabled", true);
+                    }
+                    else{
+                        //遍历回传到的Json数据，取出二级分类信息
+                        zc_rjlx.find("option").remove();
+                        $.each(data,function (i,value) {
+                            var tempOption = document.createElement("option");
+                            tempOption.value = value.id;
+                            tempOption.innerHTML  = value.cglx_mc;
+                            zc_rjlx.append(tempOption);
+                        })
+                    }
+                })
+            }
+        }
+    </script>
+    <form class="form-inline" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+        <div class="col-md-12" >
+            <h4>一、主表信息</h4>
+            <hr />
+        </div>
+        <div class="col-md-12">
+            <!--TAB标签一-->
+            <include file="manage/ZcManage/zczb" />
+            <!--副表信息-->
+            <div class="col-md-12" >
+                <hr />
+                <h4>二、车辆信息</h4>
+                <hr />
+            </div>
+            <div class="col-md-12" style="margin-top: -10px;line-height: 45px">
+                <lable style="width: 12%;text-align: right">车辆品牌 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_gzcpp" id="zc_gzcpp" placeholder="请输入车辆品牌" data-rule="required"/>
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">改装型号 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_gzcxh" id="zc_gzcxh" placeholder="请输入改装车型号" data-rule="required"/>
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">净载重量 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_jzzl" id="zc_jzzl" placeholder="请输入净载重量" data-rule="required"/>
+                <!--End IF-->
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">底盘品牌 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_dppp" id="zc_dppp" placeholder="请输入底盘品牌" data-rule="required"/>
+                <!--End IF-->
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">底盘型号 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_dpxh" id="zc_dpxh" placeholder="请输入底盘型号" data-rule="required"/>
+                <!--End IF-->
+                <!--End IF-->
+                <br />
+                <lable style="width: 12%;text-align: right">车辆牌照号 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_clpzh" id="zc_clpzh" placeholder="请输入车辆牌照号" data-rule="required"/>
+                <!--End IF-->
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">发动机编号 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_fdxbh" id="zc_fdxbh" placeholder="请输入发动机编号" data-rule="required"/>
+                <!--End IF-->
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">车架号 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_cjh" id="zc_cjh" placeholder="请输入车架号" data-rule="required"/>
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">生产日期 : </lable>
+                <input style="width: 12%;text-align: left" type="text" readonly class=" form-control" name="zc_scrq" id="zc_scrq" placeholder="请选择生产日期"/>
+                <script>
+                    $("#zc_scrq").datetimepicker({
+                        format: "yyyy-mm-dd",
+                        autoclose: true,
+                        todayBtn: true,
+                        language:"zh-CN",
+                        minView:"month"
+                    });
+                </script>
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">行驶公里 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_ljxsgl" id="zc_ljxsgl" placeholder="请输入累计行驶公里" data-rule="required"/>
+                <!--End IF-->
+                <br />
+                <lable style="width: 12%;text-align: right">生产厂家 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_sccj" id="zc_sccj" placeholder="请输入生产厂家" data-rule="required"/>
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">出厂编号 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_cccpbh" id="zc_cccpbh" placeholder="请输入出厂产品编号" data-rule="required"/>
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">车上颜色 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_csys" id="zc_csys" placeholder="请输入车上颜色" data-rule="required"/>
+                <!--End IF-->
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">排气量 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_pql" id="zc_pql" placeholder="请输入排气量" data-rule="required"/>
+                <!--End IF-->
+                <!--End IF-->
+                <lable style="width: 12%;text-align: right">吨位 : </lable>
+                <input style="width: 12%;text-align: left" type="text" class="form-control" name="zc_dw" id="zc_dw" placeholder="请输入吨位" data-rule="required"/>
+                <!--End IF-->
+                <br />
+                <lable style="text-align: right;font-size: 14px"></lable>
+                <div class=" input-group input-group-sm" style="text-align: center" >
+                    <button type="submit" class="btn btn-success">保存卡片信息</button>
+                    <button type="reset" class="btn btn-default">重置表单</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</block>

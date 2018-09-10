@@ -1,0 +1,61 @@
+<extend name="manage/index/base_user" title="设备信息管理"/>
+<block name="customer">
+    <div class="col-md-12" style="padding-left: 10px">
+        <h4><span class="glyphicon glyphicon-trash" ></span> 报废信息维护</h4>
+        <hr />
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">资产类型 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input class="form-control" name="zc_lx" id="zc_lx" placeholder="请输入资产类型" data-rule="required" type="text">
+        </div><br><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">资产名称 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input class="form-control" name="zc_zcmc" id="zc_zcmc" placeholder="请输入资产名称" data-rule="required" type="text">
+        </div><br><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">计量单位 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input class="form-control" name="zc_jldw" id="zc_jldw" placeholder="请输入计量单位" data-rule="required" type="text">
+        </div><br><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">规格型号 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input class="form-control" name="zc_ggxh" id="zc_ggxh" placeholder="请输入规格型号" data-rule="required" type="text">
+        </div><br><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">报废时间 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+            <input readonly="" class=" form-control" name="zc_bfsj" id="zc_bfsj" placeholder="请选择报废时间" type="text">
+        </div><br><script>
+            $("#zc_bfsj").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                language:"zh-CN",
+                minView:"month"
+            });
+        </script><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">报废责任人 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input class="form-control" name="zc_bfzrr" id="zc_bfzrr" placeholder="请输入报废责任人" data-rule="required" type="text">
+        </div><br><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">报废图片 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+            <input id="exampleInputFile" name="zc_photo" type="file">
+            <p class="help-block">请上传JPG/GIF/PNG类型的图片文件.</p>
+        </div><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">备注 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+            <textarea class="form-control" style="height: 100px" name="zc_note" id="zc_note" placeholder="请输入备注"></textarea>
+        </div><br><!--END-->    <br>
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">备注 : </lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+            <button type="submit" class="btn btn-success">保存</button>
+            <button type="reset" class="btn btn-default">重置</button>
+            <span class="label label-warning">{$errorInfo}</span>
+            <span class="label label-success">{$sussInfo}</span>
+        </div>
+
+        </form>
+    </div>
+</block>

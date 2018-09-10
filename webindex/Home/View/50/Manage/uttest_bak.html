@@ -1,0 +1,115 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <script>
+
+        $(document).ready(function(){
+            function trim(str)
+            {
+
+                return str.replace(/^\s*|\s*$/ig,"");
+            }
+            function getUserName()
+            {
+                //return document.getElementById("username").value;
+                return trim($("#username").val());
+            }
+            function getUserPass()
+            {
+                //	return document.getElementById("userpass").value;
+                return trim($("#userpass").val());
+            }
+
+            $("#login").click(function(){
+                var user_name=getUserName();
+                var user_pass=getUserPass();
+                if(user_name=="" || user_pass=="")
+                {
+                    alert("用户名密码必须填写");
+                }
+                else
+                {
+                    $(this).prop("disabled",true);
+                    $(this).html("正在提交...");
+                    alert("填写正确，即将提交到服务端");
+                }
+            })
+
+        })
+
+        /* $(function(){
+         document.getElementById("login").onclick=function(){
+         alert("234");
+         }
+         })*/
+
+
+    </script>
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">切换导航</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">导航</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="#">链接</a>
+                            </li>
+                            <li>
+                                <a href="#">链接</a>
+                            </li>
+
+                        </ul>
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input class="form-control" type="text" />
+                            </div> <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="#">链接</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </nav>
+
+
+                <form id="loginform" class="form-horizontal col-md-5 col-md-offset-3" style="margin-top:20px ;" role="form">
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">账号：</label>
+                        <div class="col-sm-10">
+                            <input autocomplete="off" class="form-control" placeholder="输入用户名" id="username" type="username" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userpass" class="col-sm-2 control-label">密码：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" placeholder="输入密码" id="userpass" type="password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                                <label><input type="checkbox" /> 记住我</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button autocomplete="off" id="login" type="button" class="btn btn-default">登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</block>

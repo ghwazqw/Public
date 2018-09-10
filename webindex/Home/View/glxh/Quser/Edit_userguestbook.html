@@ -1,0 +1,42 @@
+<extend name="glxh/index/base_top"  title="用户中心"/>
+<block name="customer">
+       <div class="user_cnet_bg"></div>
+    <div class="user_cnet_kj">
+    <include file="glxh/Quser/user_nav_list" />
+        <div class="user_cnet_kj_cent">
+            <div class="user_cnet_kj_content">当前位置：<a href="/">首页</a>  -> <a href="/home/Quser/user_cent">用户中心</a> -> 用户反馈</div>
+            <hr />
+            <div class="col-md-12" style="padding-left: 10px">
+                <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">标题 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="请输入标题" data-rule="required"/>
+                </div><br/><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">内容 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+                    <textarea class="form-control" style="height: 100px" name="content" id="content" placeholder="请输入内容"></textarea>
+                </div><br/><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">提交人 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="tjr" id="tjr" value="{$globar_user:user_name}"  placeholder="请输入提交人" data-rule="required"/>
+                </div><br/>    <br />
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"></lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+                    <button type="submit" class="btn btn-success">保存</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="user_cnet_kj_right">
+            <div class="user_cnet_kj_you">
+                {:W('Info/load',array(8))}
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</block>

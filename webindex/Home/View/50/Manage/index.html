@@ -1,0 +1,18 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <div class="jumbotron" >
+        <php> if(!$globar_user):</php>
+        <div style="width: 80%;margin: 0px auto">
+        <h1>你好，亲爱的用户</h1>
+        <p >你还没有登录，无法使用管理系统，请点击登录。</p>
+        <p><a class="btn btn-primary btn-lg" href="/?a=login&c=User" role="button">User Login >></a></p>
+        </div>
+        <php>else :</php>
+        <div style="width: 80%;margin: 0px auto">
+            <h1>你好，亲爱的{$globar_user:user_name}</h1>
+            <p >您已登录成功，请点击上方菜单获取相关功能！</p>
+            <p><a class="btn btn-primary btn-lg" href="/?a=login&c=User" role="button">获取更多信息请与系统管理员联系！</a></p>
+        </div>
+        <php>endif ;</php>
+    </div>
+</block>

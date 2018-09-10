@@ -1,0 +1,58 @@
+<extend name="manage/index/base_user" title="设备信息管理"/>
+<block name="customer">
+    <script>
+        function printHTML(page)
+        {
+            var bodyHTML=window.document.body.innerHTML;
+            window.document.body.innerHTML=$(page).html();
+            window.print();
+            window.document.body.innerHTML=bodyHTML;
+        }
+    </script>
+    <div class="col-md-12" style="padding-left: 10px;">
+        <H4><span class="glyphicon glyphicon-cog"></span> 设备维修详细信息</H4>
+        <hr/>
+        <foreach name='InfoData' item='Info' >
+            <php>$data=$Info['zc_sqr']."，申请处室：".$Info['zc_sqwxbm']."，申请时间：".$Info['zc_sqwxsj'] ;</php>
+        <div id='div1' class="col-md-10" style="margin: 0 auto;">
+
+            <div style="text-align: center;line-height: 35px;"><h4>中国人民银行重庆营业管理部<br />固定资产维修单</h4></div>
+
+            <div class="col-md-6" style="line-height: 25px;margin-top: 20px">
+                <strong>申请处室：</strong>{$Info.zc_sqwxbm}<br>
+                <strong>申请人：</strong>{$Info.zc_sqr}<br>
+                <abbr title="Phone">申请时间：</abbr>{$Info.zc_sqwxsj|strtotime|date="Y年m月d日",###}<br>
+                <abbr title="Phone">维修时间：</abbr>{$Info.zc_wxsj|strtotime|date="Y年m月d日",###}<br>
+                <strong>申请维修理由：</strong>{$Info.zc_sqly}<br>
+            </div>
+        <div class="col-md-6" style="text-align: right;padding-right: 60px">
+            <img src="/home/index/qrcode?data={$data}" width="150px">
+        </div>
+            <table style="width: 95%" class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+                <tr style="background: #347ab7; color: #ffffff">
+                    <th nowrap>序号</th>
+                    <th nowrap>设备名称</th>
+                    <th nowrap>资产编号</th>
+                    <th nowrap>计量单位</th>
+                    <th nowrap>品牌</th>
+                    <th nowrap>启用日期</th>
+                </tr>
+                <?php $i = 0;?>
+                <foreach name='DalData' item='Dal' >
+                    <?php $i++;?>
+                    <tr>
+                    <td>{$i}</td>
+                    <td>{$Dal.zc_mc}</td>
+                    <td>{$Dal.zc_bh}</td>
+                    <td>{$Dal.zc_jldw}</td>
+                    <td>{$Dal.zc_pp}</td>
+                    <td>{$Dal.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                    </tr>
+                </foreach>
+            </table>
+        </div>
+            <div><a href="javascript:printHTML('#div1')"><span class="glyphicon glyphicon-print"></span> 打印</a></div>
+        </foreach>
+    </div>
+
+</block>

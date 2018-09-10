@@ -1,0 +1,96 @@
+<extend name="manage/index/base_user" title="盘点信息查询"/>
+
+<block name="customer">
+
+    <script>
+        function download1(dzsb,dqsb,ysgj,qtsb,zb_id,sttime,stuser,stno,depname) {
+            $.ajax({
+                type:"Post",
+                url:"/home/PdManage/JsonDownload",
+                data:{dzsb:dzsb,dqsb:dqsb,ysgj:ysgj,qtsb:qtsb,zb_id:zb_id,sttime:sttime,stuser:stuser,stno:stno,depname:depname},
+                success:function (result, state) {
+                    alert("生成成功!");
+                    /*var $form = $('<form method="GET"></form>');
+                    $form.attr('action', '/Public/Uploads/stock.json');
+                    $form.appendTo($('body'));
+                    $form.submit();*/
+                    window.open("/home/PdManage/download");
+                    location.reload();
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                    //alert(textStatus);
+                },
+                timeout: 80000,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+            })
+        }
+    </script>
+    <div class="row clearfix" style="font-size: 12px">
+
+    </div>
+<div class="col-md-12 col-xs-12" nowrap>
+                <div class="input-group" style="text-align: right">
+                    <form class="navbar-form navbar-left" method="get">
+                    <input type="text" class="form-control" placeholder="盘点表信息搜索......" name="keyword" value="{$keyword}">
+                        <input type="hidden" name="zt" id="zt" value="0">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                    </div>
+                    </form>
+                </div>
+
+    <div id='div1'>
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>盘点单编号</th>
+                <th nowrap>盘点创建人</th>
+                <th nowrap>计划盘点日期</th>
+                <th nowrap>盘点部门</th>
+                <th nowrap>状态</th>
+                <!--<th nowrap>电子设备信息</th>
+                <th nowrap>机械器具</th>
+                <th nowrap>运输工具</th>
+                <th nowrap>其他设备</th>-->
+<!--
+                <th nowrap>操作</th>-->
+            </tr>
+            <?php $i = 0;?>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td>{$Info.id}</td>
+                    <td>{$Info.stUser}</td>
+                    <td>{$Info.stTime}</td>
+                    <td>{$Info.depName}</td>
+                    <td>
+                        <php>if ($Info['pd_zt']==0) :</php>
+                        <a href="#" onclick="download1('{$Info.pd_dzsb}','{$Info.pd_dqsb}','{$Info.pd_ysgj}','{$Info.pd_qtsb}','{$Info.id}','{$Info.sttime}','{$Info.stUser}','{$Info.stid}','{$Info.depName}')" title="生成并下载盘点计划">下载盘点计划</a>
+                        <php>else :</php>
+                        <a href="#" onclick="download1('{$Info.pd_dzsb}','{$Info.pd_dqsb}','{$Info.pd_ysgj}','{$Info.pd_qtsb}','{$Info.id}','{$Info.sttime}','{$Info.stUser}','{$Info.stid}','{$Info.depName}')" title="已下载，重新下载">已下载，正在盘点中</a>
+                        <php>endif ;</php>
+                    </td>
+                    <!--<td>{$Info.pd_dzsb}</td>
+                    <td>{$Info.pd_dqsb}</td>
+                    <td>{$Info.pd_ysgj}</td>
+                    <td>{$Info.pd_zt}</td>
+                    <td></td>-->
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover()
+                    })
+                </script>
+            </tr>
+            </foreach>
+        </table>
+
+    </div>
+            <ul class="pagination">
+                {$pagebar}
+            </ul>
+</div>
+    </block>

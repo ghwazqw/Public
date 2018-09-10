@@ -1,0 +1,96 @@
+<extend name="glxh/index/base_top"  title="成果推广信息"/>
+<block name="customer">
+<div class="sea_Kj">
+    <div class="sea_Kj_left">
+        <div class="lx-about" >
+            <div class="lx-sea-div" style="width: 40%;"><img src="__PUBLIC__/glxh/images/menu-about-ico.png">  <a href="/" style="color: #ffffff">首页</a> --> 交通运输部科技成果推广目录
+            </div>
+            <div class="lx-sea-div" style="width: 55%;text-align: right;float: right">
+
+            <form name="searchform" method="post" >
+                <div class="col-md-8 column row" style="text-align: right;">
+
+                    <div class="col-lg-4" >
+                        <div class="input-group" style="height: 40px;line-height: 40px;margin-top: 7px">
+                            <div class="input-group-btn" style="height: 40px;line-height: 40px">
+                                <select class="btn btn-default dropdown-toggle select_box" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="lx">
+                                    <option value="" <php> if ($lx=="") :</php>selected<php>endif ;</php> >请选择</option>
+                                    <!--<option value="cg_wcrxm" <php> if ($lx=="cg_wcrxm") :</php>selected<php>endif ;</php>>专家姓名</option>
+                                    <option value="cg_wcrgzdw" <php> if ($lx=="cg_wcrgzdw") :</php>selected<php>endif ;</php>>工作单位</option>
+                                    <option value="cg_wcrzyzc" <php> if ($lx=="cg_wcrzyzc") :</php>selected<php>endif ;</php>>从事专业</option>
+                                    <option value="cg_wcrjszc" <php> if ($lx=="cg_wcrjszc") :</php>selected<php>endif ;</php>>技术职称</option>
+                                    <option value="cg_wcrbyyx" <php> if ($lx=="cg_wcrbyyx") :</php>selected<php>endif ;</php>>毕业院校</option>
+                                    <option value="cg_wcrjg" <php> if ($lx=="cg_wcrjg") :</php>selected<php>endif ;</php>>所在地区</option>-->
+                                </select>
+                            </div><!-- /btn-group -->
+                            <input type="text" class="form-control"  style="height: 40px;width: 250px;border:2px solid #eb6100;border-left: none;
+							border-right: none;line-height: 40px" name="keyword" <php> if( empty($keyword["cg_wcrxm"])): //资料信息</php>placeholder="共有资料({$count})项" <php> else:</php>value="{$keyword}"<php> endif;</php>>
+                            <div class="input-group-btn">
+                                <input type="submit" name="submit" value="搜索" class="srh_btn">
+                            </div>
+
+                        </div><!-- /input-group -->
+
+                    </div><!-- /.col-lg-6 -->
+                </div>
+            </form>
+            </div>
+        </div>
+        <p style="height: 65px"></p>
+
+        <table style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px">
+            <tr >
+                <th colspan="6" style="padding-left: 5px">
+                    <h5 style="color: #4b6db0">共有{$count}条信息,每页显示{$page_size}条数据</h5>
+                </th>
+            </tr>
+            <tr style="background: #dfebfe;color: #4b6db0;height: 40px;font-size: 14px;">
+                <td style="width: 50px;text-align: center;">序号</td>
+                <td>证书编号</td>
+                <td>成果名称</td>
+                <td>第一申报单位</td>
+                <td>下载</td>
+
+            </tr>
+            <php>if( $count > 0  ):</php>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="zj" >
+                <?php $i++;?>
+                <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;">
+                    <td style="width: 50px;text-align: center">{$i}</td>
+                    <td>{$zj.cg_zsbh}</td>
+                    <td><a href="#">{$zj.cg_mc}</a></td>
+                    <td>{$zj.cg_sbdw}</td>
+                    <td><a href="__PUBLIC__/glxh/downloads/{$cg.cg_xmbh}.pdf" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
+                </tr>
+
+            </foreach>
+            <php>else:</php>
+            <tr style="font-size: 12px">
+                <td></td>
+                <td><span style="color: red" >“{$keyword}”</span> <br />通过查询，没有该专家信息。</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <php> endif;</php>
+
+        </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+    <!--右框架!-->
+    <div class="sea_Kj_right">
+        <div class="cg_rk_bq"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <a href="/index.php/home/ywcent/cgrk" style="color: #ffffff">科技成果入库申请</a></div>
+        <div style="height: 20px"></div>
+        <!--{:W('Info/load',array(2))}
+        {:W('Info/load',array(3))}
+        {:W('Info/load',array(4))}-->
+    </div>
+<div class="clear"></div>
+</div>
+
+
+
+</block>

@@ -1,0 +1,4 @@
+ <foreach name="w_data" item="d">
+                <li>• <a href="/index.php/home/news/news_dal/?id={$d.info_id}" target="_blank">{$d.info_title|mb_substr=0,28,'UTF-8'}</a>
+                    <span>[{$d.info_date|strtotime|date="m-d",###}]</span></li>
+            </foreach>

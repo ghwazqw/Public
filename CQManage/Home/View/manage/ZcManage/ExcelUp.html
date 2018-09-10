@@ -1,0 +1,31 @@
+<extend name="manage/index/base_user" title="盘点结果上传"/>
+
+<block name="customer">
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li>
+
+                <a <if condition="$link neq '' ">href="{$link}"<else />href="#"</if> <if condition="$link eq '' ">onClick="javascript :history.back(-1);"</if>> <span class="glyphicon glyphicon-th"></span> {$lxname}信息管理</a>
+            </li>
+            <li class="active">
+                {$lxname}信息Excel文件导入
+            </li>
+        </ul>
+        <h4><span class="glyphicon glyphicon-upload"></span>
+            {$lxname}信息Excel文件导入</h4>
+        <hr />
+        <form class="navbar-form" action="/Home/test/zcupload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Excel文件：</label>
+                <input type="file" id="exampleInputFile" name="photo" />
+                <input type="hidden"  name="lx" value="{$lxtable}" />
+                <p class="help-block">
+                    注意:支持.xls与.xlsx格式的文件！
+                </p>
+                <button type="submit" class="cke_button">提交</button>
+            </div>
+
+        </form>
+        <div></div>
+    </div>
+</block>

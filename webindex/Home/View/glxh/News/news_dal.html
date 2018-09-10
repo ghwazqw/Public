@@ -1,0 +1,63 @@
+<extend name="glxh/index/base_top"  title="新闻信息详细页面"/>
+<block name="customer">
+    <style>
+        p{
+            text-indent:2em;    /*每个P段落，首行空出两个空格，即缩进两个字符*/
+        }
+    </style>
+    <foreach name="meta_data" item="M_dat" >
+    <ul class="breadcrumb" style="text-align: left;padding-left: 100px;background: #ffffff;">
+			<span class="glyphicon glyphicon-th-list"></span>
+             <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="/index.php/home/news/news_list">资讯中心</a>
+            </li>
+            <li>
+                <a href="/index.php/home/news/news_z_list?info_type={$M_dat.info_type}"><php>if ($M_dat["info_type"]==1) :</php>通告公告<php>endif ;</php><php>if ($M_dat["info_type"]==2) :</php>政策解读<php>endif ;</php></a>
+            </li>
+
+        </ul>
+    
+<div style="width: 95%;margin: 0 auto;line-height: 30px">
+    <div class="col-md-9 column">
+    <div class="articleContent" style="text-align: center">
+        <h2 class="title">
+            {$M_dat.info_title}
+        </h2>
+        <div class="property" style="text-align: center;background: #fcfcfc;height: 35px">
+            <span>文章来源：{$M_dat.info_laiyuan}</span> <span>作者：{$M_dat.info_user}</span> <span>发布时间：{$M_dat.info_date|strtotime|date="Y年m月d日",###} 浏览量：{$info_cilck}次</span>
+        </div>
+        <div id="contentTxt">
+            <p style="text-align: center"><php>if ($M_dat['info_photonew']!="") :</php><img src="{$M_dat.info_photonew}" /><php>endif ;</php></p>
+            {$M_dat.info_content}
+            <p>
+                <php>if ($M_dat['info_photo']!="") :</php><a href="/{$M_dat.info_photo}" target="_blank">附件下载</a><php>endif ;</php>
+                <foreach name="file_data" item="file" >
+                   &nbsp; <a href="/{$file.photo}">附件下载</a> |
+                </foreach>
+            <br />
+            <span>分享到：</span>
+            <div class="bdsharebuttonbox">
+            <a href="#" class="bds_more" data-cmd="more"></a>
+            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <!--<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+            <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>-->
+            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        </div>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+            </p>
+        </div>
+    </div>
+
+</div>
+    <div class="col-md-3 column">
+        {:W('Info/load',array(1))}
+    </div></div>
+        </foreach>
+
+    <div style="width: 100%;word-wrap: break-word; word-break: normal;clear:both;float:none;"></div>
+    <div class="clear"></div>
+</block>

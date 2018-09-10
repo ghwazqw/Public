@@ -1,0 +1,15 @@
+
+<div class="panel panel-default">
+
+    <div class="list-group">
+        <a href="#" class="list-group-item active">{$w_title}</a>
+
+            <foreach name="w_data" item="d">
+
+                <a href="<php>if ($rzcount!=0 && $d['info_title']=='创业融资') :</php>#<php>elseif ($rkcount!=0 && $d['info_title']=='成果入库申请') :</php>#<php>else :</php>{$d.info_link}<php> endif ;</php>" class="list-group-item">{$d.info_title}
+                    <php>if ($rzcount!=0 && $d['info_title']=='创业融资') :</php><span class="cound">●</span><php> endif ;</php>
+                    <php>if ($rkcount!=0 && $d['info_title']=='成果入库申请') :</php><span class="cound">●</span><php> endif ;</php>
+                </a>
+            </foreach>
+    </div>
+</div>

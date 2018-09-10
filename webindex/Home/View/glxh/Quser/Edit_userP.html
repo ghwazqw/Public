@@ -1,0 +1,52 @@
+<extend name="glxh/index/base_top"  title="用户中心"/>
+<block name="customer">
+       <div class="user_cnet_bg"></div>
+    <div class="user_cnet_kj">
+    <include file="glxh/Quser/user_nav_list" />
+        <div class="user_cnet_kj_cent">
+            <div class="user_cnet_kj_content">当前位置：<a href="/">首页</a>  -> <a href="/home/Quser/user_cent">用户中心</a> -> 密码修改</div>
+            <hr />
+            <div class="col-md-12" style="padding-left: 5px">
+                <foreach name="Duser_info" item="user" >
+                <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">用户名 : </lable>
+                    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="text" class="form-control" name="user_name" id="user_name" value="{$globar_user:user_name}" readonly />
+                </div><br/><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">旧密码 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="password" class="form-control" name="LtxtPwd" id="LtxtPwd" value="" placeholder="请输入原来的密码" data-rule="required;password"/>
+                </div><br/><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">新密码 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="password" class="form-control" name="textPwd" id="textPwd" value="" placeholder="请输入新的密码" data-rule="新的密码:required;password"/>
+                </div><br/>
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">再次输入 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                    <input type="password" class="form-control" name="rePwd" id="rePwd" value="" placeholder="请再次输入新的密码" data-rule="密码:required;match(textPwd);"/>
+                </div><br/>
+                    <br />
+                    <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"></lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+                    <button type="submit" class="btn btn-success">保存</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </div>
+                </form>
+                </foreach>
+            </div>
+        </div>
+
+        <div class="user_cnet_kj_right">
+            <div class="user_cnet_kj_you">
+                <!--{:W('Info/load',array(8))}-->
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</block>

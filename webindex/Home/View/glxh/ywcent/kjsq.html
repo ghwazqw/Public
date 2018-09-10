@@ -1,0 +1,182 @@
+<extend name="glxh/index/base_user"  title="成果评估申请"/>
+<block name="customer">
+    <script type="text/javascript">
+        CKEDITOR.replace( 'content' ,{ //这里的 content就是上面我们设置的textarea或者input元素的id
+                    filebrowserBrowseUrl:'__PUBLIC__/Ckeditor/ckfinder.html',//设置上传图片的页面为ckfinder.html
+                    filebrowserImageBrowseUrl:'__PUBLIC__/Ckeditor/ckfinder.html?type=Images',
+                    filebrowserFlashBrowseUrl: '__PUBLIC__/Ckeditor/ckfinder.html?type=Flash',
+                    filebrowserUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                    filebrowserImageUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                    filebrowserFlashUploadUrl: '__PUBLIC__/Ckeditor/core/connector/php/connector.php?command=QuickUpload&type=Flash',
+                }
+        );
+
+    </script>
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#calendar").bootstrapDatepickr();
+            $("#calendar1").bootstrapDatepickr({date_format: "d-m-Y"});
+            $("#calendar2").bootstrapDatepickr({date_format: "l, do F Y"});
+        });
+    </script>
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+<div class="kjtd_kj" style="height: 750px">
+    <div class="kjtd_kj_left">
+        <div class="user_cnet_kj_menu">
+            {:W('Info/load',array(5))}
+            {:W('Info/load',array(6))}
+
+        </div>
+    </div>
+    <div class="kjtd_kj_right">
+<div class="kjtd_title">
+    <div class=lan_qukuai>&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/glxh/images/rz_tu.png">&nbsp;&nbsp;<b>成果评估申请</b> </div>
+    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+</div>
+    <br /><br /><br />
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current">一、基本信息</li>
+        <li>二、联系信息</li>
+    </div>
+    <div class="kjtd_qc"></div>
+    <span class="label label-warning">{$errorInfo}</span>
+    <span class="label label-success">{$sussInfo}</span>
+    <div id="xxzx_content">
+        <!--TAB标签一-->
+        <ul style="display:block;" >
+            <form method="post" enctype="multipart/form-data">
+                    <div class="kjtd_from">
+                        <!--行1!-->
+                        <div class="kjtd_from_left">科技成果名称：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_kjcgmc" id="gl_kjcgmc" value="" placeholder="请输入科技成果名称" class="kjtd_from_input"/> <span style="color: red">*</span>
+                        </div>
+                        <div class="kjtd_from_left" >研究起止年限：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="cg_cgmc" value="" class="kjtd_from_input" style="width: 130px"/>
+                            到 <input type="text" name="cg_cgmc" value="" class="kjtd_from_input" style="width: 135px"/>
+                             <span style="color: red">*</span>
+                        </div>
+                        <div class="kjtd_from_left">任务来源：</div>
+                        <div class="kjtd_from_right">
+                            <input type="checkbox"  value="国家计划" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">国家计划</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="部委计划" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">部委计划</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="地方计划" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">地方计划</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="基金资助" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">基金资助</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="企业" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">企业</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="国际合作" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">国际合作</span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="自选" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">自选 </span>&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"  value="其他" style="vertical-align:middle; margin-top:0;" name="cg_zyfx"> <span style="font-size: 13px;">其他</span>&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                        <div class="kjtd_from_left">申请单位：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="cg_cgmc" value="" placeholder="请输入申请单位" class="kjtd_from_input"/> <span style="color: red">*</span>
+                        </div>
+                        <div class="kjtd_from_left">参与单位：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="cg_cgmc" value="" placeholder="参与单位" class="kjtd_from_input"/> <span style="color: red">*</span>
+                        </div>
+                        <div class="kjtd_from_left">主要研究人员：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="cg_cgmc" value="" placeholder="请输入主要研究人员" class="kjtd_from_input"/> <span style="color: red">*</span>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 95px">成果简介：</div>
+                        <div class="kjtd_from_right" style="height: 95px">
+                            <textarea class="kttd_from_text" name="cg_cxd" placeholder="请输入成果简介"  style="width: 99%"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="font-size: 12px;height: 105px">技术文件目录及提供单位：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="cg_cxd" placeholder="请输入技术文件目录及提供单位" style="width: 99%"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" ></div>
+                        <div class="kjtd_from_right" >
+
+                            <button class="kjtd_from_reset" type="reset">取消</button>
+                            <button class="kjtd_from_submit" type="submit">下一步</button>
+                        </div>
+
+                    </div>
+
+            </form>
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+            <div class="kjtd_from_left"  >联系人： </div>
+            <div class="kjtd_from_right" >
+                <input type="text" name="cg_cgmc" value="" placeholder="联系人" class="form-control" style="width: 250px"/>
+            </div>
+            <div class="kjtd_from_left"  >工作单位： </div>
+            <div class="kjtd_from_right" >
+                <input type="text" name="cg_cgmc" value="" placeholder="工作单位" class="form-control" style="width: 250px"/>
+            </div>
+            <div class="kjtd_from_left"  >职务： </div>
+            <div class="kjtd_from_right" >
+            <input type="text" name="cg_cgmc" value="" placeholder="职务" class="form-control" style="width: 250px"/>
+            </div>
+    <div class="kjtd_from_left"  >电话： </div>
+    <div class="kjtd_from_right" >
+        <input type="text" name="cg_cgmc" value="" placeholder="电话" class="form-control" style="width: 250px"/>
+    </div>
+    <div class="kjtd_from_left"  >手机： </div>
+    <div class="kjtd_from_right" >
+        <input type="text" name="cg_cgmc" value="" placeholder="手机" class="form-control" style="width: 250px"/>
+    </div>
+    <div class="kjtd_from_left"  >邮箱： </div>
+    <div class="kjtd_from_right" >
+        <input type="text" name="cg_cgmc" value="" placeholder="邮箱" class="form-control" style="width: 250px"/>
+    </div>
+    <div class="kjtd_from_left"  >传真： </div>
+    <div class="kjtd_from_right" >
+        <input type="text" name="cg_cgmc" value="" placeholder="传真" class="form-control" style="width: 250px"/>
+    </div>
+    <div class="kjtd_from_left"  >联系地址： </div>
+    <div class="kjtd_from_right" >
+        <input type="text" name="cg_cgmc" value="" placeholder="联系地址" class="form-control" style="width: 250px"/>
+    </div>
+    <div class="kjtd_from_left"  >邮编： </div>
+    <div class="kjtd_from_right" >
+        <input type="text" name="cg_cgmc" value="" placeholder="邮编" class="form-control" style="width: 250px"/>
+    </div>
+    <div class="kjtd_from_left" style="margin-top: 20px"></div>
+    <div class="kjtd_from_right" style="margin-top: 20px">
+
+        <button class="kjtd_from_reset" type="reset">取消</button>
+        <button class="kjtd_from_submit" type="submit">下一步</button>
+    </div>
+
+    </ul>
+
+
+
+    </div>
+
+</div>
+</div>
+</block>

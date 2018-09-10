@@ -1,0 +1,123 @@
+<extend name="manage/index/base_user" title="报废信息查询"/>
+
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+    <script>
+        function printHTML(page)
+        {
+            var bodyHTML=window.document.body.innerHTML;
+            window.document.body.innerHTML=$(page).html();
+            window.print();
+            window.document.body.innerHTML=bodyHTML;
+        }
+    </script>
+    <div class="col-md-12 col-xs-12">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/Home/BfManage/BfManage"> <span class="glyphicon glyphicon-th"></span> 返回报废确认信息列表</a>
+            </li>
+
+        </ul>
+    <div style="text-align: right">
+        <a href="javascript:printHTML('#div1')"><span class="glyphicon glyphicon-print"> 打印审批单</span></a>
+        <div id="export">
+
+            <a href="#" onclick="expinfo()">导出excel</a>
+            <script>
+                function expinfo(){
+                    var myDate = new Date();
+                    $("#exp").table2excel({
+                        exclude: ".noExl",
+                        name: "Excel Document Name.xlsx",
+                        filename: myDate.toLocaleString()+".xls",
+                        exclude_img: true,
+                        exclude_links: true,
+                        exclude_inputs: false
+                    });
+                }
+            </script>
+
+        </div>
+    </div>
+    <div id='div1'>
+        <table id="exp" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="text-align: center" >
+            <tr style="border: 0px">
+                <td style="text-align: center;height: 50px" colspan=10><h4>固 定 资 产 报 废 审 批 单 </h4></td>
+            </tr>
+            <tr style="border: 0px">
+                <td style="text-align: left;" colspan=4>单位名称：中国人民银行重庆营业管理部</td>
+                <td style="text-align: center;" colspan=5></td>
+                <td style="text-align: right;" colspan=1>单位：元</td>
+            </tr>
+            <tr >
+                <th nowrap style="text-align: center">序号</th>
+                <th nowrap style="text-align: center">资产编码</th>
+                <th nowrap style="text-align: center">资产名称</th>
+                <th nowrap style="text-align: center">品牌型号</th>
+                <th nowrap style="text-align: center">数量</th>
+                <th nowrap style="text-align: center">原值</th>
+                <th nowrap style="text-align: center">购建日期</th>
+                <th nowrap style="text-align: center">部门</th>
+                <th nowrap style="text-align: center">报废理由</th>
+                <th nowrap style="text-align: center">备注</th>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <?php $zc_yzhj+=$Info['yz'];?>
+                <tr>
+                <td>{$i}</td>
+                    <td><span style="mso-number-format:'\@';">&nbsp;{$Info.sbbh}</span></td>
+                    <td>{$Info.sbmc}</td>
+
+                    <td>{$Info.ppxh}</td>
+                <td>1</td>
+                <td><?php echo number_format($Info['yz'],2,".",","); ?></td>
+                <td>{$Info.gjrq|strtotime|date="m/d/Y",###}</td>
+                <td>{$Info.zc_sqwxbm}</td>
+                <td >{$Info.zc_bfly}</td>
+                <td>{$Info.zc_kpsm}</td>
+
+            </tr>
+            </foreach>
+            <tr>
+                <td></td>
+                <td>合计</td>
+                <td></td>
+
+                <td></td>
+                <td></td>
+                <td><?php echo number_format("$zc_yzhj",2,".",","); ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan=2 style="height: 80px;line-height: 80px">鉴定意见</td>
+                <td colspan=8 style="text-align: left">
+                    <textarea id="inputinfo" class="form-control" onchange="hideinfo()"></textarea>
+                    <span id="infoid"></span>
+                </td>
+                <script>
+                    function hideinfo() {
+                        //alert("2121dsf");
+                        var inputinfo=$("#inputinfo").val();
+                        $("#infoid").html(inputinfo);
+                        //alert(inputinfo);
+                        //$("#inputinfo").hide();
+                        $("#inputinfo").remove();
+                    }
+                </script>
+            </tr>
+            <tr style="height: 100px">
+                <td colspan=3 style="text-align: left">财产管理部门审批意见：</td>
+                <td colspan=4 style="text-align: left">会计财务部门意见：</td>
+                <td colspan=3>主管行长意见：</td>
+            </tr>
+        </table>
+
+    </div>
+
+    </div>
+    </block>

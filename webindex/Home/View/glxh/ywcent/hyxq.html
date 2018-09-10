@@ -1,0 +1,113 @@
+<extend name="glxh/index/base_user"  title="融资需求"/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 750px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class="lan_qukuai" style="padding-left: 20px"><span class="glyphicon glyphicon-comment"></span> <b style="margin-left: 10px">会议会展需求</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>基本信息</li>
+                        <li>联系信息</li>
+
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 300px;">
+                        <div class="kjtd_from_left" style="height: 100px">会议需求描述：</div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            <textarea class="kttd_from_text" name="gl_xqms" placeholder="请输入推广产品介绍、推广应用领域、办会主题" id="gl_hdxq" data-rule="required,length(~500)"></textarea>
+                            <input type="hidden" name="gl_cjr" value="{$globar_user:user_name}">
+                            <input type="hidden" name="gl_lxyw" value="2">
+                        </div>
+                        <div class="kjtd_from_left">会议会展类型：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="对接会" name="gl_hylx" checked>  对接会
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="推介会" name="gl_hylx">  推介会
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="展览会" name="gl_hylx">  展览会
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="学术交流会" name="gl_hylx">  学术交流会
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">会议会展方向：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" value="技术" name="gl_hyfx" style="vertical-align:middle; margin-top:0;" data-rule="checked"/>  技术
+                                    <input type="checkbox" value="工艺" name="gl_hyfx" style="vertical-align:middle; margin-top:0;"/>  工艺
+                                    <input type="checkbox" value="材料" name="gl_hyfx" style="vertical-align:middle; margin-top:0;"/>  材料
+                                    <input type="checkbox" value="设备" name="gl_hyfx" style="vertical-align:middle; margin-top:0;"/>  设备
+                                    <input type="checkbox" value="其他" name="gl_hyfx" style="vertical-align:middle; margin-top:0;"/>  其他
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">会议意向城市：</div>
+                        <div class="kjtd_from_right">
+                            <div style="height: 30px">
+                                <input type="text" placeholder="输入意向城市" id="destination" name="gl_hycs" class="form-control" style="width: 250px" data-rule="required">
+                                <!-- 选择城市 -->
+                                <div id="in_city" style="display: none"></div>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">会议意向日期：</div>
+                        <div class="kjtd_from_right">
+                            <div style="height: 30px">
+                                <!--选择日期-->
+                                <input type="text" id="gl_hyrq" value="{$date_show}" readonly class="form-control" style="width: 250px" name="gl_hyrq" >
+                            </div>
+                        </div>
+                        <script>
+                            $("#gl_hyrq").datetimepicker({
+                                format: "yyyy-mm-dd",
+                                autoclose: true,
+                                todayBtn: true,
+                                language:"zh-CN",
+                                minView:"month"
+                            });
+                        </script>
+                        <div class="kjtd_from_left" >会议预算：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" placeholder="请输入金额" class="input_je" name="gl_hyys" data-rule="required;integer[+1]; range[~1000]"><font color="#369fd9">万元人民币</font>
+                        </div>
+                    </div>
+
+                    <!--2-->
+                    <div style="height: 350px">
+                        <include file="glxh/ywcent/lx_us" />
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

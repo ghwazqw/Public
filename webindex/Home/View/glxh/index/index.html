@@ -1,0 +1,465 @@
+<extend name="glxh/index/base" />
+<block name="customer">
+	<script type="text/javascript">
+		$(document).ready(function(){
+		    $Plist=$("#plist");
+			$("#show").click(function(){
+			    if ($Plist.is(":visible")){
+                    $Plist.slideUp();
+				}else{
+                    $Plist.slideDown();
+				}
+			});
+            /*$Plist.mouseout(function () {
+                $Plist.hide();
+            })*/
+		});
+	</script>
+	<!--导航加载-->
+	<div id=nav-menu>
+		<div class="menu-about" id="show">
+			<img src="__PUBLIC__/glxh/images/menu-about-ico.png"> <a href="#" >关于我们</a>
+		</div>
+		<div class="menu-list">
+			<ul class="">
+				{~$qnavbar=w("Nav/qdef")}
+				<foreach name="qnavbar" item="nav" >
+					<li><a href="{$nav.nav_link}">{$nav.nav_name}</a></li>
+				</foreach>
+
+			</ul>
+		</div>
+	</div>
+	<!--轮播图加载-->
+	<div class="carousel slide" id="carousel-43554">
+		<ol class="carousel-indicators">
+			<li data-slide-to="0" data-target="#carousel-43554" class="active">
+			</li>
+			<li data-slide-to="1" data-target="#carousel-43554" >
+			</li>
+			<li data-slide-to="2" data-target="#carousel-43554">
+			</li>
+			<li data-slide-to="3" data-target="#carousel-43554">
+			</li>
+			<li data-slide-to="4" data-target="#carousel-43554">
+			</li>
+		</ol>
+		<div class="carousel-inner">
+			<div class="item active">
+				<img alt="" src="__PUBLIC__/glxh/images/11.jpg" style="width: 100%"/>
+				<div class="carousel-caption">
+					<h4>
+
+					</h4>
+					<p>
+
+					</p>
+				</div>
+			</div>
+			<div class="item ">
+				<img alt="" src="__PUBLIC__/glxh/images/22.jpg" style="width: 100%" />
+				<div class="carousel-caption">
+					<h4>
+					</h4>
+					<p>
+
+					</p>
+				</div>
+			</div>
+			<div class="item">
+				<img alt="" src="__PUBLIC__/glxh/images/33.jpg" style="width: 100%" />
+				<div class="carousel-caption">
+					<h4>
+
+					</h4>
+					<p>
+
+					</p>
+				</div>
+			</div>
+			<div class="item">
+				<img alt="" src="__PUBLIC__/glxh/images/44.jpg" style="width: 100%" />
+				<div class="carousel-caption">
+					<h4>
+
+					</h4>
+					<p>
+						，
+					</p>
+				</div>
+			</div>
+			<div class="item">
+				<img alt="" src="__PUBLIC__/glxh/images/55.jpg" style="width: 100%"/>
+				<div class="carousel-caption">
+					<h4>
+
+					</h4>
+					<p>
+
+					</p>
+				</div>
+			</div>
+		</div>
+		<a class="left carousel-control" href="#carousel-43554" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+		<a class="right carousel-control" href="#carousel-43554" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	</div>
+	<div class="aboutlist" id="plist" >
+		<ul >
+		<div class="aboutlist-left" >
+			{:W('Info/load',array(19))}
+		</div>
+	</ul>
+	</div>
+<!--快捷通道-->
+	<div id=kstd class="kstd">
+		<ul><div style="float: left;width: 117px;"><a href="/index.php/home/ywcent/cgrk"><img src="__PUBLIC__/glxh/images/content_1_1.png"></a></div>
+			<div style="float: left;width: 139px;"><a href="/home/ywcent/xqsq"><img src="__PUBLIC__/glxh/images/content_1_2.png" ></a></div>
+			<div style="float: left;width: 100px;"><a href="/index.php/home/ywcent/hyxq"><img src="__PUBLIC__/glxh/images/content_1_3.png" ></a></div>
+		</ul>
+
+		<ul><div style="float: left;width: 117px;"><a href="/index.php/home/ywcent/kjzx"><img src="__PUBLIC__/glxh/images/conent_2_1.png"></a></div>
+			<div style="float: left;width: 139px;"><a href="/index.php/home/ywcent/kyzx"><img src="__PUBLIC__/glxh/images/conent_2_2.png" ></a></div>
+			<div style="float: left;width: 100px;"><a href="/index.php/home/ywcent/cgpg"><img src="__PUBLIC__/glxh/images/conent_2_3.png" alt="成果评估"></a></div>
+		</ul>
+
+		<li>
+			<div style="float: left;width: 185px;"><a href="/index.php/home/ywcent/rzxq"><img src="__PUBLIC__/glxh/images/content_3_1.png"></a></div>
+			<div style="float: left;width: 185px;"><a href="/index.php/home/ywcent/tzxq"><img src="__PUBLIC__/glxh/images/content_3_2.png"></a></div>
+		</li>
+	</div>
+	<!--重点内容-->
+	<div id=zdnr>
+		<div id=zdnr-left>
+			<ul id=zdnr-laber>
+				<li class="current">成果库</li>
+			</ul>
+			<div class="zdnr-left-content-top"></div>
+			<div class=zdnr-left-content-images><img src="__PUBLIC__/glxh/images/cup.png" alt="#"></div>
+			<div class=zdnr-left-content>
+				<a href="http://www.nosta.gov.cn/web/list.aspx?menuID=163" target="_blank" >国家奖获奖项目</a>
+			</div>
+			<div class="zdnr-left-content-top"><hr /></div>
+			<div class=zdnr-left-content-images><img src="__PUBLIC__/glxh/images/jiang.png" alt="#"></div>
+			<div class=zdnr-left-content>
+				<a href="/index.php/home/cgsea/cghj" >中国公路学会科学技术奖</a>
+			</div>
+			<div class="zdnr-left-content-top"><hr /></div>
+			<div class=zdnr-left-content-images><img src="__PUBLIC__/glxh/images/li.png" alt="#"></div>
+			<div class=zdnr-left-content>
+				<a href="/index.php/Home/Cgsea/cgtg" >交通运输部科技成果推广目录</a>
+			</div>
+		</div>
+
+		<div id=zdnr-center>
+		<div class="tabbable" id="tabs-585621" style="height: 30px">
+			<ul class="nav nav-tabs" >
+				<li class="active" style="margin-left: 30px;margin-top: 5px">
+					<a href="#panel-438231" data-toggle="tab" style="height:35px">通知公告</a>
+				</li>
+				<li style="margin-left: 10px;margin-top: 5px">
+					<a href="#panel-43489" data-toggle="tab" style="height:35px">政策解读</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="panel-438231">
+					<p>
+					<ul class="zdnr-center_content">
+						<ol>
+							<!--文本新闻信息-->
+							{:W('Info/load',array(10))}
+
+							<!--图片新闻信息-->
+							<div style="margin-top: 18px">
+							<div class="zdnr-center_xgtp">相<br>关<br>图<br>片</div>
+							<div class="zdnr-center_images" >
+								<img src="__PUBLIC__/glxh/images/new_1.png" height="100px"  />
+								<!--<img src="images/new_image2.png" />-->
+							</div>
+							</div>
+						</ol>
+					</ul>
+					</p>
+				</div>
+				<div class="tab-pane" id="panel-43489">
+					<p>
+					<ul class="zdnr-center_content">
+						<ol>
+							<!--文本新闻信息-->
+							{:W('Info/load',array(11))}
+
+							<!--图片新闻信息-->
+							<div style="margin-top: 18px">
+								<div class="zdnr-center_xgtp">相<br>关<br>图<br>片</div>
+								<div class="zdnr-center_images" >
+									<img src="__PUBLIC__/glxh/images/new_1.png" height="100px"  />
+									<!--<img src="images/new_image2.png" />-->
+								</div>
+							</div>
+						</ol>
+					</ul>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div id=zdnr-right>
+			<div class="tabbable" id="tabs-585622" >
+				<ul class="nav nav-tabs" >
+					<li class="active" style="margin-left: 30px;margin-top: 5px">
+						<a href="#panel-438232" data-toggle="tab" style="height:35px">平台统计</a>
+					</li>
+
+				</ul>
+				<div class="tab-content" >
+					<div class="tab-pane active" id="panel-438232" >
+						<p>
+						<div class="zdnr-left-content-top"></div>
+						<div >
+							<a href="/index.php/home/index/stat_info" target="_blank">
+							<div id="cgxx"  style="height:260px;width: 380px;margin-left: -20px;"></div>
+							</a>
+							<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+							<script type="text/javascript">
+								// 路径配置
+								require.config({
+									paths: {
+										echarts: 'http://echarts.baidu.com/build/dist'
+
+									}
+								});
+
+								// 使用
+								require(
+										[
+											'echarts',
+											'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+										],
+										function (ec) {
+											// 基于准备好的dom，初始化echarts图表
+											var myChart = ec.init(document.getElementById('cgxx'));
+
+											var option = {
+												title:{ //左侧标题配置
+													text:'{$cg_title}',
+													subtext: '{$cg_subtitle}'
+												},
+												tooltip: {
+													show: true
+												},
+												legend: {
+													data:['成果总量','获奖总量']
+												},
+												toolbox: {
+													show : true,
+													feature : {
+														mark : {show: false},
+														dataView : {show: false, readOnly: false},
+														magicType : {show: false, type: ['line']},
+														restore : {show: false},
+														saveAsImage : {show: false}
+													}
+												},
+												xAxis : [
+													{
+														type : 'category',
+														data : ["2011","2012","2013","2014","2015","2016"]
+													}
+												],
+												yAxis : [
+													{
+														type : 'value'
+													}
+												],
+												series : [
+													{
+														"name":"成果总量",
+														"type":"bar",
+														"data":['{$cg_2011}', '{$cg_2012}', '{$cg_2013}', '{$cg_2014}', '{$cg_2015}', '{$cg_2016}'],
+														markPoint : {
+															data : [
+																{type : 'max', name: '最大值'},
+																{type : 'min', name: '最小值'}
+															]
+														},
+														/*markLine : {
+														 data: [
+														 {type: 'average', name: '平均值'}
+														 ]
+														 }*/
+													},
+													{
+														"name":"获奖总量",
+														"type":"bar",
+														"data":['{$hj_2011}', '{$hj_2012}', '{$hj_2013}', '{$hj_2014}', '{$hj_2015}', '{$hj_2016}'],
+														markPoint : {
+															data : [
+																{type : 'max', name: '最大值'},
+																{type : 'min', name: '最小值'}
+															]
+														},
+														/* markLine : {
+														 data : [
+														 {type : 'average', name: '平均值'}
+														 ]
+														 }*/
+													}
+												]
+											};
+
+											// 为echarts对象加载数据
+											myChart.setOption(option);
+										}
+								);
+							</script>
+						</div>
+						</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+<!--需求供给与专家库-->
+	<p>&nbsp;</p>
+	<div id=xxzx>
+		<div id=xxzx-left>
+			<div class="tabbable" id="tabs-585623" style="height: 30px">
+			<ul class="nav nav-tabs" >
+
+				<li class="active" style="margin-left: 10px;margin-top: 5px"  >
+					<a href="#panel-43482" data-toggle="tab" style="height:35px">最新供给</a>
+				</li>
+				<li style="margin-left: 30px;margin-top: 5px">
+					<a href="#panel-438233" data-toggle="tab" style="height:35px">最新需求</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="panel-43482">
+					<p>
+					<ul class="xxzx_content">
+						<ol>
+							<!--文本新闻信息-->
+							{:W('Info/load',array(26))}
+
+						</ol>
+					</ul>
+					</p>
+				</div>
+				<div class="tab-pane active" id="panel-438233">
+					<p>
+					<ul class="xxzx_content">
+						<ol>
+							<!--文本新闻信息-->
+							{:W('Info/load',array(21))}
+
+						</ol>
+					</ul>
+					</p>
+				</div>
+
+			</div>
+		</div>
+
+		</div>
+
+		<div id=xxzx-right>
+			<div class="tabbable" id="tabs-585624" style="height: 30px">
+				<ul class="nav nav-tabs" >
+					<li class="active" style="margin-left: 30px;margin-top: 5px">
+						<a href="#panel-438234" data-toggle="tab" style="height:35px">专家委员会</a>
+					</li>
+					<li style="margin-left: 10px;margin-top: 5px">
+						<a href="#panel-43483" data-toggle="tab" style="height:35px">青年专家委员会</a>
+					</li>
+					<li style="margin-left: 10px;margin-top: 5px">
+						<a href="#panel-6" data-toggle="tab" style="height:35px">行业专家顾问</a>
+					</li>
+					<li style="margin-left: 10px;margin-top: 5px">
+						<a href="/index.php/home/ywcent/zjrk" style="height:35px;font-size: 12px"><i class="fa fa-address-book fa-fw"></i>专家入库申请 </a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="panel-438234">
+						<p>
+							{:W('Info/load',array(13))}
+						</p>
+					</div>
+					<div class="tab-pane" id="panel-43483">
+						<p>
+							{:W('Info/load',array(14))}
+						</p>
+					</div>
+					<div class="tab-pane" id="panel-6">
+						<p>
+							{:W('Info/load',array(12))}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="height: 1px;background: #b4b4b4;width: 100%;" ></div>
+	<!--广告-->
+	<div id=homepage_ad><img src="__PUBLIC__/glxh/images/AD.png"></div>
+	<!--重点成果推荐-->
+	<div id=zdcgtj><img src="__PUBLIC__/glxh/images/zdcg.png"></div>
+	<div id=zdcgtj_line class="zdcgtj_line"></div>
+	<div id=zdcgtj_line_content><img src="__PUBLIC__/glxh/images/zdcgtj.png" </div>
+	<!--友情链接-->
+	<div id=link_left><img src="__PUBLIC__/glxh/images/link.png"></div>
+	<div id=link_right>
+		<select name="link_key" class="link_key" onchange="if(value!=''){window.open(this.options[this.selectedIndex].value);}else{return(false);}">
+			<option value="" class="link_key" selected>各地交通厅</option>
+			<option value="http://www.bjjtw.gov.cn/"  >北京市交通委员会</option>
+			<option value="http://www.tjjt.gov.cn/Page/Index.aspx"  >天津市交通运输委员会</option>
+			<option value="http://www.hbsjtt.gov.cn/"  >河北省交通运输厅</option>
+			<option value="http://www.sxjt.gov.cn/"  >山西省交通运输厅</option>
+			<option value="http://www.nmjt.gov.cn/"  >内蒙古自治区交通运输厅</option>
+			<option value="http://www.lncom.gov.cn"  >辽宁省交通运输厅</option>
+			<option value="http://www.jljt.gov.cn"  >吉林省交通运输厅</option>
+			<option value="http://www.hljjt.gov.cn/"  >黑龙江省交通运输厅</option>
+			<option value="http://www.jt.sh.cn/export/"  >上海市交通委员会</option>
+			<option value="http://www.jscd.gov.cn/"  >江苏省交通运输厅</option>
+			<option value="http://www.zjt.gov.cn/"  >浙江省交通运输厅</option>
+			<option value="http://www.ahjt.gov.cn/"  >安徽省交通运输厅</option>
+			<option value="http://www.fjjt.gov.cn/"  >福建省交通运输厅</option>
+			<option value="http://www.jxjt.gov.cn"  >江西省交通运输厅</option>
+			<option value="http://www.sdjt.gov.cn"  >山东省交通运输厅</option>
+			<option value="http://www.hbjt.gov.cn"  >河南省交通运输厅</option>
+			<option value="http://www.hbjt.gov.cn"  >湖北省交通运输厅</option>
+			<option value="http://www.hnjt.gov.cn"  >湖南省交通运输厅</option>
+			<option value="http://www.gdcd.gov.cn"  >广东省交通运输厅</option>
+			<option value="http://www.gxdot.gov.cn"  >广西壮族自治区交通运输厅</option>
+			<option value="http://www.hainanjt.gov.cn"  >海南省交通运输厅</option>
+			<option value="http://www.cqjt.gov.cn"  >重庆市交通委员会</option>
+			<option value="http://www.scjt.gov.cn"  >四川省交通运输厅</option>
+			<option value="http://www.qjt.gov.cn"  >贵州省交通运输厅</option>
+			<option value="http://www.ynjtt.gov.cn"  >云南省交通运输厅</option>
+			<option value="http://www.xzjtt.gov.cn"  >西藏自治区交通运输厅</option>
+			<option value="http://www.sxsjtt.gov.cn"  >陕西省交通运输厅</option>
+			<option value="http://www.gsjt.gov.cn"  >甘肃省交通运输厅</option>
+			<option value="http://www.qhjt.gov.cn"  >青海省交通运输厅</option>
+			<option value="http://www.nxcd.gov.cn"  >宁夏回族自治区交通运输厅</option>
+			<option value="http://www.xjjt.gov.cn"  >新疆维吾尔自治区交通运输厅</option>
+			<option value="http://jtj.xjbt.gov.cn"  >新疆生产建设兵团交通局</option>
+		</select>
+		<select class="link_key" name="url" onchange="if(value!=''){window.open(this.options[this.selectedIndex].value);}else{return(false);}">
+			<option value="#" class="link_key" >地方学会</option>
+			<option value="http://www.bjglxh.cn/indax.html">北京公路学会</option>
+			<option value="http://www.jsglxh.cn">江苏省公路学会</option>
+			<option value="http://www.jxglxh.org.cn">江西省公路学会</option>
+			<option value="http://www.sdgl.org.cn">山东省公路学会</option>
+			<option value="http://cqglxh.cqjt.gov.cn">重庆公路学会</option>
+			<option value="http://www.shts.org/shts/index.jsp">上海公路学会</option>
+			<option value="http://www.zjglxh.org/">浙江公路学会</option>
+			<option value="http://www.ahglxh.org/">安徽公路学会</option>
+
+
+		</select>
+	</div>
+	<div id=link_line></div>
+	<div class="link_div">
+		{:W('Info/load',array(15))}
+	</div>
+	</block>

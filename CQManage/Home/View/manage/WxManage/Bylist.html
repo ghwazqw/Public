@@ -1,0 +1,113 @@
+<extend name="manage/index/base_user" title="养护信息查询"/>
+
+<block name="customer">
+
+    <div class="row clearfix" style="font-size: 12px">
+        <!--删除数据确认-->
+        <!--<div class="modal fade" id="form-A30148" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="get">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabe2">
+                                删除信息确认
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            该操作不可恢复，请确认！
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                            <button type="submit" class="btn btn-danger">确认</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>-->
+    </div>
+<div class="col-md-12 col-xs-12" nowrap>
+                <div class="input-group" style="text-align: right">
+                    <form class="navbar-form navbar-left" method="get">
+                    <input type="text" class="form-control" placeholder="养护信息搜索......" name="keyword" value="{$keyword}">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                    </form>
+                    <!--<div class="btn-group" style="margin-top: 8px">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span>功能列表</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">功能列表</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li >
+                                <a href="/Home/WxManage/editor" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                            </li>
+                            <li >
+                                <a href="/home/WxManage/infoExp" role="button" data-toggle="modal"  title="导出信息" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span> 导出信息</a>
+                            </li>
+
+                             </ul>
+                    </div>-->
+                </div>
+
+    <div id='div1'>
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>类型</th>
+                <th nowrap>资产名称</th>
+                <th nowrap>资产编号</th>
+                <th nowrap>申请养护时间</th>
+                <th nowrap>申请处室</th>
+                <th nowrap>申请养护理由</th>
+                <th nowrap>申请人</th>
+                <th nowrap>保养金额</th>
+                <th nowrap>养护时间</th>
+                <th nowrap>备注</th>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td>
+                    <?php
+                if ($Info['sblx']=='ysgj_tb')
+                echo "运输工具";
+                elseif ($Info['sblx']=='dqsb_tb')
+                echo "机械器具";
+                elseif ($Info['sblx']=='dzsb_tb')
+                echo "电子设备";
+                elseif ($Info['sblx']=='qtzc_tb')
+                echo "其他设备";
+                elseif ($Info['sblx']=='fwkp_tb')
+                echo "房屋";
+                ?>
+                </td>
+                    <td>{$Info.sbmc}</td>
+                    <td>{$Info.sbbh}</td>
+                <td>{$Info.zc_sqwxsj|strtotime|date="Y-m-d",###}</td>
+                <td>{$Info.zc_sqwxbm}</td>
+                <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='养护申请理由' data-content='{$Info.zc_sqly}'><span class='glyphicon glyphicon-folder-open'></span></a>
+                </td>
+                <td>{$Info.zc_sqr}</td>
+                <td>{$Info.zc_fsje}</td>
+                <td>{$Info.zc_wxsj|strtotime|date="Y-m-d",###}</td>
+                <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.zc_note}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover()
+                    })
+                </script>
+            </tr>
+            </foreach>
+        </table>
+
+    </div>
+</div>
+            <ul class="pagination">
+                {$pagebar}
+            </ul>
+
+    </block>

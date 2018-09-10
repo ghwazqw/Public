@@ -1,0 +1,172 @@
+<extend name="glxh/index/base_user"  title="对接需求"/>
+<block name="customer">
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+    <script>
+        $ (function (){
+            //正则表达式去空格
+            function trim(str)
+            {
+                return str.replace(/^\s*|\s*$/ig,"");
+
+            }
+            //类型选择判断
+            $("#gl_hdxq").blur(function(){
+                var gl_hdxq = trim($("#gl_hdxq").val());
+                if (gl_hdxq==""){
+                    $("#gl_hdxq").attr('placeholder',"此项为必填");
+                    $("#gl_hdxq").css('border',"1px solid #ff0000");
+                }
+                else
+                {
+                    $("#gl_hdxq").css('border',"1px solid #0785e9");
+                }
+
+            });
+            $("#sub1").click(function(){
+
+                var gl_hdxq = trim($("#gl_hdxq").val());
+                if (gl_hdxq==""){
+                }
+                else
+                {
+
+                }
+            })
+        })
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            function trim(str)
+            {
+                return str.replace(/^\s*|\s*$/ig,"");
+
+            }
+            $("#sub").click(function () {
+                var gl_hdxq = trim($("#gl_hdxq").val());
+                confirm("注意：", " 提交后在收到回复前不能修改信息，请确认!", function (isConfirm) {
+                    if (isConfirm) {
+                        //after click the confirm
+
+                        if (gl_hdxq!=""){
+                            $("#gl_hdxq").attr('placeholder',"此项为必填");
+                            $("#gl_hdxq").css('border',"1px solid #ff0000");
+                            $(this).prop("disabled",true);
+                            $(this).html("正在提交...");
+                            $("form").submit()
+                        }
+                        else{
+                            $("#errorInfo").html("信息提交非法,请检查");
+                            return false;
+                        }
+
+                    } else {
+                        //after click the cancel
+                        return false;
+                    }
+                }, {confirmButtonText: 'Yes, 我要提交!', cancelButtonText: 'No, 返回填写!', width: 420});
+            });
+        });
+    </script>
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+    <form method="post" id="form">
+
+<div class="kjtd_kj" style="height: 750px">
+    <div class="kjtd_kj_left">
+        <div class="user_cnet_kj_menu">
+            {:W('Info/load',array(5))}
+            {:W('Info/load',array(6))}
+            {:W('Info/load',array(7))}
+        </div>
+    </div>
+    <div class="kjtd_kj_right">
+
+<div class="kjtd_title">
+    <div class=lan_qukuai>&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/glxh/images/rz_tu.png">&nbsp;&nbsp;<b>供需对接需求</b> </div>
+    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+</div>
+    <br /><br /><br />
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current">一、基本信息</li>
+        <li>二、联系信息</li>
+    </div>
+    <div class="kjtd_qc"></div>
+    <div id="xxzx_content">
+        <!--TAB标签一-->
+        <ul style="display:block;" >
+
+                    <div class="kjtd_from">
+                        <!--行1!-->
+
+                        <div class="kjtd_from_left" style="height: 100px">活动需求：</div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            <textarea class="kttd_from_text" name="gl_hdxq" placeholder="请输入活动需求" id="gl_hdxq"></textarea>
+                            <input type="hidden" name="gl_cjr" value="{$globar_user:user_name}">
+                            <input type="hidden" name="gl_lxyw" value="1">
+                        </div>
+                        <div class="kjtd_from_left">活动类型：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="能力对接" name="gl_hdlx" checked>  能力对接
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="项目对接" name="gl_hdlx">  项目对接
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="服务对接" name="gl_hdlx">  服务对接
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">活动形式：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="在线对接" name="gl_hdxs" checked >  在线对接
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="视频对接" name="gl_hdxs">  视频对接
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="线下对接" name="gl_hdxs">  线下对接
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;">
+
+            <include file="glxh/ywcent/lx_us" />
+
+    </ul>
+
+
+    </div>
+
+        <include file="glxh/ywcent/submit" />
+</div>
+</div>
+    </form>
+</block>

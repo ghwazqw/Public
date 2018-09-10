@@ -1,0 +1,93 @@
+<extend name="glxh/index/base_top"  title="专家信息"/>
+<block name="customer">
+<div class="sea_Kj">
+    <div class="sea_Kj_left">
+        <div class="lx-about" >
+            <div class="lx-sea-div" style="width: 50%"><img src="__PUBLIC__/glxh/images/menu-about-ico.png">  <a href="/" style="color: #ffffff">首页</a> --> 专家信息中心 -->
+                <div class="btn-group">
+                    <button class="btn btn-default"><php>if ($type=="1") :</php>青年专家顾问<php>else :</php>专家委员会<php>endif ;</php></button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/index.php/home/zjsea/search">行业专家顾问</a>
+                        </li>
+                        <li>
+                            <php>if ($type=="1") :</php>
+                            <a href="/index.php/home/zjsea/searchq/?type=2">专家委员会</a>
+                            <php>else :</php>
+                            <a href="/index.php/home/zjsea/searchq/?type=1">青年专家顾问</a>
+                            <php>endif ;</php>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="search_top radius6" style="width: 394px">
+                <form name="searchform" method="post" action="/index.php/home/zjsea/searchq/" >
+                    <input class="inp_srh" name="keyword" style="width: 330px"
+                    <php> if($keyword==""): //行业专家顾问</php>placeholder="共有资料(10{$count})项" <php> else:</php>value="{$keyword}"<php> endif;</php>>
+                    <input name="type" type="hidden" value="<php>if ($type=="1") :</php>1<php>else :</php>2<php>endif ;</php>">
+                    <input class="btn_srh" type="submit" name="submit" value="搜索">
+                </form>
+
+            </div>
+        </div>
+        <p style="height: 65px"></p>
+
+        <table style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px">
+            <tr >
+                <th colspan="6" style="padding-left: 5px">
+                    <h5 style="color: #4b6db0">共有{$count}个<php>if ($type=="1") :</php>青年专家顾问<php>else :</php>专家委员信息<php>endif ;</php>,每页显示{$page_size}条数据</h5>
+                </th>
+            </tr>
+            <tr style="background: #dfebfe;color: #4b6db0;height: 40px;font-size: 14px;">
+                <td style="width: 50px;text-align: center;">序号</td>
+                <td style="width: 10%">姓名</td>
+                <td>工作单位</td>
+                <td>从事专业</td>
+                <td>专家职务</td>
+                <td style="width: 80px">所在地区</td>
+
+            </tr>
+            <php>if( $count > 0  ):</php>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="zj" >
+                <?php $i++;?>
+                <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;">
+                    <td style="width: 50px;text-align: center">{$i}</td>
+                    <td><a href="../zjq_dal?id={$zj.id}&type={$type}" target="_blank">{$zj.gl_zjxm}</a></td>
+                    <td>{$zj.gl_zjgzdw}</td>
+                    <td>{$zj.gl_zjcszygjc}</td>
+                    <td>{$zj.gl_zjzw}</td>
+                    <td>{$zj.gl_zjsf}</td>
+                </tr>
+
+            </foreach>
+            <php>else:</php>
+            <tr style="font-size: 12px">
+                <td></td>
+                <td><span style="color: red" >“{$keyword}”</span> <br />通过查询，没有该专家信息。</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <php> endif;</php>
+
+        </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+    <!--右框架!-->
+    <div class="sea_Kj_right">
+        <div class="cg_rk_bq"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>专家信息入库申请</div>
+        <div style="height: 20px"></div>
+        {:W('Info/load',array(2))}
+        {:W('Info/load',array(3))}
+        {:W('Info/load',array(4))}
+    </div>
+<div class="clear"></div>
+</div>
+
+
+
+</block>

@@ -1,0 +1,205 @@
+<extend name="manage/index/base" title="资产主表信息管理"/>
+
+<block name="customer">
+
+
+   <!--{$fo.column_name}/{$fo.column_comment}/{$fo.data_type}<br />-->
+
+        <div class="form-inline" style="text-align: left;height: 1500px">
+
+            <form method="post">
+                <label>数据库表</label>
+            <select name="table" class="selectpicker show-tick form-control" id="table" >
+                <option value ="">请选择</option>
+                <foreach name="Table" item="T" >
+                    <option value ="{$T.table_name}">{$T.table_comment}({$T.table_name})</option>
+                </foreach>
+            </select>
+            <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+            </form>
+
+<hr />
+
+    <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+        <tr style="background: #8bc5eb;color:#fff">
+            <th nowrap>序号</th>
+            <foreach name="formname" item="fo" >
+            <th nowrap>
+                <php>
+                    $comment=$fo['column_comment'];
+                    $comment=explode("|",$comment);
+                </php>
+                {$comment[0]}</th>
+            </foreach>
+            <th nowrap>操作</th>
+        </tr>
+
+        <tr>
+            <td><php>echo str_replace("#","$","{#i}");</php></td>
+            <foreach name="formname" item="fo" >
+                <?php
+               $info_name='{#InfoData.';
+               $info_name.=$fo['column_name'];
+               $info_name.='}';
+
+               ?>
+                <td >
+                    <?php
+                        if ($info_name!='{#InfoData.ht_bz}')
+                        {
+                        echo str_replace('#','$',$info_name);
+                        }
+                        else{
+                        $a="<a tabindex='0' role='button' data-placement='bottom' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='";
+                        $a.=str_replace('#','$',$info_name);
+                        $a.="'><span class='glyphicon glyphicon-folder-open'></span></a>";
+                        echo $a;
+                        }
+
+                    ?>
+                </td>
+            </foreach>
+
+            <td>
+            </td>
+            <script>
+                $(function () {
+                    $('[data-toggle="popover"]').popover()
+                })
+            </script>
+        </tr>
+    </table>
+            类综合代码：
+            <textarea style="width: 100%;height: 300px">
+            class ****API //填写控制器名称规则:"控制器名称+API"
+            {
+            public $_page_size="40"; //每页显示条数
+            public $_page_bar=""; //分布组件需要展示的内容
+            public $_page_count=""; //统计数量
+            public $_main_data=array(); //主表数据
+            public $_dateil_data=array();  //子表数据
+            public $_keyword=""; //关键字数据
+            public $_class_data=""; //类型数据
+            public $_class_meta_data=""; //关键字数据
+            public $actionInfo=""; //返回要执行的动作
+
+                function loadmatedata($where){
+                $TableName=M("{$TableName}");
+                $this->_keyword=I("keyword");
+                if ($this->_keyword!=""){
+            <foreach name="formname" item="fo" >
+                $where["{$fo.column_name}"]  = array('like',"%$this->_keyword%");
+            </foreach>
+                $where['_logic']='OR';
+            }
+                //加载主表数据
+                $this->_page_count=$count=$TableName->where($where)->order("id DESC")->count();
+                $Page = new \Think\Page($count,$this->_page_size);
+                //$Page->parameter=$this->_keyword;
+
+                $this->_page_bar=$Page->show(); //把分布内容赋值给变量
+                $this->_main_data=$TableName->where($where)->order("id DESC")->LIMIT($Page->firstRow.','.$Page->listRows)->select(); //主表数据取值完成
+                //echo $TableName->getLastSql();
+            }
+            }
+
+            </textarea>
+
+
+            控制器代码：
+            <pre style="width: 100%;height: 300px">
+                $ii->loadmatedata();
+                $this->assign("InfoData",$ii->_main_data); //主表数据
+                $this->assign("pagebar",$ii->_page_bar);    //分页组件
+                $this->assign("count",$ii->_page_count);    //统计数据
+                $this->assign("keyword",$ii->_keyword);
+                $this->assign("page_count",$ii->_page_size);
+                $this->theme("")->display();
+            </pre>
+            API接口代码：
+            <pre style="width: 100%;height: 300px">
+            function loadmatedata($where){
+                $TableName=M("{$TableName}");
+                $this->_keyword=I("keyword");
+                if ($this->_keyword!=""){
+            <foreach name="formname" item="fo" >
+                $where["{$fo.column_name}"]  = array('like',"%$this->_keyword%");
+            </foreach>
+                $where['_logic']='OR';
+            }
+                //加载主表数据
+                $this->_page_count=$count=$TableName->where($where)->order("id DESC")->count();
+                $Page = new \Think\Page($count,$this->_page_size);
+                //$Page->parameter=$this->_keyword;
+
+                $this->_page_bar=$Page->show(); //把分布内容赋值给变量
+                $this->_main_data=$TableName->where($where)->order("id DESC")->LIMIT($Page->firstRow.','.$Page->listRows)->select(); //主表数据取值完成
+                //echo $TableName->getLastSql();
+            }
+
+            </pre>
+            前端列表显示代码：
+            <textarea style="width: 100%;height: 300px">
+                <div>
+                    <form class="navbar-form navbar-left" method="post">
+                        <input type="text" class="form-control" placeholder="{$keyword}" name="keyword" >
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                </div>
+                <table id="gridtable" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                    <tr style="background: #8bc5eb; color: #ffffff">
+                        <th nowrap>序号</th>
+                        <foreach name="formname" item="fo" >
+                            <php>
+                                $comment=$fo['column_comment'];
+                                $comment=explode("|",$comment);
+                            </php>
+                            <th nowrap>{$comment[0]}</th>
+                        </foreach>
+                        <th nowrap>操作</th>
+                    </tr>
+                    <?php
+                    $ii="<?php #i = 0;?>";
+                      $io="<?php #i++;?>";
+                    $for_start="<#foreach name='InfoData' item='Info' >";
+                    ?>
+                    <php>echo str_replace("#","$",$ii);</php><br/>
+                    <php>echo str_replace("#","",$for_start);</php>
+                    <php>echo str_replace("#","$",$io);</php>
+                    <tr>
+                        <td><php>echo str_replace("#","$","{#i}");</php></td>
+                        <foreach name="formname" item="fo" >
+                            <?php
+               $info_name='{#Info.';
+               $info_name.=$fo['column_name'];
+               $info_name.='}';
+               ?><td><?php
+                        if ($info_name!='{#Info.ht_bz}')
+                        {
+                        echo str_replace('#','$',$info_name);
+                        }
+                        else{
+                        $a="<a tabindex='0' role='button' data-placement='bottom' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='";
+                        $a.=str_replace('#','$',$info_name);
+                        $a.="'><span class='glyphicon glyphicon-folder-open'></span></a>";
+                        echo $a;
+                        }
+                    ?></td>
+                        </foreach>
+                        <td>
+                        </td>
+                        <script>
+                $(function () {
+                    $('[data-toggle="popover"]').popover()
+                })
+            </script>
+                    </tr>
+                    <?php
+                    $for_end="<#/foreach>";
+                    ?>
+                    <php>echo str_replace("#","",$for_end);</php>
+                </table>
+            </textarea>
+        </div>
+
+</block>

@@ -1,0 +1,134 @@
+<extend name="50/index/base_ywmanage"  title="成果评估"/>
+<block name="customer">
+
+    <script type="text/javascript">
+        //需求TAB标签
+        $(function(){
+            window.onload = function()
+            {
+                var $li = $('#kjtd_title_list li');
+                var $ul = $('#xxzx_content ul');
+
+                $li.mousedown(function(){
+                    var $this = $(this);
+                    var $t = $this.index();
+                    $li.removeClass();
+                    $this.addClass('current');
+                    $ul.css('display','none');
+                    $ul.eq($t).css('display','block');
+                })
+            }
+        });
+    </script>
+
+<div class="kjtd_kj" style="height: 750px">
+    <ul class="breadcrumb">
+        <li>
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="#">管理中心</a>
+        </li>
+        <li>
+            <a href="/home/Manage/cgpg_manage">成果评估信息管理</a>
+        </li>
+        <li class="active">
+            <a href="#"> 成果评估详细信息</a>
+        </li>
+    </ul>
+
+    <foreach name='InfoData' item='InfoData' >
+    <div class="kjtd_title_list" id="kjtd_title_list">
+        <li class="current">一、基本信息</li>
+        <li>二、知识产权</li>
+        <li>三、其他证明材料</li>
+        <li>四、联系信息</li>
+        <li>五、信息状态及回复</li>
+    </div>
+    <div class="kjtd_qc"></div>
+    <div id="xxzx_content">
+        <!--TAB标签一-->
+        <ul style="display:block;" >
+
+                    <div class="kjtd_from">
+                        <!--行1!-->
+
+                        <div class="kjtd_from_left">成果名称：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_cgmc}                        </div>
+                        <div class="kjtd_from_left">成果类型：</div>
+                        <div class="kjtd_from_right">
+                            {$InfoData.gl_cglx}                        </div>
+
+                        <div class="kjtd_from_left" style="height: 100px">成果简介：</div>
+                        <div class="kjtd_from_right" style="height:100px">
+                            {$InfoData.gl_cgjj}                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">应用情况：</div>
+                        <div class="kjtd_from_right" style="height:100px">
+                            {$InfoData.gl_yyqk}                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">推广前景：</div>
+                        <div class="kjtd_from_right" style="height:100px">
+                            {$InfoData.gl_tgqj}                        </div>
+
+
+
+
+
+                    </div>
+
+
+
+        </ul>
+        <!--TAB标签二-->
+        <ul style="display:none;height: 350px">
+            <div class="kjtd_from_left"  >专利技术：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_zljs}            </div>
+            <div class="kjtd_from_left"  >专利所属地区：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_zlssdq}
+            </div>
+            <div class="kjtd_from_left"  >专利类型：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_zllx}            </div>
+            <div class="kjtd_from_left"  >专利号/申请号：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_zlh}            </div>
+            <div class="kjtd_from_left"  > 专利简介：</div>
+            <div class="kjtd_from_right" style="height: 97px">
+                {$InfoData.gl_zljj}            </div>
+            <div class="clear"></div>
+            <div class="kjtd_from_left"  >其他专利技术：</div>
+            <div class="kjtd_from_right" >
+                {$InfoData.gl_qtzljs}            </div>
+        </ul>
+        <!--TAB标签三-->
+        <ul style="display:none;">
+
+            <div class="kjtd_from_left"  style="height: 60px">检测报告：</div>
+            <div class="kjtd_from_right" style="height: 60px">
+                <a href="/{$InfoData.gl_jcbg}" target="_blank">下载</a>            </div>
+            <div class="kjtd_from_left"  style="height: 60px">获奖证书：</div>
+            <div class="kjtd_from_right" style="height: 60px">
+                {$InfoData.gl_hjzs}            </div>
+            <div class="kjtd_from_left"  style="height: 60px">用户报告：</div>
+            <div class="kjtd_from_right" style="height: 60px">
+                {$InfoData.gl_yhbg}            </div>
+
+        </ul>
+
+        <!--TAB标签二-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/lx_us" />
+        </ul>
+        <!--TAB标签六!-->
+        <ul style="display:none;">
+            <include file="50/ywmanage/hfzx" />
+        </ul>
+
+
+    </div>
+    </foreach>
+</div>
+
+</block>

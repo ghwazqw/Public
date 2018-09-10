@@ -1,0 +1,75 @@
+<extend name="50/index/base" title=""/>
+<block name="title"><title>{$web_manage_title}</title></block>
+<block name="customer">
+    <foreach name="meta_data" item="M_dat" >
+    <div style="width: 90%;margin: 0px auto;">
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><a href="/index.php/Home/newstest/news_list/">资讯信息列表</a>-->资讯详细页面</div>
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-9 column">
+
+                    <div class="articleContent">
+                        <h2 class="title">
+                            {$M_dat.info_title}
+                        </h2>
+                        <div class="property">
+                            <span>文章来源：{$M_dat.info_laiyuan}</span> <span>作者：{$M_dat.info_user}</span> <span>发布时间：{$M_dat.info_date|strtotime|date="Y年m月d日",###} 浏览量：{$info_cilck}次</span>
+                            <span>评估数据：
+                            <php>if ($M_dat["info_anal_type"]=="") :</php>
+                            <div class="btn-group">
+                                <button class="btn btn-default">未分析</button>
+                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+
+                                    <li>
+                                        <a href="?id={$M_dat.info_id}&act=1">通知公告分析</a>
+                                    </li>
+                                    <li>
+                                        <a href="?id={$M_dat.info_id}&act=2">政策解读分析</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <php>endif ;</php>
+                            </span>
+                            <foreach name="dateil_data" item="c_dat" >
+                            <span>
+                                <php>if ($c_dat["info_type"]==1) :</php>通知公告指数：<php>else :</php>政策解读指数：<php>endif ;</php>
+                                {$c_dat.info_count}&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
+                            </foreach>
+                        </div>
+                        <hr/>
+                        <div id="contentTxt">
+                            <p style="text-align: center"><php>if ($M_dat['info_photonew']!="") :</php><img src="{$M_dat.info_photonew}" /><php>endif ;</php></p>
+                            {$M_dat.info_content}
+                        </div>
+                        <div >
+                            <php>if ($M_dat['info_photo']!="") :</php><a href="/{$M_dat.info_photo}" target="_blank">附件下载</a><php>endif ;</php>
+                            <foreach name="file_data" item="file" >
+                                <a href="/{$file.photo}">附件下载</a>  |
+                            </foreach>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3 column">
+                {:W('Info/load',array(1))}
+                </div>
+                <php>if ($M_dat["info_anal_type"]==1) :</php>
+                <div class="col-md-3 column">
+                    {:W('Info/load',array(22))}
+                </div>
+                <php>elseif ($M_dat["info_anal_type"]==2) :</php>
+                <div class="col-md-3 column">
+                    {:W('Info/load',array(23))}
+                </div>
+                <php>else :</php>
+                没有相关资讯
+                <php>endif ;</php>
+            </div>
+        </div>
+    </div>
+    </foreach>
+</block>

@@ -1,0 +1,56 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <div style="width: 90%;margin: 0px auto;">
+        <div  class="glyphicon glyphicon-th"> <a href="/">首页</a>--><a href="/index.php/Home/zjxx/zjwcr_list/">行业专家顾问信息列表</a>-->专家详细信息</div>
+        <br/><br/>
+        <div style="width: 90%;margin: 0px auto;">
+            <foreach name="info_data" item="zj" >
+
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object"
+                            <php>if ($zj["zj_photo"]=="") :</php>
+                            src="__PUBLIC__/glxh/images/logo.png"
+                            <php>else :</php>
+                            src="/{$zj.zj_photo}" style="width: 150px" ;
+                            <php>endif ;</php> alt="{$zj.cg_wcrxm}"  >
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{$zj.cg_wcrxm}<span style="font-size: 12px;color: #0f0f0f"> ({$zj.cg_wcrxb}，{$zj.cg_wcrcsny|strtotime|date="Y年m月",###}出生，{$zj.cg_wcrsfzh})；{$zj.cg_wcrzgxl}，{$zj.cg_wcrdp}，{$zj.cg_wcrgzdw}{$zj.cg_wcrxzzw}。</span></h4>
+                        <br />
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-success" style="font-size: 13px">
+                            办公电话：<php> if( $zj['cg_wcrbgdh'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrbgdh}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;工作单位：<php> if( $zj['cg_wcrgzdw'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrgzdw}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;从事专业：<php> if( $zj['gl_zjcszygjc'] == "" ):</php>无记录<php>else:</php>{$zj.gl_zjcszygjc}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;籍贯：<php> if( $zj['cg_wcrjg'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrjg}<php> endif;</php>
+                            &nbsp;&nbsp;&nbsp;&nbsp;技术职称：<php> if( $zj['cg_wcrjszc'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrjszc}<php> endif;</php>
+
+                            </li>
+                            <li class="list-group-item list-group-item-info" style="font-size: 13px">
+                            通讯地址：{$zj.cg_wcrtxdz} &nbsp;&nbsp;&nbsp;&nbsp;邮政编码：{$zj.cg_wcryzbm}
+                            &nbsp;&nbsp;&nbsp;&nbsp;电子邮箱：{$zj.cg_wcrdzyx}
+                                &nbsp;&nbsp;&nbsp;&nbsp;移动电话：{$zj.cg_wcryddh}
+                            </li>
+                            <li class="list-group-item list-group-item-warning" style="font-size: 13px">
+                                曾获奖项：<php> if( $zj['cg_wcrchj'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrchj}<php> endif;</php>
+                            </li>
+                        </ul>
+                        <hr/>
+                        <div style="line-height: 25px">
+                            主要成果：<?php $i = 0;?>
+                            <foreach name="cg_data" item="cg" >
+                                <?php $i++;?>
+                                <h5><a href="/index.php/home/cgxx/cgxx_dal/?id={$cg.id}" target="_blank">{$i}. {$cg.cg_cgmc}</a> <span class="label label-default">({$cg.cg_wcsj|strtotime|date="Y年m月",###})</span></h5>
+                                <li style="font-size: 12px">主要完成人：{$cg.cg_zywcr} </li>
+                            </foreach>
+                        </div>
+                    </div>
+                </div>
+            </foreach>
+        </div>
+    </div>
+
+</block>

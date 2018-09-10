@@ -1,0 +1,26 @@
+<div class="row">
+    <?php $i = 0;?>
+    <foreach name="w_data" item="d">
+        <?php $i++;?>
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <img alt="600x200" src="<php>if ($i==1) :</php>__PUBLIC__/glxh/images/lu.png<php>endif ;</php>
+            <php>if ($i==2) :</php>__PUBLIC__/glxh/images/city.png<php>endif ;</php>
+            <php>if ($i==3) :</php>__PUBLIC__/glxh/images/tai.png<php>endif ;</php>
+            " class="img_d"/>
+            <div class="caption">
+                <h3>
+                    {$d.info_title|mb_substr=0,14,'UTF-8'}
+                </h3>
+                <p>
+                    {$d.info_note|mb_substr=0,49,'UTF-8'}
+                </p>
+                <p>
+                    <a class="btn btn-primary" href="/index.php/home/news/news_dal/?id={$d.info_id}" target="_blank">浏览</a>
+                    <a class="btn" href="/index.php/home/news/news_z_list?info_type={$d.info_type}">更多 »</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </foreach>
+</div>

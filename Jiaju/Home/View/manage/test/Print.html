@@ -1,0 +1,41 @@
+
+    <script language="javascript" src="__PUBLIC__/printjs/jquery-1.4.4.min.js"></script>
+    <script language="javascript" src="__PUBLIC__/printjs/jquery.jqprint-0.3.js"></script>
+    <script language="javascript">
+
+        function aa(){
+            pagesetup_null() ;
+            $("#ddd").jqprint();
+        }
+    </script>
+    <script language="JavaScript">
+        var hkey_root,hkey_path,hkey_key
+        hkey_root="HKEY_CURRENT_USER"
+        hkey_path="//Software//Microsoft//Internet Explorer//PageSetup//"
+        //设置网页打印的页眉页脚为空
+        function pagesetup_null(){
+            try{
+                var RegWsh = new ActiveXObject("WScript.Shell")
+                hkey_key="header";
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"");
+                hkey_key="footer";
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"");
+                print();
+            }catch(e){}
+        }
+        //设置网页打印的页眉页脚为默认值
+        function pagesetup_default(){
+            try{
+                var RegWsh = new ActiveXObject("WScript.Shell")
+                hkey_key="header" ;
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"&w&b页码，&p/&P");
+                hkey_key="footer";
+                RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"&u&b&d");
+                print();
+            }catch(e){}
+        }
+    </script>
+    <div id="ddd">
+        <img src="/home/index/qrcode" />
+    </div>
+    <input type="button" onclick="aa()" value="打印"/>

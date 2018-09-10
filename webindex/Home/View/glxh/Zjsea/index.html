@@ -1,0 +1,116 @@
+<extend name="glxh/index/base_top"  title="专家信息"/>
+<block name="customer">
+<div class="sea_Kj">
+    <div class="sea_Kj_left">
+        <div class="lx-about" >
+            <div class="lx-sea-div" style="width: 40%;"><img src="__PUBLIC__/glxh/images/menu-about-ico.png">  <a href="/" style="color: #ffffff">首页</a> --> 专家信息中心
+
+            </div>
+            <div class="lx-sea-div" style="width: 55%;text-align: right;float: right">
+
+            <form name="searchform" method="post" action="/Home/Zjsea/search">
+                <div class="col-md-8 column row" style="text-align: right;">
+
+                    <div class="col-lg-4" >
+                        <div class="input-group" style="height: 40px;line-height: 40px;margin-top: 7px">
+                            <div class="input-group-btn" style="height: 40px;line-height: 40px">
+                                <select class="btn btn-default dropdown-toggle select_box" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="lx">
+                                    <option value="" <php> if ($lx=="") :</php>selected<php>endif ;</php> >请选择</option>
+                                    <option value="cg_wcrxm" <php> if ($lx=="cg_wcrxm") :</php>selected<php>endif ;</php>>专家姓名</option>
+                                    <option value="cg_wcrgzdw" <php> if ($lx=="cg_wcrgzdw") :</php>selected<php>endif ;</php>>工作单位</option>
+                                    <option value="cg_wcrzyzc" <php> if ($lx=="cg_wcrzyzc") :</php>selected<php>endif ;</php>>从事专业</option>
+                                    <option value="cg_wcrjszc" <php> if ($lx=="cg_wcrjszc") :</php>selected<php>endif ;</php>>技术职称</option>
+                                    <option value="cg_wcrbyyx" <php> if ($lx=="cg_wcrbyyx") :</php>selected<php>endif ;</php>>毕业院校</option>
+                                    <option value="cg_wcrjg" <php> if ($lx=="cg_wcrjg") :</php>selected<php>endif ;</php>>所在地区</option>
+                                </select>
+                            </div><!-- /btn-group -->
+                            <input type="text" class="form-control"  style="height: 40px;width: 250px;border:2px solid #eb6100;border-left: none;
+							border-right: none;line-height: 40px" name="keyword" <php> if($keyword==""): //资料信息</php>placeholder="共有资料(10{$count})项" <php> else:</php>value="{$keyword}"<php> endif;</php>>
+                            <div class="input-group-btn">
+                                <input type="submit" name="submit" value="搜索" class="srh_btn">
+                            </div>
+
+                        </div><!-- /input-group -->
+
+                    </div><!-- /.col-lg-6 -->
+                </div>
+            </form>
+            </div>
+        </div>
+        <p style="height: 65px"></p>
+
+
+                    <form class="navbar-form navbar-left" method="post">
+                        <div class="form-group" style="line-height: 40px">
+                            专家姓名：<input type="text" class="form-control" value="{$cg_wcrxm}" name="cg_wcrxm">
+                            从事专业：<input type="text" class="form-control" value="{$cg_wcrzyzc}" name="cg_wcrzyzc">
+                            学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：<input type="text" class="form-control" value="{$cg_wcrzgxl}" name="cg_wcrzgxl">
+                            专家类型：<select name="zj_type" class="selectpicker show-tick form-control">
+                            <option value="" <php>if ($zj_type=="1,2,3") :</php>selected<php>endif ;</php>>全部</option>
+                            <option value="1" <php>if ($zj_type=="1") :</php>selected<php>endif ;</php>>青年专家委员</option>
+                            <option value="2" <php>if ($zj_type=="2") :</php>selected<php>endif ;</php>>专家委员</option>
+                            <option value="3" <php>if ($zj_type=="3") :</php>selected<php>endif ;</php>>行业专家顾问</option>
+                        </select>
+                            <button type="submit" class="btn btn-default">搜索</button><BR />
+                            共有{$count}条信息
+
+                        </div>
+                    </form>
+
+        <table style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px">
+            <tr style="background: #dfebfe;color: #4b6db0;height: 40px;font-size: 14px;">
+                <td style="width: 50px;text-align: center;">序号</td>
+                <td style="width: 10%">姓名</td>
+                <td>专家类型</td>
+                <td>工作单位</td>
+                <td>从事专业</td>
+                <td>技术职称</td>
+                <td>毕业院校</td>
+                <td>所在地区</td>
+
+            </tr>
+            <php>if( $count > 0  ):</php>
+            <?php $i = 0;?>
+            <foreach name="info_data" item="zj" >
+                <?php $i++;?>
+                <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;">
+                    <td style="width: 50px;text-align: center">{$i}</td>
+                    <td><a href="/index.php/home/zjsea/zj_dal?id={$zj.id}&type=3" target="_blank">{$zj.cg_wcrxm}</a></td>
+                    <td><php>if ($zj["zj_type"]==3) :</php>行业专家顾问<php>elseif ($zj["zj_type"]==2) :</php>专家委员<php>elseif ($zj["zj_type"]==1) :</php>青年专家委员<php>endif ;</php></td>
+                    <td>{$zj.cg_wcrgzdw}</td>
+                    <td>{$zj.cg_wcrzyzc}</td>
+                    <td>{$zj.cg_wcrjszc}</td>
+                    <td>{$zj.cg_wcrbyyx}</td>
+                    <td>{$zj.cg_wcrjg}</td>
+                </tr>
+
+            </foreach>
+            <php>else:</php>
+            <tr style="font-size: 12px">
+                <td></td>
+                <td><span style="color: red" >“{$keyword}”</span> <br />通过查询，没有该专家信息。</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <php> endif;</php>
+
+        </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+    <!--右框架!-->
+    <div class="sea_Kj_right">
+        <div class="cg_rk_bq"><a href="/index.php/home/ywcent/zjrk" style="color: #fff"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>专家信息入库申请</a></div>
+        <div style="height: 20px"></div>
+        {:W('Info/load',array(2))}
+        {:W('Info/load',array(3))}
+        {:W('Info/load',array(4))}
+    </div>
+<div class="clear"></div>
+</div>
+
+
+
+</block>

@@ -1,0 +1,145 @@
+<extend name="manage/index/base_user" title="到期合同管理"/>
+<block name="customer">
+    <script>
+       /*var parentId=parent.$("#count").html();
+        alert(parentId);*/
+    </script>
+    <link href="__PUBLIC__/bs/css/bootstrap-switch.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/bootstrap-switch.min.js"></script>
+    <div class="box">
+        <div class="col-md-12 column">
+            在<mark>未来15天内共有<span id="ccount">{$count}</span>个合同</mark>需要付款。
+        </div>
+        <div class="box-body">
+    <div id='div1' style="width: 98%;margin: 0 auto">
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped " >
+            <tr style="background: #8bc5eb; color: #ffffff;font-size: 12px" >
+                <th nowrap>序号</th>
+                <th nowrap>合同名称</th>
+                <th nowrap>签署方</th>
+                <th nowrap>合同金额</th>
+                <th nowrap>付款方式</th>
+                <th nowrap>开始日期</th>
+                <th nowrap>下次付款日期(付款金额)</th>
+                <th nowrap>备注</th>
+                <th nowrap>继续提醒</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr style="font-size: 12px">
+                    <td>{$i}</td>
+                    <td>{$Info.ht_mc}</td>
+                    <td>{$Info.ht_qsf}</td>
+                    <td style="text-align: right">￥{$Info.ht_je}</td>
+                    <td>共{$Info.ht_fkfs}次付清</td>
+                    <td>{$Info.ht_kssj|strtotime|date="Y-m-d",###}</td>
+                    <td style="color:#ff0000">
+                        <?php
+                        //第一次付款
+                        $time=date("Y-m-d"); //获取当前时间
+                        $otime=date("Y-m-d",strtotime("+15 day")); //15天时间提醒
+                        $j_ht_osj=$Info['ht_osj'];
+                        if ($j_ht_osj>=$time && $j_ht_osj<=$otime){
+                        echo $j_ht_osj."(".$Info['ht_oje'].")<br />";
+                        }
+                        ?>
+                        <?php
+                        //第二次付款
+                        $time=date("Y-m-d"); //获取当前时间
+                        $otime=date("Y-m-d",strtotime("+15 day")); //15天时间提醒
+                        $j_ht_tsj=$Info['ht_tsj'];
+                        if ($j_ht_tsj>=$time && $j_ht_tsj<=$otime){
+                        echo $j_ht_tsj."(".$Info['ht_tje'].")<br />";
+                        }
+                        ?>
+                        <?php
+                        //第三次付款
+                        $time=date("Y-m-d"); //获取当前时间
+                        $otime=date("Y-m-d",strtotime("+15 day")); //15天时间提醒
+                        $j_ht_csj=$Info['ht_csj'];
+                        if ($j_ht_csj>=$time && $j_ht_csj<=$otime){
+                        echo $j_ht_csj."(".$Info['ht_cje'].")<br />";
+                        }
+                        ?>
+                        <?php
+                        //第四次付款
+                        $time=date("Y-m-d"); //获取当前时间
+                        $otime=date("Y-m-d",strtotime("+15 day")); //15天时间提醒
+                        $j_ht_ssj=$Info['ht_ssj'];
+                        if ($j_ht_ssj>=$time && $j_ht_ssj<=$otime){
+                        echo $j_ht_ssj."(".$Info['ht_sje'].")<br />";
+                        }
+                        ?>
+                        <?php
+                        //第五次付款
+                        $time=date("Y-m-d"); //获取当前时间
+                        $otime=date("Y-m-d",strtotime("+15 day")); //15天时间提醒
+                        $j_ht_wsj=$Info['ht_wsj'];
+                        if ($j_ht_wsj>=$time && $j_ht_wsj<=$otime){
+                        echo $j_ht_wsj."(".$Info['ht_wje'].")<br />";
+                        }
+                        ?>
+                    </td>
+                    <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.ht_bz}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                    <td>
+                        <input name="ht_txzt{$Info.id}" id="ht_txzt{$Info.id}" type="checkbox" data-size="small" value="{$Info.ht_txzt}" <php>if ($Info['ht_txzt']==1) :</php>checked<php>endif ;</php>>
+                        <input name="id{$Info.id}" id="id{$Info.id}" value="{$Info.id}" type="hidden" />
+                    </td>
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popover"]').popover()
+                        });
+                        $('[name="ht_txzt{$Info.id}"]').bootstrapSwitch({
+                            onText:"是",
+                            offText:"否",
+                            onColor:"warning",
+                            offColor:"danger",
+                            size:"mini",
+                            onSwitchChange:function(event,state){
+                                if(state==true){
+                                    $(this).val(1);
+                                }else{
+                                    $(this).val(0);
+                                }
+                                var info=$("#ht_txzt{$Info.id}").val();
+                                var id=$("#id{$Info.id}").val();
+                                //alert(info);
+                                //alert(id);
+                                /*location.reload();*/
+                                $.ajax({
+                                    type:"POST",
+                                    url:"/Home/ZcManage/HtDqtx",
+                                    data:{"info":info,"id":id},
+                                    success:function (data, state) { //成功调用回调信息
+                                        parent.$("#count").html(data);  //设置父框架的值
+                                        $("#ccount").html(data);
+                                        //alert(data);
+                                        //window.parent.location.reload();
+                                        //window.location.reload();
+                                    },
+                                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                        //alert(textStatus);
+                                    },
+                                    timeout: 60000,
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                        alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                        return false;
+                                    }
+                                })
+                            }
+                        })
+                    </script>
+
+                </tr>
+            </foreach>
+
+        </table>
+    </div>
+    <ul class="pagination">
+        {$pagebar}
+    </ul>
+        </div>
+    </div>
+
+</block>

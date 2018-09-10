@@ -1,0 +1,148 @@
+<extend name="glxh/index/base_user"  title="专家入库"/>
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/glxh/js/birthday.js"></script>
+    <script>
+        $(function () {
+            $.ms_DatePicker({
+                YearSelector: ".sel_year",
+                MonthSelector: ".sel_month",
+                DaySelector: ".sel_day"
+            });
+            $.ms_DatePicker();
+        });
+    </script>
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 750px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class=lan_qukuai>&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/glxh/images/rz_tu.png">&nbsp;&nbsp;<b>专家入库申请</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>基本信息</li>
+                        <li>拟申请专家库类型</li>
+                        <li>教育经历</li>
+                        <li>工作经历</li>
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 230px;">
+
+                        <div class="kjtd_from_left">姓名：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_name" placeholder="姓名" class="form-control" style="width: 250px"/>
+                            <input type="hidden" name="gl_cjr" value="{$globar_user:user_name}">
+                        </div>
+                        <div class="kjtd_from_left">性别：</div>
+                        <div class="kjtd_from_right">
+                            <select name="zj_xb" class="form-control" style="width: 20%">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="kjtd_from_left">民族：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_mz" placeholder="民族" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">出生日期：</div>
+                        <div class="kjtd_from_right">
+                            <select id="sel_year" name="nian" style="height: 25px"></select>年 &nbsp;
+                            <select id="sel_month" name="yue" style="height: 25px"></select>&nbsp;月
+                            <select id="sel_day" name="ri" style="height: 25px"></select>日
+                        </div>
+                        <div class="kjtd_from_left">所属地区：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_ssdq" placeholder="所属地区" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">身份证号：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_sfzh" placeholder="身份证号" class="form-control" style="width: 250px"/>
+                        </div>
+                    </div>
+                    <!--2!-->
+                    <div style="height: 200px">
+                        <div class="kjtd_from_left">拟申请专家库类型：</div>
+                        <div class="kjtd_from_right">
+                            <input type="radio" name="gl_zjlx" id="gl_zjlx"  value="2" checked /> 专家委员<br />
+                            <input type="radio" name="gl_zjlx"   value="1"/> 青年专家委员<br />
+                            <input type="radio" name="gl_zjlx"   value="3"/> 行业专家顾问<br />
+                        </div>
+                    </div>
+                    <!--2!-->
+                    <div style="height: 520px">
+                        <div class="kjtd_from_left">毕业院校：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_byyx" placeholder="毕业院校" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">专业：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_zyxx" placeholder="专业" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">毕业时间：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_lxr" placeholder="毕业时间" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">最高学历：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_zgxl" placeholder="最高学历" class="form-control" style="width: 250px"/>
+                        </div>
+                    </div>
+                    <!--3-->
+                    <div style="height: 300px">
+                        <div class="kjtd_from_left">工作单位：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_gzdw" placeholder="工作单位" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">工作年限：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_gznx" placeholder="工作年限" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">担任职务：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_xzzw" placeholder="担任职务" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">技术职称：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_jszc" placeholder="技术职称" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">职业标签：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_zybq" placeholder="最多填写6项，中间以,分割" class="form-control" style="width: 250px"/>
+                        </div>
+                        <div class="kjtd_from_left">主要专业技术：</div>
+                        <div class="kjtd_from_right">
+                            <input type="text" name="gl_zyjs" placeholder="主要专业技术" class="form-control" style="width: 250px"/>
+                        </div>
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                    <!--4-->
+
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

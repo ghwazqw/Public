@@ -1,0 +1,80 @@
+<extend name="manage/index/base_user" title="合同管理"/>
+<block name="customer">
+    <div class="col-md-12" style="padding-left: 10px">
+        <ol class="breadcrumb">
+        <li><a href="/Home/ZcManage/HtManage"><span class="glyphicon glyphicon-envelope"></span> 合同信息管理</a></li>
+        <li class="active">合同信息维护</li>
+    </ol>
+        <hr />
+        <div class="col-md-12" style="padding-left: 10px">
+            <foreach name='InfoData' item='Info' >
+            <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+                <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">合同类型 : </lable>
+                <div class="col-sm-6 input-group-sm" style="">
+                    <select class="form-control" name="ht_lx" id="ht_lx ">
+                        <option value=''>请选择类型</option>
+                        <option value='1' <php>if ($Info['ht_lx']=='1') :</php>selected<php>endif ;</php>>维修合同</option>
+                        <option value='2' <php>if ($Info['ht_lx']=='2') :</php>selected<php>endif ;</php>>保养合同</option>
+                    </select>
+                </div><br /><br /><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">合同名称 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                <input type="text" class="form-control" name="ht_mc" id="ht_mc" placeholder="请输入合同名称" value="{$Info.ht_mc}" data-rule="required"/>
+            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">签署方 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                <input type="text" class="form-control" name="ht_qsf" id="ht_qsf" placeholder="请输入签署方" data-rule="required" value="{$Info.ht_qsf}"/>
+            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">合同金额 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+                <input type="hidden" value="{$Info.id}" name="id" id="id" />
+                <input type="text" class="form-control" name="ht_je" id="ht_je" placeholder="请输入合同金额" value="{$Info.ht_je}"/>
+                <div class="input-group-addon">.00</div>
+            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">付款方式 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                <input type="text" class="form-control" name="ht_fkfs" id="ht_fkfs" placeholder="请输入付款方式" value="{$Info.ht_fkfs}" data-rule="required"/>
+            </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">开始日期 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+                <input type="text" readonly class=" form-control" name="ht_kssj" id="ht_kssj" placeholder="请选择开始日期" value="{$Info.ht_kssj|strtotime|date='Y-m-d',###}"/>
+            </div><br/><script>
+                $("#ht_kssj").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">结束日期 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+                <input type="text" readonly class=" form-control" name="ht_jssj" id="ht_jssj" placeholder="请选择结束日期" value="{$Info.ht_jssj|strtotime|date='Y-m-d',###}"/>
+            </div><br/><script>
+                $("#ht_jssj").datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    language:"zh-CN",
+                    minView:"month"
+                });
+            </script><!--END--><!--<lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">合同附件 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+                <input type="file" id="exampleInputFile" name="ht_htfj" id="ht_htfj">
+                <p class="help-block">请上传DOC/PDF/RAR/ZIP类型的文件.</p>
+            </div>&lt;!&ndash;END&ndash;&gt;--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">备注 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+                <textarea class="form-control" style="height: 100px" name="ht_bz" id="ht_bz" placeholder="请输入备注">{$Info.ht_bz}</textarea>
+            </div><br/><!--END-->    <br />
+                <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">备注 : </lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+                <button type="submit" class="btn btn-success">保存</button>
+                <button type="reset" class="btn btn-default">重置</button>
+            </div>
+            </form>
+            </foreach>
+        </div>
+    </div>
+</block>

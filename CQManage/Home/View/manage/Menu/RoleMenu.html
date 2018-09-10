@@ -1,0 +1,73 @@
+<extend name="manage/index/base_user" title="设备信息管理"/>
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <script type="text/javascript">
+        function Search() {
+                $("#tijiao").show();
+        }
+        function Submit() {
+            $("#RoleSub").submit();
+        }
+    </script>
+    <div class="col-md-12" >
+
+        <form class="navbar-form" id="RoleSub" method="post" >
+            <div class="form-group form-inline" >
+                <label>选择角色：</label>
+                <select name="Role" id="Role" class="form-control" onchange="Submit()">
+                    <option value="">请选择</option>
+                    <foreach name="info_data" item="role" >
+                        <option value="{$role.role_name}" <php>if ($rolename==$role['role_name']) :</php>selected<php>endif ;</php>>{$role.role_name}</option>
+                    </foreach>
+                </select>
+
+            </div>
+        </form>
+        <hr />
+    </div>
+
+    <div id='div1' class="col-md-12" >
+        <foreach name="class_meta_data" item="class_mtea" >
+            <script type="text/javascript">
+                //checkbox 全选/取消全选
+                var isCheckAll{$class_mtea.id} = false;
+                function MenuCheck{$class_mtea.id}() {
+                    if (isCheckAll{$class_mtea.id}) {
+                        $("input[name='Menu_id{$class_mtea.id}']").each(function() {
+                            this.checked = false;
+                        });
+                        isCheckAll{$class_mtea.id} = false;
+                    } else {
+                        $("input[name='Menu_id{$class_mtea.id}']").each(function() {
+                            this.checked = true;
+                        });
+                        isCheckAll{$class_mtea.id} = true;
+                    }
+                    Dzsb_id = document.getElementsByName("Menu_id{$class_mtea.id}"); //电子设备
+                    checkDz_val{$class_mtea.id} = [];
+                    for(Z in Dzsb_id){
+                        if(Dzsb_id[Z].checked)
+                            checkDz_val{$class_mtea.id}.push(Dzsb_id[Z].value);
+                    }
+                    alert(checkDz_val{$class_mtea.id});
+                    $("#menu_id{$class_mtea.id}").val(checkDz_val{$class_mtea.id});
+                }
+            </script>
+
+        <div class="panel panel-default">
+            <input type="text" id="menu_id{$class_mtea.id}" value="">
+            <div class="panel-heading"><input type="checkbox" onclick="MenuCheck{$class_mtea.id}()" value="{$class_mtea.id}" /> <b>{$class_mtea.cglx_mc}</b></div>
+            <div class="panel-body">
+                <foreach name="mtea_data" item="mtea" >
+                    <php> if( $mtea['cglx_sjid'] == $class_mtea['id'] ):</php>
+                <span style="margin-right: 30px"><input type="checkbox" name="Menu_id{$class_mtea.id}" value="{$mtea.id}"> {$mtea.cglx_mc}</span>
+                    <php>endif ;</php>
+                </foreach>
+            </div>
+        </div>
+        </foreach>
+    </div>
+</block>

@@ -1,0 +1,58 @@
+<extend name="glxh/index/base_top"  title="专家详细页面"/>
+<block name="customer">
+
+    <div class="sea_Kj">
+        <div class="col-md-12 column" style="text-align: left">
+            <div class="row clearfix">
+                <div class="col-md-9 column" style="text-align: left">
+                    <ul class="breadcrumb" style="text-align: left;padding-left: 100px;background: #ffffff;">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                        <li>
+                            &nbsp;<a href="/index.php/home/zjsea/search">专家信息中心</a>
+                        </li>
+                        <li>
+                            <php>if ($type=="1") :</php><a href="/index.php/home/zjsea/searchq/?type=1" >青年专家顾问</a><php>else :</php>
+                            <a href="/index.php/home/zjsea/searchq/?type=2" >专家委员会</a><php>endif ;</php>
+                        </li>
+                        <li>
+                            专家详细信息
+                        </li>
+                    </ul>
+
+                        <foreach name="info_data" item="zj" >
+
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" <php>if ($zj["gl_zjphoto"]=="") :</php>src="__PUBLIC__/glxh/images/logo.png" <php>else :</php>src="/{$zj.gl_zjphoto}" style="width: 150px" ;<php>endif ;</php> alt="{$zj.gl_zjxm}"  >
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{$zj.gl_zjxm}<span style="font-size: 12px;color: #0f0f0f"> ({$zj.gl_zjxb}，{$zj.gl_zjgzdw}，{$zj.gl_zjcszygjc}专业。）</span></h4>
+                                    <br />
+                                    <ul class="list-group">
+
+                                        <li class="list-group-item list-group-item-warning" style="font-size: 13px">
+                                            曾获奖项：<php> if( $zj['cg_wcrchj'] == "" ):</php>无记录<php>else:</php>{$zj.cg_wcrchj}<php> endif;</php>
+                                        </li>
+                                    </ul>
+                                    <hr/>
+                                    <div style="line-height: 25px">
+                                        主要成果：<?php $i = 0;?>
+                                        <foreach name="cg_data" item="cg" >
+                                            <?php $i++;?>
+                                            <h5><a href="/index.php/home/cgsea/search_dal/?id={$cg.id}" target="_blank">{$i}. {$cg.cg_cgmc}</a> <span class="label label-default">({$cg.cg_wcsj|strtotime|date="Y年m月",###})</span></h5>
+                                            <li style="font-size: 12px">主要完成人：{$cg.cg_zywcr} </li>
+                                        </foreach>
+                                    </div>
+                                </div>
+                            </div>
+                        </foreach>
+                </div>
+                <div class="col-md-3 column">
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</block>

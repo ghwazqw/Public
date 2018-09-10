@@ -1,0 +1,42 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <div style="width: 90%;margin: 0px auto;">
+
+        <div><span class="glyphicon glyphicon glyphicon-user"> <a href="/">首页</a>-->成果信息数据中心</span></div>
+        <form class="navbar-form navbar-left" method="post">
+            <div class="form-group">
+               <input type="text" class="form-control" placeholder="{$keyword}" name="keyword">
+                <button type="submit" class="btn btn-default">搜索</button>
+            </div>
+            <button class="btn btn-primary" type="button">
+                成果信息数量 <span class="badge">10{$count}</span>
+            </button>
+        </form>
+        <table class="table table-hover" id="table">
+            <tr>
+                <td><b>成果编号</b></td>
+                <td><b>成果名称</b></td>
+                <td><b>所在地区</b></td>
+                <td><b>完成时间</b></td>
+                <td><b>下载</b></td>
+
+
+            </tr>
+
+            <foreach name="info_data" item="cg" >
+
+                <tr>
+                    <td>{$cg.cg_xmbh}</td>
+                    <td><a href="/home/cgxx/cgxx_dal?id={$cg.id}">{$cg.cg_cgmc}</a></td>
+                    <td>{$cg.cg_dq}</td>
+                    <td>{$cg.cg_wcsj}</td>
+                    <td><a href="__PUBLIC__/glxh/downloads/{$cg.cg_xmbh}.pdf" target="_blank"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
+                </tr>
+            </foreach>
+
+        </table>
+        <ul class="pagination">
+            {$pagebar}
+            </ul>
+    </div>
+</block>

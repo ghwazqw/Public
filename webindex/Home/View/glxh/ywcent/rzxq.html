@@ -1,0 +1,243 @@
+<extend name="glxh/index/base_user"  title="融资需求"/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 750px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class=lan_qukuai>&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/glxh/images/rz_tu.png">&nbsp;&nbsp;<b>融资需求申请</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>基本信息</li>
+                        <li>融资信息</li>
+                        <li>项目简介</li>
+                        <li>融资方简介</li>
+                        <li>联系信息</li>
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 230px;">
+
+                        <div class="kjtd_from_left">机构性质：</div>
+                        <div class="kjtd_from_right">
+                            <select class="form-control" style="width: 250px" name="gl_jgxz" data-rule="required">
+                                <option value="" >请选择</option>
+                                <option value="企业">企业</option>
+                                <option value="个人">个人</option>
+                                <option value="金融机构">金融机构</option>
+                                <option value="代理机构">代理机构</option>
+                            </select>
+                        </div>
+                        <div class="kjtd_from_left" >项目名称：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_xmmc" value="" placeholder="请输入项目名称" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left" >合作单位：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_hzdw" value="" placeholder="请输入合作单位" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left" >项目总投资金额：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_xmztzje" placeholder="请输入金额" class="input_je" data-rule="required;integer[+1]; range[~10000]"><font color="#369fd9">万元人民币</font>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 100px">项目应用领域：</div>
+                        <div class="kjtd_from_right" style="height: 100px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="公路" data-rule="checked">  公路
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="桥梁">  桥梁
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;"  name="gl_xmyyly" value="隧道">  隧道
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="交通安全">  交通安全
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="系统开发">  系统开发
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="信息采集">  信息采集
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="新材料">  新材料
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="新装备">  新装备
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="高效节能">  高效节能
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="环境保护">  环境保护
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="试验检测">  试验检测
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_xmyyly" value="其他">  其他
+
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--2!-->
+                    <div style="height: 520px">
+                        <div class="kjtd_from_left" >预融资金额：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" placeholder="请输入金额" class="input_je" name="gl_yrzje" data-rule="required;integer[+1]; range[~10000]"><font color="#369fd9">万元人民币</font>
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 105px">资金用途：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="gl_zjyt" placeholder="请输入资金用途" data-rule="length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 140px">项目应用地域：</div>
+                        <div class="kjtd_from_right" style="height: 140px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" value="国际" name="gl_xmyydy" data-rule="checked"/> 国际&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="全国" name="gl_xmyydy"/> 全国&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="北京" name="gl_xmyydy"/> 北京&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="天津" name="gl_xmyydy"/> 天津&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="河北" name="gl_xmyydy"/> 河北&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="山西" name="gl_xmyydy"/> 山西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="内蒙古" name="gl_xmyydy"/> 内蒙古&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="山东" name="gl_xmyydy"/> 山东&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="江苏" name="gl_xmyydy"/> 江苏&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="安徽" name="gl_xmyydy"/> 安徽&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="安徽" name="gl_xmyydy"/> 安徽&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="浙江" name="gl_xmyydy"/> 浙江&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="福建" name="gl_xmyydy"/> 福建&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="上海" name="gl_xmyydy"/> 上海&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="广东" name="gl_xmyydy"/> 广东&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="广西" name="gl_xmyydy"/> 广西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="海南" name="gl_xmyydy"/> 海南&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="湖北" name="gl_xmyydy"/> 湖北&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="湖南" name="gl_xmyydy"/> 湖南&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="河南" name="gl_xmyydy"/> 河南&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="江西" name="gl_xmyydy"/> 江西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="宁夏" name="gl_xmyydy"/> 宁夏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="新疆" name="gl_xmyydy"/> 新疆&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="青海" name="gl_xmyydy"/> 青海&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="陕西" name="gl_xmyydy"/> 陕西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="甘肃" name="gl_xmyydy"/> 甘肃&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="四川" name="gl_xmyydy"/> 四川&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="云南" name="gl_xmyydy"/> 云南&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="贵州" name="gl_xmyydy"/> 贵州&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="西藏" name="gl_xmyydy"/> 西藏&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="重庆" name="gl_xmyydy"/> 重庆&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="辽宁" name="gl_xmyydy"/> 辽宁&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="吉林" name="gl_xmyydy"/> 吉林&nbsp;&nbsp;&nbsp;&nbsp;<br /><input type="checkbox" value="黑龙江" name="gl_xmyydy"/> 黑龙江&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="台湾" name="gl_xmyydy"/> 台湾&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="香港" name="gl_xmyydy"/> 香港&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="澳门" name="gl_xmyydy"/> 澳门&nbsp;&nbsp;&nbsp;&nbsp;
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 55px">融资方式：</div>
+                        <div class="kjtd_from_right" style="height: 55px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="转让" data-rule="checked">  转让
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="合资">  合资
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="参股">  参股
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="控股">  控股
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="固定回报">  固定回报
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="风险投资">  风险投资
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="借款">  借款
+                                    <input type="checkbox" style="vertical-align:middle; margin-top:0;" name="gl_rzfs" value="面洽">  面洽
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">资金来源：</div>
+                        <div class="kjtd_from_right">
+                            <select class="form-control" style="width: 250px" name="gl_zjly" data-rule="required">
+                                <option value="" >请选择</option>
+                                <option value="自有资金">自有资金</option>
+                                <option value="筹资">筹资</option>
+                                <option value="委托管理">委托管理</option>
+                                <option value="不限">不限</option>
+                            </select>
+                        </div>
+                        <div class="kjtd_from_left">资金投入方式：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="一次性投入" name="gl_zjtrfs">  一次性投入
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="分期到位" name="gl_zjtrfs">  分期到位
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="两者均可" name="gl_zjtrfs">  两者均可
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">共担资金风险：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="是" name="gl_gdzjfx">  是 &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="否" name="gl_gdzjfx">  否 &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="均可" name="gl_gdzjfx">  均可
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">共同经营管理：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="是" name="gl_gtjygl">  是 &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="否" name="gl_gtjygl">  否 &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="均可" name="gl_gtjygl">  均可
+
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left">项目回报周期：</div>
+                        <div class="kjtd_from_right">
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="3年以内" name="gl_zmhbzq">  3年以内 &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="3-5年" name="gl_zmhbzq">  3-5年 &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="5年以上" name="gl_zmhbzq">  5年以上 &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="视具体情况而定" name="gl_zmhbzq">  视具体情况而定 &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--3-->
+                    <div style="height: 300px">
+                        <div class="kjtd_from_left" style="height: 105px">项目应用范围：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="gl_xmyyfw" data-rule="length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 105px">项目已有条件：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="gl_xmyytj" data-rule="length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 105px">项目前景分析：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="gl_xmqjfx" data-rule="length(~500)"></textarea>
+                        </div>
+
+                    </div>
+                    <!--4-->
+                    <div style="height: 300px">
+                        <div class="kjtd_from_left" >项目单位(人)：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_xmdw" value="" placeholder="请输入项目单位" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 107px">团队介绍：</div>
+                        <div class="kjtd_from_right" style="height: 107px">
+                            <textarea class="kttd_from_text" name="gl_tdjs" placeholder="请输入团队介绍" data-rule="length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 107px">产品运营：</div>
+                        <div class="kjtd_from_right" style="height: 107px">
+                            <textarea class="kttd_from_text" name="cg_yyal" placeholder="请输入产品运营信息" data-rule="length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left"  >商业计划书上传：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="gl_syjhs" >
+                        </div>
+                    </div>
+                    <div style="height: 350px">
+                        <include file="glxh/ywcent/lx_us" />
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

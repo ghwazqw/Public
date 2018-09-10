@@ -1,0 +1,32 @@
+<extend name="50/index/base" />
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <div><span class="glyphicon glyphicon glyphicon-user"> <a href="/">首页</a>-->管理中心->友情链接管理</span>
+            <span class="label label-info glyphicon glyphicon-plus"> <a href="../link_add.html" style="color: ffffff;">新增</a> </span></div>
+        <foreach name="main_data" item="M_dat" >
+    <div class="media">
+        <div class="media-left">
+            <div style="width: 175px;height: 48px;border: 1px solid #d1d1d1">
+            <a href="http://{$M_dat.info_link}" target="_blank">
+                <img class="media-object" src="/{$M_dat.info_photo}" alt="{$M_dat.info_title}" style="width: 173px;height: 46px">
+            </a>
+            </div>
+        </div>
+        <div class="media-body">
+            <h4><a class="media-heading" href="http://{$M_dat.info_link}" target="_blank">{$M_dat.info_title}</a></h4>
+            <!--<h4><a class="media-heading" href="{:U('Newstest/News_dal',array('info_id'=>$M_dat['info_id']))}">{$M_dat.info_title}</a></h4><!-->
+            <p>{$M_dat.info_note}</p>
+
+            <p class="bg-info">
+                <span>类型：<php> if($M_dat["info_type"]==4):</php>友情链接<php> endif;</php><php> if($M_dat["info_type"]==2):</php>政策解读<php> endif;</php></span></p>
+        </div>
+    </div>
+        </foreach>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+        <!-- Split button -->
+
+    </div>
+</block>

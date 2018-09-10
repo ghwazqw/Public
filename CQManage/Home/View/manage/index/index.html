@@ -1,0 +1,170 @@
+<extend name="manage/index/base" />
+<block name="customer">
+    <div class="layui-layout layui-layout-admin" style="border-bottom: solid 5px #1aa094;">
+        <div class="layui-header header header-demo">
+            <div class="layui-main">
+                <div class="admin-login-box">
+                    <a class="logo" style="left: 0;" href="#">
+                        <img src="__PUBLIC__/manage/images/logo.png" style="margin-top: -10px;">
+                        <span style="font-size: 22px;color:#000000">资产设备信息管理系统</span>
+                    </a>
+                    <div class="admin-side-toggle" style="margin-left: 10px;">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                    </div>
+                    <div class="admin-side-full" style="margin-left: 10px;width: 100px">
+                        <i class="fa fa-life-bouy" aria-hidden="true"></i> 全屏模式
+                    </div>
+                </div>
+                <ul class="layui-nav admin-header-item">
+                    <!--<li class="layui-nav-item">
+                        <a href="#">清除缓存</a>
+                    </li>-->
+                    <li class="layui-nav-item" id="pay">
+
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"></a>
+                    </li>
+                    <li class="layui-nav-item" id="video1111">
+                        <a href="#" id="HtList" title="合同到期提醒"><span class="glyphicon glyphicon-tags"></span><span class="layui-badge" id="count">{$count}</span></a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <include file="manage/Common/navbar_login" />
+                        <dl class="layui-nav-child" style="line-height: 30px">
+                            <dd>
+                                <a href="#" id="MyInfo" title="我的信息"><i class="fa fa-lock" aria-hidden="true"></i> 个人信息</a>
+                            </dd>
+                            <dd>
+                                <a href="#" id="repassword"><i class="fa fa-gear" aria-hidden="true"></i> 修改密码</a>
+                            </dd>
+                            <!--<dd id="lock">
+                                <a href="javascript:;">
+                                    <i class="fa fa-lock" aria-hidden="true" style="padding-right: 3px;padding-left: 1px;"></i> 锁屏 (Alt+L)
+                                </a>
+                            </dd>-->
+                            <dd>
+                                <a href="?do=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+                <ul class="layui-nav admin-header-item-mobile">
+                    <li class="layui-nav-item">
+                        <a href="login.html"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-side layui-bg-black" id="admin-side">
+            <div class="layui-side-scroll" id="admin-navbar-side" lay-filter="side"></div>
+
+            <!--<ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="demo">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">默认展开</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" id="repassword">选项一</a></dd>
+                        <dd><a href="javascript:;">选项二</a></dd>
+                        <dd><a href="javascript:;">选项三</a></dd>
+                        <dd><a href="/Home/user/U_manage">跳转项</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">移动模块</a></dd>
+                        <dd><a href="">后台模版</a></dd>
+                        <dd><a href="">电商平台</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">社区</a></li>
+            </ul>-->
+        </div>
+        <div class="layui-body" style="bottom: 0;border-left: solid 2px #1AA094;" id="admin-body">
+            <div class="layui-tab admin-nav-card layui-tab-brief" lay-filter="admin-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">
+                        <i class="fa fa-dashboard" aria-hidden="true"></i>
+                        <cite>数据中心</cite>
+                    </li>
+                </ul>
+                <div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src="/index.php/home/index/main_dal"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+
+        <!--锁屏模板 start-->
+        <script type="text/template" id="lock-temp">
+            <div class="admin-header-lock" id="lock-box">
+                <div class="admin-header-lock-img">
+                    <img src="__PUBLIC__/manage/images/logo.png"/>
+                </div>
+                <div class="admin-header-lock-name" id="lockUserName">
+                    <php> if($globar_user):</php>
+                    <a href="#">{$globar_user:user_name}({$globar_user:user_role})</a>
+                    <php> else:</php>
+                    <a href="/?a=login&c=User" class="hidden-xs" style="font-size: 12px">登录</a>
+                    <php> endif;</php>
+                </div>
+                <input type="text" class="admin-header-lock-input" value="输入密码解锁.." name="lockPwd" id="lockPwd" />
+                <button class="layui-btn layui-btn-small" id="unlock">解锁</button>
+            </div>
+        </script>
+        <!--锁屏模板 end -->
+    </div>
+    <script>
+    layui.use('layer', function() {
+        var $ = layui.jquery,
+                layer = layui.layer;
+        $('#repassword').on('click', function() {
+            layer.open({
+                title: '密码修改(Edit Password)',
+                maxmin: true,
+                type: 2,
+                content: '/Home/user/Repassword',
+                area: ['600px', '450px'],
+                shadeClose: false
+            });
+        });
+        $('#HtList').on('click', function() {
+            layer.open({
+                title: '到期合同查询(Data View)',
+                maxmin: true,
+                type: 2,
+                content: '/Home/ZcManage/HtList',
+                area: ['800px', '450px'],
+                shadeClose: false
+            });
+        });
+        $('#MyInfo').on('click', function() {
+            layer.open({
+                title: '个人信息查询(Myinfo View)',
+                maxmin: true,
+                type: 2,
+                content: '/Home/Jcxx/UserInfo',
+                area: ['800px', '450px'],
+                shadeClose: false
+            });
+        });
+        /*$('#pay').on('click', function () {
+            layer.open({
+                title: false,
+                type: 1,
+                content: '<img src="images/xx.png" />',
+                area: ['500px', '250px'],
+                shadeClose: true
+            });
+        });*/
+
+    });
+</script>
+
+</block>

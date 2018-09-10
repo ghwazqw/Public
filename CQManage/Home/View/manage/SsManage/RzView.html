@@ -1,0 +1,177 @@
+<extend name="manage/index/base_user" title="养护信息管理"/>
+<block name="customer">
+
+    <div class="box">
+    <div class="box-body">
+
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="房屋信息搜索......" name="keyword" value="{$keyword}">
+                <select name="nf" class="form-control">
+                    <option value="">请选择入住年份</option>
+                    <option value="{$nfxx}"  <php>if ($nfxx==$nf) :</php>selected<php>endif ;</php>>{$nfxx}</option>
+                    <option value="{$nfxx+1}" <php>if ($nfxx+1==$nf) :</php>selected<php>endif ;</php>>{$nfxx+1}</option>
+                    <option value="{$nfxx+2}" <php>if ($nfxx+2==$nf) :</php>selected<php>endif ;</php>>{$nfxx+2}</option>
+                    <option value="{$nfxx+3}" <php>if ($nfxx+3==$nf) :</php>selected<php>endif ;</php>>{$nfxx+3}</option>
+                    <option value="{$nfxx+4}" <php>if ($nfxx+4==$nf) :</php>selected<php>endif ;</php>>{$nfxx+4}</option>
+                    <option value="{$nfxx+5}" <php>if ($nfxx+5==$nf) :</php>selected<php>endif ;</php>>{$nfxx+5}</option>
+                    <option value="{$nfxx+6}" <php>if ($nfxx+6==$nf) :</php>selected<php>endif ;</php>>{$nfxx+6}</option>
+                    <option value="{$nfxx+7}" <php>if ($nfxx+7==$nf) :</php>selected<php>endif ;</php>>{$nfxx+7}</option>
+                    <option value="{$nfxx+8}" <php>if ($nfxx+8==$nf) :</php>selected<php>endif ;</php>>{$nfxx+8}</option>
+                    <option value="{$nfxx+9}" <php>if ($nfxx+9==$nf) :</php>selected<php>endif ;</php>>{$nfxx+9}</option>
+                    <option value="{$nfxx+10}" <php>if ($nfxx+10==$nf) :</php>selected<php>endif ;</php>>{$nfxx+10}</option>
+                    <option value="{$nfxx+11}" <php>if ($nfxx+11==$nf) :</php>selected<php>endif ;</php>>{$nfxx+11}</option>
+                    <option value="{$nfxx+12}" <php>if ($nfxx+12==$nf) :</php>selected<php>endif ;</php>>{$nfxx+12}</option>
+                    <option value="{$nfxx+13}" <php>if ($nfxx+13==$nf) :</php>selected<php>endif ;</php>>{$nfxx+13}</option>
+                    <option value="{$nfxx+14}" <php>if ($nfxx+14==$nf) :</php>selected<php>endif ;</php>>{$nfxx+14}</option>
+                    <option value="{$nfxx+15}" <php>if ($nfxx+15==$nf) :</php>selected<php>endif ;</php>>{$nfxx+15}</option>
+
+                </select>
+
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">搜索</button>
+                </div>
+            </form>
+            <!--<div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                </ul>
+            </div>-->
+        </div>
+        <script>
+            function TsSummit(fjid,ryid,ryname,rzrq,dqrq,fjmj,zj,zjksyf,nxlx) {
+                //alert(fjid);
+                $("#ryname").html(ryname);
+                $("#ListTale").html("");
+                $("#rzrq").val(rzrq); //入住日期
+                $("#dqrq").val(dqrq); //到期日期
+                //$("#ry_ttrq").val(dqrq); //腾退日期
+                $("#fjid").val(fjid); //房间ID
+                $("#subname").val(ryname); //人员姓名
+                $("#fjmj").val(fjmj); //房间面积
+                $("#zjxx").val(zj); //租金信息
+                $("#zjksyf").val(zjksyf); //租金开始月份
+                $("#nxlx").val(nxlx); //年限类型
+                var url = "/home/SsManage/RzInfoList?fjid=" + fjid+"&name="+ ryname;
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        $("#ListTale").append("<tr><td>该房间本年度没有租金信息。</td></tr>");
+                    }
+                    else{
+                        //遍历回传到的Json数据
+                        $("#ListTale").append("<tr style=\"background: #8bc5eb; color: #ffffff\">\n" +
+                            /*"                                    <th nowrap>序号</th>\n" +*/
+                            "                                    <th nowrap>人员姓名</th>\n" +
+                            /*"                                    <th nowrap>年限类型</th>\n" +*/
+                            "                                    <!--<th nowrap>房间ID</th>-->\n" +
+                            "                                    <th nowrap>年份</th>\n" +
+                            "                                    <th nowrap>租金</th>\n" +
+                            "                                    <!--<th nowrap>主表ID</th>-->\n" +
+                            "                                    <th nowrap>状态</th>\n" +
+                            "                                </tr>");
+                        var sum=0;
+                        $.each(data,function (i,value) {
+                            if (value.nx_lx==4){
+                                $("#nxlx").val(4);
+                            }else{
+                                var lx="协议租金";
+                            };
+                            sum += Number(value.zj);
+                            if (value.zt==0){
+                                var zt="未缴";
+                                $("#ListTale").append("<tr><td>"+value.ry_name+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td >"+zt+"</td></tr>");//在table最后面添加一行
+                            }else{
+                                var zt="已缴";
+                                $("#ListTale").append("<tr><td>"+value.ry_name+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td >"+zt+"</td></tr>");//在table最后面添加一行
+
+                            };
+                        });
+                        sum=sum.toFixed(2); //格式化显示2位小数
+                        $("#ListTale").append("<tr><td style='text-align: center'>合计</td><td colspan='2' style='text-align: right;'>￥"+sum+"</td><td></td></tr>");
+                    }
+                });
+            }
+        </script>
+
+    <div  style="width: 97%;margin: 0 auto">
+            <!-- /.box-header -->
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>房间名称</th>
+                <th nowrap>人员姓名</th>
+                <th nowrap>身份证号</th>
+                <th nowrap>性别</th>
+                <th nowrap>人员类型</th>
+                <!--<th nowrap>所属房间id</th>-->
+                <th nowrap>房间面积</th>
+                <th nowrap>入住日期</th>
+                <th nowrap>到期日期</th>
+                <th nowrap>腾退日期</th>
+
+                <th nowrap>合同类型</th>
+                <th nowrap>月租金</th>
+
+                <!--<th nowrap>开始收费月份</th>
+                <th nowrap>结束收费月份</th>-->
+                <th nowrap>状态</th>
+                <th nowrap>备注</th>
+                <!--<th nowrap>操作</th>-->
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                    <td style="text-align: center">{$i}</td>
+                    <td><a href="?keyword={$Info.ry_ssfjname}">{$Info.ry_ssfjname}</a></td>
+                    <td>{$Info.ry_name}</td>
+                    <td>{$Info.ry_sfzh}</td>
+                    <td>{$Info.ry_xb}</td>
+                    <td><php>if ($Info['ry_lxid']==1) :</php>普通人员<php>else :</php>交流干部<php>endif ;</php></td>
+                    <!--<td>{$Info.ry_ssfjid}</td>-->
+
+                    <td>{$Info.ry_ssfjmj}</td>
+                    <td>{$Info.ry_rzrq}</td>
+                    <td>{$Info.ry_dqrq}</td>
+                    <td>{$Info.ry_ttrq}</td>
+                    <td>{$Info.ht_nxlx}({$Info.ht_nx}年)</td>
+                    <td>{$Info.ht_zj}</td>
+                    <!--<td>{$Info.kssfyf|strtotime|date="Y-m",###}</td>
+                    <td>{$Info.jssfyf|strtotime|date="Y-m",###}</td>-->
+                    <td><php>if (!$Info['ry_ttrq']) :</php>
+                        <a href="#" type="button" class="btn btn-success btn-xs">住宿中</a>
+                        <php>else :</php>
+                        <a href="#" type="button" class="btn btn-danger btn-xs">已退房</a>
+                        <php>endif ;</php>
+                    </td>
+                    <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.bz}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+<!--
+                    <td><a href="#TsSub" data-toggle="modal" onclick="TsSummit({$Info.ry_ssfjid},{$Info.id},'{$Info.ry_name}','{$Info.ry_rzrq}','{$Info.ry_dqrq}',{$Info.ry_ssfjmj},{$Info.ht_zj},'{$Info.kssfyf}','{$Info.ht_nxlx}')" title="办理退宿"><span class="glyphicon glyphicon-log-out"></span></a> </td>
+-->
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popover"]').popover()
+                        })
+                    </script>
+
+
+                </tr>
+            </foreach>
+        </table>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+</block>

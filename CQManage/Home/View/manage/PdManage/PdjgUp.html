@@ -1,0 +1,21 @@
+<extend name="manage/index/base_user" title="盘点结果上传"/>
+
+<block name="customer">
+
+    <div class="col-md-12">
+        <h4><span class="glyphicon glyphicon-upload"></span> 盘点结果上传</h4>
+        <hr />
+        <form class="navbar-form" action="/Home/PdManage/JsonUp" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>JSON文件：</label>
+                <input type="file" id="exampleInputFile" name="photo" />
+                <p class="help-block">
+                    请上传您盘点完成后的JSON文件！
+                </p>
+                <button type="submit" class="cke_button">提交</button>
+            </div>
+
+        </form>
+        <div></div>
+    </div>
+</block>

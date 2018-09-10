@@ -1,0 +1,13 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <form  enctype="multipart/form-data" method="post" >
+        <div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <input type="text" name="name" value="">
+            <input type="file" id="exampleInputFile" name="photo">
+            <p class="help-block">Example block-level help text here.</p>
+        </div>
+        <input type="submit" value="提交" >
+    </form>
+    <img src="/{$photo_add}" />
+    </block>

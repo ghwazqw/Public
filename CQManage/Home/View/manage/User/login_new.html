@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="login-content" data-ng-app="materialAdmin">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>资产设备信息管理系统</title>
+
+  <!--<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />-->
+  <link href="__PUBLIC__/Manage/login/css/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet" type="text/css">
+  <!-- CSS -->
+  <link href="__PUBLIC__/Manage/login/css/app.min.1.css" rel="stylesheet" type="text/css">
+  <script>
+    function selectuser() {
+        //alert("122");
+        var compname=$("#comp").val();
+        var Username=$("#Username");
+        //alert(compname);
+        var noCache = Date();
+        $("#Username").prop("disabled",false);
+        var url="/home/User/SelUser";
+        $.ajaxSetup({ cache: false });
+        $.ajax({
+            type:"POST", //以post提交数据
+            url:url,  //提交URL
+            data:{"comp":compname}, //提交数据
+            success:function (data, state) { //成功调用回调信息
+                if (data==""){
+                    //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                    //("#zc_rjlx").prop("disabled", true);
+                    Username.find("option").remove();
+                    var tempOption = document.createElement("option");
+                    tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    Username.append(tempOption);
+                    Username.prop("disabled", true);
+                }
+                else{
+                    //遍历回传到的Json数据，取出二级分类信息
+                    Username.find("option").remove();
+                    /*tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    Username.append(tempOption);*/
+                    $.each(data,function (i,value) {
+                        var tempOption = document.createElement("option");
+                        tempOption.value = value.user_name;
+                        tempOption.innerHTML  = value.user_name;
+                        Username.append(tempOption);
+                    })
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                //alert(textStatus);
+            },
+            timeout: 60000, //执行最大时间，超过该时间为超时
+            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                return false;
+            }
+
+        });
+
+    }
+    function Sub() {
+        var username=$("#Username").val();
+        var textPwd=$("#textPwd").val();
+        var txtcode=$("#txtcode").val();
+        if (!username){
+            //alert("信息填写不完整");
+            $("#errorInfo").html('用户名错误');
+            return false;
+        }else if (!textPwd){
+            $("#errorInfo").html('密码错误');
+            return false;
+        }else if (!txtcode){
+            $("#errorInfo").html('验证码错误');
+            return false;
+        }
+        else{
+            $.ajax({
+                type:"POST",
+                url:"/home/User/ChVer",
+                data:{"txtcode":txtcode},
+                success:function (data, state) { //成功调用回调信息
+                    if (data!='OK'){
+                        $("#errorInfo").html('验证码错误');
+                        $("#sussInfo").hide();
+                    }else{
+                        //alert(data);
+                        $("#form_login").submit();
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                    //alert(textStatus);
+                },
+                timeout: 60000,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+
+            });
+
+        }
+        //alert(username);
+    };
+    function verch() {
+        var txtcode=$("#txtcode").val();
+        $.ajax({
+            type:"POST",
+            url:"/home/User/ChVer",
+            data:{"txtcode":txtcode},
+            success:function (data, state) { //成功调用回调信息
+                if (data!='OK'){
+                    $("#errorInfo").html('验证码错误');
+                    $("#sussInfo").hide();
+                    return false;
+                }else{
+                    $("#errorInfo").hide();
+                    $("#sussInfo").html('验证码正确');
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                //alert(textStatus);
+            },
+            timeout: 60000,
+            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                return false;
+            }
+
+        })
+    }
+  </script>
+</head>
+<body class="login-content" data-ng-controller="loginCtrl as lctrl">
+
+<div class="lc-block" id="l-login" data-ng-class="{'toggled':lctrl.login === 1}">
+  <img src="__PUBLIC__/Manage/images/logo.png" style="width: 100px"/>
+  <h4>资产设备信息管理系统</h4>
+  <form method="post" id="form_login">
+  <div class="input-group m-b-20">
+    		<span class="input-group-addon">
+    			<i class="glyphicon glyphicon-th"></i>
+    		</span>
+    <div class="fg-line">
+      <select name="comp" id="comp" class="form-control" onchange="selectuser()" />
+        <option value="">请选择用户部门</option>
+        <foreach name='CompInfo' item='Info' >
+          <option value="{$Info.cglx_mc}" <php>if ($zccomp==$Info['cglx_mc']) :</php>selected<php>endif ;</php>>{$Info.cglx_mc}</option>
+        </foreach>
+      </select>
+    </div>
+  </div>
+    <div class="input-group m-b-20">
+    		<span class="input-group-addon">
+    			<i class="zmdi zmdi-account"></i>
+    		</span>
+      <div class="fg-line">
+        <select name="Username" id="Username" class="form-control" disabled/>
+        <option value="">请选择用户</option>
+
+        </select>
+        <!--<input type="text" class="form-control" placeholder="用户名" name="Username" id="Username" regex="^\w{3,16}$"/>-->
+      </div>
+    </div>
+
+  <div class="input-group m-b-20">
+    		<span class="input-group-addon">
+    			<i class="zmdi zmdi-male"></i>
+    		</span>
+    <div class="fg-line">
+      <input type="password" class="form-control" name="textPwd" id="textPwd"  placeholder="密码" regex="^\w+"/>
+    </div>
+  </div>
+  <div class="input-group m-b-20">
+    		<span class="input-group-addon">
+    			<i class="zmdi zmdi-account"></i>
+    		</span>
+    <div class="fg-line">
+      <input type="text" name="txtcode" id="txtcode" class="form-control" placeholder="验证码" style="width: 60%"/>
+      <p style="padding-left: 78px;margin-top: -20px;margin-bottom: 10px">
+        <img src="/index.php/home/index/vercode" style="width: 130px;height: 32px;;margin-top: 10px"  onclick="this.src='/index.php/home/index/vercode?id='+Math.random();" title="点击刷新" />
+
+      </p>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="checkbox">
+    <button type="button" onclick="Sub()" class="btn btn-danger btn-sm">登 录</button>
+    <button type="reset" class="btn btn-default btn-sm">重 置</button>
+    <label>
+      <span style="color:#ff0000" id="errorInfo">{$errorInfo}</span>
+      <span class="label label-success" id="sussInfo">{$sussInfo}</span>
+    </label>
+
+  </div>
+  </form>
+
+  <a href="" class="btn btn-login btn-danger btn-float">
+    <i class="zmdi zmdi-arrow-forward"></i>
+  </a>
+
+  <!--<ul class="login-navigation">
+    <li class="bgm-red" data-ng-click="lctrl.login = 0; lctrl.register = 1">Register</li>
+    <li data-block="#l-forget-password" class="bgm-orange" data-ng-click="lctrl.login = 0; lctrl.forgot = 1">Forgot Password?</li>
+  </ul>-->
+</div>
+
+<div class="lc-block" id="l-register" data-ng-class="{ 'toggled': lctrl.register === 1 }" data-ng-if="lctrl.register === 1">
+
+
+
+  <a href="" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></a>
+
+  <ul class="login-navigation">
+<!--    <li data-block="#l-login" class="bgm-green" data-ng-click="lctrl.forgot = 0; lctrl.login = 1">Login</li>
+    <li data-block="#l-register" class="bgm-red" data-ng-click="lctrl.forgot = 0; lctrl.register = 1">Register</li>
+  </ul>-->
+</div>
+</body>
+
+<script src="__PUBLIC__/Manage/login/js/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="__PUBLIC__/Manage/login/js/log.js"></script>
+<!-- Angular -->
+<script src="__PUBLIC__/Manage/login/js/bower_components/angular/angular.min.js"></script>
+<script src="__PUBLIC__/Manage/login/js/bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="__PUBLIC__/Manage/login/js/bower_components/angular-animate/angular-animate.min.js"></script>
+
+
+<!-- Angular Modules -->
+<script src="__PUBLIC__/Manage/login/js/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="__PUBLIC__/Manage/login/js/bower_components/angular-loading-bar/src/loading-bar.js"></script>
+<script src="__PUBLIC__/Manage/login/js/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+<script src="__PUBLIC__/Manage/login/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+<!-- Common js -->
+<script src="__PUBLIC__/Manage/login/js/bower_components/angular-nouislider/src/nouislider.min.js"></script>
+<script src="__PUBLIC__/Manage/login/js/bower_components/ng-table/dist/ng-table.min.js"></script>
+
+<!-- Placeholder for IE9 -->
+<!--[if IE 9 ]>
+<script src="__PUBLIC__/Manage/login/js/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+<![endif]-->
+<!-- App level -->
+<script src="__PUBLIC__/Manage/login/js/app.js"></script>
+<script src="__PUBLIC__/Manage/login/js/controllers/main.js"></script>
+<script src="__PUBLIC__/Manage/login/js/controllers/ui-bootstrap.js"></script>
+
+
+<!-- Template Modules -->
+<script src="__PUBLIC__/Manage/login/js/modules/form.js"></script>
+</html>

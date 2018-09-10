@@ -1,0 +1,14 @@
+<php>
+    $typt_id=$_GET["id"];
+    //echo($typt_id);
+</php>
+<foreach name="w_data" item="d">
+    <php> if ($typt_id==$d["info_id"]) :</php>
+<div style="width: 6px;height: 60px;float: left"><img src="__PUBLIC__/glxh/images/about_tbg.png"></div>
+
+<div style="width: 270px;height: 60px;float: left;line-height: 60px;padding-left: 5px;background: #f8f8f8;font-size: 16px"><b>{$d.info_title}</b></div>
+    <div style="width: 21px;float: left;"><img src="__PUBLIC__/glxh/images/sanjiao.png"></div>
+    <php>else :</php>
+    <div style="width: 300px;height: 60px;float: left;line-height: 60px;padding-left: 11px;font-size:16px"><a href="/index.php/home/about/about_us?id={$d.info_id}" style="color: #000000">{$d.info_title}</a></div>
+    <php>endif ;</php>
+    </foreach>

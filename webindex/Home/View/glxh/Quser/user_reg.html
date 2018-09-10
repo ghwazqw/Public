@@ -1,0 +1,317 @@
+<extend name="glxh/index/base_user"  title="用户注册"/>
+<block name="customer">
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px ">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+    <script type="text/javascript">
+        /*$(function(){
+            document.getElementById("Submit").onclick=function(){
+                alert(1212);
+            }
+        })*/
+        $(document).ready(function(){
+            function trim(str){
+                return str.replace(/^\s*|\s*$/ig,"")
+            }
+            function getUserName(){
+                return trim($("#Username").val());
+            }
+            function txtcode(){
+                return trim($("#txtcode").val());
+            }
+            function txtpwd(){
+                return trim($("#textPwd").val());
+            }
+            function Email() {
+                return trim($("#Email").val());
+            }
+            $("#Email").blur(function () {
+                if (!Email()){
+                    $("#Email").attr('placeholder',"此项为必填");
+                    $("#Email").css('border',"1px solid #ff0000");
+                    //$("#user_chck").html("错误");
+                    $("#Email_chck").show();
+                    return false;
+                }else{
+                    var preg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; //匹配Email
+                    if(!preg.test(Email())){
+                        $("#Email").attr('placeholder',"邮箱填写错误");
+                        $("#Email").css('border',"1px solid #ff0000");
+                        $("#Email_chck").show();
+                        $("#Email_chck").html("请填写正确的邮箱！");
+                        $("#Email_ok").hide();
+                        return false;
+                    }else{
+                        $.ajax({
+                            type:"POST",
+                            url:"/home/Quser/Forgot_Password",
+                            data:{"email":Email()},
+                            success:function(result,state){ //成功调用回调信息
+                                $("#chkmsg").css('color','#ff0000');
+                                if (result!='Error'){
+                                    $("#Email").css('border',"1px solid #ff0000");
+                                    $("#Email_chck").show();
+                                    $("#Email_chck").html('邮箱已经被注册');
+                                    $("#Email_ok").hide();
+                                    return false;
+                                }else{
+                                    $("#Email").css('border',"1px solid #0785e9");
+                                    $("#Email_chck").hide();
+                                    $("#Email_ok").show();
+                                }
+                            },
+                            complete:function(XMLHttpRequest, textStatus){  //调用后返回信息
+                                $("#Submit").html("提交");
+                                $("#Submit").prop("disabled",false);
+                            },
+                            timeout:60000,
+                            error:function(XMLHttpRequest, textStatus, errorThrown){  //失败后调用回调信息
+                                alert("服务器响应超时，请稍候重试"+textStatus);
+                            }
+                        })
+                    }
+                }
+
+            })
+            $("#Username").blur(function(){
+                if (!getUserName()){
+                    $("#Username").attr('placeholder',"此项为必填");
+                    $("#Username").css('border',"1px solid #ff0000");
+                    //$("#user_chck").html("错误");
+                    $("#user_chck").show();
+                    return false;
+                }
+                else{
+                    if (getUserName().length<6 || getUserName().length>20){
+
+                        $("#Username").css('border',"1px solid #ff0000");
+                        $("#user_chck").html("请输入6-20位字母或数字的组合。");
+                        $("#user_chck").show();
+                        $("#user_ok").hide();
+                        return false;
+                    }
+                    else{
+                        $.ajax({
+                            type:"POST",
+                            url:"/home/Quser/user_reg",
+                            data:{"Username":getUserName(),"action":1},
+                            success:function(result,state){
+                                var getResult=eval("("+result+")");
+                                //alert(getResult.user_info);
+                                if (getResult.user_callback==1){
+                                    //alert(getResult.user_callback);
+                                    $("#Username").css('border',"1px solid #0785e9");
+                                    $("#user_chck").hide();
+                                    $("#user_ok").show();
+                                    $("#Submit").prop("disabled",false);
+                                }
+                                else{
+                                    //alert(getResult.user_callback);
+                                    $("#Username").css('border',"1px solid #ff0000");
+                                    $("#user_chck").html("用户被占用。");
+                                    $("#user_chck").show();
+                                    $("#user_ok").hide();
+                                    $("#Submit").prop("disabled",true);
+                                    return false;
+                                }
+                            },
+                            timeout:8000,
+                            error:function(XMLHttpRequest, textStatus, errorThrown){  //失败后调用回调信息
+                                alert("出错，具体为"+textStatus);
+                            }
+                        })
+                    }
+                }
+            })
+            $("#textPwd").blur(function(){
+                var reg=/^\w{6,}$/;
+                var textPwd = trim($("#textPwd").val());
+                if (textPwd==""){
+                    $("#textPwd").attr('placeholder',"此项为必填");
+                    $("#textPwd").css('border',"1px solid #ff0000");
+                    $("#pass_chck").show();
+                    $("#pass_ok").hide();
+                    return false;
+                }
+                else
+                {
+                    if (!reg.test(textPwd)){
+                        $("#pass_chck").show();
+                        $("#pass_ok").hide();
+                        $("#pass_chck").html("请输入6-20位字母/数字/符号的组合。");
+                        return false;
+                    }else
+                    {
+                        $("#textPwd").css('border',"1px solid #0785e9");
+                        $("#pass_chck").hide();
+                        $("#pass_ok").show();
+
+                    }
+                }
+
+            });
+            $("#rePwd").blur(function(){
+                var rePwd=trim($("#rePwd").val());
+                var textPwd=trim($("#textPwd").val());
+                if(rePwd==""){
+                    $("#rePwd").attr('placeholder',"此项为必填");
+                    $("#rePwd").css('border',"1px solid #ff0000");
+                    $("#repass_chck").show();
+                    $("#repass_ok").hide();
+
+                    return false;
+
+                }
+                else{
+                    if (textPwd!=rePwd){
+                        $("#repass_ok").hide();
+                        $("#repass_chck").html("两次输入的密码不一致");
+                        $("#repass_chck").show();
+                        return false;
+                    }
+                    else{
+                        $("#repass_chck").hide();
+                        $("#rePwd").css('border',"1px solid #0785e9");
+                        $("#repass_ok").show();
+                    }
+
+
+                }
+            });
+            $("#txtcode").blur(function(){
+                var txtcode=trim($("#txtcode").val());
+                if(txtcode==""){
+                    $("#txtcode").attr('placeholder',"此项为必填");
+                    $("#txtcode").css('border',"1px solid #ff0000");
+                    $("#code_chck").show();
+                    $("#code_ok").hide();
+                    return false;
+                }
+                else{
+                    $.ajax({
+                        type:"POST",
+                        url:"/home/Quser/user_reg",
+                        data:{"txtcode":txtcode,"action":2},
+                        success:function(data,state){
+                            var gettxtcode=eval("("+data+")");
+                            //alert(gettxtcode.txt_info);
+                            if (gettxtcode.txt_callback==0){
+                                $("#txtcode").css('border',"1px solid #ff0000");
+                                $("#Info").html(gettxtcode.txt_info);
+                                $("#code_chck").show();
+                                $("#code_ok").hide();
+                                return false;
+                            }else{
+                                $("#code_chck").hide();
+                                $("#txtcode").css('border',"1px solid #0785e9");
+                                $("#Info").hide();
+                                $("#code_ok").show();
+                            }
+                        },
+
+
+                    })
+                }
+            });
+
+
+            $("#Submit").click(function(){
+                if (!getUserName() || !txtcode() || !Email()){
+                    alert("所有信息必须输入");
+                }
+                else
+                {
+                    //alert("正在提交后端");
+                    $("#Submit").html("正在提交...");
+                    $("#Submit").prop("disabled",true);
+                        $.ajax({
+                        type:"POST",
+                        url:"/home/Quser/user_reg",
+                        data:{"Username":getUserName(),"action":3,"textPwd":txtpwd(),"user_yx":Email()},
+                        success:function(result,state){ //成功调用回调信息
+                            window.location.href="/?a=user_ok&c=Quser";
+                        },
+                        complete:function(XMLHttpRequest, textStatus){  //调用后返回信息
+                            $("#Submit").html("提交");
+                            $("#Submit").prop("disabled",false);
+                        },
+                        timeout:8000,
+                        error:function(XMLHttpRequest, textStatus, errorThrown){  //失败后调用回调信息
+                            alert("出错，具体为"+textStatus);
+                        }
+                    })
+                }
+            }
+            )
+        })
+    </script>
+    <div class="wd2">
+        <p class="mt20">
+            当前位置：<a href="/">首页</a> >> 用户注册
+        </p>
+        <div class="mt10">
+
+            <div class="ssd_Xsd_xdxrx">
+
+                <p>
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    <span class="ls fz16 b fl mt10 pl20">用户注册<span class="ye"></span></span>
+                    <!--<a class="zc fr mt10" href="g_reg.html">
+                        个人会员注册  >>
+                    </a>-->
+                </p>
+                <hr/>
+                <div style="padding-left: 40px">
+                    <form method="post" >
+                        <div class="form-inline" style="height: 70px">
+                            <label>用户名</label><br/>
+                            <input type="text" class="form-control" name="Username" id="Username" placeholder="6-20位字母或数字的组合" style="width: 50%">
+                            <input type="hidden" name="aa" value="q" >
+                            <span id="user_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="user_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <div class="form-inline" style="height: 70px">
+                            <label>电子邮箱</label><br/>
+                            <input type="text" class="form-control" name="Email" id="Email" placeholder="请输入Email信息" style="width: 50%">
+                            <span id="Email_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="Email_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="form-inline" style="height: 70px">
+                            <label>密码</label><br/>
+                            <input type="password" class="form-control" name="textPwd" id="textPwd" placeholder="6-20位字母、数字、符号的组合" style="width: 50%">
+                            <span id="pass_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="pass_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="form-inline" style="height: 70px">
+                            <label>请再次输入密码</label><br/>
+                            <input type="password" class="form-control" name="tPwd" id="rePwd" placeholder="6-20位字母、数字、符号的组合" style="width: 50%">
+                            <span id="repass_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="repass_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <div class="form-inline" style="height: 70px">
+                            <label>输入验证码</label><br/>
+                            <input type="text" class="form-control" name="txtcode" id="txtcode" placeholder="请输入验证码信息">
+                            <img src="/index.php/home/index/vercode" style="width: 130px;height: 32px;cursor: pointer"  onclick="this.src='/index.php/home/index/vercode?id='+Math.random();" title="点击刷新"/>
+                            <span id="code_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                            <span id="code_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                        </div>
+                        <button type="button" class="btn btn-danger"  id="Submit" autocomplete="off">提交</button>
+                        <!--<a role="button" class="btn btn-danger" data-loading-text="提交中..." id="regSubmit" autocomplete="off">提交</a>-->
+                        <button type="reset" class="btn btn-default">重置</button>
+                        <div class="label label-warning" id="Info"></div>
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</block>

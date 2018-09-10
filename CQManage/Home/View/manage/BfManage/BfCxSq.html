@@ -1,0 +1,136 @@
+<extend name="manage/index/base_user" title="报废信息查询"/>
+
+<block name="customer">
+    <script type="text/javascript">
+        function queren(data,nr,spyj) {
+            $("#id").val(data);
+            $("#nrcz").html(nr);
+            $("#nr").val(nr);
+            $("#spyj").html(spyj)
+        }
+    </script>
+
+    <div class="row clearfix" style="font-size: 12px">
+        <!--审批确认-->
+        <div class="modal fade" id="check-form"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" class="form-group" action="/home/BfManage/BfcxsqManage">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabe2">
+                                重新提交报废申请
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="nrcz"></p>
+                            <label style="margin-top: 5px">审批意见</label>
+                            <p id="spyj"></p>
+                            <input type="hidden" name="id" id="id" />
+                            <input type="hidden" name="nr" id="nr" />
+                            <!--<label style="margin-top: 5px">审批意见</label>
+                            <textarea class="form-control" id="cznr" name="cznr"></textarea>-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-danger">重新申请提交</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+<div class="col-md-12 col-xs-12" nowrap>
+                <div class="input-group" style="text-align: right">
+                    <form class="navbar-form navbar-left" method="get">
+                    <input type="text" class="form-control" placeholder="报废信息搜索......" name="keyword" value="{$keyword}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                    </div>
+                    </form>
+                    <!--<div class="btn-group" style="margin-top: 8px">-->
+                    <!--<a href="/Home/BfManage/BfPrint" role="button" data-toggle="modal"  title="生成报废审批单" ><button type="button" class="btn btn-default" style="margin-top: 7px"><span class="glyphicon glyphicon-list" ></span> 生成报废审批单</button></a>-->
+                        <!--<a href="/Home/BfManage/BfPrint" role="button" data-toggle="modal"  title="生成报废审批单"><span class="glyphicon glyphicon-cloud-upload"></span> 生成报废审批单</a>-->
+                        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">功能列表</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li >
+                                <a href="/Home/BfManage/BfPrint" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 生成报废审批单</a>
+                            </li>
+                             </ul>-->
+                    <!--</div>-->
+                </div>
+
+    <div id='div1'>
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>类型</th>
+                <th nowrap>资产名称</th>
+                <th nowrap>资产编号</th>
+                <th nowrap>申请报废日期</th>
+                <th nowrap>申请处室</th>
+                <th nowrap>报废理由</th>
+                <th nowrap>申请人</th>
+                <th nowrap>状态</th>
+                <th nowrap>备注</th>
+                <th nowrap>详细</th>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td>
+                    <?php
+                if ($Info['sblx']=='ysgj_tb')
+                echo "运输工具";
+                elseif ($Info['sblx']=='dqsb_tb')
+                echo "机械器具";
+                elseif ($Info['sblx']=='dzsb_tb')
+                echo "电子设备";
+                elseif ($Info['sblx']=='qtzc_tb')
+                echo "其他设备";
+                elseif ($Info['sblx']=='fwkp_tb')
+                echo "房屋";
+                ?>
+                </td>
+                    <td>{$Info.sbmc} <a id="sb{$Info.id}"><span class="glyphicon glyphicon-picture" ></span></a></td>
+                    <script>
+                        $('#sb{$Info.id}').popover({
+                            trigger : 'hover',//鼠标以上时触发弹出提示框
+                            html:true,//开启html 为true的话，data-content里就能放html代码了
+                            content:"<img src='/{$Info.zc_photo}' style='width: 100%'>"
+                        });
+                    </script>
+                    <td>{$Info.sbbh}</td>
+                <td>{$Info.czsj|strtotime|date="Y-m-d",###}</td>
+                <td>{$Info.zc_sqwxbm}</td>
+                <td>{$Info.zc_bfly}</td>
+                <td>{$Info.zc_sqr}</td>
+                <td ><a href="#check-form" onclick="queren('{$Info.id}','{$Info.cznr}','{$Info.spyj}')" data-toggle="modal" style="color: #ff0814;" title="重新申请"><span class="label label-danger">驳回</span></a></td>
+                <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.zc_kpsm}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='操作信息' data-content='{$Info.cznr}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popover"]').popover(
+                                {
+                                    trigger: 'hover',//鼠标以上时触发弹出提示框
+                                    html: true,//开启html 为true的话，data-content里就能放html代码了
+                                }
+
+                            )
+                        })
+                    </script>
+            </tr>
+            </foreach>
+        </table>
+    </div>
+            <ul class="pagination">
+                {$pagebar}
+            </ul>
+</div>
+    </block>

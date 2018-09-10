@@ -1,0 +1,42 @@
+<extend name="glxh/index/base_user"  title=""/>
+<block name="customer">
+    <script language="javascript">
+        // 这个脚本是 ie6和ie7 通用的脚本
+        function custom_close(){
+            if
+            (confirm("您确定要关闭本页吗？")){
+                window.opener=null;
+                window.open('','_self');
+                window.close();
+            }
+            else{}
+        }
+    </script>
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+    </div>
+        <div class="kjtd_kj" style="height: 300px;width: 1000px;padding-top: 70px;">
+            <div class="col-md-3" style="text-align: right">
+                <img src="__PUBLIC__/glxh/images/suss.png" width="64px"/>
+            </div>
+            <div class="col-md-9" style="text-align: left">
+                <h4>您的信息已提交成功。</h4>
+                <p>我们将在两个工作日内联系到您，请保持您填写的<span style="color:#ff0000">联系电话</span>畅通！</p>
+                <p>接下来，您还可以<A href="/"><span style="color:#ff0000">返回首页</span></A>或者<A HREF="/home/Quser/user_cent"><span style="color:#ff0000">返回用户中心</span></A>！</p>
+            </div>
+            <div class="col-md-12" style="text-align: center;margin-top: 30px">
+                <button type="button" class="btn btn-success" onClick="custom_close()">关闭窗口</button>
+            </div>
+        </div>
+        </div>
+
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

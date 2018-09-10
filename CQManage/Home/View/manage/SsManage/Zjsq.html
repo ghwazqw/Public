@@ -1,0 +1,277 @@
+<extend name="manage/index/base_user" title="养护信息管理"/>
+<block name="customer">
+
+    <script type="text/javascript">
+        function link(id) {
+            window.location.href="/home/SsManage/Rzsq?id="+id;
+        }
+    </script>
+    <script>
+        function RyZjInfo(fjid,fjname,zt) {
+            //alert(fjid);
+            $("#ListTale").html("");
+            var mydate = new Date();
+            var str = "" + mydate.getFullYear();
+            //alert(str);
+            $("#jfryname").html(fjname+" "+str+"年");
+            var url = "/home/SsManage/RzInfoNdList?fjid=" + fjid;
+            var zc_rjlx = $("#zc_rjlx");
+            if (zt!=0){
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        $("#ListTale").append("<tr><td>该房间本年度没有租金信息。</td></tr>");
+                    }
+                    else{
+                        //遍历回传到的Json数据
+                        //var trHTML = "<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>"
+                        $("#ListTale").append("<tr style=\"background: #8bc5eb; color: #ffffff\">\n" +
+                            "                                    <th nowrap>序号</th>\n" +
+                            "                                    <th nowrap>人员姓名</th>\n" +
+                            "                                    <th nowrap>年限类型</th>\n" +
+                            "                                    <!--<th nowrap>房间ID</th>-->\n" +
+                            "                                    <th nowrap>租金年份</th>\n" +
+                            "                                    <th nowrap>租金</th>\n" +
+                            "                                    <!--<th nowrap>主表ID</th>-->\n" +
+                            "                                    <th nowrap>租金状态</th>\n" +
+                            "                                </tr>");
+                        var sum=0;
+                        $.each(data,function (i,value) {
+
+                            if (value.nx_lx==4){
+                                var lx="四年固定";
+                            }else{
+                                var lx="协议租金";
+                            };
+                            sum += Number(value.zj);
+                            if (value.zt==0){
+                                var zt="<button type='button' class='btn btn-danger btn-xs'>未缴</button>";
+                                $("#ListTale").append("<tr><td style='text-align: center'>"+Number(i+1)+"</td><td>"+value.ry_name+"</td><td>"+lx+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td ><a href='#' onclick='ZjSbmit("+value.id+","+fjid+")'  title='点击收取租金'>"+zt+"</a></td></tr>");//在table最后面添加一行
+                            }else{
+                                var zt="<button type='button' class='btn btn-success btn-xs'>已缴</button>";
+                                $("#ListTale").append("<tr><td style='text-align: center'>"+Number(i+1)+"</td><td>"+value.ry_name+"</td><td>"+lx+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td >"+zt+"</td></tr>");//在table最后面添加一行
+
+                            };
+                        });
+                        sum=sum.toFixed(2); //格式化显示2位小数
+                        $("#ListTale").append("<tr><td style='text-align: center'>合计</td><td colspan='4' style='text-align: right;'>￥"+sum+"</td><td></td></tr>");
+                    }
+                });
+            }else{
+                $("#ListTale").append("<tr><td>目前空置</td></tr>");
+            }
+        }
+    </script>
+    <script>
+        function ZjSbmit(id,fjid) {
+            if(confirm("收取租金确认，该操作不可恢复！")){
+                //alert(id);
+                var url = "/home/SsManage/ZjSubmit?id=" + id +"&fjid="+fjid;
+                $.getJSON(url,function (data) {
+                    $("#ListTale").html("");
+                    if (data==""){
+                        $("#ListTale").append("<tr><td>该房间本年度没有租金信息。</td></tr>");
+                    }
+                    else{
+                        //遍历回传到的Json数据
+                        //var trHTML = "<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>"
+                        $("#ListTale").append("<tr style=\"background: #8bc5eb; color: #ffffff\">\n" +
+                            "                                    <th nowrap>序号</th>\n" +
+                            "                                    <th nowrap>人员姓名</th>\n" +
+                            "                                    <th nowrap>年限类型</th>\n" +
+                            "                                    <!--<th nowrap>房间ID</th>-->\n" +
+                            "                                    <th nowrap>租金年份</th>\n" +
+                            "                                    <th nowrap>租金</th>\n" +
+                            "                                    <!--<th nowrap>主表ID</th>-->\n" +
+                            "                                    <th nowrap>租金状态</th>\n" +
+                            "                                </tr>");
+                        var sum=0;
+                        $.each(data,function (i,value) {
+                            if (value.nx_lx==4){
+                                var lx="四年固定";
+                            }else{
+                                var lx="协议租金";
+                            };
+                            sum += Number(value.zj);
+                            if (value.zt==0){
+                                var zt="<button type='button' class='btn btn-danger btn-xs'>未缴</button>";
+                                $("#ListTale").append("<tr><td style='text-align: center'>"+Number(i+1)+"</td><td>"+value.ry_name+"</td><td>"+lx+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td ><a href='#' onclick='ZjSbmit("+value.id+","+fjid+")'  title='点击收取租金'>"+zt+"</a></td></tr>");//在table最后面添加一行
+                            }else{
+                                var zt="<button type='button' class='btn btn-success btn-xs'>已缴</button>";
+                                $("#ListTale").append("<tr><td style='text-align: center'>"+Number(i+1)+"</td><td>"+value.ry_name+"</td><td>"+lx+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td >"+zt+"</td></tr>");//在table最后面添加一行
+
+                            };
+                        });
+                        sum=sum.toFixed(2); //格式化显示2位小数
+                        $("#ListTale").append("<tr><td style='text-align: center'>合计</td><td colspan='4' style='text-align: right;'>￥"+sum+"</td><td></td></tr>");
+                    }
+                })
+            }
+        }
+    </script>
+    <!--入住人员信息-->
+    <script>
+        function Ryxx(fjid) {
+            $("#ryListTale").html("");
+            //alert(fjid);
+            var url = "/home/SsManage/RyInfo?fjid=" + fjid;
+            $.getJSON(url,function (data) {
+                $("#ryListTale").append("<tr style=\"background: #8bc5eb; color: #ffffff\">\n" +
+                    "                                    <th nowrap>序号</th>\n" +
+                    "                                    <th nowrap>人员姓名</th>\n" +
+                    "                                    <th nowrap>入住日期</th>\n" +
+                    "                                    <!--<th nowrap>房间ID</th>-->\n" +
+                    "                                    <th nowrap>到期日期</th>\n" +
+                    "                                    <!--<th nowrap>主表ID</th>-->\n" +
+                    "                                    <th nowrap>状态</th>\n" +
+                    /*"                                    <th nowrap>状态</th>\n" +*/
+                    "                                </tr>");
+                $.each(data,function (i,value) {
+                    zt=value.zt;
+                    switch(zt){
+                        case '0':zt="<button type='button' class='btn btn-danger btn-xs' title='退房时间:'"+value.ry_name+">已退房</button>";break;
+                        case '5':zt="<button type='button' class='btn btn-danger btn-xs' title='退房时间:'"+value.ry_name+">已腾退</button>";break;
+                        case '1':zt="<button type=\"button\" class=\"btn btn-success btn-xs\">住宿中</button>";break;
+                        //default:zt="在住";break;
+                    };
+                    $("#ryListTale").append("<tr>" +
+                        "<td>"+Number(i+1)+"</td>" +
+                        "<td>"+value.ry_name+"</td>" +
+                        "<td>"+value.ry_rzrq+"</td>" +
+                        "<td>"+value.ry_dqrq+"</td>" +
+                        "<td>"+zt+"</td>" +
+                        /*"<td>"+value.ry_rzrq+"</td>" +*/
+                        "</tr>");
+                })
+            })
+        }
+    </script>
+    <div class="box">
+    <div class="box-body">
+        <php>if (!$keyword) :</php>
+        <php>else :</php>
+        <div class="col-md-12 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#" onClick="javascript :history.back(-1);"> <span class="glyphicon glyphicon-th"></span> 楼宇信息</a>
+                </li>
+                <li class="active">
+                    <span class="glyphicon glyphicon-home"></span> 房屋信息列表
+                </li>
+            </ul>
+        </div>
+        <php>endif ;</php>
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="房屋信息搜索......" name="keyword" value="">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">搜索</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal fade" id="RyZjList" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <span id="jfryname"></span> 租金详细信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="ListTale" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="margin-top: 0px">
+
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="modal fade" id="RyList" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">
+                             入住人员信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="ryListTale" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="margin-top: 0px">
+
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    <div  style="width: 97%;margin: 0 auto">
+            <!-- /.box-header -->
+                <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+                    <tr style="background: #8bc5eb; color: #ffffff;font-size: 12px">
+                        <th style="width: 5%;">编号</th>
+                        <th >房间名称</th>
+                        <th >资产类别</th>
+                        <th >资产编码</th>
+                        <th >发证日期</th>
+                        <!--<th >证号编号</th>-->
+                        <th >财产保管人</th>
+                        <th >坐落位置</th>
+                        <th >面积</th>
+                        <th >所在楼层</th>
+                        <th >住宿人员信息</th>
+                        <th style="width: 8%">操作</th>
+                        <!--<th style="width: 4%">Down</th>-->
+                    </tr>
+                    <tbody>
+                    <php>if( $count > 0  ):</php>
+                    <foreach name="info_data" item="cg" >
+                        <tr style="font-size: 12px">
+                            <td style="text-align: center">{$cg.id}</td>
+                            <td><a href="#RyZjList" onclick="RyZjInfo({$cg.id},'{$cg.homename}',{$cg.rz_zt})" data-toggle="modal">{$cg.homename}</a></td>
+                            <td>{$cg.zclb}</td>
+                            <td>{$cg.zcbm}</td>
+                            <!--<td>{$cg.fzrq}</td>-->
+                            <td>{$cg.fczbh}</td>
+                            <td>{$cg.glyxm}</td>
+                            <td>{$cg.zlwz}</td>
+                            <td style="text-align: right">{$cg.mj}㎡</td>
+                            <td>{$cg.szlc}</td>
+                            <td><php>if ($cg['rz_zt']==0) :</php><span style="color:#ff0000">空置</span><php>else :</php><a href="#RyList" onclick="Ryxx({$cg.id})" data-toggle="modal" title="入住人员信息查询"><span class="glyphicon glyphicon-search"></span></a><php>endif ;</php></td>
+                            <td>
+                                <div class="btn-toolbar" role="toolbar">
+                                <div class="btn-group">
+                                    <a href="#RyZjList" onclick="RyZjInfo({$cg.id},'{$cg.homename}',{$cg.rz_zt})" data-toggle="modal" title="收取租金"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
+                                </div>
+                            </div></td>
+
+                        </tr>
+                    </foreach>
+                    <php>else:</php>
+                    </tbody>
+
+                </table>
+                    <span style="color: red" >“{$keyword}”</span>该关键字下没有信息。
+                <br/><br/><br/>
+                    <php> endif;</php>
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+</block>

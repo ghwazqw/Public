@@ -1,0 +1,296 @@
+<extend name="glxh/index/base_top" />
+<block name="customer">
+	<div class="col-md-12 column">
+		<div id="cgxx" class="col-xs-12 col-md-6" style="height:300px;"></div>
+		<div id="zjxx" class="col-xs-12 col-md-6" style="height:300px;"></div>
+		<div id="map" class="col-xs-12 col-md-12" style="height:500px;"></div>
+	</div>
+	<!-- ECharts单文件引入 -->
+	<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+	<script type="text/javascript">
+		// 路径配置
+		require.config({
+			paths: {
+				echarts: 'http://echarts.baidu.com/build/dist'
+
+			}
+		});
+
+		// 使用
+		require(
+				[
+					'echarts',
+					'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('cgxx'));
+
+					var option = {
+						title:{ //左侧标题配置
+							text:'{$cg_title}',
+							subtext: '{$cg_subtitle}'
+						},
+						tooltip: {
+							show: true
+						},
+						legend: {
+							data:['成果总量','获奖总量']
+						},
+						toolbox: {
+							show : true,
+							feature : {
+								mark : {show: false},
+								dataView : {show: false, readOnly: false},
+								magicType : {show: false, type: ['line']},
+								restore : {show: true},
+								saveAsImage : {show: true}
+							}
+						},
+						xAxis : [
+							{
+								type : 'category',
+								data : ["2011","2012","2013","2014","2015","2016"]
+							}
+						],
+						yAxis : [
+							{
+								type : 'value'
+							}
+						],
+						series : [
+							{
+								"name":"成果总量",
+								"type":"bar",
+								"data":['{$cg_2011}', '{$cg_2012}', '{$cg_2013}', '{$cg_2014}', '{$cg_2015}', '{$cg_2016}'],
+								markPoint : {
+									data : [
+										{type : 'max', name: '最大值'},
+										{type : 'min', name: '最小值'}
+									]
+								},
+								/*markLine : {
+								 data: [
+								 {type: 'average', name: '平均值'}
+								 ]
+								 }*/
+							},
+							{
+								"name":"获奖总量",
+								"type":"bar",
+								"data":['{$hj_2011}', '{$hj_2012}', '{$hj_2013}', '{$hj_2014}', '{$hj_2015}', '{$hj_2016}'],
+								markPoint : {
+									data : [
+										{type : 'max', name: '最大值'},
+										{type : 'min', name: '最小值'}
+									]
+								},
+								/* markLine : {
+								 data : [
+								 {type : 'average', name: '平均值'}
+								 ]
+								 }*/
+							}
+						]
+					};
+
+					// 为echarts对象加载数据
+					myChart.setOption(option);
+				}
+		);
+	</script>
+	<script type="text/javascript">
+		// 路径配置
+		require.config({
+			paths: {
+				echarts: 'http://echarts.baidu.com/build/dist'
+
+			}
+		});
+
+		// 使用
+		require(
+				[
+					'echarts',
+					'echarts/chart/map' // 使用柱状图就加载bar模块，按需加载
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('map'));
+
+					var option =  {
+						title : {
+							text: '专家地区分布统计',
+							subtext: '{$day}',
+							x:'center'
+						},
+						tooltip : {
+							trigger: 'item'
+						},
+						legend: {
+							orient: 'vertical',
+							x:'left',
+							data:['专家信息']
+						},
+						dataRange: {
+							min: 0,
+							max: 1000,
+							x: 'left',
+							y: 'bottom',
+							text:['高','低'],           // 文本，默认为数值文本
+							calculable : true
+						},
+						toolbox: {
+							show: true,
+							orient : 'vertical',
+							x: 'right',
+							y: 'center',
+							feature : {
+								mark : {show: false},
+								dataView : {show: false, readOnly: false},
+								restore : {show: true},
+								saveAsImage : {show: true}
+							}
+						},
+						roamController: {
+							show: true,
+							x: 'right',
+							mapTypeControl: {
+								'china': true
+							}
+						},
+						series : [
+							{
+								name: '专家数量',
+								type: 'map',
+								mapType: 'china',
+								roam: false,
+								itemStyle:{
+									normal:{label:{show:true}},
+									emphasis:{label:{show:true}}
+								},
+								data:[
+									{name: '北京',value: '{$zj_bj}'},
+									{name: '天津',value: '{$zj_tj}'},
+									{name: '上海',value: '{$zj_sh}'},
+									{name: '重庆',value: '{$zj_cq}'},
+									{name: '河北',value: '{$zj_hb}'},
+									{name: '河南',value: '{$zj_hn}'},
+									{name: '云南',value: '{$zj_yn}'},
+									{name: '辽宁',value: '{$zj_ln}'},
+									{name: '黑龙江',value: '{$zj_hlj}'},
+									{name: '湖南',value: '{$zj_hnn}'},
+									{name: '安徽',value: '{$zj_ah}'},
+									{name: '山东',value: '{$zj_sd}'},
+									{name: '新疆',value: '{$zj_xj}'},
+									{name: '江苏',value: '{$zj_js}'},
+									{name: '浙江',value: '{$zj_zjj}'},
+									{name: '江西',value: '{$zj_jx}'},
+									{name: '湖北',value: '{$zj_hbb}'},
+									{name: '广西',value: '{$zj_gx}'},
+									{name: '甘肃',value: '{$zj_gs}'},
+									{name: '山西',value: '{$zj_sx}'},
+									{name: '内蒙古',value: '{$zj_nmg}'},
+									{name: '陕西',value: '{$zj_sxx}'},
+									{name: '吉林',value: '{$zj_jl}'},
+									{name: '福建',value: '{$zj_fj}'},
+									{name: '贵州',value: '{$zj_gz}'},
+									{name: '广东',value: '{$zj_gd}'},
+									{name: '青海',value: '{$zj_qh}'},
+									{name: '西藏',value: '{$zj_xz}'},
+									{name: '四川',value: '{$zj_sc}'},
+									{name: '宁夏',value: '{$zj_nx}'},
+									{name: '海南',value: '{$zj_hnnn}'},
+									{name: '台湾',value: '{$zj_tw}'},
+									{name: '香港',value: '{$zj_xg}'},
+									{name: '澳门',value: '{$zj_am}'}
+								]
+							}
+
+						]
+					};
+
+					// 为echarts对象加载数据
+					myChart.setOption(option);
+				}
+		);
+	</script>
+	<script type="text/javascript">
+		// 路径配置
+		require.config({
+			paths: {
+				echarts: 'http://echarts.baidu.com/build/dist'
+
+			}
+		});
+
+		// 使用
+		require(
+				[
+					'echarts',
+					'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('zjxx'));
+
+					var option = {
+						title : {
+							text: '{$zj_title}',
+							subtext: '{$zj_subtitle}',
+							x:'center'
+						},
+						tooltip : {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						legend: {
+							orient : 'vertical',
+							x : 'left',
+							data:['专家顾问','青年专家','专家委员']
+						},
+						toolbox: {
+							show : true,
+							feature : {
+								mark : {show: false},
+								dataView : {show: false, readOnly: false},
+								magicType : {
+									show: false,
+									type: ['pie', 'funnel'],
+									option: {
+										funnel: {
+											x: '25%',
+											width: '50%',
+											funnelAlign: 'left',
+											max: {$zj_gw}
+										}
+									}
+								},
+								restore : {show: true},
+								saveAsImage : {show: true}
+							}
+						},
+						calculable : true,
+						series : [
+							{
+								name:'{$zj_title}',
+								type:'pie',
+								radius : '55%',
+								center: ['50%', '60%'],
+								data:[
+									{value:'{$zj_gw}', name:'专家顾问'},
+									{value:'{$zj_qn}', name:'青年专家'},
+									{value:'{$zj_zj}', name:'专家委员'},
+
+								]
+							}
+						]
+					};
+
+					// 为echarts对象加载数据
+					myChart.setOption(option);
+				}
+		);
+	</script>
+	<div class="clear"></div>
+	</block>

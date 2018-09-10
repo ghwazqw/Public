@@ -1,0 +1,75 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <script language="javascript">
+        function deleteinfo(data,type) {
+            if(confirm("删除将不可恢复，请确认？")){
+                //alert(data);
+                location.href="/home/zjxx/Delete?table=zjwc_tb&id="+data+"&type="+type;
+            }
+        }
+        </script>
+     <div style="width: 90%;margin: 0px auto;">
+     	<div><span class="glyphicon glyphicon glyphicon-user"> <a href="/">首页</a>-->专家数据中心
+
+        </span></div>
+     	<form class="navbar-form navbar-left" method="post">
+        <div class="form-group" style="line-height: 40px">
+         专家姓名：<input type="text" class="form-control" value="{$cg_wcrxm}" name="cg_wcrxm">
+            性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<input type="text" class="form-control" value="{$cg_wcrxb}" name="cg_wcrxb">
+            出生年月：<input type="text" class="form-control" value="{$cg_wcrcsny}" name="cg_wcrcsny">
+            籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯：<input type="text" class="form-control" value="{$cg_wcrjg}" name="cg_wcrjg"><br />
+            民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族：<input type="text" class="form-control" value="{$cg_wcrmz}" name="cg_wcrmz">
+            身份证号：<input type="text" class="form-control" value="{$cg_wcrsfzh}" name="cg_wcrsfzh">
+            党&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;派：<input type="text" class="form-control" value="{$cg_wcrdp}" name="cg_wcrdp">
+            工作职务：<input type="text" class="form-control" value="{$cg_wcrxzzw}" name="cg_wcrxzzw"><br />
+            工作单位：<input type="text" class="form-control" value="{$cg_wcrgzdw}" name="cg_wcrgzdw">
+            从事专业：<input type="text" class="form-control" value="{$cg_wcrzyzc}" name="cg_wcrzyzc">
+            学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：<input type="text" class="form-control" value="{$cg_wcrzgxl}" name="cg_wcrzgxl">
+            移动电话：<input type="text" class="form-control" value="{$cg_wcryddh}" name="cg_wcryddh">
+            专家类型：<select name="zj_type" class="selectpicker show-tick form-control">
+            <option value="" <php>if ($zj_type=="1,2,3") :</php>selected<php>endif ;</php>>全部</option>
+            <option value="1" <php>if ($zj_type=="1") :</php>selected<php>endif ;</php>>青年专家委员</option>
+            <option value="2" <php>if ($zj_type=="2") :</php>selected<php>endif ;</php>>专家委员</option>
+            <option value="3" <php>if ($zj_type=="3") :</php>selected<php>endif ;</php>>行业专家顾问</option>
+        </select>
+            <button type="submit" class="btn btn-default">搜索</button><BR />
+            共有{$count}条信息
+
+        </div>
+
+
+      </form>
+      <table class="table table-hover" id="table">
+      	 	 <tr style="font-size: 14px">
+  	<td><b>专家姓名</b></td>
+    <td><b>专家类型</b></td>
+  	<td><b>工作单位</b></td>
+  	<td><b>从事专业</b></td>
+  	<td><b>技术职称</b></td>
+  	<td><b>毕业院校及学历</b></td>
+    <td><b>主要项目</b></td>
+    <td><b>操作</b></td>
+  </tr>
+  <foreach name="info_data" item="zj" >
+
+  <tr style="font-size: 12px">
+  	<td><a href="/index.php/home/zjxx/zjxx_dal?id={$zj.id}&type=3" target="_blank">{$zj.cg_wcrxm} <php>if ($zj["cg_wcrxb"]!="") :</php><span style="font-size: 11px">({$zj.cg_wcrxb})</span><php>endif ;</php></td>
+  	<td><php>if ($zj["zj_type"]==3) :</php>行业专家顾问<php>elseif ($zj["zj_type"]==2) :</php>专家委员<php>elseif ($zj["zj_type"]==1) :</php>青年专家委员<php>endif ;</php></td>
+    <td>{$zj.cg_wcrgzdw}</td>
+  	<td>{$zj.cg_wcrzyzc}</td>
+  	<td>{$zj.cg_wcrjszc}</td>
+  	<td>{$zj.cg_wcrbyyx}({$zj.cg_wcrzgxl})</td>
+    <td><a href="/index.php/Home/Cgxx/cgxx_class/?keyword={$zj.cg_wcrxm}">主要从事项目</a></td>
+      <td><!--<a id="modal-940791" href="#act_qr" role="button" data-toggle="modal"><span class="glyphicon glyphicon-remove"></span></a>-->
+          <a href="/index.php/home/zjxx/zjxx_edit?id={$zj.id}&type=3" title="编辑数据"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a href="#" onclick="deleteinfo({$zj.id},{$zj.zj_type})" title="删除数据"><span class="glyphicon glyphicon-trash"></span></a>
+      </td>
+  </tr>
+   </foreach>
+
+</table>
+         <ul class="pagination">
+             {$pagebar}
+         </ul>
+</div>
+</block>

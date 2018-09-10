@@ -1,0 +1,167 @@
+<extend name="manage/index/base_user" title="其他设备"/>
+
+<block name="customer">
+
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+
+<div class="col-md-12 col-xs-12" nowrap>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#" onClick="javascript :history.back(-1);"> <span class="glyphicon glyphicon-th"></span> 其它资产信息管理</a>
+        </li>
+        <li class="active">
+            其它资产信息全部导出
+        </li>
+    </ul>
+                <div class="input-group" style="text-align: right">
+                    <div class="btn-group" style="margin-top: 8px">
+
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="确认导出"><button type="button" class="btn btn-success" onclick="SelectInfo()"><span class="glyphicon glyphicon-share"></span> 确认导出</button></a>
+
+                        </li>
+                        <script>
+                            function expinfo(){
+                                var myDate = new Date();
+                                $("#exp").table2excel({
+                                    exclude: ".noExl",
+                                    name: "Excel Document Name.xlsx",
+                                    filename: myDate.toLocaleString()+".xls",
+                                    exclude_img: true,
+                                    exclude_links: true,
+                                    exclude_inputs: false
+                                });
+                            }
+                        </script>
+
+                    </div>
+
+                    <div class="btn-group" style="text-align: left;padding-top: 9px;padding-left: 20px">共有{$count}条信息。</div>
+                </div>
+    <div id='div1'>
+        <table id="exp" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>品牌</th>
+                <th nowrap>型号</th>
+                <th nowrap>生产日期</th>
+                <th nowrap>生产厂家</th>
+                <th nowrap>出厂产品编号</th>
+                <th nowrap>用途</th>
+                <th nowrap>资产编号</th>
+                <!--<th nowrap>资产类型</th>-->
+                <th nowrap>资产二级分类</th>
+                <th nowrap>资产名称</th>
+                <th nowrap>计量单位</th>
+                <th nowrap>原值</th>
+                <th nowrap>净值</th>
+                <th nowrap>是否折旧标志</th>
+                <th nowrap>折旧年限类型</th>
+                <th nowrap>累计折旧</th>
+                <th nowrap>本期折旧</th>
+                <th nowrap>购建日期</th>
+                <th nowrap>入帐日期</th>
+                <th nowrap>启用日期</th>
+                <th nowrap>取得方式</th>
+                <th nowrap>财产使用部门</th>
+                <th nowrap>是否闲置</th>
+                <th nowrap>财产管理部门</th>
+                <th nowrap>条形码</th>
+                <th nowrap>责任人</th>
+                <th nowrap>批复单号</th>
+                <th nowrap>卡片说明</th>
+                <th nowrap>出帐日期</th>
+                <th nowrap>出帐类型</th>
+                <th nowrap>出帐原因</th>
+                <th nowrap>初始维修金额</th>
+                <th nowrap>状态</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <?php $zc_yzhj+=$Info['zc_yz'];?>
+                <?php $zc_jzhj+=$Info['zc_jz'];?>
+                <tr>
+                <td>{$i}</td>
+                <td nowrap>{$Info.zc_pp}</td>
+                <td nowrap>{$Info.zc_xh}</td>
+                <td nowrap>
+                    <if condition="$Info.zc_scrq neq '' ">
+                        {$Info.zc_scrq|strtotime|date="Y-m-d",###}
+                    </if>
+                </td>
+                <td nowrap>{$Info.zc_sccj}</td>
+                <td nowrap>{$Info.zc_cccpbh}</td>
+                <td nowrap>{$Info.zc_yt}</td>
+                <td nowrap>&nbsp;{$Info.zc_bh}</td>
+                <!--<td nowrap>{$Info.zc_lx}</td>-->
+                <td nowrap>{$Info.zc_rjlx}</td>
+                <td nowrap>{$Info.zc_mc}</td>
+                <td nowrap>{$Info.zc_jldw}</td>
+                <td nowrap style="text-align: right">{$Info.zc_yz}</td>
+                <td nowrap style="text-align: right">{$Info.zc_jz}</td>
+                <td nowrap>{$Info.zc_sfzjbz}</td>
+                <td nowrap>{$Info.zc_zjnxlx}</td>
+                <td nowrap>{$Info.zc_ljzj}</td>
+                <td nowrap>{$Info.zc_bqzj}</td>
+                <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_qdfs}</td>
+                <td nowrap>{$Info.zc_ccsybm}</td>
+                <td nowrap>{$Info.zc_sfxz}</td>
+                <td nowrap>{$Info.zc_ccglbm}</td>
+                <td nowrap>&nbsp;{$Info.zc_txm}</td>
+                <td nowrap>{$Info.zc_zrr}</td>
+                <td nowrap>{$Info.zc_pfdh}</td>
+                <td nowrap>{$Info.zc_kpsm}</td>
+                    <if condition="$Info.zc_czrq neq '0000-00-00 00:00:00' ">
+                        {$Info.zc_czrq|strtotime|date="Y-m-d",###}
+                    </if>
+                <td nowrap>{$Info.zc_czlx}</td>
+                <td nowrap>{$Info.zc_czyy}</td>
+                    <td nowrap>{$Info.zc_czyy}</td>
+                    <td nowrap>
+                        {$Info.wxje}
+                    </td>
+
+                <td nowrap>
+                    <include file="manage/ZcManage/sb_zt" />
+                </td>
+
+            </tr>
+            </foreach>
+            <!--<tr style="background: ">
+                <td>合计</td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap style="text-align: right">{$zc_yzhj}</td>
+                <td nowrap style="text-align: right">{$zc_jzhj}</td>
+
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+                <td nowrap></td>
+
+                <td nowrap></td>
+
+                <td nowrap></td>
+
+                <td nowrap>
+
+                </td>
+            </tr>-->
+        </table>
+
+    </div>
+            <ul class="pagination" style="padding-left: 5px">
+                {$pagebar}
+            </ul>
+</div>
+    </block>

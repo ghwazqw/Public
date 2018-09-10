@@ -1,0 +1,231 @@
+<extend name="manage/index/base_user" title="[title]"/>
+
+<block name="customer">
+
+    <script type="text/javascript">
+        function changeData() {
+            var v=$("#zc_lx").find("option:selected").val();
+            var t=$("#zc_lx").find("option:selected").text();
+            $("#zc_mc").val(t);
+            var zc_rjlx = $("#zc_rjlx");
+            if (!v){
+                // 下拉框禁用
+                ("#zc_rjlx").prop("disabled", true);
+            }else{
+                $("#zc_rjlx").prop("disabled", false);
+                var url = "?id=" + v;
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                        //("#zc_rjlx").prop("disabled", true);
+                        zc_rjlx.find("option").remove();
+                        var tempOption = document.createElement("option");
+                        tempOption.value = '';
+                        tempOption.innerHTML  = '请选择';
+                        zc_rjlx.append(tempOption);
+                        zc_rjlx.prop("disabled", true);
+                    }
+                    else{
+                        //遍历回传到的Json数据，取出二级分类信息
+                        zc_rjlx.find("option").remove();
+                        $.each(data,function (i,value) {
+                            var tempOption = document.createElement("option");
+                            tempOption.value = value.id;
+                            tempOption.innerHTML  = value.cglx_mc;
+                            zc_rjlx.append(tempOption);
+                        })
+                    }
+                })
+            }
+        }
+        </script>
+    <div class=" panel panel-default" style="width: 98%;margin: 0 auto;margin-top: 5px;line-height: 40px">
+        <div class="panel-body" style="margin: 0 auto">
+        <form class="form-inline" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+            <lable style="text-align: right;font-size: 14px">资产编号 : </lable>
+            <div class="form-group input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" >
+                    <span class="glyphicon glyphicon-sound-6-1"></span>
+                </span>
+            <input type="text" class="form-control" name="zc_bh" id="zc_bh" placeholder="请输入资产编号" data-rule="required"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF-->
+            <lable style="text-align: right;font-size: 14px">资产类型 : </lable>
+            <div class="form-group input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+                <select class="form-control" name="zc_lx" id="zc_lx" onchange="changeData()">
+                    <option value='' selected>请选择类型</option>
+                    <foreach name="class_info" item="info" >
+                        <option value="{$info.id}">{$info.cglx_mc}</option>
+                    </foreach>
+                </select>
+            </div>&nbsp;&nbsp;&nbsp;
+            <lable style="text-align: right;font-size: 14px">资产二级分类 : </lable>
+            <div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <select class="form-control" name="zc_rjlx" id="zc_rjlx" disabled>
+                <!--<option value="">请选择</option>-->
+            </select>
+            </div>&nbsp;&nbsp;&nbsp;<!--End IF-->
+            <lable style="text-align: right;font-size: 14px">资产名称 : </lable>
+            <div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_mc" id="zc_mc" placeholder="请输入资产名称" data-rule="required"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF--><br />
+            <lable style="text-align: right;font-size: 14px">计量单位 : </lable>
+            <div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+                <input type="text" class="form-control" name="zc_jldw" id="zc_jldw" placeholder="请输入计量单位" data-rule="required"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF-->
+            <lable style="text-align: right;font-size: 14px">原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值 : </lable><div class=" form-group input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="zc_yz" id="zc_yz" placeholder="请输入原值"  style="width: 235px"/>
+            <div class="input-group-addon">.00</div>
+        </div>&nbsp;&nbsp;&nbsp;<lable style="text-align: right;font-size: 14px">其中:安装成本 : </lable>
+            <div class=" form-group input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="zc_azcb" id="zc_azcb" placeholder="请输入其中:安装成本" style="width: 265px"/>
+            <div class="input-group-addon">.00</div>
+        </div>&nbsp;&nbsp;&nbsp;<br />
+            <lable style="text-align: right;font-size: 14px">是否折旧标志 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <label class="radio-inline"><input type="radio"  value="1" checked name="zc_sfzjbz" id="zc_sfzjbz"/>是</label>
+            <label class="radio-inline"><input type="radio"  value="0" name="zc_sfzjbz" id="zc_sfzjbz"/> 否</label>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF--><lable style="text-align: right;font-size: 14px">折旧年限类型 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_zjnxlx" id="zc_zjnxlx" placeholder="请输入折旧年限类型" data-rule="required"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF--><lable style="text-align: right;font-size: 14px">累计折旧 : </lable><div class=" form-group input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="zc_ljzj" id="zc_ljzj" placeholder="请输入累计折旧"/>
+            <div class="input-group-addon">.00</div>
+        </div>&nbsp;&nbsp;&nbsp;<lable style="text-align: right;font-size: 14px">本期折旧 : </lable><div class=" form-group input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="zc_bqzj" id="zc_bqzj" placeholder="请输入本期折旧" style="width: 155px"/>
+            <div class="input-group-addon">.00</div>
+        </div><br /><lable style="text-align: right;font-size: 14px">购建日期 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+            <input type="text" readonly class=" form-control" name="zc_gjrq" id="zc_gjrq" placeholder="请选择购建日期"/>
+        </div>&nbsp;&nbsp;&nbsp;<script>
+            $("#zc_gjrq").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                language:"zh-CN",
+                minView:"month"
+            });
+        </script><lable style="text-align: right;font-size: 14px">入帐日期 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+            <input type="text" readonly class=" form-control" name="zc_rzrq" id="zc_rzrq" placeholder="请选择入帐日期"/>
+        </div>&nbsp;&nbsp;&nbsp;<script>
+            $("#zc_rzrq").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                language:"zh-CN",
+                minView:"month"
+            });
+        </script><lable style="text-align: right;font-size: 14px">启用日期 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+            <input type="text" readonly class=" form-control" name="zc_qyrq" id="zc_qyrq" placeholder="请选择启用日期"/>
+        </div>&nbsp;&nbsp;&nbsp;<script>
+            $("#zc_qyrq").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                language:"zh-CN",
+                minView:"month"
+            });
+        </script><lable style="text-align: right;font-size: 14px">取得方式 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_qdfs" id="zc_qdfs" placeholder="请输入取得方式" data-rule="required" style="width: 187px"/>
+        </div><br /><!--End IF--><lable style="text-align: right;font-size: 14px">财产使用部门 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_ccsybm" id="zc_ccsybm" placeholder="请输入财产使用部门" data-rule="required"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF--><lable style="text-align: right;font-size: 14px">是否闲置 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_sfxz" id="zc_sfxz" placeholder="请输入是否闲置" data-rule="required"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF--><lable style="text-align: right;font-size: 14px">财产管理部门 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_ccglbm" id="zc_ccglbm" placeholder="请输入财产管理部门" data-rule="required"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF--><lable style="text-align: right;font-size: 14px">条形码 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+                    <span class="input-group-addon" >
+                        <span class="glyphicon glyphicon-barcode"></span>
+                    </span>
+            <input type="text" class="form-control" name="zc_txm" id="zc_txm" placeholder="请输入条形码" data-rule="required" style="width: 145px"/>
+        </div><br /><!--End IF--><lable style="text-align: right;font-size: 14px">责 &nbsp;任 &nbsp;人 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_zrr" id="zc_zrr" placeholder="请输入责任人" data-rule="required" style="width: 434px"/>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF--><lable style="text-align: right;font-size: 14px">批复单号 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_pfdh" id="zc_pfdh" placeholder="请输入批复单号" data-rule="required" style="width: 450px"/>
+        </div><br /><!--End IF--><lable style="text-align: right;font-size: 14px">卡片说明 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" >
+                    <span class="glyphicon glyphicon-file"></span>
+                </span>
+            <textarea class="form-control" style="height: 100px;width: 1014px" name="zc_kpsm" id="zc_kpsm" placeholder="请输入卡片说明"></textarea>
+        </div><br /><!--End IF-->
+            <lable style="text-align: right;font-size: 14px">出帐日期 : </lable>
+            <div class="form-group input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-time"></span>
+            </span>
+            <input type="text" readonly class=" form-control" name="zc_czrq" id="zc_czrq" placeholder="请选择出帐日期"/>
+            </div>
+            <script>
+        $("#zc_czrq").datetimepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            todayBtn: true,
+            language:"zh-CN",
+            minView:"month"
+        });
+    </script>
+            <lable style="text-align: right;font-size: 14px">出帐类型 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" >
+                <span class="glyphicon glyphicon-text-color"></span>
+            </span>
+            <input type="text" class="form-control" name="zc_czlx" id="zc_czlx" placeholder="请输入出帐类型" data-rule="required"/>
+        </div><br /><!--End IF--><lable style="text-align: right;font-size: 14px">出帐原因 : </lable><div class="form-group input-group input-group-sm" style="padding-left: 15px">
+                <span class="input-group-addon" >
+                    <span class="glyphicon glyphicon-file"></span>
+                </span>
+            <textarea class="form-control" style="height: 100px;width: 1014px" name="zc_czyy" id="zc_czyy" placeholder="请输入出帐原因"></textarea>
+        </div>&nbsp;&nbsp;&nbsp;<!--End IF-->        <br />
+            <lable style="text-align: right;font-size: 14px"></lable>
+            <div class=" input-group input-group-sm" style="padding-left: 15px" >
+            <button type="submit" class="btn btn-success">保存</button>
+            <button type="reset" class="btn btn-default">重置</button>
+        </div>
+        </form>
+
+    </div>
+</div>
+</block>

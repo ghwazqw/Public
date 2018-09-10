@@ -1,0 +1,616 @@
+<extend name="manage/index/base_user" title="详细信息管理"/>
+<block name="customer">
+
+    <div class="box">
+        <foreach name="info_data" item="Info">
+        <div class="box-body">
+            <div class="col-md-12 column">
+    <ul class="breadcrumb">
+        <li >
+            <a href="#" onClick="window.history.back();"><span class="glyphicon glyphicon-th"></span> 房屋信息</a>
+        </li>
+        <li class="active">
+            人员入住登记
+        </li>
+    </ul>
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="__PUBLIC__/Manage/images/sh.png" style="width: 64px" alt="Generic placeholder image">
+                </a>
+            </div>
+            <div class="media-body">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><b>{$Info.homename}</b> <small>资产编号{$Info.zcbm}</small></div>
+                        <div class="panel-body">
+                            <b>发证日期：</b>{$Info.fzrq}；
+                            <b>证号编号：</b>{$Info.fczbh}；
+                            <b>财产保管人：</b>{$Info.glyxm}；
+                            <b>坐落位置：</b>{$Info.zlwz}；
+                            <b>面积：</b>{$Info.mj}㎡；
+                            <b>所在楼层：</b>{$Info.szlc}；
+                            <b>土地使用性质：</b>{$Info.nolur}。
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+
+        </div>
+        </div>
+
+        <div class="col-md-7 column" style="margin-top: 0px">
+            <div class="panel panel-default">
+                <div class="panel-heading">办理入住</div>
+                <div class="panel-body" style="line-height: 40px">
+                    <form class="form-inline" id="subform" action="/Home/SsManage/RzSubmit" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                        <div class="form-group" style="width: 50%;float: left">
+                            <label style="width: 40%;text-align: right">人员类型选择：</label>
+                            <select class="form-control" style="width: 50%" name="ry_lxid" id="ry_lxid" onchange="rylxselect()" data-rule="required">
+                                <option value="">请选择人员类型</option>
+                                <option value="1">普通人员</option>
+                                <option value="2">交流干部</option>
+                            </select>
+                        </div>
+                        <script>
+                            function rylxselect() {
+                                var id=$("#ry_lxid").val();
+                                var nx=$("#ht_nx").val();
+                                if (id==2){
+                                    $("#ht_zj").val(0);
+                                    $("#ht_zj").attr("readonly","readonly");
+                                }else{
+                                    if (nx==4){
+                                        $("#ht_zj").val(10);
+                                    }else{
+                                        $("#ht_zj").removeAttr("readonly");
+                                    }
+
+                                }
+                            }
+                        </script>
+                        <div class="form-group" style="width: 50%;float: left">
+                            <label style="width: 40%;text-align: right">人员姓名：</label>
+                            <!--<input type="text" class="form-control" style="width: 50%" placeholder="姓名" id="ry_name" name="ry_name" onblur="RyInput()" data-rule="required">-->
+                            <select name="ry_name" class="form-control" data-rule="required">
+                                <option value="">请选择人员</option>
+                                <foreach name="RyInfoData" item="ry" >
+                                <option value="{$ry.ry_xm}">{$ry.ry_xm}</option>
+                                </foreach>
+                            </select>
+                            <input type="hidden" name="id" value="{$Info.id}">
+                            <script>
+                                function RyInput() {
+                                    var ryname=$("#ry_name").val();
+                                    $("#ryname").html(ryname);
+                                }
+                            </script>
+                        </div>
+                        <div class="form-group" style="width: 50%;float: left">
+                            <label style="width: 40%;text-align: right">性别：</label>
+                            <select class="form-control" style="width: 50%" name="ry_xb" data-rule="required">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="width: 50%;float: left">
+                            <label style="width: 40%;text-align: right">身份证号：</label>
+                            <input type="text" class="form-control" style="width: 50%" placeholder="身份证号" id="ry_sfzh" name="ry_sfzh">
+                        </div>
+                        <div class="form-group" style="width: 50%;float: left">
+                            <label style="width: 40%;text-align: right">合同年限：</label>
+                            <select class="form-control" style="width: 30%" name="ht_nx" id="ht_nx" onchange="htnx()" data-rule="required">
+                                <option value="4">4年</option>
+                                <option value="其他">其他</option>
+                            </select>
+                            <input type="text" name="ht_nx1" id="ht_nx1" style="width: 19%" class="form-control" placeholder="4" onblur="nxrq()" value="4"  data-rule="required" readonly/> 年
+                        </div>
+                        <script>
+                            function htnx() {
+                                var v=$("#ht_nx").val();
+                                var lx=$("#ry_lxid").val();
+                                if (v!=4){
+                                    //alert(v);
+                                    if (lx==2){ //交流干部不收取租金
+                                        $("#ht_zj").val(0);
+                                        $("#ht_zj").attr("readonly","readonly");
+                                    }else{
+                                        $("#ht_zj").removeAttr("readonly");
+                                    };
+                                    $("#ht_nx1").val(1);
+                                    $("#ht_nx1").removeAttr("readonly");
+                                }else{
+                                    if (lx==2)
+                                    {
+                                        $("#ht_zj").val(0);
+                                        $("#ht_zj").attr("readonly", "readonly");
+                                    }else{
+                                        $("#ht_zj").val(10);
+                                        $("#ht_zj").attr("readonly","readonly");
+                                    }
+                                    $("#ht_nx1").val(4);
+                                    $("#ht_nx1").attr("readonly","readonly");
+                                }
+                            }
+                        </script>
+                        <script>
+                            function nxrq() {
+                                Date.prototype.Format = function (fmt) { //author: meizz
+                                    var o = {
+                                        "M+": this.getMonth() + 1, //月份
+                                        "d+": this.getDate(), //日
+                                        "H+": this.getHours(), //小时
+                                        "m+": this.getMinutes(), //分
+                                        "s+": this.getSeconds(), //秒
+                                        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                                        "S": this.getMilliseconds() //毫秒
+                                    };
+                                    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                                    for (var k in o)
+                                        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                                    return fmt;
+                                };
+                                var t=$("#ry_rzrq").val();
+                                if (t!=""){
+                                var nx=Number($("#ht_nx1").val());
+                                var yue=Number(nx*12);
+                                //alert(t);
+                                var nowTime=new Date(t);
+                                nowTime.setMonth(nowTime.getMonth()+yue);
+                                var tt=nowTime.Format("yyyy-MM-dd")//上月当前时间
+                                $("#ry_dqrq").val(tt);
+                                };
+                            }
+                        </script>
+                        <div class="form-group" style="width: 50%;float: left">
+                            <label style="width: 40%;text-align: right">月租金：</label>
+                            <input type="text" name="ht_zj" id="ht_zj" style="width: 50%" class="form-control" placeholder="月租金" value="10" readonly data-rule="required"> 元
+                        </div>
+
+                        <div class="form-group"  style="width: 50%;float: left">
+                            <label style="width: 40%;text-align: right">入住日期：</label>
+                            <input type="text" readonly class=" form-control" style="width: 50%" name="ry_rzrq" id="ry_rzrq" placeholder="请选择入住日期"  onchange="rqSelect()"/>
+                            <script>
+                                $("#ry_rzrq").datetimepicker({
+                                    format: "yyyy-mm-dd",
+                                    autoclose: true,
+                                    todayBtn: true,
+                                    language:"zh-CN",
+                                    minView:"month"
+                                });
+                                Date.prototype.Format = function (fmt) { //author: meizz
+                                    var o = {
+                                        "M+": this.getMonth() + 1, //月份
+                                        "d+": this.getDate(), //日
+                                        "H+": this.getHours(), //小时
+                                        "m+": this.getMinutes(), //分
+                                        "s+": this.getSeconds(), //秒
+                                        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                                        "S": this.getMilliseconds() //毫秒
+                                    };
+                                    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                                    for (var k in o)
+                                        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                                    return fmt;
+                                };
+                                function rqSelect() {
+                                    /*//接收输入的姓名
+                                    var ryname=$("#ry_name").val(); //人员信息
+                                    if (!ryname){
+                                        alert("人员姓名必须输入");
+                                        return false;
+                                    }*/
+                                    //return false;
+                                    //初始化变量
+                                    $("#ZjList").html("");
+                                    $("#Bjlist").html("");
+                                    $("#Zjhj").html("");
+                                    var t="";//接收起租日期
+                                    var nx=""; //承租年限
+                                    var yue="";//将承租年限转换成月
+                                    var fj_id=""; //房间ID
+                                    var HM=""; //开始收费月份
+                                    var HY=""; //开始收费年
+                                    var YM=""; //第一年度总收费月份
+                                    var nx1=""; //年限
+
+                                    var t=$("#ry_rzrq").val();
+                                    var nx=Number($("#ht_nx1").val()); //承租年限
+                                    var nxlx=$("#ht_nx").val(); //年限类型
+                                    var yue=Number(nx*12); //将承租年限转换成月
+                                    var fj_id=$("#ry_ssfjid").val(); //房间ID
+
+                                    //alert(t);
+                                    var nowTime=new Date(t);
+                                    //计算开始月份是否需要收费
+                                    nowTime.setMonth(nowTime.getMonth());
+                                    var ty=nowTime.Format("yyyy");
+                                    var tm=nowTime.Format("MM");
+                                    var td=nowTime.Format("dd");
+                                    var d= new Date(ty, tm, 0);
+                                    var dygs=d.getDate(); //当月天数
+                                    var sjts=Number(dygs-td); //是否满足15天
+                                    $("#kssfyf").val("");
+                                    if (sjts>=15){ //住宿时间大于等于15天时本月开始收费
+                                        //alert("当月收费");
+                                        var kssfyf=nowTime.Format("yyyy-MM-dd"); //开始收费月份
+                                        $("#kssfyf").val(kssfyf);
+                                        var fzksyf=nowTime.Format("yyyy年MM月");
+                                        $("#fzksyf").html(fzksyf);
+                                        var HM=nowTime.Format("MM"); //开始收费月份
+                                        var HY=nowTime.Format("yyyy"); //开始收费年
+                                        var YM=Number(13-HM); //第一年度总收费月份
+                                        var ynjr=Number(YM*10); //第一年合计
+                                        ynjr=ynjr.toFixed(2); //格式化显示2位小数
+                                        //alert(ynjr);
+                                        //年限类型为4年的计算方式
+                                        if (nxlx==4){
+                                            if (YM==12){
+                                                var enje=Number(12*20);
+                                                enje=enje.toFixed(2);
+                                                var mj=$("#ry_ssfjmj").val();
+                                                var snje=Number(12*mj);
+                                                snje=snje.toFixed(2);
+                                                var ssnje=Number(12*mj);
+                                                ssnje=ssnje.toFixed(2);
+                                                //alert(enje);
+                                            }else{
+                                                var hm1=Number(HM-1);
+                                                var en1=Number(hm1*10);
+                                                var en2=Number(YM*20);
+                                                var enje=Number(en1+en2); //第二年合计
+                                                enje=enje.toFixed(2);
+                                                var mj=$("#ry_ssfjmj").val(); //读取房屋面积
+                                                var sn1=Number(hm1*20);
+                                                var en2=Number(YM*mj);
+                                                var snje=Number(sn1+en2); //第三年合计
+                                                snje=snje.toFixed(2);
+                                                var ssn1=Number(hm1*mj);
+                                                var ssn2=Number(YM*mj);
+                                                var ssnje=Number(ssn1+ssn2); //第四年合计
+                                                ssnje=ssnje.toFixed(2);
+                                                var wnje=Number(hm1*mj); //补交合计
+                                                wnje=wnje.toFixed(2);
+                                                var ernss=Number(HY);
+                                                ernss=ernss+4;
+                                                $("#Bjlist").html(ernss+"年租金："+wnje);
+                                            }
+                                            var ern=Number(HY);
+                                            ern=ern+1;
+                                            var sn=ern+1;
+                                            var ssn=sn+1;
+                                            $("#ZjList").html(HY+"年租金："+ynjr+"<br />"+ern+"年租金："+enje+"<br />"+sn+"年租金："+snje+"<br />"+ssn+"年租金："+ssnje);
+                                            var zjhj=Number(parseFloat(ynjr)+parseFloat(enje)+parseFloat(snje)+parseFloat(ssnje)); //前四年金额合计
+                                            if (!wnje){ //如果第五年金额不空则相加
+                                                //alert(0);
+                                            }else{
+                                                zjhj=Number(parseFloat(zjhj)+parseFloat(wnje))
+                                            };
+                                            $("#Zjhj").html("租金合计：<b>"+zjhj+"</b>");
+                                        }else{   //年限类型“其他”
+                                            $("#ZjList").html("");
+                                            var Nxxx=$("#ht_nx1").val(); //读取用户输入的居住年限
+                                            var dj=$("#ht_zj").val(); //读取用户输入的租金信息
+                                            if (!Nxxx || Nxxx==0){
+                                                alert("请输入您的合同年限");
+                                            }else{
+                                                if (YM==12){
+                                                    var ern=Number(HY);
+                                                    for(var i = 0; i < Nxxx; i++){
+                                                        var Hjje=Number(YM*dj);
+                                                        ynjr=Hjje.toFixed(2);
+                                                        //alert(Hjje);
+                                                        $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                        ern=ern+1;
+                                                    }
+                                                    var zjhj=Hjje*Nxxx;
+                                                    $("#Zjhj").html("租金合计：<b>"+zjhj+"</b>");
+                                                }else{
+                                                    //需单独计算第一年和最后一年
+                                                    var Hjje=Number(YM*dj);
+                                                    var ern=Number(HY);
+                                                    ynjr=Hjje.toFixed(2);
+                                                    $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                    ern=ern+1; //年度加一
+                                                    //循环中间完整年度
+                                                    for(var i = 0; i < Nxxx-1; i++){
+                                                        var Hjje=Number(12*dj);
+                                                        //var ern=Number(HY);
+                                                        ynjr=Hjje.toFixed(2);
+                                                        //alert(Hjje);
+                                                        $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                        ern=ern+1; //年度加一
+                                                    }
+                                                    //单独计算最后一年
+                                                    var YFjs=Number(12-YM);
+                                                    var Hjje=Number(YFjs*dj);
+                                                    ynjr=Hjje.toFixed(2);
+                                                    $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                    //总计计算
+                                                    var zjhj=Number(dj*12*Nxxx);
+                                                    $("#Zjhj").html("租金合计：<b>"+zjhj+"</b>");
+                                                }
+                                            }
+                                        }
+                                    }else{
+                                        nowTime.setMonth(nowTime.getMonth()+1);
+                                        var kssfyf=nowTime.Format("yyyy-MM-dd"); //开始收费月份
+                                        //alert("当月不收费");
+                                        $("#kssfyf").val(kssfyf);
+                                        var fzksyf=nowTime.Format("yyyy年MM月");
+                                        $("#fzksyf").html(fzksyf);
+                                        var HM=nowTime.Format("MM"); //开始收费月份
+                                        var HY=nowTime.Format("yyyy"); //开始收费年
+                                        var YM=Number(13-HM);
+                                        var ynjr=Number(YM*10); //第一年合计
+                                        ynjr=ynjr.toFixed(2); //格式化显示2位小数
+                                        //alert(sljr);
+                                        //年限类型为4年的计算方式
+                                        if (nxlx==4){
+                                            if (YM==12){
+                                                var enje=Number(12*20);
+                                                enje=enje.toFixed(2);
+                                                var mj=$("#ry_ssfjmj").val();
+                                                var snje=Number(12*mj);
+                                                snje=snje.toFixed(2);
+                                                var ssnje=Number(12*mj);
+                                                ssnje=ssnje.toFixed(2);
+                                                //alert(enje);
+                                            }else{
+                                                var hm1=Number(HM-1);
+                                                var en1=Number(hm1*10);
+                                                var en2=Number(YM*20);
+                                                var enje=Number(en1+en2); //第二年合计
+                                                enje=enje.toFixed(2);
+                                                var mj=$("#ry_ssfjmj").val(); //读取房屋面积
+                                                var sn1=Number(hm1*20);
+                                                var en2=Number(YM*mj);
+                                                var snje=Number(sn1+en2); //第三年合计
+                                                snje=snje.toFixed(2);
+                                                var ssn1=Number(hm1*mj);
+                                                var ssn2=Number(YM*mj);
+                                                var ssnje=Number(ssn1+ssn2); //第四年合计
+                                                ssnje=ssnje.toFixed(2);
+                                                var wnje=Number(hm1*mj); //补交合计
+                                                wnje=wnje.toFixed(2);
+                                                var ernss=Number(HY);
+                                                ernss=ernss+4;
+                                                $("#Bjlist").html(ernss+"年租金："+wnje);
+                                            }
+                                            var ern=Number(HY);
+                                            ern=ern+1;
+                                            var sn=ern+1;
+                                            var ssn=sn+1;
+                                            $("#ZjList").html(HY+"年租金："+ynjr+"<br />"+ern+"年租金："+enje+"<br />"+sn+"年租金："+snje+"<br />"+ssn+"年租金："+ssnje);
+                                            var zjhj=Number(parseFloat(ynjr)+parseFloat(enje)+parseFloat(snje)+parseFloat(ssnje)); //前四年金额合计
+                                            if (!wnje){ //如果第五年金额不空则相加
+                                                //alert(0);
+                                            }else{
+                                                zjhj=Number(parseFloat(zjhj)+parseFloat(wnje))
+                                            };
+                                            $("#Zjhj").html("租金合计：<b>"+zjhj+"</b>");
+                                        }else{   //年限类型“其他”
+                                            $("#ZjList").html("");
+                                            var Nxxx=$("#ht_nx1").val(); //读取用户输入的居住年限
+                                            var dj=$("#ht_zj").val(); //读取用户输入的租金信息
+                                            if (!Nxxx || Nxxx==0){
+                                                alert("请输入您的合同年限");
+                                            }else{
+                                                if (YM==12){
+                                                    var ern=Number(HY);
+                                                    for(var i = 0; i < Nxxx; i++){
+                                                        var Hjje=Number(YM*dj);
+
+                                                        ynjr=Hjje.toFixed(2);
+                                                        //alert(Hjje);
+                                                        $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                        ern=ern+1;
+                                                    }
+                                                    var zjhj=Hjje*Nxxx;
+                                                    $("#Zjhj").html("租金合计：<b>"+zjhj+"</b>");
+                                                }else{
+                                                    //需单独计算第一年和最后一年
+                                                    var Hjje=Number(YM*dj);
+                                                    var ern=Number(HY);
+                                                    ynjr=Hjje.toFixed(2);
+                                                    $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                    ern=ern+1; //年度加一
+                                                    //循环中间完整年度
+                                                    for(var i = 0; i < Nxxx-1; i++){
+                                                        var Hjje=Number(12*dj);
+                                                        //var ern=Number(HY);
+                                                        ynjr=Hjje.toFixed(2);
+                                                        //alert(Hjje);
+                                                        $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                        ern=ern+1; //年度加一
+                                                    }
+                                                    //单独计算最后一年
+                                                    var YFjs=Number(12-YM);
+                                                    var Hjje=Number(YFjs*dj);
+                                                    ynjr=Hjje.toFixed(2);
+                                                    $("#ZjList").append(ern+"年租金："+ynjr+"<br />");
+                                                    //总计计算
+                                                    var zjhj=Number(dj*12*Nxxx);
+                                                    $("#Zjhj").html("租金合计：<b>"+zjhj+"</b>");
+                                                }
+                                            }
+                                        }
+
+                                        nowTime.setMonth(nowTime.getMonth()-1); //修正入住日期
+                                    }
+                                    //计算截止日期
+                                    nowTime.setMonth(nowTime.getMonth()+yue);
+                                    var tt=nowTime.Format("yyyy-MM-dd"); //截止日期
+                                    var tr=nowTime.Format("MM"); //截止日期
+                                    /*alert(tr);
+                                    return false;*/
+                                    $("#ry_dqrq").val(tt);
+                                    var ty=nowTime.Format("yyyy");
+                                    var tm=nowTime.Format("MM");
+                                    var td=nowTime.Format("dd");
+                                    var d= new Date(ty, tm, 0);
+                                    var dygs=d.getDate(); //当月天数
+                                    var sjts=Number(dygs-td); //是否满足15天
+                                    $("#jssfyf").val("");
+                                    if (sjts<15){ //住宿时间小于15天，本月不收费
+                                        //alert("截止月需收费");
+                                        var kssfyf=nowTime.Format("yyyy-MM-dd"); //截止日期
+                                        $("#jssfyf").val(kssfyf);
+                                        var fzjsyf=nowTime.Format("yyyy年MM月");
+                                        $("#fzjsyf").html(fzjsyf);
+                                    }else{
+                                        //alert("截止月不收费");
+                                        nowTime.setMonth(nowTime.getMonth()-1);
+                                        var kssfyf=nowTime.Format("yyyy-MM-dd"); //开始收费月份
+                                        $("#jssfyf").val(kssfyf);
+                                        var fzjsyf=nowTime.Format("yyyy年MM月");
+                                        $("#fzjsyf").html(fzjsyf);
+                                    }
+                                };
+                                function getDaysInOneMonth(year, month){
+                                    month = parseInt(month, 10);
+                                    var d= new Date(year, month, 0);
+                                    alert (d.getDate());
+                                }
+                            </script>
+
+                        </div>
+
+                        <div class="form-group" style="width: 50%;float: left">
+                            <input type="hidden" value="" id="kssfyf" name="kssfyf" />
+                            <input type="hidden" value="" id="jssfyf" name="jssfyf" />
+                            <input type="hidden" id="ry_ssfjid" name="ry_ssfjid" value="{$Info.id}"  />
+                            <input type="hidden" id="ry_ssfjname" name="ry_ssfjname" value="{$Info.homename}" />
+                            <input type="hidden" id="ry_ssfjmj" name="ry_ssfjmj" value="{$Info.mj}" />
+                            <label style="width: 40%;text-align: right">到期日期：</label>
+                            <input type="text" readonly class=" form-control" style="width: 50%" name="ry_dqrq" id="ry_dqrq" placeholder="选择入住日期后自动计算" data-rule="required" onchange="rqSelect()"/>
+                            <!--<script>
+                                $("#ry_dqrq").datetimepicker({
+                                    format: "yyyy-mm-dd",
+                                    autoclose: true,
+                                    todayBtn: true,
+                                    language:"zh-CN",
+                                    minView:"month"
+                                });
+                            </script>-->
+                        </div>
+                        <div class="form-group" style="width: 100%;float: left">
+                            <label style="width: 100%;text-align: left">备注：</label>
+                            <textarea name="bz" class="form-control" style="width: 95%"></textarea>
+                        </div>
+                        <div style="width: 100%;text-align: center">
+                            <button type="button" onclick="Subxx()" class="btn btn-success">提交保存</button>
+                            <script>
+                                function Subxx() {
+                                    var ksrq=$("#ry_rzrq").val();
+                                    if (!ksrq){
+                                        alert("入住日期必须填写");
+                                        return false;
+                                    }
+                                    $("#subform").submit();
+                                }
+                            </script>
+                            <button type="reset" class="btn btn-default">重置表单</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+            <div class="col-md-5 column" style="margin-top: 0px">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"><span id="ryname"></span>租金预览</div>
+                    <div class="panel-body">
+                        <p style="line-height: 25px">
+                            租金收取月份：从<span id="fzksyf"></span>到<span id="fzjsyf"></span>。<br />
+                            <span id="ZjList"></span><br />
+                            <span id="Bjlist"></span><br />
+                            <span id="Zjhj" style="text-align: right"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">当前房间人员信息 <small>共有{$count}人</small></div>
+                    <div class="panel-body">
+                        <php>if ($count==0) :</php>该房间目前空置<php>else :</php>
+                        <foreach name='ryinfo' item='ryInfo' >
+                            <a id="modal-798694" href="#RyZjList" onclick="RyZjInfo('{$ryInfo.ry_name}',{$Info.id})" role="button" class="btn" data-toggle="modal">{$ryInfo.ry_name}</a> |
+                        </foreach>
+                        <php>endif ;</php>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function RyZjInfo(name,fjid) {
+                    //alert(fjid);
+                    $("#jfryname").html(name);
+                    var url = "/home/SsManage/RzInfoList?name="+name+"&fjid=" + fjid;
+                    var zc_rjlx = $("#zc_rjlx");
+                    $.getJSON(url,function (data) {
+                        if (data==""){
+
+                        }
+                        else{
+                            //遍历回传到的Json数据
+                            //var trHTML = "<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>"
+                            $("#ListTale").html("");
+                            $("#ListTale").append("<tr style=\"background: #8bc5eb; color: #ffffff\">\n" +
+                                "                                    <th nowrap>序号</th>\n" +
+                                "                                    <th nowrap>人员姓名</th>\n" +
+                                "                                    <th nowrap>年限类型</th>\n" +
+                                "                                    <!--<th nowrap>房间ID</th>-->\n" +
+                                "                                    <th nowrap>租金年份</th>\n" +
+                                "                                    <th nowrap>租金</th>\n" +
+                                "                                    <!--<th nowrap>主表ID</th>-->\n" +
+                                "                                    <th nowrap>租金状态</th>\n" +
+                                "                                </tr>");
+                            var sum=0;
+                            $.each(data,function (i,value) {
+                                if (value.zt==0){
+                                    var zt="未缴";
+                                }else{
+                                    var zt="已缴";
+                                };
+                                if (value.nx_lx==4){
+                                    var lx="四年固定";
+                                }else{
+                                    var lx="协议租金";
+                                };
+                                sum += Number(value.zj);
+                                $("#ListTale").append("<tr><td>"+Number(i+1)+"</td><td>"+value.ry_name+"</td><td>"+lx+"</td><td>"+value.nf+"</td><td style='text-align: right;'>￥"+value.zj+"</td><td>"+zt+"</td></tr>");//在table最后面添加一行
+                            });
+                            sum=sum.toFixed(2); //格式化显示2位小数
+                            $("#ListTale").append("<tr><td>合计</td><td colspan='4' style='text-align: right;'>￥"+sum+"</td><td></td></tr>");
+                        }
+                    });
+                }
+            </script>
+            <div class="modal fade" id="RyZjList" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                <span id="jfryname"></span>租金详细信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <table id="ListTale" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="margin-top: 0px">
+
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </foreach>
+    </div>
+</block>

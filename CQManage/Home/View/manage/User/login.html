@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <link href="__PUBLIC__/manage/css/styles.css" type="text/css" media="screen" rel="stylesheet" />
+  <script type="text/javascript" src="__PUBLIC__/bs/js/jquery1.9.1.js" ></script>
+  <script type="text/javascript" src="__PUBLIC__/bs/Validator/jquery.validator.js?local=zh-CN" ></script>
+  <title>资产信息管理系统/用户名录</title>
+</head>
+<script>
+    function selectuser() {
+        //alert("122");
+        var compname=$("#comp").val();
+        var Username=$("#Username");
+        //alert(compname);
+        var noCache = Date();
+        $("#Username").prop("disabled",false);
+        var url="/home/User/SelUser";
+        $.ajaxSetup({ cache: false });
+        $.ajax({
+            type:"POST", //以post提交数据
+            url:url,  //提交URL
+            data:{"comp":compname}, //提交数据
+            success:function (data, state) { //成功调用回调信息
+                if (data==""){
+                    //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                    //("#zc_rjlx").prop("disabled", true);
+                    Username.find("option").remove();
+                    var tempOption = document.createElement("option");
+                    tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    Username.append(tempOption);
+                    Username.prop("disabled", true);
+                }
+                else{
+                    //遍历回传到的Json数据，取出二级分类信息
+                    Username.find("option").remove();
+                    /*tempOption.value = '';
+                    tempOption.innerHTML  = '请选择';
+                    Username.append(tempOption);*/
+                    $.each(data,function (i,value) {
+                        var tempOption = document.createElement("option");
+                        tempOption.value = value.user_name;
+                        tempOption.innerHTML  = value.user_name;
+                        Username.append(tempOption);
+                    })
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                //alert(textStatus);
+            },
+            timeout: 60000, //执行最大时间，超过该时间为超时
+            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                return false;
+            }
+
+        });
+
+    }
+    function Sub() {
+        var username=$("#Username").val();
+        var textPwd=$("#textPwd").val();
+        var txtcode=$("#txtcode").val();
+        if (!username){
+            //alert("信息填写不完整");
+            $("#errorInfo").html('用户名错误');
+            return false;
+        }else if (!textPwd){
+            $("#errorInfo").html('密码错误');
+            return false;
+        }else if (!txtcode){
+            $("#errorInfo").html('验证码错误');
+            return false;
+        }
+        else{
+            $.ajax({
+                type:"POST",
+                url:"/home/User/ChVer",
+                data:{"txtcode":txtcode},
+                success:function (data, state) { //成功调用回调信息
+                    if (data!='OK'){
+                        $("#errorInfo").html('验证码错误');
+                        $("#sussInfo").hide();
+                    }else{
+                        //alert(data);
+                        $("#form_login").submit();
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                    //alert(textStatus);
+                },
+                timeout: 60000,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+
+            });
+
+        }
+        //alert(username);
+    };
+    function verch() {
+        var txtcode=$("#txtcode").val();
+        $.ajax({
+            type:"POST",
+            url:"/home/User/ChVer",
+            data:{"txtcode":txtcode},
+            success:function (data, state) { //成功调用回调信息
+                if (data!='OK'){
+                    $("#errorInfo").html('验证码错误');
+                    $("#sussInfo").hide();
+                    return false;
+                }else{
+                    $("#errorInfo").hide();
+                    $("#sussInfo").html('验证码正确');
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                //alert(textStatus);
+            },
+            timeout: 60000,
+            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                return false;
+            }
+        })
+    }
+</script>
+<body id="login">
+<form method="post" id="form_login" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+<div id="wrapper">
+  <div id="content">
+    <div id="header">
+      <h1>
+        <!--<a href="#">qwewqe</a>--></h1>
+    </div>
+    <div id="darkbanner" class="banner320">
+      <h2>Login System</h2>
+    </div>
+    <div id="darkbannerwrap">
+    </div>
+      <fieldset class="form">
+        <p>
+          <label class="loginlabel" for="Username">
+            部门选择:</label>
+          <select name="comp" id="comp" class="form-control" onchange="selectuser()" />
+          <option value="">请选择用户部门</option>
+          <foreach name='CompInfo' item='Info' >
+            <option value="{$Info.cglx_mc}" <php>if ($zccomp==$Info['cglx_mc']) :</php>selected<php>endif ;</php>>{$Info.cglx_mc}</option>
+          </foreach>
+          </select>
+        </p>
+        <p>
+          <label class="loginlabel" for="Username">
+            用户名:</label>
+          <select name="Username" id="Username" class="form-control" disabled/>
+          <option value="">请选择用户</option>
+          </select>
+        </p>
+        <p>
+          <label class="loginlabel" for="textPwd">
+            密码:</label>
+          <span>
+           <input class="logininput"   name="textPwd" id="textPwd" type="password" data-rule="required"/></span>
+        </p>
+        <p >
+          <label class="loginlabel" for="txtcode">
+            验证码:</label>
+          <span>
+                        <input name="txtcode" class="logininput" id="txtcode" type="text" data-rule="required"/>
+          </span>
+        </p>
+        <p style="padding-left: 78px;margin-top: -20px;margin-bottom: 10px">
+        <img src="/home/index/vercode" style="width: 130px;height: 32px;;margin-top: 10px"  onclick="this.src='/home/index/vercode?id='+Math.random();" title="点击刷新" />
+          <span style="color:#ff0000" id="errorInfo">{$errorInfo}</span>
+          <span class="label label-success" id="sussInfo">{$sussInfo}</span>
+        </p>
+        <button id="loginbtn" type="button" onclick="Sub()" class="positive" >登 录</button>
+        <ul id="forgottenpassword">
+          <li class="boldtext">|</li>
+          <li>
+            <input id="remember" type="checkbox" name="save" id="save"> 一周内免登录</li>
+
+        </ul>
+      </fieldset>
+  </div>
+</div>
+<div id="wrapperbottom_branding">
+  <div id="wrapperbottom_branding_text">
+    忘记密码请与系统管理员联系</div>
+</div>
+</form>
+</body>

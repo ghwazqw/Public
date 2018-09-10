@@ -1,0 +1,168 @@
+<extend name="manage/index/base_user" title="运输工具"/>
+
+<block name="customer">
+
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+
+<div class="col-md-12 col-xs-12" nowrap>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#" onClick="javascript :history.back(-1);"> <span class="glyphicon glyphicon-th"></span> 运输工具信息管理</a>
+        </li>
+        <li class="active">
+            运输工具信息全部导出
+        </li>
+    </ul>
+    <div class="input-group" style="text-align: right">
+        <div class="btn-group" role="group" aria-label="..." style="margin-top: 8px">
+            <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="确认导出"><button type="button" class="btn btn-success" onclick="SelectInfo()"><span class="glyphicon glyphicon-share"></span> 确认导出</button></a>
+        </div>
+        <script>
+            function expinfo(){
+                var myDate = new Date();
+                $("#exp").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name.xlsx",
+                    filename: myDate.toLocaleString()+".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: false
+                });
+            }
+        </script>
+        <div class="btn-group" style="text-align: left;padding-top: 9px;padding-left: 20px">共有{$count}条信信息。</div>
+    </div>
+    <div id='div1'>
+        <table id="exp" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>改装车品牌</th>
+                <th nowrap>改装车型号</th>
+                <th nowrap>净载重量</th>
+                <th nowrap>底盘品牌</th>
+                <th nowrap>底盘型号</th>
+                <th nowrap>车辆牌照号</th>
+                <th nowrap>车辆座数</th>
+                <th nowrap>发动机编号</th>
+                <th nowrap>车架号</th>
+                <th nowrap>生产日期</th>
+                <th nowrap>生产厂家</th>
+                <th nowrap>出厂产品编号</th>
+                <th nowrap>车上颜色</th>
+                <th nowrap>排气量</th>
+                <th nowrap>累计行驶公里</th>
+                <th nowrap>吨位</th>
+                <th nowrap>机构代码</th>
+                <th nowrap>机构名称</th>
+                <th nowrap>机构行政级别</th>
+                <th nowrap>机构行政级别细项</th>
+                <th nowrap>资产编号</th>
+                <!--<th nowrap>资产类型</th>
+                <th nowrap>类型ID</th>-->
+                <th nowrap>资产二级分类</th>
+                <!--<th nowrap>二级类型ID</th>-->
+                <th nowrap>资产名称</th>
+                <th nowrap>计量单位</th>
+                <th nowrap>原值</th>
+                <th nowrap>单价</th>
+                <th nowrap>其中:安装成本</th>
+                <th nowrap>净值</th>
+                <th nowrap>是否折旧标志</th>
+                <th nowrap>折旧年限类型</th>
+                <th nowrap>累计折旧</th>
+                <th nowrap>本期折旧</th>
+                <th nowrap>购建日期</th>
+                <th nowrap>入帐日期</th>
+                <th nowrap>启用日期</th>
+                <th nowrap>取得方式</th>
+                <th nowrap>财产使用部门</th>
+                <th nowrap>是否闲置</th>
+                <th nowrap>财产管理部门</th>
+                <th nowrap>条形码</th>
+                <th nowrap>责任人</th>
+                 <th nowrap>批复单号</th>
+                <th nowrap>卡片说明</th>
+               <th nowrap>出帐日期</th>
+                <th nowrap>出帐类型</th>
+                <th nowrap>出帐原因</th>
+                <th nowrap>资产登记人</th>
+                 <th nowrap>备注</th>
+                <th nowrap>初始维修金额</th>
+               <th nowrap>状态</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >                    <?php $i++;?>                    <tr>
+                <td>{$i}</td>
+                <td nowrap>{$Info.zc_gzcpp}</td>
+                <td nowrap>{$Info.zc_gzcxh}</td>
+                <td nowrap>{$Info.zc_jzzl}</td>
+                <td nowrap>{$Info.zc_dppp}</td>
+                <td nowrap>{$Info.zc_dpxh}</td>
+                <td nowrap>{$Info.zc_clpzh}</td>
+                <td nowrap>{$Info.zc_clzs}</td>
+                <td nowrap>{$Info.zc_fdxbh}</td>
+                <td nowrap>{$Info.zc_cjh}</td>
+                <td nowrap>{$Info.zc_scrq}</td>
+                <td nowrap>{$Info.zc_sccj}</td>
+                <td nowrap>{$Info.zc_cccpbh}</td>
+                <td nowrap>{$Info.zc_csys}</td>
+                <td nowrap>{$Info.zc_pql}</td>
+                <td nowrap>{$Info.zc_ljxsgl}</td>
+                <td nowrap>{$Info.zc_dw}</td>
+                <td nowrap>{$Info.zc_jgdm}</td>
+                <td nowrap>{$Info.zc_jgmc}</td>
+                <td nowrap>{$Info.zc_jgxzjb}</td>
+                <td nowrap>{$Info.zc_jgxzjbxx}</td>
+                <td nowrap>&nbsp;{$Info.zc_bh}</td>
+                <!--<td nowrap>{$Info.zc_lx}</td>
+                <td nowrap>{$Info.zc_lxid}</td>-->
+                <td nowrap>{$Info.zc_rjlx}</td>
+                <!--<td nowrap>{$Info.zc_rjlxid}</td>-->
+                <td nowrap>{$Info.zc_mc}</td>
+                <td nowrap>{$Info.zc_jldw}</td>
+                <td nowrap>{$Info.zc_yz}</td>
+                <td nowrap>{$Info.zc_dj}</td>
+                <td nowrap>{$Info.zc_azcb}</td>
+                <td nowrap>{$Info.zc_jz}</td>
+                <td nowrap>{$Info.zc_sfzjbz}</td>
+                <td nowrap>{$Info.zc_zjnxlx}</td>
+                <td nowrap>{$Info.zc_ljzj}</td>
+                <td nowrap>{$Info.zc_bqzj}</td>
+                <td nowrap>{$Info.zc_gjrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_rzrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_qyrq|strtotime|date="Y-m-d",###}</td>
+                <td nowrap>{$Info.zc_qdfs}</td>
+                <td nowrap>{$Info.zc_ccsybm}</td>
+                <td nowrap>{$Info.zc_sfxz}</td>
+                <td nowrap>{$Info.zc_ccglbm}</td>
+                <td nowrap>&nbsp;{$Info.zc_txm}</td>
+                <td nowrap>{$Info.zc_zrr}</td>
+                <td nowrap>{$Info.zc_pfdh}</td>
+                <td nowrap>{$Info.zc_kpsm}</td>
+                <td nowrap>
+                    <if condition="$Info.zc_czrq neq '' ">
+                        {$Info.zc_czrq|strtotime|date="Y-m-d",###}
+                    </if>
+                </td>
+                <td nowrap>{$Info.zc_czlx}</td>
+                <td nowrap>{$Info.zc_czyy}</td>
+                <td nowrap>{$Info.zc_zcdjr}</td>
+                <td nowrap>{$Info.zc_bz}</td>
+                <td nowrap>
+                    {$Info.wxje}
+                </td>
+
+                <td nowrap>
+                    <include file="manage/ZcManage/sb_zt" />
+                </td>
+
+            </tr>
+            </foreach>
+        </table>
+
+    </div>
+            <ul class="pagination" style="padding-left: 5px">
+                {$pagebar}
+            </ul>
+</div>
+    </block>

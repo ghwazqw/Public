@@ -1,0 +1,195 @@
+<extend name="glxh/index/base_user"  title="融资需求"/>
+<block name="customer">
+
+
+    {~$qnavbar=w("Nav/qdef")}
+
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav" >
+            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+
+    <form method="post" id="form" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+        <div class="kjtd_kj" style="height: 820px">
+            <div class="kjtd_kj_left">
+                <div class="user_cnet_kj_menu">
+                    {:W('Info/load',array(5))}
+                    {:W('Info/load',array(6))}
+
+                </div>
+            </div>
+            <div class="kjtd_kj_right">
+                <div class="kjtd_title">
+                    <div class="lan_qukuai" style="padding-left: 20px"><span class="glyphicon glyphicon-asterisk"></span> <b style="margin-left: 10px">投资需求登记</b> </div>
+                    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
+                </div>
+                <br /><br /><br />
+
+                <div id="wizard">
+                    <ol>
+                        <li>投资需求</li>
+                        <li>投资人基本信息</li>
+                        <li>投资人联系信息</li>
+                    </ol>
+                    <!--1!-->
+                    <div style="height: 610px;">
+                        <div class="kjtd_from_left">拟投资项目：</div>
+                        <div class="kjtd_from_right">
+                            <select class="form-control" style="width: 250px" name="gl_ntzxm" data-rule="required">
+                                <option value="" >请选择</option>
+                                <option value="新技术">新技术</option>
+                                <option value="新工艺">新工艺</option>
+                                <option value="新材料">新材料</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <div class="kjtd_from_left" >拟投资规模：</div>
+                        <div class="kjtd_from_right" >
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="500万以内" name="gl_ntzgm" data-rule="checked">  500万以内
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="500-1000万" name="gl_ntzgm">  500-1000万
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="1000-3000万" name="gl_ntzgm">  1000-3000万
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="3000-5000万" name="gl_ntzgm">  3000-5000万
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="5000万以上" name="gl_ntzgm">  5000万以上
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" style="height: 140px">拟投资地区：</div>
+                        <div class="kjtd_from_right" style="height: 140px">
+                            <div style="width: 100%;border: 1px dashed #cccccc">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" value="国际" name="gl_ntzdq" data-rule="checked"/> 国际&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="全国" name="gl_ntzdq"/> 全国&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="北京" name="gl_ntzdq"/> 北京&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="天津" name="gl_ntzdq"/> 天津&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="河北" name="gl_ntzdq"/> 河北&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="山西" name="gl_ntzdq"/> 山西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="内蒙古" name="gl_ntzdq"/> 内蒙古&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="山东" name="gl_ntzdq"/> 山东&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="江苏" name="gl_ntzdq"/> 江苏&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="安徽" name="gl_ntzdq"/> 安徽&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="安徽" name="gl_ntzdq"/> 安徽&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="浙江" name="gl_ntzdq"/> 浙江&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="福建" name="gl_ntzdq"/> 福建&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="上海" name="gl_ntzdq"/> 上海&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="广东" name="gl_ntzdq"/> 广东&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="广西" name="gl_ntzdq"/> 广西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="海南" name="gl_ntzdq"/> 海南&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="湖北" name="gl_ntzdq"/> 湖北&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="湖南" name="gl_ntzdq"/> 湖南&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="河南" name="gl_ntzdq"/> 河南&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="江西" name="gl_ntzdq"/> 江西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="宁夏" name="gl_ntzdq"/> 宁夏&nbsp;&nbsp;&nbsp;&nbsp;<br /><input type="checkbox" value="新疆" name="gl_ntzdq"/> 新疆&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="青海" name="gl_ntzdq"/> 青海&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="陕西" name="gl_ntzdq"/> 陕西&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="甘肃" name="gl_ntzdq"/> 甘肃&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="四川" name="gl_ntzdq"/> 四川&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="云南" name="gl_ntzdq"/> 云南&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="贵州" name="gl_ntzdq"/> 贵州&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="西藏" name="gl_ntzdq"/> 西藏&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="重庆" name="gl_ntzdq"/> 重庆&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="辽宁" name="gl_ntzdq"/> 辽宁&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="吉林" name="gl_ntzdq"/> 吉林&nbsp;&nbsp;&nbsp;&nbsp;<br /><input type="checkbox" value="黑龙江" name="gl_ntzdq"/> 黑龙江&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="台湾" name="gl_ntzdq"/> 台湾&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="香港" name="gl_ntzdq"/> 香港&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="澳门" name="gl_ntzdq"/> 澳门&nbsp;&nbsp;&nbsp;&nbsp;
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" >拟投资方式：</div>
+                        <div class="kjtd_from_right" >
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="参股" name="gl_ntzfs" data-rule="checked">  参股&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="控股" name="gl_ntzfs">  控股&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="其他形式" name="gl_ntzfs">  其他形式
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" >拟投资阶段：</div>
+                        <div class="kjtd_from_right" >
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" name="gl_ntzjd" style="vertical-align:middle; margin-top:0;" value="初创阶段" data-rule="checked">  初创阶段&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="gl_ntzjd" style="vertical-align:middle; margin-top:0;" value="成长阶段">  成长阶段&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="gl_ntzjd" style="vertical-align:middle; margin-top:0;" value="成熟阶段">  成熟阶段&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="gl_ntzjd" style="vertical-align:middle; margin-top:0;" value="衰退阶段">  衰退阶段
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" >拟投资企业性质：</div>
+                        <div class="kjtd_from_right" >
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="checkbox" name="gl_ntzqyxz" style="vertical-align:middle; margin-top:0;" value="国有企业" data-rule="checked">  国有企业&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="gl_ntzqyxz" style="vertical-align:middle; margin-top:0;" value="外资">  外资&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="gl_ntzqyxz" style="vertical-align:middle; margin-top:0;" value="民营">  民营&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="gl_ntzqyxz" style="vertical-align:middle; margin-top:0;" value="其他">  其他&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="gl_ntzqyxz" style="vertical-align:middle; margin-top:0;" value="不限">  不限&nbsp;&nbsp;&nbsp;&nbsp;
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left" >股权结构要求：</div>
+                        <div class="kjtd_from_right" >
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="一般参股" name="gl_gqjgyq" data-rule="checked">  一般参股&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="相对控股" name="gl_gqjgyq">  相对控股&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="绝对控股" name="gl_gqjgyq">  绝对控股
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 105px">过去投资经验：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="gl_gxtzjy" placeholder="请输入过去投资经验" data-rule="length(~500)"></textarea>
+                        </div>
+                        <div class="kjtd_from_left" >是否有过合作：</div>
+                        <div class="kjtd_from_right" >
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="是" name="gl_sfyghz">  是&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" value="否" name="gl_sfyghz" checked>  否&nbsp;&nbsp;&nbsp;&nbsp;
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 105px">其他投资要求：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="gl_qttzyq" placeholder="请输入其他投资要求" ></textarea>
+                        </div>
+                    </div>
+                    <!--2-->
+                    <div style="height: 245px">
+                        <div class="kjtd_from_left" >投资人名称：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_tzrmc" value="" placeholder="请输入投资人名称" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left" >注所地(住所)：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_zsd" value="" placeholder="请输入注所地(住所)" class="kjtd_from_input" data-rule="required"/>
+                        </div>
+                        <div class="kjtd_from_left" >注册资本：</div>
+                        <div class="kjtd_from_right" >
+                            <input type="text" name="gl_zczb" value="" placeholder="请输入注册资本" class="kjtd_from_input"/>
+                        </div>
+                        <div class="kjtd_from_left" >投资人类型：</div>
+                        <div class="kjtd_from_right" >
+                            <div style="width: 100%;border: 1px dashed #cccccc;height: 28px">
+                                <p style="font-size:13px;line-height: 28px;color: #929292;padding-left: 3px">
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" name="gl_tzrlx" value="国有企业(独资、控股、参股)">  国有企业(独资、控股、参股)&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" name="gl_tzrlx" value="民营">  民营&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" name="gl_tzrlx" value="自然人">  自然人&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" style="vertical-align:middle; margin-top:0;" name="gl_tzrlx" value="其他">  其他&nbsp;&nbsp;&nbsp;&nbsp;
+                                </p>
+                            </div>
+                        </div>
+                        <div class="kjtd_from_left"  style="height: 105px">备注：</div>
+                        <div class="kjtd_from_right" style="height: 105px">
+                            <textarea class="kttd_from_text" name="gl_bz" placeholder="请输入备注信息" ></textarea>
+                        </div>
+                    </div>
+
+                    <!--3-->
+                    <div style="height: 350px">
+                        <include file="glxh/ywcent/lx_us" />
+                        <include file="glxh/ywcent/submit" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </form>
+    <script type="text/javascript">
+        $("#wizard").bwizard();
+    </script>
+</block>

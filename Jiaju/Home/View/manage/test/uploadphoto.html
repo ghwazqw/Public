@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>上传图片插件</title>
+    <link href="__PUBLIC__/bs/css/upload.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="upload-box">
+    <p class="upload-tip">作品图片：最多可以上传5张图片，马上上传</p>
+    <div class="image-box clear">
+        <section class="upload-section">
+            <div class="upload-btn"></div>
+            <input type="file" name="file" id="upload-input" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="multiple" />
+        </section>
+    </div>
+
+</div>
+
+<script src="__PUBLIC__/bs/js/jquery.js"></script>
+<script src="__PUBLIC__/bs/js/upload.js"></script>
+<script>
+
+    $("#upload-input").ajaxImageUpload({
+        url: '/test/upload', //上传的服务器地址
+        data: { name:'photo' },
+        maxNum: 1, //允许上传图片数量
+        zoom: true, //允许上传图片点击放大
+        allowType: ["gif", "jpeg", "jpg", "bmp",'png'], //允许上传图片的类型 lll
+        e9 : ["gif", "jpeg", "jpg", "bmp",'png'], //允许上传图片的类型 lll
+        maxSize :3, //允许上传图片的最大尺寸，单位M
+        before: function () {
+            //alert('上传前回调函数');
+        },
+        success:function(data,v,s){
+            alert('上传成功,'+data);
+            $.each(data,function (i,value) {
+                alert(value.src);
+            });
+            var dataObj=eval("("+data+")");
+            //alert("OK");
+            console.log(data);
+        },
+        error:function (e) {
+            alert('上传失败'+e);
+            console.log(e);
+        }
+    });
+
+</script>
+
+</body>
+</html>

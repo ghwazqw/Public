@@ -1,0 +1,144 @@
+<extend name="50/index/base" />
+<block name="customer">
+    <form role="form" method="post" enctype="multipart/form-data" id="form" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+<div style="width: 75%;margin: 0px auto;">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="#">管理中心</a>
+                    </li>
+                    <li class="active">
+                        专家信息缯加
+                    </li>
+                </ul>
+
+                <div class="tabbable" id="tabs-260845">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#pane1" data-toggle="tab">基础信息</a>
+                        </li>
+                        <li >
+                            <a href="#pane2" data-toggle="tab">工作信息</a>
+                        </li>
+                        <li >
+                            <a href="#pane3" data-toggle="tab">联系信息</a>
+                        </li>
+                        <li >
+                            <a href="#pane4" data-toggle="tab">获奖信息</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="pane1" style="width: 90%;padding-left: 20px">
+
+                            <p>
+                            <div class="form-group">
+                                <label for="cg_wcrxm">专家类型：</label>
+                            <select name="zj_type" class="selectpicker show-tick form-control" id="zj_type" data-rule="required">
+                                    <option value ="3">行业专家顾问</option>
+                                <option value ="1">青年专家</option>
+                                <option value ="2">专家委员</option>
+                                </foreach>
+                            </select>
+                            </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrxm">专家姓名：</label><input type="text" class="form-control" id="cg_wcrxm" name="cg_wcrxm" value="" data-rule="required"/>
+                            <input type="hidden" name="id" value="{$zj.id}"/> <input type="hidden" name="type" value="{$type}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrxb">性别：</label>
+                                        <input type="radio" style="vertical-align:middle; margin-top:0;" value="男" name="cg_wcrxb" id="cg_wcrxb" checked> 男
+                                        <input type="radio" style="vertical-align:middle; margin-top:0;" value="女" name="cg_wcrxb" id="cg_wcrxb1" > 女
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrcsny">出生年月：</label><input type="text" class="form-control" id="cg_wcrcsny" name="cg_wcrcsny" data-rule="required"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrsfzh">身份证号：</label><input type="text" class="form-control" id="cg_wcrsfzh" name="cg_wcrsfzh" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrbyyx">毕业院校：</label><input type="text" class="form-control" id="cg_wcrbyyx" name="cg_wcrbyyx" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrzgxl">学历：</label><input type="text" class="form-control" id="cg_wcrzgxl" name="cg_wcrzgxl" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrzyzc">从事专业：</label><input type="text" class="form-control" id="cg_wcrzyzc" name="cg_wcrzyzc" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrdp">专家党派：</label><input type="text" class="form-control" id="cg_wcrdp" name="cg_wcrdp" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrjg">籍贯：</label><input type="text" class="form-control" id="cg_wcrjg" name="cg_wcrjg" />
+                                    </div>
+                            <div class="form-group">
+                                <label for="cg_wcrjszc">技术职称：</label><input type="text" class="form-control" id="cg_wcrjszc" name="cg_wcrjszc" />
+                            </div>
+
+                                    <div class="form-group">
+                                        <label >照片信息：</label><input type="file" class="form-control" id="basic-url12" aria-describedby="basic-addon3" name="info_photo" >
+                                    <p class="help-block">
+                                        请上传您的照片信息,图片尺寸为183*230像素的图片！
+                                    </p>
+                        </div>
+
+
+                            </p>
+                        </div>
+                        <div class="tab-pane " id="pane2" style="width: 90%;padding-left: 20px">
+                            <p>
+                            <div class="form-group">
+                                <label for="cg_wcrgzdw">工作单位：</label><input type="text" class="form-control" id="cg_wcrgzdw" name="cg_wcrgzdw" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcrxzzw">行政职务：</label><input type="text" class="form-control" id="cg_wcrxzzw" name="cg_wcrxzzw" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcrbgdh">办公电话：</label><input type="text" class="form-control" id="cg_wcrbgdh" name="cg_wcrbgdh" />
+                            </div>
+                            </p>
+                        </div>
+                        <div class="tab-pane " id="pane3" style="width: 90%;padding-left: 20px">
+                            <p>
+                            <div class="form-group">
+                                <label for="cg_wcrtxdz">通讯地址：</label><input type="text" class="form-control" id="cg_wcrtxdz" name="cg_wcrtxdz" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcryzbm">邮政编码：</label><input type="text" class="form-control" id="cg_wcryzbm" name="cg_wcryzbm" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcryddh">移动电话：</label><input type="text" class="form-control" id="cg_wcryddh" name="cg_wcryddh" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcrdzyx">电子邮箱：</label><input type="text" class="form-control" id="cg_wcrdzyx" name="cg_wcrdzyx" />
+                            </div>
+                            </p>
+                        </div>
+                        <div class="tab-pane " id="pane4" style="width: 90%;padding-left: 20px">
+                            <p>
+                            <div class="input-group">
+                                <span class="input-group-addon" >获奖信息</span>
+                                <textarea class="form-control" rows="3" name="cg_wcrchj">{$zj.cg_wcrchj}</textarea>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-left: 20px">
+                    <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+                    <span class="label label-success">{$sussInfo}</span>
+
+                </div>
+            </div>
+
+        </div>
+
+</div>
+    </form>
+
+</block>

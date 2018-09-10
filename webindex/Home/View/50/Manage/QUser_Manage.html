@@ -1,0 +1,44 @@
+<extend name="50/index/base" title="用户管理"/>
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="#">管理中心</a>
+            </li>
+            <li>
+                <a href="#">前端用户管理中心</a>
+            </li>
+            <li class="active">
+                <a href="#"> <span class="label label-info glyphicon glyphicon-plus">  </a></span>
+            </li>
+        </ul>
+
+        <!-- Table -->
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+            <tr style="background: #347ab7; color: #ffffff">
+                <th nowrap>序号</th>
+                <th >用户名</th><th >用户姓名</th><th >所在单位</th><th >工作职务</th><th >电话</th><th >手机</th><th >电子邮箱</th><th >联系地址</th><th >传真</th>                        <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td>{$Info.user_name}</td><td>{$Info.user_xm}</td><td>{$Info.user_comp}</td><td>{$Info.user_zw}</td><td>{$Info.user_dh}</td><td>{$Info.user_sj}</td><td>{$Info.user_yx}</td><td>{$Info.user_lxdz}</td><td>{$Info.user_cz}</td>
+                    <td><a href="?Act=mu&meta={$Info.id}" title="删除数据" onclick="return confirm('确认需要删除吗');"><span class="glyphicon glyphicon-remove"></span></a>
+
+                        <a href="/Home/Manage/quser_manage" title="置为无效" onclick="return alert('暂不开通本功能，请等待');"><span class="glyphicon glyphicon-minus"></span></a></td>
+                </tr>
+            </foreach>                </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+
+</block>

@@ -1,0 +1,227 @@
+<extend name="manage/index/base" />
+<block name="customer">
+    <php> if($type==3): //行业专家顾问</php>
+    <foreach name="info_data" item="zj" >
+    <form role="form" method="post" enctype="multipart/form-data" id="loginform">
+<div style="width: 99%;margin: 0px auto;">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">管理中心</a>
+                    </li>
+                    <li>
+                        <a href="/?a=Zjwcr_list&c=Zjxx">专家信息中心</a>
+                    </li>
+                    <li class="active">
+                        专家信息编辑
+                    </li>
+                </ul>
+
+                <div class="tabbable" id="tabs-260845">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#pane1" data-toggle="tab">基础信息</a>
+                        </li>
+                        <li >
+                            <a href="#pane2" data-toggle="tab">工作信息</a>
+                        </li>
+                        <li >
+                            <a href="#pane3" data-toggle="tab">联系信息</a>
+                        </li>
+                        <li >
+                            <a href="#pane4" data-toggle="tab">获奖信息</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="pane1" style="width: 90%;padding-left: 20px">
+
+                            <p>
+                                    <div class="form-group">
+                                        <label for="cg_wcrxm">专家姓名：</label><input type="text" class="form-control" id="cg_wcrxm" name="cg_wcrxm" value="{$zj.cg_wcrxm}"/>
+                            <input type="hidden" name="id" value="{$zj.id}"/> <input type="hidden" name="type" value="{$type}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrxb">性别：</label>
+                                        <input type="radio" style="vertical-align:middle; margin-top:0;" value="男" name="cg_wcrxb" id="cg_wcrxb" <php>if ($zj["cg_wcrxb"]=='男') :</php>checked<php>endif ;</php>> 男
+                                        <input type="radio" style="vertical-align:middle; margin-top:0;" value="女" name="cg_wcrxb" id="cg_wcrxb1" <php>if ($zj["cg_wcrxb"]=='女') :</php>checked<php>endif ;</php>> 女
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrcsny">出生年月：</label><input type="text" class="form-control" id="cg_wcrcsny" name="cg_wcrcsny" value="{$zj.cg_wcrcsny}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrsfzh">身份证号：</label><input type="text" class="form-control" id="cg_wcrsfzh" name="cg_wcrsfzh" value="{$zj.cg_wcrsfzh}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrbyyx">毕业院校：</label><input type="text" class="form-control" id="cg_wcrbyyx" name="cg_wcrbyyx" value="{$zj.cg_wcrbyyx}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrzgxl">学历：</label><input type="text" class="form-control" id="cg_wcrzgxl" name="cg_wcrzgxl" value="{$zj.cg_wcrzgxl}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrzyzc">从事专业：</label><input type="text" class="form-control" id="cg_wcrzyzc" name="cg_wcrzyzc" value="{$zj.cg_wcrzyzc}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrdp">专家党派：</label><input type="text" class="form-control" id="cg_wcrdp" name="cg_wcrdp" value="{$zj.cg_wcrdp}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cg_wcrjg">籍贯：</label><input type="text" class="form-control" id="cg_wcrjg" name="cg_wcrjg" value="{$zj.cg_wcrjg}"/>
+                                    </div>
+                            <div class="form-group">
+                                <label for="cg_wcrjszc">技术职称：</label><input type="text" class="form-control" id="cg_wcrjszc" name="cg_wcrjszc" value="{$zj.cg_wcrjszc}"/>
+                            </div>
+
+                                    <div class="form-group">
+                                        <label for="info_photo">照片信息：</label><input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="info_photo" id="info_photo">
+                                    <p class="help-block">
+                                        请上传您的照片信息,图片尺寸为183*230像素的图片！
+                                    </p>
+                        </div>
+
+
+                            </p>
+                        </div>
+                        <div class="tab-pane " id="pane2" style="width: 90%;padding-left: 20px">
+                            <p>
+                            <div class="form-group">
+                                <label for="cg_wcrgzdw">工作单位：</label><input type="text" class="form-control" id="cg_wcrgzdw" name="cg_wcrgzdw" value="{$zj.cg_wcrgzdw}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcrxzzw">行政职务：</label><input type="text" class="form-control" id="cg_wcrxzzw" name="cg_wcrxzzw" value="{$zj.cg_wcrxzzw}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcrbgdh">办公电话：</label><input type="text" class="form-control" id="cg_wcrbgdh" name="cg_wcrbgdh" value="{$zj.cg_wcrbgdh}"/>
+                            </div>
+                            </p>
+                        </div>
+                        <div class="tab-pane " id="pane3" style="width: 90%;padding-left: 20px">
+                            <p>
+                            <div class="form-group">
+                                <label for="cg_wcrtxdz">通讯地址：</label><input type="text" class="form-control" id="cg_wcrtxdz" name="cg_wcrtxdz" value="{$zj.cg_wcrtxdz}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcryzbm">邮政编码：</label><input type="text" class="form-control" id="cg_wcryzbm" name="cg_wcryzbm" value="{$zj.cg_wcryzbm}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcryddh">移动电话：</label><input type="text" class="form-control" id="cg_wcryddh" name="cg_wcryddh" value="{$zj.cg_wcryddh}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cg_wcrdzyx">电子邮箱：</label><input type="text" class="form-control" id="cg_wcrdzyx" name="cg_wcrdzyx" value="{$zj.cg_wcrdzyx}"/>
+                            </div>
+                            </p>
+                        </div>
+                        <div class="tab-pane " id="pane4" style="width: 90%;padding-left: 20px">
+                            <p>
+                            <div class="input-group">
+                                <span class="input-group-addon" >获奖信息</span>
+                                <textarea class="form-control" rows="3" name="cg_wcrchj">{$zj.cg_wcrchj}</textarea>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-left: 20px">
+                    <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+                    <span class="label label-success">{$sussInfo}</span>
+
+                </div>
+            </div>
+
+        </div>
+
+</div>
+    </form>
+        </foreach>
+    <php>else : //青年专家及专家委员会信息</php>
+    <foreach name="info_data" item="zj" >
+        <form role="form" method="post" enctype="multipart/form-data" id="loginform">
+            <div style="width: 75%;margin: 0px auto;">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="/">首页</a>
+                            </li>
+                            <li>
+                                <a href="#">管理中心</a>
+                            </li>
+                            <li class="active">
+                                <php>if ($zj['gl_zjlx']==2): </php><a href="/?a=Zjxx_list&c=Zjxx&type={$zj.gl_zjlx}">专家委员信息</a><php>else: </php><a href="/?a=Zjxx_list&c=Zjxx&type={$zj.gl_zjlx}">青年专家信息</a><php> endif; </php>
+                            </li>
+                            <li>
+                                专家信息编辑
+                            </li>
+                        </ul>
+
+                        <div class="tabbable" id="tabs-260845">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#pane1" data-toggle="tab">详细信息</a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="pane1" style="width: 90%;padding-left: 20px">
+
+                                    <p>
+                                    <div class="form-group">
+                                        <label for="gl_zjxm">专家姓名：</label><input type="text" class="form-control" id="gl_zjxm" name="gl_zjxm" value="{$zj.gl_zjxm}"/>
+                                        <input type="hidden" name="id" value="{$zj.id}"/><input type="hidden" name="type" value="{$zj.gl_zjlx}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zjxb">性别：</label>
+                                        <input type="radio" style="vertical-align:middle; margin-top:0;" value="男" name="gl_zjxb" id="gl_zjxb" <php>if ($zj["gl_zjxb"]=='男') :</php>checked<php>endif ;</php>> 男
+                                        <input type="radio" style="vertical-align:middle; margin-top:0;" value="女" name="gl_zjxb" id="gl_zjxb1" <php>if ($zj["gl_zjxb"]=='女') :</php>checked<php>endif ;</php>> 女
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zjgzdw">工作单位：</label><input type="text" class="form-control" id="gl_zjgzdw" name="gl_zjgzdw" value="{$zj.gl_zjgzdw}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zwhzw">委员会职务：</label><input type="text" class="form-control" id="gl_zwhzw" name="gl_zwhzw" value="{$zj.gl_zwhzw}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zjcszygjc">从事专业：</label><input type="text" class="form-control" id="gl_zjcszygjc" name="gl_zjcszygjc" value="{$zj.gl_zjcszygjc}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zjdh">专家电话：</label><input type="text" class="form-control" id="gl_zjdh" name="gl_zjdh" value="{$zj.gl_zjdh}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zjsf">籍贯：</label><input type="text" class="form-control" id="gl_zjsf" name="gl_zjsf" value="{$zj.gl_zjsf}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zjzw">专家职务：</label><input type="text" class="form-control" id="gl_zjzw" name="gl_zjzw" value="{$zj.gl_zjzw}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gl_zjbz">备注：</label><input type="text" class="form-control" id="gl_zjbz" name="gl_zjbz" value="{$zj.gl_zjbz}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="info_photo">照片信息：</label><input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="info_photo" id="info_photo">
+                                        <p class="help-block">
+                                            请上传您的照片信息,图片尺寸为183*230像素的图片！
+                                        </p>
+                                    </div>
+
+
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px">
+                            <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+                            <button type="reset" class="btn btn-default">重置</button>
+                            <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+                            <span class="label label-success">{$sussInfo}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </foreach>
+    <php>endif ;</php>
+</block>

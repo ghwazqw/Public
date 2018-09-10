@@ -1,0 +1,49 @@
+<extend name="50/index/base" title="用户管理"/>
+<block name="customer">
+
+    <div style="width: 90%;margin: 0px auto;">
+        <!-- Default panel contents -->
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="#">管理中心</a>
+            </li>
+            <li>
+                <a href="#">创业融资信息管理</a>
+            </li>
+            <li class="active">
+                <a href="#"> <span class="label label-info glyphicon glyphicon-plus">  </span></a>
+            </li>
+        </ul>
+
+        <!-- Table -->
+        <div class="col-md-12" style="padding-left: 10px;height: 1500px;border: 1px solid #000">
+            <foreach name='InfoData' item='InfoData' >
+                <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>机构性质</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_jgxz}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目名称</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmmc}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>合作单位</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_hzdw}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目总投资金额</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmztzje}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目应用领域</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmyyly}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>预融资金额</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_yrzje}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>资金用途</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_zjyt}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目应用领域</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmyydy}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>融资方式</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_rzfs}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>资金来源</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_zjly}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>资金投入方式</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_zjtrfs}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>共担资金风险</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_gdzjfx}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>共同经营管理</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_gtjygl}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目回报周期</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_zmhbzq}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目应用范围</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmyyfw}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目已有条件</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmyytj}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目前景分析</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmqjfx}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>项目单位(人)</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_xmdw}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>团队介绍</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_tdjs}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>产品运营</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_cpyy}</div>
+                <br /><!--end-->        <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"><b>商业计划书</b>：</lable><div class="col-sm-4 input-group input-group-sm">{$InfoData.gl_syjhs}</div>
+                <br /><!--end-->                        </foreach>    <br />
+        </div>
+
+</block>
