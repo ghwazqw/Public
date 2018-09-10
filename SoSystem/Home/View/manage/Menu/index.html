@@ -1,0 +1,206 @@
+<extend name="manage/index/base" />
+<block name="customer">
+    <script>
+        $ (function (){
+            $("#sub").click(function(){
+                var title = $("#title").val();
+                var cglx_fl = $("#cglx_fl").val();
+                if(title=="" || cglx_fl=="" ) {
+                    $("#errorInfo").html("信息提交非法,请检查");
+                    return false;
+                }
+                else
+                {
+                    /*$(this).prop("disabled",true);
+                    $(this).html("正在提交,请稍候...");*/
+                }
+            });
+            //删除信息
+            $("#delete").click(function () {
+                cglx_id=$("#cglx_id").val();
+                if (!cglx_id){
+                    alert("您没有选择要操作的菜单，请点击左侧进行选择!")
+                    return false;
+                }else{
+                    var massage=confirm("删除后不可恢复，请确认!");
+                    if (massage==true){
+                       $.ajax({
+                           type : "get",
+                           url:"/home/Menu/MenuDel",
+                           data:{"table":"qx_menu_tb","cglx_id":cglx_id},
+                           success:function (result, state) { //成功调用回调信息
+                               alert(result);
+                               window.location.reload();
+                           },
+                           complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                               //alert(textStatus);
+                           },
+                           timeout: 60000,
+                           error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                               alert("服务器响应超时，请稍候重试：" + errorThrown);
+                               return false;
+                           }
+                       })
+                    }
+                }
+            });
+            //编辑信息
+            $("#Edit").click(function () {
+                cglx_id=$("#cglx_id").val();
+                cglx_mc=$("#cglx_mc").val();
+
+                if (!cglx_id){
+                    alert("您没有选择要操作的菜单，请点击左侧进行选择!");
+                    return false;
+                }else{
+                    if (!cglx_id || !cglx_mc){
+                        alert("信息不完整，请检查！")
+                    }else{
+                        $.ajax({
+                            type:"POST",
+                            url:"/home/Menu/MenuEdit",
+                            data:{"cglx_id":cglx_id,"cglx_mc":cglx_mc},
+                            success:function (result, state) {
+                                alert(result);
+                                window.location.reload();
+                                //$("#tree").load(location.href+" #tree");
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                //alert(textStatus);
+                            },
+                            timeout: 60000,
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                return false;
+                            }
+                        })
+                    }
+                }
+            })
+        })
+    </script>
+    <div style="width: 99%;margin: 0px auto;" id="div1">
+    <div class="col-xs-12 col-md-3" style="display: inline-block; height: 700px; padding: 10px; border: 1px solid #ddd; overflow: auto;">
+        <ul id="tree">
+            <script>
+                layui.use(['tree', 'layer'], function(){
+                    var layer = layui.layer
+                        ,$ = layui.jquery;
+
+                    layui.tree({
+                            elem: '#tree' //指定元素
+                            ,target: '_blank' //是否新选项卡打开（比如节点返回href才有效）
+                            ,click: function(item){ //点击节点回调
+                                //layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+                                $("#cglx_mc").val(item.name);
+                                $("#cglx_id").val(item.id);
+                                $("#cglx_sjid").val(item.sjid);
+                                $("#sjname").val(item.sjname);
+                                $("#cglx_jb").val(item.jb);
+                                console.log(item);
+                            }
+                            ,nodes: [ //节点
+                            <foreach name="class_data" item="class" >
+                            {
+                                name: '{$class.cglx_mc}'
+                                ,sjid:{$class.cglx_sjid}
+                            ,jb:{$class.cglx_jb}
+                        ,id: {$class.id},spread: true,children: [
+                    <foreach name="class_mtea_data" item="meta" >
+                        <php> if( $meta['cglx_sjid'] == $class['id'] ):</php>
+                    {
+                        name: '{$meta.cglx_mc}',id: {$meta.id},sjid: '{$meta.cglx_sjid}',sjname:'{$class.cglx_mc}',jb:'{$meta.cglx_jb}',spread: false,children: [
+                    <foreach name="mtea_data" item="meta1" >
+                        <php> if( $meta1['cglx_sjid'] == $meta['id'] ):</php>
+                        {name: '{$meta1.cglx_mc}',id: {$meta1.id},sjid: '{$meta1.cglx_sjid}',sjname:'{$meta.cglx_mc}',jb:'{$meta1.cglx_jb}'},
+                    <php>endif ;</php>
+                    </foreach>
+                    ]},
+                <php> endif;</php>
+                    </foreach>
+                ]},
+                </foreach>
+                ]
+                });
+                    //生成树结构
+                    var createTree = function(node, start){
+                        node = node || function(){
+                            var arr = [];
+                            for(var i = 1; i < 50; i++){
+                                arr.push({
+                                    name: i.toString()
+                                });
+                            }
+                            return arr;
+                        }();
+                        start = start || 1;
+                        layui.each(node, function(index, item){
+                            if(start < 50 && index < 50){
+                                var child = [
+                                    {
+                                        name: (1 + index + start).toString()
+                                    }
+                                ];
+                                node[index].children = child;
+                                createTree(child, index + start + 1);
+                            }
+                        });
+                        return node;
+                    };
+                });
+            </script>
+        </ul>
+    </div>
+        <div  class="col-xs-12 col-md-9">
+            <h5>菜单信息管理</h5>
+            <div style="margin-top: 20px;line-height: 40px" >
+            <form role="form" class="form-inline" method="post" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+                <div class="form-group">
+                    <label >当前菜单：</label><input type="text" class="form-control" id="cglx_mc" name="cglx_mc"/>
+                    <label ></label><input type="hidden" class="form-control" id="cglx_id" name="cglx_id"/>
+                    <!--<label >当前级别：</label>--><input type="hidden" class="form-control" id="cglx_jb" readonly="readonly" name="cglx_jb"/>
+                    <label >上级菜单：</label><input type="hidden" class="form-control" id="cglx_sjid" name="cglx_sjid"/>
+                    <input type="text" class="form-control" id="sjname" name="sjname"/>
+                    <button class="layui-btn layui-btn-normal layui-btn-small" id="Edit" type="button"> <i class="layui-icon">&#xe642;</i> 提交修改</button>
+                    <button class="layui-btn layui-btn-danger layui-btn-small" id="delete" type="button"> <i class="layui-icon"></i>删除</button>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label >菜单名称：</label><input type="text" class="form-control"  name="title" id="title" data-rule="required"/>
+
+                    <label >选项：</label><select class="selectpicker show-tick form-control" name="cglx_fl">
+                    <option value="1" selected>最高级菜单</option>
+                    <option value="2" >同级菜单</option>
+                    <option value="3" >下级菜单</option>
+                </select>
+                    <label >是否有效：</label><select class="selectpicker show-tick form-control" name="cglx_sfyx">
+                    <option value="1" selected>是</option>
+                    <option value="0" >否</option>
+                </select>
+                    <label >是否展开：</label>
+                    <select class="selectpicker show-tick form-control" name="menu_sfzk">
+                        <option value="0" selected>否</option>
+                        <option value="1" >是</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label >图 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;标：</label><input type="text" style="width: 620px" class="form-control"  name="menu_icon" id="menu_icon" />
+
+                </div>
+                <br />
+                <div class="form-group">
+                    <label >链接地址：</label><input style="width: 620px" type="text" class="form-control"  name="menu_link" id="menu_link" data-rule="required"/>
+                    </select>
+                </div>
+                <br />
+                <button autocomplete="off" class="btn btn-success" id="sub" type="submit">提交</button>
+                <button type="reset" class="btn btn-default">重置</button>
+                <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+                <span class="label label-success">{$sussInfo}</span>
+            </form>
+                </div>
+        </div>
+
+</div>
+
+</block>

@@ -1,0 +1,239 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+    <script type="text/javascript">
+        function delinfo(data,ryid) {
+            if(confirm("请确认是否删除，该操作不可恢复！")){
+                //alert(data);
+                location.href="/home/User/delqinfo?table=qx_user_tb&id="+data+"&ry_id="+ryid;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function resetpass(data) {
+            if(confirm("请确认是否重置密码，该操作不可恢复！")){
+                //alert(data);
+                location.href="/home/User/reqpass?id="+data;
+            }
+        }
+        function sfyx(data,yx) {
+            if(confirm("本操作将改变用户状态，请注意！")){
+                //alert(data);
+                location.href="/home/User/Qsfyx?id="+data+"&yx="+yx;
+                //alert(yx+","+data);
+            }
+        }
+        function rolename() {
+            var role_name=$("#user_role").find("option:selected").text();
+            $("#role_name").val(role_name);
+        }
+        function editinfo(id,xm,username,usersj,usersfzh) {
+            //alert(xm);
+            $("#editid").val(id);
+            $("#edituser_xm").val(xm);
+            $("#edituser_sj").val(usersj);
+            $("#edituser_sfzh").val(usersfzh);
+            $("#edituser_name").val(username);
+        }
+        function rolenameedit() {
+            var role_name=$("#edituser_role").find("option:selected").text();
+            $("#editrole_name").val(role_name);
+        }
+    </script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
+    <!--用户详细信息-->
+    <div class="modal fade" id="edit-from" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myyhedit">
+                            <span id="username"></span>下属信息
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="height: 400px;width: 800px">
+                        <div id="jstree" class="col-md-12"></div>
+
+                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <!--<button type="submit" class="btn btn-primary">保存</button>-->
+                        </div>
+                </div>
+            </div>
+    </div>
+    <!--用户信息编辑-->
+    <div class="modal fade" id="form-edit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form role="form" method="post" action="/Home/User/Userredit" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myyh1edit">
+                            编辑用户信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="form-group" >
+                                <label>用户名</label>
+                                <input type="text" class="form-control" name="user_name" id="edituser_name" readonly placeholder="请输入用户名" data-rule="required"/>
+
+                            <label style="margin-top: 10px">姓名</label>
+                                <input type="hidden" name="id" id="editid" />
+                            <input type="text" class="form-control" name="user_xm" id="edituser_xm" placeholder="请输入姓名" data-rule="required" />
+                            <label style="margin-top: 10px">手机号码</label>
+                            <input type="text" class="form-control" name="user_sj" id="edituser_sj" placeholder="请输入手机号码" data-rule="required" />
+                            <label style="margin-top: 10px">身份证号</label>
+                            <input type="text" class="form-control" name="user_sfzh" id="edituser_sfzh" placeholder="请输入身份证号" data-rule="required" />
+
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                            <input type="reset" style="display:none;" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12 col-xs-12" nowrap>
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="用户信息搜索......" name="keyword" value="{$keyword}">
+
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                   <!-- <li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>-->
+                </ul>
+
+            </div>
+            <span style="padding-top: 15px;margin-top: 30px">共有{$count}条用户信息。</span>
+        </div>
+    </div>
+    <div id='div1' class="col-md-12" style="margin-top: -10px">
+        <!-- Table -->
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>姓名</th>
+                <th nowrap>用户名</th>
+                <th nowrap>信用帐户状态</th>
+                <th nowrap>积分帐户状态</th>
+                <th nowrap>身份证号</th>
+                <th nowrap>联系电话</th>
+                <th nowrap>地址</th>
+                <th nowrap>推荐码</th>
+                <th nowrap>推荐人码</th>
+                <th nowrap>状态</th>
+                <!--<th nowrap>办公电话</th>
+                <th nowrap>手机号码</th>
+                <th nowrap>电子邮箱</th>
+                <th nowrap>用户ID</th>-->
+                <th nowrap>操作</th>
+            </tr>
+            <script>
+                function on1select(id,name,xm) {
+                    $('#jstree').jstree("destroy");
+                    $("#username").html(xm);
+                    $('#jstree').jstree({
+                        'core' : {
+                            'data' : {
+                                "url" : "/home/index/UserIdTree?id="+id,
+                                "dataType" : "json", // needed only if you do not supply JSON headers
+                            },
+                            "check_callback": true,
+                            "themes": {
+                                "theme": "classic",
+                                "dots": true,
+                                "icons": false,
+                                "stripes" : true
+                            },
+                        },
+                        "plugins": [ //插件
+                            "search", //允许插件搜索
+                            //"sort", //排序插件
+                            //"state", //状态插件
+                            //"types", //类型插件
+                            //"unique", //唯一插件
+                            //"wholerow" //整行插件
+                        ],
+                        types: {
+                            "default": { //设置默认的icon 图
+                                "icon": "glyphicon glyphicon-folder-close",
+                            }
+                        }
+                    });
+                }
+
+            </script>
+            <?php $i = 0;?><br/>
+            <foreach name='info_data' item='Info' >                    <?php $i++;?>                    <tr>
+                <td>{$i}</td>
+                <td><a href="#"  href="#list-from"  data-toggle="modal" title="编辑信息" aria-label="Left Align">{$Info.user_xm}</a>
+                    <button onclick="on1select({$Info.id},'{$Info.user_name}','{$Info.user_xm}','{$Info.user_sj}','{$Info.user_sfzh}')" type="button"  class="btn btn-default btn-xs" href="#edit-from"  data-toggle="modal" title="用户详细信息" aria-label="Left Align"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                </td>
+                <td>{$Info.user_name}</td>
+                <td>{~$MetaValue=R('User/UserCatMeta',array($Info['user_name'],2),"API")}</td>
+                <td>{~$MetaValue=R('User/UserCatMeta',array($Info['user_name'],1),"API")}</td>
+                <td>{$Info.user_sfzh}</td>
+                <td>{$Info.user_sj}</td>
+                <td>{$Info.user_dz}</td>
+                <td>{$Info.user_tjm}</td>
+                <td>{$Info.user_tjr}</td>
+                <td><php>if ($Info['user_lx']==2) :</php>
+                    <span class="label label-danger">无效</span>
+                    <php>elseif ($Info['user_lx']==3) :</php>
+                    <span class="label label-success">有效</span>
+                    <php>endif ;</php>
+                    <if condition="$Info.bdcore eq 1">
+                        <span class="label label-danger">报单中心</span>
+                    </if>
+                </td>
+                <!--<td>{$Info.user_bgdh}</td>
+                <td>{$Info.user_sj}</td>
+                <td>{$Info.user_yx}</td>
+                <td>{$Info.user_ryid}</td>-->
+                <td>
+                    <div class="btn-group btn-group-xs" role="group" >
+                    <a  href="#form-edit" role="button" data-toggle="modal" onclick="editinfo({$Info.id},'{$Info.user_xm}','{$Info.user_name}','{$Info.user_sj}','{$Info.user_sfzh}')" title="编辑数据"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="#" onclick="resetpass({$Info.id})"><span class="glyphicon glyphicon-refresh" title="重置密码"></span></a>
+                    <!--<a href="/index.php/home/zjxx/zjxx_edit?id={$zj.id}&type=3" title="编辑数据"><span class="glyphicon glyphicon-pencil"></span></a>-->
+                    <php>if ($Info['user_lx']==3) :</php>
+                    <a href="#" title="置为无效" onclick="sfyx('{$Info.id}','2')"><span class="glyphicon glyphicon-minus"></span></a>
+                    <php>else :</php>
+                    <a href="#" title="启用帐号" onclick="sfyx('{$Info.id}','3')"><span class="glyphicon glyphicon-plus"></span></a>
+                    <php>endif ;</php>
+                    <!--<a  href="#" onclick="delinfo({$Info.id},'{$Info.user_ryid}')" title="删除信息"><span class="glyphicon glyphicon-remove"></span></a>-->
+                    </div>
+                </td>
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover()
+                    })
+                </script>
+            </tr>
+            </foreach>
+        </table>
+        <ul class="pagination" style="margin-top: -10px">
+            {$pagebar}
+        </ul>
+    </div>
+
+
+
+</block>

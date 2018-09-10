@@ -1,0 +1,79 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <script>
+        $(function group() {
+            $("#group").html("正在加载中，请稍候 <i class=\"am-icon-spinner am-icon-pulse\"></i>");
+            $.ajax({
+                type:"POST", //以post提交数据
+                url:"/home/Quser/group",  //提交URL
+                data:{"txtcode":"1"}, //提交数据
+                success:function (data, state) { //成功调用回调信息
+                    //return data;
+                    if (!data){
+                        $("#group").html("还没有下属团队。");
+                    }else{
+                        $("#group").html(data);
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                    //alert(textStatus);
+                    return "正在加载中，请稍候...";
+                },
+                timeout: 1200000, //执行最大时间，超过该时间为超时
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+            });
+        })
+    </script>
+    <link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+    <include file="WebApps/widget/navbar" />
+    <hr />
+    <div class="header-box" data-am-sticky>
+
+        <div class="container">
+                <div class="am-u-sm-3">
+                    <div class="am-panel-group">
+                    <div class="am-panel am-panel-default">
+                        <div class="user_cnet_kj_menu">
+                            {:W('Info/load',array(8))}
+                            {:W('Info/load',array(6))}
+                            <if condition="$globar_user:bd_type eq 1 ">
+                                {:W('Info/load',array(7))}
+                            </if>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <if condition="$globar_user:user_lx eq 3 ">
+                <div class="am-u-sm-9" >
+                    <div >
+                    <!--<ol class="am-breadcrumb" >
+                        <li><a href="/" class="am-icon-home">首页</a></li>
+                        <li class="am-active">用户中心</li>
+                    </ol>-->
+                    <h4>我的团队 <small>{$globar_user:user_name}</small></h4>
+                    <hr style="margin-top: 0px;width: 100%" />
+                        <!--<foreach name="InfoData" item="Info" >
+                            <h4>我的信息：<small>真实姓名：{$Info.user_xm}，身份证号：{$Info.user_sfzh}，手册号码：{$Info.user_sj}，联系地址：{$Info.user_dz}</small></h4>
+                        </foreach>
+                        <hr />
+                        <foreach name="sjdata" item="info">
+                            <h4>我的直接上级：<small>真实姓名：{$info.user_xm}</small></h4>
+                        </foreach>
+                        <hr />-->
+                        <h4>团队成员名单：<small><span id="group"></span></small></h4>
+                    </div>
+                </div>
+                <else /><h4>用户未激活，无法操作！请等待激活</h4></if>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://validator.niceue.com/releases/1.1.3/dist/jquery.validator.min.js?local=zh-CN" ></script>
+</block>

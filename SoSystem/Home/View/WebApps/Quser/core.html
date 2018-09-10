@@ -1,0 +1,94 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+    <include file="WebApps/widget/navbar" />
+    <hr />
+
+    <div class="header-box" data-am-sticky>
+        <div class="container">
+                <div class="am-u-sm-3">
+                    <div class="am-panel-group">
+                    <div class="am-panel am-panel-default">
+                        <div class="user_cnet_kj_menu">
+                            {:W('Info/load',array(8))}
+                            {:W('Info/load',array(6))}
+                            <if condition="$globar_user:bd_type eq 1 ">
+                            {:W('Info/load',array(7))}
+                            </if>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <foreach name='InfoData' item='Info'>
+                <div class="am-u-sm-9" >
+                    <if condition="$ft eq 1 ">
+                    <h4>复投用户</h4>
+                        <p style="color: #ff0000">您的总收益：{$zsy}，总提现：{$ztx}，本帐户只能用于查询。不能再进行交易及提现。</p>
+                    <else />
+                    <div >
+                    <!--<ol class="am-breadcrumb" >
+                        <li><a href="/" class="am-icon-home">首页</a></li>
+                        <li class="am-active">用户中心</li>
+                    </ol>-->
+                        <h4>我的推荐码 <small><if condition="$globar_user:user_lx eq 3 "><if condition="$Info.user_tjm eq '' "><a href="#" onclick="tjmch()" id="chcode" style="color: #ff0000">生成</a></if><else/><del>用户未激活</del></if></small></h4>
+                    <hr style="margin-top: 0px" />
+                    <h5 style="height: 100px" id="tjcode">
+                        <if condition="$Info.user_tjm eq '' ">
+                        等待生成<else />{$Info.user_tjm}</if>
+                        <input id="xmxx" type="hidden" value="{$Info.user_sfzh}">
+                        <input id="id" type="hidden" value="{$Info.id}">
+                    </h5>
+                        <script>
+                            function tjmch() {
+                                var xm=$("#xmxx").val();
+                                var id=$("#id").val();
+                                if (!xm){
+                                    alert("请完善个人资料后再生成信息");
+                                    return false;
+                                }else{
+                                    if(confirm("确认是否生成，一旦生成将不可修改，请注意！")){
+                                        //alert(data);
+                                        $.ajax({
+                                            type:"POST", //以post提交数据
+                                            url:"/home/Quser/tjdoce",  //提交URL
+                                            data:{"code":8,"id":id}, //提交数据
+                                            success:function (data, state) { //成功调用回调信息
+                                                //alert(data);
+                                                $("#tjcode").html("<h4>"+data+"</h4><span style='color:#ff0000'>请妥善保管您的唯一识别推荐码，这将非常重要！！！</span>");
+                                                $("#chcode").hide();
+                                            },
+                                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                                                //alert(textStatus);
+                                            },
+                                            timeout: 60000, //执行最大时间，超过该时间为超时
+                                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                                return false;
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        </script>
+
+                    <h4>个人信息 <small><a href="/home/Quser/Edit_userinfo">修改</a></small></h4>
+                    <hr style="margin-top: 0px" />
+
+                    <h5 style="height: 25px">真实姓名：{$Info.user_xm}</h5>
+                    <h5 style="height: 25px" >身份证号：{$Info.user_sfzh}</h5>
+                    <h5 style="height: 25px">手机号码：{$Info.user_sj}</h5>
+                    <h5 style="height: 25px">联系地址：{$Info.user_dz}</h5>
+                    </div>
+                </div>
+                </if>
+            </foreach>
+        </div>
+    </div>
+
+</block>

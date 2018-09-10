@@ -1,0 +1,40 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+    <script>
+        window.onload = function(){
+        <foreach name="info" item="user" >
+
+                $.ajax({
+                        type:"POST", //以post提交数据
+                        url:"/home/Quser/AddBd",  //提交URL
+                        data:{
+                            "user_type":{$user.user_type},
+                        "user_tjr":'<if condition="$user.user_tjr eq '' ">1<else />{$user.user_tjr}</if>',
+                    "user_jb":{$user.user_jb},
+            "user_tjm":'<if condition="$user.user_tjm eq '' ">1<else />{$user.user_tjm}</if>',
+            "jy_je":1000,
+                "user_name":'{$user.user_name}',
+            "user_id":{$user.id},
+            "user_regdate":'{$user.user_regdate|strtotime|date="Y-m-d",###}'
+
+        }, //提交数据
+            success:function (data, state) { //成功调用回调信息
+
+            },
+            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                //alert(textStatus);
+            },
+            timeout: 12000000, //执行最大时间，超过该时间为超时
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                return false;
+            }
+
+        });
+        </foreach>
+            }
+
+    </script>
+
+</block>

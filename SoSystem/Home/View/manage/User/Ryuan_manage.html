@@ -1,0 +1,575 @@
+<extend name="manage/index/base_user" title="人员信息管理"/>
+
+<block name="customer">
+
+    <script type="text/javascript">
+        function changeData() {
+            var v=$("#ry_bm").find("option:selected").val();
+            var t=$("#ry_bm").find("option:selected").text();
+            $("#ry_bmid").val(v);
+            $("#ry_bm1").val(t);
+            var ry_ks = $("#ry_ks");
+            if (!v){
+                // 下拉框禁用
+                ("#ry_ks").prop("disabled", true);
+            }else{
+                $("#ry_ks").prop("disabled", false);
+                var url = "?id=" + v;
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                        //("#ry_ks").prop("disabled", true);
+                        ry_ks.find("option").remove();
+                        var tempOption = document.createElement("option");
+                        tempOption.value = '';
+                        tempOption.innerHTML  = '请选择';
+                        ry_ks.append(tempOption);
+                        ry_ks.prop("disabled", true);
+                    }
+                    else{
+                        //遍历回传到的Json数据，取出二级分类信息
+                        //ry_ks.find("option").remove();
+                        $.each(data,function (i,value) {
+                            var tempOption = document.createElement("option");
+                            tempOption.value = value.id;
+                            tempOption.innerHTML  = value.cglx_mc;
+                            ry_ks.append(tempOption);
+                        })
+                    }
+                })
+            }
+        }
+        function ksdata() {
+            var kv=$("#ry_ks").find("option:selected").val();
+            var kt=$("#ry_ks").find("option:selected").text();
+            $("#ry_ksid").val(kv);
+            $("#ry_ks1").val(kt);
+        }
+        function kseditdata() {
+            var kv=$("#ry_ksedit").find("option:selected").val();
+            var kt=$("#ry_ksedit").find("option:selected").text();
+            $("#ry_ksidedit").val(kv);
+            $("#ry_ks1edit").val(kt);
+        }
+    </script>
+    <script>
+        function AddYhxx(xm,bm,ks,zw,id) {
+            //alert(bm);
+            //清空表单
+            $("input[type=reset]").trigger("click");//触发reset按钮 }
+            //获取首字母拼音
+            $.ajax(
+                {
+                    type:"POST",
+                    url:"/Home/User/RyPy",
+                    data:{"xm":xm},
+                    success:function (result, state) { //成功调用回调信息
+                        var ii=result+'-'+id;
+                        //window.location.reload();
+                        $("#user_name").val(ii);
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                        //alert(textStatus);
+                    },
+                    timeout: 60000,
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                        alert("服务器响应超时，请稍候重试：" + errorThrown);
+                        return false;
+                    }
+                }
+            );
+            $("#user_xm").val(xm);
+            $("#user_comp").val(bm);
+            $("#user_ks").val(ks);
+            $("#user_zw").val(zw);
+            $("#user_id").val(id);
+
+        }
+    </script>
+    <script>
+        //读取用户信息
+        function userinfo(id) {
+            $.ajax({
+                type:"POST",
+                url:"/Home/User/UserInfo",
+                data:{"keyword":id},
+                success:function (data, state) { //成功调用回调信息
+                    $.each(data,function (i,value) {
+                        //userxx="用户名："+value.user_name+"<br />创建时间："+value.user_regdate+"<br />用户角色："+value.user_role;
+                        $("#quser_name").html("<b>用户名：</b>"+value.user_name);
+                        $("#quser_regdate").html("<b>创建时间：</b>"+value.user_regdate);
+                        role=value.user_role;
+                        if (!role){
+                            $("#quser_role").html("<b>用户角色：</b>未分配");
+                        }else{
+                            $("#quser_role").html("<b>用户角色：</b>"+role);
+                        }
+
+                    })
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                    //alert(textStatus);
+                },
+                timeout: 60000,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+                }
+            )
+        }
+    </script>
+    <script>
+        function editinfo(id,ry_xm,ry_zw,ry_bm,ry_bmid,ry_ks,ry_ksid,ry_fjh,ry_bgdh,ry_sjhm,ry_zt,ry_bz) {
+            //alert(ry_bgdh);
+            $("#id").val(id);
+            $("#ry_xmedit").val(ry_xm);
+            $("#ry_bmidedit").val(ry_bmid);
+            $("#ry_ksidedit").val(ry_ksid);
+            $("#ry_ks1edit").val(ry_ks);
+            $("#ry_bm1edit").val(ry_bm);
+            $("#ry_zwedit").val(ry_zw);
+            $("#ry_bmedit").val(ry_bmid);
+            $("#ry_ksedit").val(ry_ksid);
+            $("#ry_fjhedit").val(ry_fjh);
+            $("#ry_bgdhedit").val(ry_bgdh);
+            $("#ry_sjhmedit").val(ry_sjhm);
+            $("#ry_ztedit").val(ry_zt);
+            $("#ry_bzedit").val(ry_bz);
+
+            //系统日志中原有数据准备
+            $("#ry_yzw").val(ry_zw);
+            $("#ry_ybm").val(ry_bm);
+            $("#ry_yks").val(ry_ks);
+            $("#ry_yfjh").val(ry_fjh);
+            $("#ry_ybgdh").val(ry_bgdh);
+            $("#ry_ysjhm").val(ry_sjhm);
+            if (ry_zt==1){
+                $("#ry_yzt").val("在职");
+            }else{
+                $("#ry_yzt").val("不在职");
+            }
+            $("#ry_ybz").val(ry_bz);
+
+            var v=ry_bmid;
+            var ry_ks = $("#ry_ksedit");
+            if (!v){
+                // 下拉框禁用
+                ("#ry_ksedit").prop("disabled", true);
+            }else {
+                $("#ry_ksedit").prop("disabled", false);
+                var url = "?id=" + v;
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                        //("#ry_ks").prop("disabled", true);
+                        ry_ks.find("option").remove();
+                        var tempOption = document.createElement("option");
+                        tempOption.value = '';
+                        tempOption.innerHTML  = '请选择';
+                        ry_ks.append(tempOption);
+                        ry_ks.prop("disabled", true);
+                    }
+                    else{
+                        //遍历回传到的Json数据，取出二级分类信息
+                        ry_ks.find("option").remove();
+                        $.each(data,function (i,value) {
+                            var tempOption = document.createElement("option");
+                            tempOption.value = value.id;
+                            tempOption.innerHTML  = value.cglx_mc;
+                            ry_ks.append(tempOption);
+                        })
+                    }
+                })
+            }
+
+        }
+        function editData() {
+            var v=$("#ry_bmedit").find("option:selected").val();
+            var t=$("#ry_bmedit").find("option:selected").text();
+            $("#ry_bmidedit").val(v);
+            $("#ry_bm1edit").val(t);
+            var ry_ks = $("#ry_ksedit");
+            if (!v){
+                // 下拉框禁用
+                ("#ry_ksedit").prop("disabled", true);
+            }else{
+                $("#ry_ksedit").prop("disabled", false);
+                var url = "?id=" + v;
+                $.getJSON(url,function (data) {
+                    if (data==""){
+                        //alert('该分类下未维护二级分类，请联系管理进行维护!');
+                        //("#ry_ks").prop("disabled", true);
+                        ry_ks.find("option").remove();
+                        var tempOption = document.createElement("option");
+                        tempOption.value = '';
+                        tempOption.innerHTML  = '请选择';
+                        ry_ks.append(tempOption);
+                        ry_ks.prop("disabled", true);
+                    }
+                    else{
+                        //遍历回传到的Json数据，取出二级分类信息
+                        ry_ks.find("option").remove();
+                        $.each(data,function (i,value) {
+                            var tempOption = document.createElement("option");
+                            tempOption.value = value.id;
+                            tempOption.innerHTML  = value.cglx_mc;
+                            ry_ks.append(tempOption);
+                        })
+                    }
+                })
+            }
+        }
+    </script>
+    <script>
+        function Ryxx_info(id,xm) {
+            //alert(xm);
+            $("#loguser_xm").html(xm);
+            var url = "/home/User/RyLog?id=" + id;
+            $.getJSON(url,function (data) {
+                //遍历回传到的Json数据，取出信息
+                    $.each(data,function (i,value) {
+                        //alert(value.cznr);
+                        if (data.length==0){
+                            $("#log11").append("<span style='line-height: 20px'>"+"还没有操作信息。"+"</span><hr />");
+                        }else{
+                            $("#log11").append("<span style='line-height: 20px'>"+value.cznr+"</span><hr />");
+                        }
+
+                    })
+            })
+        }
+        function rolename() {
+            var role_name=$("#user_role").find("option:selected").text();
+            $("#role_name").val(role_name);
+        }
+    </script>
+    <div class="row clearfix">
+         <!--增加信息弹出-->
+        <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                增加人员信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>姓名</label><input type="text" class="form-control" name="ry_xm" id="ry_xm" placeholder="请输入姓名" data-rule="required" />
+                                <input type="hidden" class="form-control" name="ry_bmid" id="ry_bmid" placeholder="请输入部门ID" />
+                                <input type="hidden" class="form-control" name="ry_ksid" id="ry_ksid" placeholder="请输入科室ID" />
+                                <input type="hidden" class="form-control" name="ry_ks1" id="ry_ks1" placeholder="请输入科室" />
+                                <input type="hidden" class="form-control" name="ry_bm1" id="ry_bm1" placeholder="请输入部门" />
+                            </div>
+                            <div class="form-group">
+                                <label>职务</label>
+                                <input type="text" class="form-control" name="ry_zw" id="ry_zw" placeholder="请输入职务" />
+                            </div>
+                            <div class="form-group">
+                                <label>部门</label>
+                                <select class="form-control" name="ry_bm" id="ry_bm" onchange="changeData()">
+                                    <option value='' selected>请选择部门</option>
+                                    <foreach name="class_info" item="info" >
+                                        <option value="{$info.id}">{$info.cglx_mc}</option>
+                                    </foreach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>科室</label>
+                                <select class="form-control" name="ry_ks" id="ry_ks" disabled onchange="ksdata()">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>房间号</label><input type="text" class="form-control" name="ry_fjh" id="ry_fjh" placeholder="请输入房间号" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>办公电话</label><input type="text" class="form-control" name="ry_bgdh" id="ry_bgdh" placeholder="请输入办公电话" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>手机号码</label><input type="text" class="form-control" name="ry_sjhm" id="ry_sjhm" placeholder="请输入手机号码" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>用户状态</label>
+                                <select class="form-control" name="ry_zt" id="ry_zt">
+                                    <option value="1" select>在职</option>
+                                    <option value="0" select>不在职</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>备注</label>
+                                <textarea name="ry_bz" id="ry_bz" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--编辑信息弹出-->
+        <div class="modal fade" id="edit-form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" action="/home/user/EditRyinfo" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="Label">
+                                人员信息编辑
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>姓名</label><input type="text" class="form-control" name="ry_xm" id="ry_xmedit" readonly placeholder="请输入姓名" data-rule="required" />
+                                <input type="hidden" class="form-control" name="id" id="id" placeholder="ID" />
+                                <input type="hidden" class="form-control" name="ry_bmid" id="ry_bmidedit" placeholder="请输入部门ID" />
+                                <input type="hidden" class="form-control" name="ry_ksid" id="ry_ksidedit" placeholder="请输入科室ID" />
+                                <input type="hidden" class="form-control" name="ry_ks1" id="ry_ks1edit" placeholder="请输入科室" />
+                                <input type="hidden" class="form-control" name="ry_bm1" id="ry_bm1edit" placeholder="请输入部门" />
+                                <!--系统日志信息-->
+                                <input type="hidden" class="form-control" name="ry_ybm" id="ry_ybm"/>
+                                <input type="hidden" class="form-control" name="ry_yzw" id="ry_yzw"/>
+                                <input type="hidden" class="form-control" name="ry_yks" id="ry_yks"/>
+                                <input type="hidden" class="form-control" name="ry_yfjh" id="ry_yfjh"/>
+                                <input type="hidden" class="form-control" name="ry_ybgdh" id="ry_ybgdh"/>
+                                <input type="hidden" class="form-control" name="ry_ysjhm" id="ry_ysjhm"/>
+                                <input type="hidden" class="form-control" name="ry_yzt" id="ry_yzt"/>
+                                <input type="hidden" class="form-control" name="ry_ybz" id="ry_ybz"/>
+                            </div>
+                            <div class="form-group">
+                                <label>职务</label>
+                                <input type="text" class="form-control" name="ry_zw" id="ry_zwedit" placeholder="请输入职务" />
+                            </div>
+                            <div class="form-group">
+                                <label>部门</label>
+                                <select class="form-control" name="ry_bm" id="ry_bmedit" onchange="editData()">
+                                    <option value='' >请选择部门</option>
+                                    <foreach name="class_info" item="info" >
+                                        <option value="{$info.id}">{$info.cglx_mc}</option>
+                                    </foreach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>科室</label>
+                                <select class="form-control" name="ry_ks" id="ry_ksedit" onchange="kseditdata()">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>房间号</label><input type="text" class="form-control" name="ry_fjh" id="ry_fjhedit" placeholder="请输入房间号" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>办公电话</label><input type="text" class="form-control" name="ry_bgdh" id="ry_bgdhedit" placeholder="请输入办公电话" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>手机号码</label><input type="text" class="form-control" name="ry_sjhm" id="ry_sjhmedit" placeholder="请输入手机号码" data-rule="required" />
+                            </div>
+                            <div class="form-group">
+                                <label>用户状态</label>
+                                <select class="form-control" name="ry_zt" id="ry_ztedit">
+                                    <option value="1" select>在职</option>
+                                    <option value="0" select>不在职</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>备注</label>
+                                <textarea name="ry_bz" id="ry_bzedit" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--用户信息增加-->
+        <div class="modal fade" id="form-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <form role="form" method="post" action="/Home/User/UserAdd" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myyh">
+                                增加用户信息
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>用户姓名</label>
+                                <input type="text" class="form-control" name="user_xm" id="user_xm" value="" readonly data-rule="required"/>
+                                <input type="hidden" name="user_id" id="user_id" value="">
+                            </div>
+                            <div class="form-group form-inline" >
+                                <label>所属部门</label>
+                                <input type="text" class="form-control" name="user_comp" id="user_comp" value="" readonly data-rule="required"/>
+                                <label>所属科室</label>
+                                <input type="text" class="form-control" name="user_ks" id="user_ks" value="" readonly/>
+                            </div>
+                            <div class="form-groupform-inline" style="margin-top: 10px">
+                                <label>职务</label>
+                                <input type="text" class="form-control" name="user_zw" id="user_zw" value="" readonly />
+                                <label style="margin-top: 10px">用户角色选择</label>
+                                <select class="form-control" name="user_role" id="user_role" onchange="rolename()" data-rule="required">
+                                    <option value='' selected>请选择角色</option>
+                                    <foreach name="RoleData" item="info" >
+                                        <option value="{$info.id}">{$info.role_name}</option>
+                                    </foreach>
+                                </select>
+                                <input type="hidden" name="role_name" id="role_name" value="">
+                            </div>
+                            <div class="form-group" style="margin-top: 10px">
+                                <label>用户名</label>
+                                <input type="text" class="form-control" name="user_name" id="user_name" placeholder="请输入用户名" data-rule="required"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>密码 <small style="color:#ff0000">默认密码为:123456</small></label>
+                                <input type="password" readonly class="form-control" name="user_pwd" id="user_pwd" value="123456" placeholder="请输入密码" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" class="btn btn-primary">保存</button>
+                                <input type="reset" style="display:none;" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--用户信息查询-->
+        <div class="modal fade" id="form-3" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myyh1">
+                            用户信息查询
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group form-inline">
+                            <span id="quser_name"></span>
+                            <span id="quser_regdate"></span>
+                            <span id="quser_role"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--用户操作记录-->
+        <div class="modal fade" id="form-log" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="log">
+                            <span id="loguser_xm"></span>日志查询
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group form-inline">
+                            <p id="log11" style="line-height: 25px"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div class="col-md-12" >
+                <div class="input-group" style="text-align: right">
+                    <form class="navbar-form navbar-left" method="get">
+                    <input type="text" class="form-control" placeholder="人员信息搜索......" name="keyword" value="{$keyword}">
+                        <select name="ry_zt" class="form-control">
+                            <option value="">请选择人员状态</option>
+                            <option value="1"  <php>if ($zt=='1') :</php>selected<php>endif ;</php>>在职</option>
+                            <option value="0" <php>if ($zt=='0') :</php>selected<php>endif ;</php>>不在职</option>
+                        </select>
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">搜索</button>
+                    </div>
+                    </form>
+                    <div class="btn-group" style="margin-top: 8px">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">功能列表</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li >
+                                <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                            </li>
+                             </ul>
+                    </div>
+                </div>
+</div>
+    <div id='div1' class="col-md-12" style="width: 99%;margin-left:5px;">
+
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>姓名</th>
+                <th nowrap>职务</th>
+                <th nowrap>部门</th>
+                <!--<th nowrap>科室</th>-->
+                <th nowrap>房间号</th>
+                <th nowrap>办公电话</th>
+                <th nowrap>手机号码</th>
+                <th nowrap>用户信息</th>
+                <th nowrap>备注</th>
+                <th nowrap>状态</th>
+                <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td >{$i}</td>
+                <td><a href="#form-log" role="button" data-toggle="modal" onclick="Ryxx_info({$Info.id},'{$Info.ry_xm}')">{$Info.ry_xm}</a></td>
+                    <td>{$Info.ry_zw}</td>
+                    <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='科室信息' data-content='{$Info.ry_ks}'>{$Info.ry_bm}</a></td>
+                    <!--<td>{$Info.ry_ks}</td>-->
+                    <td>{$Info.ry_fjh}</td>
+                    <td>{$Info.ry_bgdh}</td>
+                    <td>{$Info.ry_sjhm}</td>
+                    <td><php>if ($Info['ry_yh']==0) :</php>
+                        <a href="#form-2" role="button" data-toggle="modal" onclick="AddYhxx('{$Info.ry_xm}','{$Info.ry_bm}','{$Info.ry_ks}','{$Info.ry_zw}',{$Info.id})" title="增加为用户"><span class="label label-danger">增加为用户</span></a>
+                        <php>else :</php>
+                        <a href="#form-3" role="button" data-toggle="modal" onclick="userinfo({$Info.id})"><span class="label label-success">用户信息查看</span></a>
+                        <php>endif ;</php>
+                    </td>
+                    <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.ry_bz}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
+                    <td><php>if ($Info['ry_zt']==1) :</php>在职<php>else :</php>不在职<php>endif ;</php></td>
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popover"]').popover()
+                        })
+                    </script>
+                    <td>
+                        <div class="btn-group btn-group-xs" role="group" >
+                            <button type="button" class="btn btn-success" href="#edit-form"  data-toggle="modal" title="编辑" onclick="editinfo({$Info.id},'{$Info.ry_xm}','{$Info.ry_zw}','{$Info.ry_bm}','{$Info.ry_bmid}','{$Info.ry_ks}','{$Info.ry_ksid}','{$Info.ry_fjh}','{$Info.ry_bgdh}','{$Info.ry_sjhm}','{$Info.ry_zt}','{$Info.ry_bz}')"><span class="glyphicon glyphicon-edit"></span></button>
+                            <button type="button" class="btn btn-success" href="#form-log" onclick="Ryxx_info({$Info.id},'{$Info.ry_xm}')"  data-toggle="modal" title="日志记录" ><span class="glyphicon glyphicon-zoom-in"></span></button>
+                        </div>
+                    </td>
+            </tr>
+            </foreach>
+        </table>
+        <ul class="pagination">
+            {$pagebar}
+        </ul>
+    </div>
+
+
+    </block>

@@ -1,0 +1,159 @@
+<extend name="manage/index/base_user" />
+<block name="customer">
+    <script src="__PUBLIC__/Manage/JS/type_zd.js"></script>
+    <link href="__PUBLIC__/bs/css/upload.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var dataSource = [
+                <foreach name='lxinfo' item='Info' >
+                '{$Info.lxname}',
+        </foreach>
+            '-1'
+        ];
+            //alert(dataSource);
+            $("#lxname").typeahead({ source: dataSource, //数据源
+                items: 8, //最多显示个数
+                delay: 100,
+                //这里一定要return，否则选中不显示，外加调用display的时候null reference错误。
+                updater: function (item) {
+                    return item;
+                },
+                //返回选中的字符串
+                displayText: function (item) {
+                    return item;
+                },
+                //选择项之后的事件，item是当前选中的选项
+                afterSelect: function (item) {
+                    console.log(item);
+                }
+            });
+        });
+
+    </script>
+    <ol class="breadcrumb">
+        <li><a href="#">管理首页</a></li>
+        <li><a href="/home/news/newsmanage">天龙八部信息管理</a></li>
+        <li class="active">信息增加</li>
+    </ol>
+    <div class="col-md-12" style="padding-left: 10px">
+        <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">信息类型 : </lable>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+                <input class="form-control" type="text" data-provide="typeahead" autocomplete="off" id="lxname" name="lxname" placeholder="请输入类型">
+            </div><br />
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">标题 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input type="text" class="form-control" name="info_title" id="info_title" placeholder="请输入标题" data-rule="required"/>
+        </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">发布者 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input type="text" class="form-control" name="info_user" id="info_user" placeholder="请输入发布者" data-rule="required"/>
+        </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">信息来源 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input type="text" class="form-control" name="info_laiyuan" id="info_laiyuan" placeholder="请输入信息来源" data-rule="required"/>
+        </div><br/><!--END-->
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">关键词 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input type="text" class="form-control" name="info_laiyuan" id="info_keyword" placeholder="请输入关键词" data-rule="required"/>
+        </div><br/><!--END-->
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">简介 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+            <textarea class="form-control" style="height: 100px" name="info_des" id="info_des" placeholder="请输入简介"></textarea>
+        </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">内容 : </lable>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                <div id="weditor">
+                    <p></p>
+                </div>
+                <input type="text" id="text1" name="info_content" />
+                <script src="__PUBLIC__/bs/js/wangEditor.min.js"></script>
+                <script type="text/javascript">
+                    var E = window.wangEditor
+                    var editor = new E('#weditor')
+                    editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+                    var $text1 = $('#text1')
+                    editor.customConfig.onchange = function (html) {
+                        // 监控变化，同步更新到 textarea
+                        $text1.val(html)
+
+                    }
+                    editor.create()
+                    // 初始化 textarea 的值
+                    $text1.val(editor.txt.html())
+                </script>
+            <!--<textarea class="ckeditor form-control" style="height: 100px" name="info_content" id="info_content" placeholder="请输入内容"></textarea>-->
+        </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">发布时间 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+            <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+            <input type="text" readonly class=" form-control" name="info_date" id="info_date" placeholder="请选择发布时间" value="{$day}"/>
+        </div><br/><script>
+            $("#info_date").datetimepicker({
+                format: "yyyy-mm-dd",
+                autoclose: true,
+                todayBtn: true,
+                language:"zh-CN",
+                minView:"month",
+            });
+        </script><!--END-->
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">资讯图片：</lable>
+            <div class="upload-box col-sm-8 input-group input-group-sm" style="float: left;margin-left: 0px;margin-bottom: 10px">
+                <div class="image-box clear">
+                    <section class="upload-section">
+                        <div class="upload-btn"></div>
+                        <input type="file" name="file" id="upload-input" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="multiple" />
+                    </section>
+
+                </div>
+
+            </div>
+            <br />
+            <div style="margin-top: 130px;margin-bottom: 20px">
+                <input type="text" id="info_photo" name="info_photo" style="width: 600px"/>
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"></lable>    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+            <button type="submit" class="btn btn-success">保存</button>
+            <button type="reset" class="btn btn-default">重置</button>
+            </div>
+        </div>
+
+        </form>
+        <script src="__PUBLIC__/bs/js/upload.js"></script>
+        <script>
+            $("#upload-input").ajaxImageUpload({
+                url: '/home/test/upload', //上传的服务器地址
+                data: { name:'photo' },
+                maxNum: 5, //允许上传图片数量
+                zoom: true, //允许上传图片点击放大
+                allowType: ["gif", "jpeg", "jpg", "bmp",'png'], //允许上传图片的类型
+                maxSize :3, //允许上传图片的最大尺寸，单位M
+                before: function () {
+                    //alert('上传前回调函数');
+                },
+                success:function(data){
+                    var parJson=data;
+                    //alert('上传成功,'+data.src);
+                    var photoval=$("#info_photo").val();
+                    if (!photoval){
+                        $("#info_photo").val(data.src);
+                    }else {
+                        $("#info_photo").val(photoval+","+data.src);
+                    };
+                    console.log(data.src);
+                },
+                error:function (e) {
+                    alert('上传失败'+e);
+                    console.log(e);
+                }
+            });
+        </script>
+    </div>
+</block>

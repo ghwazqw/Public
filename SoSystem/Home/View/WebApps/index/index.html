@@ -1,0 +1,100 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <link rel="stylesheet" href="__PUBLIC__/Moblie/AmaUi/css/index.min.css" />
+    <script type="text/html" id="tpl_ptype">
+        <li class="menu-item"><a href="{link}">{title}</a></li>
+    </script>
+    <script>
+        var datinfo=[ //定义数组
+            <foreach name='MetaData' item='Info' > //循环取出子表中的信息
+            [{$Info.cglx_sjid},'{$Info.cglx_mc}','{$Info.menu_link}'],
+        </foreach>
+            [-1,'',''] //IE低版本中中BUG处理
+        ];
+        function getMetaList(info_id,im_key,tpl_id,link) {
+            var ret="";
+            //alert(tpl_id);
+            var tpl_content=$("#"+tpl_id).html(); //模板内容
+            //alert(tpl_content);
+            for (var i=0;i<datinfo.length;i++){
+                if (datinfo[i][0]==info_id)
+                    ret+=tpl_content.replace("{"+im_key+"}",datinfo[i][1]).replace("{"+link+"}",datinfo[i][2]); //将模板中的变量替换成读取到的数据
+            }
+            //alert(ret);
+            return ret;
+        }
+    </script>
+
+    <!--topbar end-->
+    <div class="header-box" data-am-sticky>
+        <include file="WebApps/widget/navbar" />
+        <!--nav start-->
+
+        <div class="nav-contain">
+            <div class="nav-inner" id="navbar" >
+                <ul class="am-nav am-nav-pills am-nav-justify">
+                    <foreach name='InfoData' item='Info' >
+                        <li><a href="{$Info.menu_link}">{$Info.cglx_mc}</a>
+                            <ul class="sub-menu">
+                                <!--页面读取时加载方法-->
+                                <script>document.write(getMetaList({$Info.id},'title',"tpl_ptype","link"))</script>
+                            </ul>
+                        </li>
+                    </foreach>
+
+                        <!--<li>
+                            <a href="#">产品中心</a>
+                            &lt;!&ndash; sub-menu start&ndash;&gt;
+                            <ul class="sub-menu">
+                                <li class="menu-item"><a href="html/product1.html">产品展示1</a></li>
+                                <li class="menu-item"><a href="html/product2.html">产品展示2</a></li>
+                                <li class="menu-item"><a href="html/product3.html">产品展示3</a></li>
+                            </ul>
+                            &lt;!&ndash; sub-menu end&ndash;&gt;
+                        </li>
+                        <li><a href="html/example.html">客户案例</a></li>
+                        <li><a href="html/solution.html">解决方案</a></li>
+                        <li>
+                            <a href="html/news.html">新闻中心</a>
+                            &lt;!&ndash; sub-menu start&ndash;&gt;
+                            <ul class="sub-menu">
+                                <li class="menu-item"><a href="html/news-content.html">公司动态</a></li>
+                                <li class="menu-item"><a href="html/404-dark.html">行业动态</a></li>
+                                <li class="menu-item"><a href="html/404-light.html">精彩专题</a></li>
+                            </ul>
+                            &lt;!&ndash; sub-menu end&ndash;&gt;
+                        </li>
+                        <li><a href="html/about.html">关于我们</a></li>
+                        <li><a href="html/join.html">加入我们</a></li>
+                        <li><a href="html/contact.html">联系我们</a></li>-->
+                    </ul>
+                </div>
+            </div>
+            <!--nav end-->
+    </div>
+
+    </div>
+    <!--===========content===============-->
+    <div class="section">
+        <div class="container">
+            <div class="section--header">
+                <h2 class="section--title">重要通知</h2>
+                <p class="section--description" style="color:#FF0000">
+				系统启用正式服务器地址：<a href="http://www.hhdty.com">www.hhdty.com</a>，用户请直接以网址的方式进行访问。<br />
+                    用户中心中完善基础资料后，重要项目将不可修改，请注意。
+                </p>
+            </div>
+
+            <!--index-container start-->
+            <div class="index-container">
+                <div class="index-more">
+                    <a href="/home/index/register.html"> <button type="button" class="am-btn am-btn-secondary">用户注册</button></div>
+                </div>
+            </div>
+            <!--index-container end-->
+        </div>
+    </div>
+    <!--===========content end===============-->
+
+</div>
+</block>

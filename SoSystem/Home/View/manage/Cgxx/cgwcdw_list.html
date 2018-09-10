@@ -1,0 +1,48 @@
+<extend name="manage/index/base" />
+<block name="customer">
+    <div style="width: 99%;margin: 0px auto;">
+
+        <div></div>
+        <form class="navbar-form navbar-left" method="post">
+            <div class="form-group">
+               项目编号：<input type="text" class="form-control" value="{$cgwc_xmbh}" name="cgwc_xmbh">
+               设备名称：<input type="text" class="form-control" value="{$cgwc_wcdw}" name="cgwc_wcdw">
+               所在地：<input type="text" class="form-control" value="{$cgwc_szd}" name="cgwc_szd">
+                维修时间：<input type="text" class="form-control" value="{$cgwc_dwsx}" name="cgwc_dwsx">
+                <button type="submit" class="btn btn-default">搜索</button>
+            </div>
+        </form>
+        <table class="table table-hover" id="table" style="font-size: 12px">
+            <tr>
+                <td><b>项目编号</b></td>
+                <td><b>设备名称</b></td>
+                <td><b>所在地</b></td>
+                <td><b>维修时间</b></td>
+                <td><b>联系人</b></td>
+                <td><b>电子邮箱</b></td>
+                <td><b>机构属性</b></td>
+                <td><b>相关设备</b></td>
+
+
+            </tr>
+
+            <foreach name="info_data" item="cg" >
+
+                <tr>
+                    <td>{$cg.cgwc_xmbh}</td>
+                    <td><a href="/index.php/Home/Cgxx/cgdw_dal/?id={$cg.id}&bh={$cg.cgwc_xmbh}" target="_blank">{$cg.cgwc_wcdw}</a></td>
+                    <td>{$cg.cgwc_szd}</td>
+                    <td>{$cg.cgwc_lxdh}</td>
+                    <td>{$cg.cgwc_lxr}</td>
+                    <td>{$cg.cgwc_dzxx}</td>
+                    <td>{$cg.cgwc_dwsx}</td>
+                    <td><a href="/index.php/Home/Cgxx/cgxx_class/?keyword={$cg.cgwc_wcdw}" target="_blank">相关成果信息</a></td>
+                </tr>
+            </foreach>
+
+        </table>
+        <ul class="pagination">
+            {$pagebar}
+            </ul>
+    </div>
+</block>

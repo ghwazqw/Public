@@ -1,0 +1,6 @@
+<div class="btn-group btn-group-xs" role="group" >
+
+    <foreach name='ActBut' item='In' >
+    <button type="button" class="btn btn-success" href="{$In.action_link}"  data-toggle="modal" title="{$In.action_name}" onclick="delinfo({$Info.id})">{$In.action_ico}</button>
+    </foreach>
+</div>

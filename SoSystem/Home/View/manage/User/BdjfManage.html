@@ -1,0 +1,38 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+<div class="container-fluid">
+
+
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+
+    <div id="toolbar">
+        <div class="btn-group">
+
+            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">功能列表</span>
+            </button>
+            <ul class="dropdown-menu" style="margin-top: -8px">
+
+                <li >
+                    <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出Excel</a>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+    <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+           data-classes="table table-hover"
+           data-show-columns="true"
+           data-height="600"
+           data-search="true"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-toolbar="#toolbar"
+    ></table>
+    <script type="text/javascript" src="__PUBLIC__/sosystem/js/bdjfinfo.js"></script>
+</block>

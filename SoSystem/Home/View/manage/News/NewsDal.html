@@ -1,0 +1,41 @@
+<extend name="manage/index/base_user" />
+<block name="customer">
+    <foreach name='meta_data' item='Info' >
+    <ol class="breadcrumb">
+        <li><a href="#">管理首页</a></li>
+        <li><a href="/home/news/newsmanage">天龙八部信息管理</a></li>
+        <li class="active">{$Info.info_title}</li>
+    </ol>
+        <div class="col-md-12 column">
+            <div class="articleContent">
+                <h2 class="title">
+                    {$Info.info_title}
+                </h2>
+                <div class="property">
+                    <span>文章来源：{$Info.info_laiyuan}</span> <span>作者：{$Info.info_user}</span> <span>发布日期：{$Info.info_date}</span> <span>资讯类型：{$Info.info_lx}</span> <span></span>
+                </div>
+                <div id="contentTxt">
+                    <p><img src="{$Info.info_photo}" width="100%"></p>
+                    {$Info.info_content}
+                </div>
+
+
+            </div>
+            <hr />
+            <div>
+                <assign name="keyword_c" value="$Info[info_keyword]" />
+                <?php
+                    $keyword_a=explode(",",$keyword_c);
+                ?>
+                <h4>关键词：
+                    <small>
+                        <foreach name="keyword_a" item="v">
+                                {$v} |&nbsp;
+                        </foreach>
+                    </small>
+                </h4></div>
+            <hr />
+            <div><h4>信息统计：<small>点击量：{$info_cilck+$data_cilck} </small></h4></div>
+        </div>
+    </foreach>
+</block>

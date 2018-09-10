@@ -1,0 +1,38 @@
+<extend name="manage/index/base_user" title="资产主表信息管理"/>
+<block name="customer">
+    <script src="__PUBLIC__/Manage/JS/type_zd.js"></script>
+
+<!-- 通过data-provide="typeahead"来声明这是一个typeahead组件 --> <!-- 通过data-source=来提供数据 -->
+<input class="form-control" type="text" data-provide="typeahead" autocomplete="off" id="input">
+<script type="text/javascript">
+    $(document).ready(function() {
+        var dataSource = [
+            <foreach name='lxinfo' item='Info' >
+            '{$Info.lxname}|{$Info.lxnote}',
+    </foreach>
+            '-1'
+        ];
+        //alert(dataSource);
+        $("#input").typeahead({ source: dataSource, //数据源
+            items: 8, //最多显示个数
+            delay: 100,
+            //这里一定要return，否则选中不显示，外加调用display的时候null reference错误。
+            updater: function (item) {
+                return item;
+            },
+            //返回选中的字符串
+            displayText: function (item) {
+                return item;
+            },
+            //选择项之后的事件，item是当前选中的选项
+            afterSelect: function (item) {
+                console.log(item);
+            }
+        });
+    });
+
+</script>
+
+    <div id="data111"></div>
+
+</block>

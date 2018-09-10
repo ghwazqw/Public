@@ -1,0 +1,177 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+    <include file="WebApps/widget/navbar" />
+    <hr />
+    <div class="header-box" data-am-sticky>
+        <div class="container">
+                <div class="am-u-sm-3">
+                    <div class="am-panel-group">
+                    <div class="am-panel am-panel-default">
+                        <div class="user_cnet_kj_menu">
+                            {:W('Info/load',array(8))}
+                            {:W('Info/load',array(6))}
+                            <if condition="$globar_user:bd_type eq 1 ">
+                                {:W('Info/load',array(7))}
+                            </if>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            <foreach name='InfoData' item='Info' >
+                <div class="am-u-sm-9" >
+                    <if condition="$ft eq 1 ">
+                        <h4>复投用户</h4>
+                        <p style="color: #ff0000">您的总收益：{$zsy}，总提现：{$ztx}，本帐户只能用于查询。不能再进行交易及提现。</p>
+                        <else />
+                    <div >
+                    <!--<ol class="am-breadcrumb" >
+                        <li><a href="/" class="am-icon-home">首页</a></li>
+                        <li class="am-active">用户中心</li>
+                    </ol>-->
+
+                    <h4>报单积分帐户查询 <small>
+
+                         {$globar_user:user_name},当前日期：{$day}</small></h4>
+
+                    <hr style="margin-top: 0px;width: 100%" />
+                        <br />
+                        <php>if ($count>0) :</php>
+                        <?php
+                       $zje=$Info['cat_dqje']-$sdje;
+                       if ($zje>=30000){
+                            $ktxje=30000.00;
+                       }else{
+                        $ktxje=$zje;
+                        }
+                       ?>
+                        <php>else :</php>
+                        <?php
+                       $zje=$Info['cat_dqje']-$sdje;
+                       if ($zje>=20000){
+                        $ktxje=20000.00;
+                        }else{
+                        $ktxje=$zje;
+                        }
+                        ?>
+                        <php>endif ;</php>
+                        <h5>您的当前积分：</h5><h3 style="padding-left: 30px;color: #ff7d27">￥{$Info['cat_dqje']}<small>当天锁定：￥{$sdje},可提现：￥{$zje}.00，本日最高提现额：￥{$ktxje}.00
+
+                    </small></h3>
+
+                        <hr />
+                        <form method="post" id="form" action="/home/Quser/jfTxsub">
+                        <label>请输入您的提现金额：</label>
+                        <input name="txje" id="txje" class="form-control" style="width: 50%" value="{$ktxje}"  onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();"/>
+                        <input name="ktxje" id="ktxje" type="hidden" value="{$ktxje}" />
+                            <input name="username" id="username" type="hidden" value="{$globar_user:user_name}" />
+                            <input name="zhje" id="zhje" type="hidden" value="{$Info.cat_dqje}" >
+                            <span style="text-align: right;margin-left: 700px">
+                            <php>if ($txlog==0) :</php>
+                                <span style="color: #ff0000">有提现正在进行，不可重复操作！</span>
+                                <php>else :</php>
+                                <if condition='$week eq 0 '>
+                                    <span style="color: #ff0000">当前时间不可提现！</span>
+                                    <else/>
+                                    <if condition="$Info.cat_dqje LT 30 ">
+                                        <else />
+                                        <button type="button" id="btn" class="am-btn am-btn-warning" onclick="tx()">申请提现</button>
+                                    </if>
+                                </if>
+                                <php>endif ;</php>
+                            </span>
+                        <script>
+                            function checkdig()
+                            {
+                                var value= $("#txtfp").val();
+                                $("#txtfp").val(value.replace(/[^\d]/g,''));
+                            }
+                        </script>
+                        </form>
+                        <div id="txpass" style="display: none">
+                            <label>请输入您的提现密码：</label>
+                            <input name="txpassword" id="txpassword" type="password" value="" class="form-control" style="width: 200px"/>
+                        </div>
+                        <h4>提现规则：</h4>
+                        <p style="padding-left: 20px">
+                            1>提现最小单位为100元；<br />
+                            2>用户首次提现金额最高为20000元整；<br />
+                            3>非工作日不可进行提现；<br />
+                            4>工作日期间09:00-17:00期间可申请提现；<br />
+                            5>所有事宜解释权归公司所有。
+                        </p>
+                    </div>
+                    </if>
+                </div>
+        </foreach>
+
+        </div>
+    </div>
+    <script>
+        window.onload = function(){
+            //alert("{$sdje}");
+            var ktxje=$("#ktxje").val();
+            if (ktxje==0){
+                $("#btn").attr('disabled',"true");
+            }
+            };
+        function tx() {
+            var je=$("#txje").val();
+            var ktxje=$("#ktxje").val();
+
+            //alert(je);
+            if (je<100){
+                alert("必须输入100以上金额");
+                return false;
+            }else if (je%100!=0){
+                alert("必须是100的倍数");
+                return false;
+            }else if (je>ktxje){
+                alert("超出可提现范围，请重新填写。");
+                return false;
+            }else{
+                $("#txpass").show();
+                //$("#form").submit();
+                //alert("您申请的提现金额为：￥"+je+".00元,系统已提交后台，请耐心等待结果。");
+            }
+        }
+        $("#txpassword").blur(function () {
+            var username=$("#username").val();
+            var pass=$("#txpassword").val();
+            if (!username || !pass){
+                alert("信息错误");
+                return false;
+            }
+            $.ajax({
+                type:"POST", //以post提交数据
+                url:"/home/User/ChTxP",  //提交URL
+                data:{"Username":username,"textPwd":pass}, //提交数据
+                success:function (data, state) { //成功调用回调信息
+                    if (data==0){
+                        alert("密码验证失败，请检查");
+                    }else{
+                        alert("验证通过，即将提交,请点击确定...");
+                        $("#form").submit();
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                    //alert(textStatus);
+                },
+                timeout: 60000, //执行最大时间，超过该时间为超时
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+
+            });
+        })
+    </script>
+    <script type="text/javascript" src="https://validator.niceue.com/releases/1.1.3/dist/jquery.validator.min.js?local=zh-CN" ></script>
+    </foreach>
+</block>

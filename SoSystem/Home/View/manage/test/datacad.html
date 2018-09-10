@@ -1,0 +1,100 @@
+<extend name="manage/index/base" />
+<block name="customer">
+<div class="container">
+<h4>用户开市线结构图</h4>
+    <script>
+         function userinfo(){
+            var user_name=$("#seluser").val();
+            //alert(user_name);
+            $("#seluserinfo").html(user_name);
+                $.ajax({
+                    type:"POST", //以post提交数据
+                    url:"/home/test/datainfo",  //提交URL
+                    data:{"user_name":user_name}, //提交数据
+                    success:function (data, state) { //成功调用回调信息
+                        var reg=/,/g;
+                        data=data.replace(reg,'<br /><span class="glyphicon glyphicon-arrow-down" style="color:#ff0000;margin-left: 25px"></span><br />');
+                        var reg1=/。/g;
+                        data=data.replace(reg1,'<span style="color:#ff0000" class="glyphicon glyphicon-arrow-right"></span>');
+                        $("#username").html(data);
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                        //alert(textStatus);
+                    },
+                    timeout: 60000, //执行最大时间，超过该时间为超时
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                        alert("服务器响应超时，请稍候重试：" + errorThrown);
+                        return false;
+                    }
+                });
+            $.ajax({
+                type:"POST", //以post提交数据
+                url:"/home/test/datacount",  //提交URL
+                data:{"user_name":user_name}, //提交数据
+                success:function (data, state) { //成功调用回调信息
+                    //alert(data);
+                    $("#ii").html(data);
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                    //alert(textStatus);
+                },
+                timeout: 60000, //执行最大时间，超过该时间为超时
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+
+            });
+        }
+        function getmetainfo(id) {
+            /*$.ajax({
+                type:"POST", //以post提交数据
+                url:"/home/test/datacount",  //提交URL
+                data:{"id":id}, //提交数据
+                success:function (data, state) { //成功调用回调信息
+                    //alert(data);
+                    $("#io").html(data);
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                    //alert(textStatus);
+                },
+                timeout: 60000, //执行最大时间，超过该时间为超时
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+
+            });*/
+            layui.use('layer', function() {
+                var $ = layui.jquery,
+                    layer = layui.layer;
+                layer.open({
+                    title: '用户'+id+'详细信息查询(UserData View)',
+                    maxmin: true,
+                    type: 2,
+                    content: '/Home/user/UserInfoView?id='+id,
+                    area: ['1000px', '600px'],
+                    shadeClose: false
+                });
+            })
+        }
+
+    </script>
+    <hr />
+    <label>请选择根用户</label>
+    <select name="seluser" id="seluser" class="form-control col-md-4" onchange="userinfo()">
+        <option value="">请选择</option>
+        <foreach name="InfoData" item="Ginfo">
+        <option value="{$Ginfo.user_name}">{$Ginfo.user_name}</option>
+        </foreach>
+    </select>
+    <hr/>
+        <div class="col-md-3" style="text-align: right;margin-left: -10px">
+            <input type="hidden" id="user_name" value="{$Ginfo.user_name}">
+            <p>用户：<span id="seluserinfo"></span>,(共<span id="ii"></span>人)：
+                <span style="color:#ff0000" class="glyphicon glyphicon-arrow-right"></span></p>
+        </div>
+
+        <span id="username" ></span>
+</div>
+</block>

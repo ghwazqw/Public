@@ -1,0 +1,93 @@
+<extend name="manage/index/base_user" title="个人用户信息查询"/>
+<block name="customer">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
+    <div class="container col-md-12">
+        <div id="jstree" class="col-md-3"></div>
+        <div class="col-md-9">
+            <h5>用户数据中心 <small id="userinfo"></small></h5>
+            <hr style="margin-top: -5px"/>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="__PUBLIC__/manage/images/logo.png" alt="..." style="width: 50px">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <input id="name1" value="" type="hidden" />
+                    <h4 class="media-heading" id="user_name">Media heading <small id="user_xm"></small></h4>
+                    注册时间：<span id="regdate"></span><span id="tjm"></span><span id="lx"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $('#jstree').jstree({
+            'core' : {
+                'data' : {
+                    "url" : "/home/index/UserTree",
+                    "dataType" : "json", // needed only if you do not supply JSON headers
+                },
+                "check_callback": true,
+                "themes": {
+                    "theme": "classic",
+                    "dots": true,
+                    "icons": false,
+                    "stripes" : true
+                },
+            },
+            "plugins": [ //插件
+                "search", //允许插件搜索
+                //"sort", //排序插件
+                //"state", //状态插件
+                //"types", //类型插件
+                //"unique", //唯一插件
+                //"wholerow" //整行插件
+            ],
+            types: {
+                "default": { //设置默认的icon 图
+                    "icon": "glyphicon glyphicon-folder-close",
+                }
+            }
+        });
+
+        //单击事件
+        $("#jstree").bind('changed.jstree',
+            function(e, data) {
+                var iid=data.instance.get_node(data.selected[0]).id;
+                //$("#userinfo").html(iid);
+                var url = "/home/restful/QuserInfo/info/" + iid;
+                $.getJSON(url,function (data) {
+                        $.each(data,function (i,value) {
+                            $("#user_name").html(value.user_name);
+                            $("#name1").val(value.user_name);
+                            $("#user_xm").html(value.user_xm);
+                            $("#regdate").html(value.user_regdate);
+                            if (!value.user_tjm){
+                                $("#tjm").html("，推荐码未生成。未进行交易");
+                            }else{
+                                $("#tjm").html("，推荐码为："+value.user_tjm);
+                            }
+                            if (!value.user_tjr){
+                                $("#lx").html("，<span style='color:#ff0000'>为根用户</span>");
+                            }
+                            if(value.user_type==1){
+                                $("#lx").html("，<span style='color:#ff0000'>分享线用户</span>");
+                            }
+                            if(value.user_type==2){
+                                $("#lx").html("，<span style='color:#ff0000'>开市线用户</span>");
+                            }
+                        })
+                })
+                var bdname=$("#name1").val();
+                var url = "/home/restful/UserBdInfo/info/" + bdname;
+                $.getJSON(url,function (data) {
+                    $.each(data,function (i,data) {
+                        //alert(data.user_name);
+                    })
+                })
+            });
+    </script>
+
+</block>

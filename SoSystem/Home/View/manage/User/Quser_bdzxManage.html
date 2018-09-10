@@ -1,0 +1,110 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+
+    <script type="text/javascript">
+        function resetpass(data) {
+            if(confirm("请确认申请成为报单中心！")){
+                //alert(data);
+                location.href="/home/User/sqbdzx?id="+data;
+            }
+        };
+        function qxtpass(data) {
+            if(confirm("请确认取消报单中心！")){
+                //alert(data);
+                location.href="/home/User/qxbdzx?id="+data;
+            }
+        }
+        </script>
+
+    <div class="col-md-12 col-xs-12" nowrap>
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="用户信息搜索......" name="keyword" value="{$keyword}">
+
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                   <!-- <li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>-->
+                </ul>
+
+            </div>
+            <span style="padding-top: 15px;margin-top: 30px">共有{$count}条用户信息。</span>
+        </div>
+    </div>
+    <div id='div1' class="col-md-12" style="margin-top: -10px">
+        <!-- Table -->
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>姓名</th>
+                <th nowrap>用户名</th>
+                <th nowrap>身份证号</th>
+                <th nowrap>联系电话</th>
+                <th nowrap>地址</th>
+                <th nowrap>推荐码</th>
+                <th nowrap>推荐人码</th>
+                <th nowrap>状态</th>
+                <!--<th nowrap>办公电话</th>
+                <th nowrap>手机号码</th>
+                <th nowrap>电子邮箱</th>
+                <th nowrap>用户ID</th>-->
+                <th nowrap>操作</th>
+            </tr>
+
+            <?php $i = 0;?><br/>
+            <foreach name='info_data' item='Info' >                    <?php $i++;?>                    <tr>
+                <td>{$i}</td>
+                <td><a href="#"  href="#list-from"  data-toggle="modal" title="编辑信息" aria-label="Left Align">{$Info.user_xm}</a>
+                </td>
+                <td>{$Info.user_name}</td>
+                <td>{$Info.user_sfzh}</td>
+                <td>{$Info.user_sj}</td>
+                <td>{$Info.user_dz}</td>
+                <td>{$Info.user_tjm}</td>
+                <td>{$Info.user_tjr}</td>
+                <td><php>if ($Info['user_lx']==2) :</php>
+                    <span class="label label-danger">无效</span>
+                    <php>elseif ($Info['user_lx']==3) :</php>
+                    <span class="label label-success">有效</span>
+                    <php>endif ;</php>
+                    <if condition="$Info.bdcore eq 1">
+                        <span class="label label-danger">报单中心</span>
+                    </if>
+                </td>
+                <!--<td>{$Info.user_bgdh}</td>
+                <td>{$Info.user_sj}</td>
+                <td>{$Info.user_yx}</td>
+                <td>{$Info.user_ryid}</td>-->
+                <td>
+                    <div class="btn-group btn-group-xs" role="group" >
+                        <if condition="$Info.bdcore eq 1">
+                            <a href="#" onclick="qxtpass({$Info.id})"><span class="glyphicon glyphicon-ban-circle" title="取消报单中心"></span></a>
+                            <else/>
+                            <a href="#" onclick="resetpass({$Info.id})"><span class="glyphicon glyphicon-check" title="申请成为报单中心"></span></a>
+                        </if>
+                    </div>
+                </td>
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover()
+                    })
+                </script>
+            </tr>
+            </foreach>
+        </table>
+        <ul class="pagination" style="margin-top: -10px">
+            {$pagebar}
+        </ul>
+    </div>
+
+
+
+</block>

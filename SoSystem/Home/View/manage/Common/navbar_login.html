@@ -1,0 +1,9 @@
+<?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+<php> if($globar_user):</php>
+    <a href="#">欢迎：{$globar_user:user_name}({$globar_user:user_role})</a>
+<php> else:</php>
+    <a href="/?a=login&c=User" class="hidden-xs" style="font-size: 12px">登录</a>
+<php> endif;</php>

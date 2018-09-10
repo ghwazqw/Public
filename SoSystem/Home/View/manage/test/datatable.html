@@ -1,0 +1,26 @@
+<extend name="manage/index/base_user" title="表单配置管理"/>
+<block name="customer">
+
+<table id="gridtable" style="font-size: 12px" class="table table-hover table-bordered table-condensed table-responsive table-striped">
+    <thead>
+    <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        <th>col 3</th>
+    </tr>
+    </thead>
+    <tbody>
+    <foreach name='Info' item='Info' >
+    <tr>
+        <td>{$Info.id}</td>
+        <td>{$Info.lxname}</td>
+        <td data-search="Tiger Nixon">T. Nixon</td>
+    </tr>
+    </foreach>
+    </tbody>
+</table>
+    <button id="table_id_example_button">获取选中的行</button>
+
+
+    <script type="text/javascript" charset="utf8" src="__PUBLIC__/bs/sysjs/sys_datatable.js"></script>
+</block>

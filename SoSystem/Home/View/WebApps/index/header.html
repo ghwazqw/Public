@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>{$sys_title}</title>
+    <link rel="stylesheet" href="__PUBLIC__/Moblie/AmaUi/css/amazeui.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Moblie/AmaUi/css/common.min.css" />
+
+    <!--<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="layout">
+    <!--===========layout-header================-->
+    <div class="layout-header am-hide-sm-only">
+        <!--topbar start-->
+        <div class="topbar" style="background: #17224f">
+            <div class="container">
+                <div class="am-g">
+                    <div class="am-u-md-3" >
+                        <div class="topbar-left">
+                            <i class="am-icon-globe"></i>
+                            <div class="am-dropdown"  data-am-dropdown>
+                                <button class="am-btn am-btn-primary am-dropdown-toggle" style="background: #17224f;border: #17224f" data-am-dropdown-toggle>Language <span class="am-icon-caret-down"></span></button>
+                                <ul class="am-dropdown-content" >
+                                    <!--<li><a href="#">English(EN)</a></li>-->
+                                    <li class="am-divider"></li>
+                                    <li><a href="#">中文(CN)</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-md-9">
+                        <div class="topbar-right am-text-right am-fr">
+                            <div class="am-dropdown"  data-am-dropdown>
+                                <div class="am-dropdown"  data-am-dropdown>
+                                    <button class="am-btn am-btn-primary am-dropdown-toggle" style="background: #17224f;border: #17224f" data-am-dropdown-toggle>
+                                        Follow us <i class="am-icon-weixin" ></i>
+                                    </button>
+                                    <ul class="am-dropdown-content" >
+                                        <li style="text-align: center;color: #000000">
+
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <!-- <i class="am-icon-qq"></i>
+                             &lt;!&ndash;<i class="am-icon-google-plus"></i>
+                             <i class="am-icon-pinterest"></i>
+                             <i class="am-icon-instagram"></i>
+                             <i class="am-icon-linkedin"></i>
+                             <i class="am-icon-youtube-play"></i>&ndash;&gt;
+
+                             <i class="am-icon-rss"></i>-->
+                            <!--顶端信息-->
+                            <include file="WebApps/Common/logininfo" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

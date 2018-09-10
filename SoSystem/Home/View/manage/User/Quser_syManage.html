@@ -1,0 +1,66 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+
+    <div class="col-md-12 col-xs-12" nowrap>
+
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="收益信息搜索......" name="keyword" value="{$keyword}">
+
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <!--<li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div id='div1' class="col-md-12">
+        <!-- Table -->
+        <table id="gridtable" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>收益人用户名</th>
+                <!--<th nowrap>收益人推荐码</th>
+                <th nowrap>供献人推荐码</th>-->
+                <th nowrap>贡献金额</th>
+                <th nowrap>贡献人用户名</th>
+                <th nowrap>收益时间</th>
+                <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td>{$Info.syr_name}({~$MetaValue=R('User/UserMeta',array($Info['syr_name']),"API")})</td>
+                    <!--<td>{$Info.syr_tjm}</td>
+                    <td>{$Info.syr_gxrtjm}</td>-->
+                    <td>{$Info.syr_gxje}</td>
+                    <td>{$Info.syr_gxrname}({~$MetaValue=R('User/UserMeta',array($Info['syr_gxrname']),"API")})</td>
+                    <td>{$Info.syr_sj}</td>
+                    <td>
+            </td>
+
+            </tr>
+            </foreach>
+        </table>
+        <script>
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })
+        </script>
+    </div>
+    <ul class="pagination">
+        {$pagebar}
+    </ul>
+</block>

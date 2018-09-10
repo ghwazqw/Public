@@ -1,0 +1,120 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+
+    <div class="col-md-12 col-xs-12" nowrap>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><span id="name"></span>银行卡信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="userxm"></div>
+                        <div id="khh"></div>
+                        <div id="zhm"></div>
+                        <div id="kh"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <!--<button type="button" class="btn btn-primary">提交更改</button>-->
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="交易信息搜索......" name="keyword" value="{$keyword}">
+
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <!--<li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div id='div1' class="col-md-12">
+        <!-- Table -->
+        <table id="gridtable" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <?php
+                $sxf=0.65;
+                ?>
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>用户名</th>
+                <th nowrap>申请提现金额</th>
+                <th nowrap>预计到帐金额(比例：{$sxf})</th>
+                <th nowrap>申请提现时间</th>
+                <th nowrap>状态</th>
+                <!--<th nowrap>审核人</th>
+                <th nowrap>审核时间</th>-->
+                <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++; ?>
+                <?php $tx_je+=$Info['tx_je'];?>
+                <?php $dz_je=$Info['tx_sjdzje'];
+                $dz_je1+=$dz_je;?>
+                <tr>
+                <td>{$i}</td>
+                <td>{$Info.username}({~$MetaValue=R('User/UserMeta',array($Info['username']),"API")})</td>
+                    <td style="text-align: right">￥{$Info.tx_je}.00</td>
+                    <td style="text-align: right">￥{$Info["tx_sjdzje"]}.00</td>
+                    <td>{$Info.tx_sj}</td>
+                    <td><if condition="$Info.tx_zt eq '1' ">申请</if>
+                        <if condition="$Info.tx_zt eq '5' ">等待审批</if>
+                        <if condition="$Info.tx_zt eq '10' ">等待放款</if>
+                        <if condition="$Info.tx_zt eq '100' ">财务放款成功</if>
+                        <if condition="$Info.tx_zt eq '7' ">驳回</if></td>
+                    <!--<td>{$Info.tx_shr}</td>
+                    <td>{$Info.tx_shsj}</td>-->
+                    <td>
+                    </td>
+
+            </tr>
+            </foreach>
+            <tr>
+                <td>合计</td>
+                <td></td>
+                <td style="text-align: right;color: #ff0000">￥{$tx_je}.00</td>
+                <td style="text-align: right;color: #ff0000">￥{$dz_je1}.00</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <script>
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })
+            function ch(username) {
+                $("#name").html(username);
+                var url = "/home/quser/user_khinfo?username=" + username;
+                $.getJSON(url,function (data) {
+                        $.each(data,function (i,value) {
+                            $("#userxm").html("用户姓名："+value.user_xm);
+                            $("#khh").html("开户行信息："+value.user_carekhh);
+                            $("#zhm").html("帐户名称信息："+value.user_carename);
+                            $("#kh").html("帐户卡号："+value.user_carenum);
+                            //alert(value.user_carekhh);
+                        })
+                })
+            }
+        </script>
+    </div>
+    <ul class="pagination">
+        {$pagebar}
+    </ul>
+
+</block>

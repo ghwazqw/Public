@@ -1,0 +1,308 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+//var_export($globar_user);
+?>
+    <link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+    <include file="WebApps/widget/navbar" />
+    <hr />
+    <div class="header-box" data-am-sticky>
+        <div class="container">
+                <div class="am-u-sm-3">
+                    <div class="am-panel-group">
+                    <div class="am-panel am-panel-default">
+                        <div class="user_cnet_kj_menu">
+                            {:W('Info/load',array(8))}
+                            {:W('Info/load',array(6))}
+                            <if condition="$globar_user:bd_type eq 1 ">
+                                {:W('Info/load',array(7))}
+                            </if>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <foreach name='BdInfo' item='Info'>
+                <div class="am-u-sm-9" >
+                        <h4><a href="#"><span class="glyphicon glyphicon-user"></span></a>  {$globar_user:user_xm} <small>{$globar_user:user_name}
+                            <if condition='$globar_user:bd_type eq 1 '>
+                                <a href="#" class="btn btn-danger btn-xs" role="button">报单中心</a>
+                                <else />
+                                <a href="#" class="btn btn-danger btn-xs" role="button">用户</a>
+                            </if>
+                        </small></h4>
+                    <hr style="margin-top: 0px" />
+                        报单币余额：<h3 style="padding-left: 30px;color: #ff7d27">{$Info.dqje}</h3>
+                        <span style="text-align: right;padding-left: 100px">
+                            {$globar_user:bdcore}
+                            <if condition='$globar_user:bd_type eq 1 '>
+                                <?php
+                            $ktxje=$Info['dqje']-10000;
+                            //echo $ktxje;
+                            ?>
+                                <if condition='$Info.dqje elt 10000 '>可用金额不足，不可操作！<else />
+                            <if condition='$week eq 0 '>
+                                    <span style="color: #ff0000">当前时间不可提现！</span>
+                                    <else/>
+                            <button type="button" id="btn" class="am-btn am-btn-warning" onclick="tx()">申请提现</button>
+                            </if>
+                            <button type="button" id="btn" class="am-btn am-btn-success" onclick="zz()">我要转帐</button>
+                            </if>
+                                <else />
+                                <?php
+                            $ktxje=$Info['dqje']-10;
+                            //echo $ktxje;
+                            ?>
+
+                            <if condition='$Info.dqje elt 10'>可用金额不足，不可操作！<else />
+                            <if condition='$week eq 0 '>
+                                    <span style="color: #ff0000">当前时间不可提现！</span>
+                                    <else/>
+                            <button type="button" id="btn" class="am-btn am-btn-warning" onclick="tx()">申请提现</button>
+                            </if>
+                            <button type="button" id="btn" class="am-btn am-btn-success" onclick="zz()">我要转帐</button>
+                            </if>
+                            </if>
+
+
+                        </span>
+                    <div id="txpass" style="display: none;margin-top: 30px" >
+                        <hr />
+                        <form id="txsq" method="post" action="/home/Quser/BdbTx">
+                        <label>请输入您的提现金额：</label>
+                        <input name="zrje" id="txje" class="form-control" style="width: 50%" value=""  onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();"/>
+                        <input name="ktxje" id="ktxje" type="hidden" value="{$ktxje}" />
+                            <input name="jy_zt" id="jy_zt" type="hidden" value="1" />
+                            <input name="czr" id="username" type="hidden" value="{$globar_user:user_name}" />
+                        <label style="margin-top: 20px">请输入您的提现密码：</label>
+                        <input name="txpassword" id="txpassword" type="password" value="" class="form-control" style="width: 200px"/>
+                            <div style="margin-top: 20px">
+                        <button type="button" id="txsub" class="am-btn am-btn-primary" >提交提现申请</button>
+                        <button type="reset" class="am-btn am-btn-default">重置表单</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="zzpass" style="display: none;margin-top: 30px" >
+                        <hr />
+                        <form id="zzsq" method="post" action="/home/Quser/Bdbzz">
+                            <label>请输入您的转帐金额：</label>
+                            <input name="zrje" id="txje1" class="form-control" style="width: 50%" value=""  onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();"/>
+                            <input name="ktxje" id="ktxje1" type="hidden" value="{$ktxje}" />
+                            <input name="jy_zt" id="jy_zt1" type="hidden" value="1" />
+                            <input name="czr" id="username1" type="hidden" value="{$globar_user:user_name}" />
+                            <input name="userxm" id="userxm" type="hidden" value="{$globar_user:user_xm}" />
+                            <label style="margin-top: 20px">请输入收取人的用户名：</label>
+                            <input name="jy_skr" id="jy_skr" type="text" value="" class="form-control" style="width: 50%"/>
+                            <span id="skrxm" style="display: none;margin-top: 20px">1212</span><br />
+                            <label style="margin-top: 20px">请输入您的二次验证密码：</label>
+                            <input name="txpassword" id="txpassword1" type="password" value="" class="form-control" style="width: 200px"/>
+                            <div style="margin-top: 20px">
+                                <button type="button" id="txsub1" class="am-btn am-btn-primary" >提交转帐</button>
+                                <button type="reset" class="am-btn am-btn-default">重置表单</button>
+                            </div>
+                        </form>
+                    </div>
+                    <hr/>
+                    <h4>提现/转帐规则：</h4>
+                    <p style="padding-left: 20px">
+                        1>报单中心：报单币帐户需要保证大于10000元，方可进行提现和转帐；<br />
+                        2>普通用户：报单币帐户需要保证大于10元，方可进行提现和转帐；<br />
+                        3>提现和转帐最小单位为100元；<br />
+                        4>工作日期间09:00-17:00期间可申请提现，非工作日不可进行提现；<br />
+                        5>所有事宜解释权归公司所有。
+                    </p>
+                </div>
+
+
+            </foreach>
+        </div>
+    </div>
+    <script>
+        window.onload = function(){
+            var ktxje=$("#ktxje").val();
+            if (ktxje==0){
+                $("#txsub").attr('disabled',"true");
+            }
+            $("#txsub").attr('disabled',"true");
+            $("#txsub1").prop("disabled",true);
+        };
+        function tx() {
+            $("#txje1").val("");
+            $("#txpass").show();
+            $("#zzpass").hide();
+        }
+        $("#txpassword").blur(function () {
+            var username=$("#username").val();
+            var pass=$("#txpassword").val();
+            if (!username || !pass){
+                alert("请输入验证密码");
+                $("#txsub").attr('disabled',"true");
+                return false;
+            }
+            $.ajax({
+                type:"POST", //以post提交数据
+                url:"/home/User/ChTxP",  //提交URL
+                data:{"Username":username,"textPwd":pass}, //提交数据
+                success:function (data, state) { //成功调用回调信息
+                    if (data==0){
+                        alert("密码验证失败，请检查");
+                        $("#txsub1").attr('disabled',"true");
+                    }else{
+                        //alert("验证通过");
+                        //$("#form").submit();
+                        $("#txsub").prop("disabled",false);
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                    //alert(textStatus);
+                },
+                timeout: 60000, //执行最大时间，超过该时间为超时
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+
+            });
+        });
+        $("#txsub").click(function () {
+            var je=$("#txje").val();
+            var ktxje=$("#ktxje").val();
+
+            //alert(je);
+            if (je<100){
+                alert("必须输入100以上金额");
+                return false;
+            }else if (je%100!=0){
+                alert("必须是100的倍数");
+                return false;
+            }else if (je>ktxje){
+                alert("超出可提现范围，请重新填写。");
+                return false;
+            }else{
+                $("#txsub").html("正在提交,在返回结果前请不要离开本页...");
+                $("#txsub").prop("disabled",true);
+                $("#txsq").submit();
+                //alert("您申请的提现金额为：￥"+je+".00元,系统已提交后台，请耐心等待结果。");
+            }
+        })
+    </script>
+    <script>
+        function zz() {
+            $("#txje").val("");
+            $("#txpass").hide();
+            $("#zzpass").show();
+        }
+        $("#txpassword1").blur(function () {
+            var username=$("#username1").val();
+            var pass=$("#txpassword1").val();
+            if (!username || !pass){
+                alert("请输入验证密码");
+                $("#txsub1").attr('disabled',"true");
+                return false;
+            }
+            //alert(pass);
+            $.ajax({
+                type:"POST", //以post提交数据
+                url:"/home/User/ChTxP",  //提交URL
+                data:{"Username":username,"textPwd":pass}, //提交数据
+                success:function (data, state) { //成功调用回调信息
+                    if (data==0){
+                        alert("密码验证失败，请检查");
+                        $("#txsub1").attr('disabled',"true");
+                    }else{
+                        //alert("验证通过");
+                        //$("#form").submit();
+                        $("#txsub1").prop("disabled",false);
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                    //alert(textStatus);
+                },
+                timeout: 60000, //执行最大时间，超过该时间为超时
+                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                    return false;
+                }
+            });
+
+        });
+        $("#jy_skr").blur(function () {
+            var skr=$("#jy_skr").val();
+            var username=$("#username1").val();
+            var userxm=$("#userxm").val();
+            if (skr==username){
+                alert("您不能转帐给自己");
+                $("#jy_skr").val("");
+                $("#txsub1").prop("disabled",true);
+                $("#skrxm").hide();
+                return false;
+            }
+            if (!skr){
+                alert("收款人信息必填");
+                $("#txsub1").prop("disabled",true);
+                $("#skrxm").hide();
+                return false;
+            }else{
+                $.ajax({
+                    type:"POST", //以post提交数据
+                    url:"/home/User/selectry",  //提交URL
+                    data:{"keyword":skr}, //提交数据
+                    success:function (data, state) { //成功调用回调信息
+                        if (data==0){
+                            alert("查无此人！");
+                            $("#skrxm").hide();
+                            $("#txsub1").prop("disabled",true);
+                            return false;
+                        }else{
+                            if (userxm==data){
+                                alert("您不能转帐给自己");
+                                $("#jy_skr").val("");
+                                $("#txsub1").prop("disabled",true);
+                                $("#skrxm").hide();
+                                return false;
+                            }else{
+                                $("#skrxm").show();
+                                $("#skrxm").html("<mark> 收款人：" + data + "</mark>");
+                            }
+
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                        //alert(textStatus);
+                    },
+                    timeout: 60000, //执行最大时间，超过该时间为超时
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                        alert("服务器响应超时，请稍候重试：" + errorThrown);
+                        return false;
+                    }
+                });
+            }
+        })
+        $("#txsub1").click(function () {
+            var je=$("#txje1").val();
+            var ktxje=$("#ktxje1").val();
+
+            //alert(je);
+            if (je<100){
+                alert("必须输入100以上金额");
+                return false;
+            }else if (je%100!=0){
+                alert("必须是100的倍数");
+                return false;
+            }/*else if (je>ktxje){
+                alert("提现金额出错，请重新填写。");
+                return false;
+            }*/else{
+                $("#txsub1").html("正在提交,在返回结果前请不要离开本页...");
+                $("#txsub1").prop("disabled",true);
+                $("#zzsq").submit();
+                //alert("您申请的提现金额为：￥"+je+".00元,系统已提交后台，请耐心等待结果。");
+            }
+        })
+    </script>
+
+</block>

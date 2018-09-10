@@ -1,0 +1,91 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+    <include file="WebApps/widget/navbar" />
+    <hr />
+    <div class="header-box" data-am-sticky>
+        <div class="container">
+                <div class="am-u-sm-3">
+                    <div class="am-panel-group">
+                    <div class="am-panel am-panel-default">
+                        <div class="user_cnet_kj_menu">
+                            {:W('Info/load',array(8))}
+                            {:W('Info/load',array(6))}
+                            <if condition="$globar_user:bd_type eq 1 ">
+                                {:W('Info/load',array(7))}
+                            </if>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="am-u-sm-9" >
+                    <div >
+                    <!--<ol class="am-breadcrumb" >
+                        <li><a href="/" class="am-icon-home">首页</a></li>
+                        <li class="am-active">用户中心</li>
+                    </ol>-->
+                    <h4>提现/转报单币信息查询 <small>{$globar_user:user_name}</small></h4>
+                    <hr style="margin-top: 0px;width: 100%" />
+                        <table class="am-table am-table-bordered am-table-striped am-table-compact">
+                            <?php
+                $sxf=0.65;
+                ?>
+                            <thead>
+                            <tr>
+                                <th nowrap>序号</th>
+                                <th nowrap>用户名</th>
+                                <th nowrap>操作金额</th>
+                                <!--<th nowrap>预计到帐金额</th>-->
+                                <th nowrap>到帐金额</th>
+                                <th nowrap>申请时间</th>
+                                <th nowrap>状态</th>
+                                <th nowrap>审核人</th>
+                                <th nowrap>审核时间</th>
+                                <!--<th nowrap>操作</th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $i = 0;?><br/>
+                            <foreach name='InfoData' item='Info' >
+                                <?php $i++;?>
+                                <?php $tx_je+=$Info['tx_je'];?>
+                                <?php $dz_je=$Info['tx_je']*$sxf;
+                                $dz_je1+=$dz_je;?>
+                                <tr>
+                                    <td>{$i}</td>
+                                    <td>{$Info.username}</td>
+                                    <td style="text-align: right">￥{$Info.tx_je}.00</td>
+                                    <!--<td style="text-align: right">￥{$Info["tx_je"]*$sxf}.00</td>-->
+                                    <td style="text-align: right">
+                                        <if condition="$Info.tx_lx eq '91' ">扣除信用额度<else />
+                                        <if condition="$Info.tx_zt eq '100' "><if condition="$Info.tx_sjdzje eq 0 ">转报单币<else />{$Info.tx_sjdzje}</if><else />{$Info.tx_sjdzje}</if>
+                                        </if>
+                                    </td>
+                                    <td>{$Info.tx_sj}</td>
+                                    <td><a href="#" title="{$Info.tx_spyj}">
+                                        <if condition="$Info.tx_zt eq '1' ">申请</if>
+                                        <if condition="$Info.tx_zt eq '5' ">审批中</if>
+                                        <if condition="$Info.tx_zt eq '10' ">通过，财务放款中</if>
+                                        <if condition="$Info.tx_zt eq '100' "><if condition="$Info.tx_lx eq '95' ">报单积分转报单币</if>操作成功</if>
+                                        <if condition="$Info.tx_zt eq '7' ">驳回，请与公司联系确认驳回原因</if>
+                                    </a>
+                                        </td>
+                                    <td>{$Info.tx_shr}</td>
+                                    <td>{$Info.tx_shsj}</td>
+                                    <!--<td>
+                                </td>-->
+                            </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://validator.niceue.com/releases/1.1.3/dist/jquery.validator.min.js?local=zh-CN" ></script>
+</block>

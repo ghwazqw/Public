@@ -1,0 +1,32 @@
+
+
+
+
+
+<script type="text/javascript" src="__PUBLIC__/manage/js/layui.js"></script>
+<!--<script type="text/javascript" src="__PUBLIC__/manage/datas/nav.js"></script>-->
+<script>
+    var navs = [
+        <foreach name="class_mtea_data" item="class_mtea" >
+        {
+        "title": "{$class_mtea.cglx_mc}",
+        "icon": "{$class_mtea.menu_icon}",
+        "spread": <php>if ($class_mtea['menu_sfzk']==0) :</php>false<php>else :</php>true<php>endif ;</php>,
+        "children": [
+            <foreach name="mtea_data" item="mtea" >
+            <php> if( $mtea['cglx_sjid'] == $class_mtea['id'] ):</php>
+            {
+                "title": "{$mtea.cglx_mc}",
+                "icon": "{$mtea.menu_icon}",
+                "href": "{$mtea.menu_link}"
+            },
+            <php>endif ;</php>
+            </foreach>
+        ]
+        },
+        </foreach>
+
+    ];
+</script>
+<script src="__PUBLIC__/manage/js/index.js"></script>
+</body>

@@ -1,0 +1,56 @@
+<extend name="manage/index/base_user" />
+<block name="customer">
+    <link href="__PUBLIC__/bs/css/bootstrap-switch.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/bootstrap-switch.min.js"></script>
+        <ol class="breadcrumb">
+            <li><a href="#">管理首页</a></li>
+            <li class="active">系统基础信息配置</li>
+        </ol>
+    <div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">服务器信息 <small>Server Information</small></div>
+        <div class="panel-body" style="line-height: 22px">
+            <volist name="serverinfo" id="v" >
+                {$key}：<small>{$v}</small><br/>
+
+            </volist>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default" style="line-height: 22px">
+            <div class="panel-heading">系统基础信息 <small>System Information </small>
+                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="panel-body">
+                <volist name="sysconfig" id="v">
+                    {$key}：<small>{$v}</small><br/>
+                </volist>
+                系统开关：
+                    <input name="status" type="checkbox" checked /><br />
+                <foreach name="LoginInfo" item="info" >
+                    最后一次登录时间：<small>{$info.log_date}</small><br/>
+                    最后一次登录用户：<small>{$info.user_name}</small><br/>
+                    最后一次登录IP：<small>{$info.user_ip}</small><br/>
+                </foreach>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $('[name="status"]').bootstrapSwitch({
+        onText:"开",
+        offText:"关",
+        onColor:"success",
+        offColor:"danger",
+        size:"mini",
+        onSwitchChange:function(event,state){
+            if(state==true){
+                $(this).val("1");
+            }else{
+                $(this).val("2");
+            }
+        }
+    })
+</script>
+</block>

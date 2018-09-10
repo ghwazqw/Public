@@ -1,0 +1,52 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+
+    <link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+
+    <include file="WebApps/widget/navbar" />
+    <hr />
+    <!--login start-->
+    <div class="container " style="margin: 0 auto;">
+        <div class="col-md-8">
+            <form method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" class="form-control" name="Username" id="username" placeholder="输入用户名" style="width: 80%" value="" required>
+                    <input type="hidden" name="aa" value="q" >
+                </div>
+                <div class="form-group" >
+                    <label>密码</label>
+                    <input type="password" class="form-control" name="textPwd" id="textPwd" placeholder="输入密码" style="width: 80%" required>
+                </div>
+                <div class="form-inline" >
+                    <label>输入验证码</label>
+                    <input type="text" class="form-control" name="txtcode" id="txtcode" placeholder="请输入验证码信息" required>
+                    <img src="/home/index/vercode" style="width: 130px;height: 32px;cursor: pointer"   onclick="this.src='/home/index/vercode?id='+Math.random();" title="点击刷新"/>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="sj"> 一周内免登录
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<!--<a href="/home/Quser/Forgot_Password.html">忘记密码</a>-->&nbsp;&nbsp;
+                    &nbsp;&nbsp;<a href="/home/index/register.html">注册新用户</a>
+                </div>
+                <button type="submit" class="btn btn-success">提交</button>
+                <button type="reset" class="btn btn-default">重置</button>
+                <span class="label label-warning">{$errorInfo}</span>
+                <span class="label label-success">{$sussInfo}</span>
+            </form>
+        </div>
+        <div class="col-md=4" style="height: 200px;line-height: 200px">
+            <a href="https://open.weixin.qq.com/connect/qrconnect?appid={$appid}&redirect_uri=http://www.clzcdrt.com/home/test/wxloginretrue&response_type=code&scope=snsapi_login#wechat_redirect">
+                <button type="button" class="am-btn am-btn-success am-radius"><i class="am-icon-weixin"> </i> 微信登录</button>
+            </a>
+            <a href="/home/index/register.html" class="contact-btn" onclick="kf()">
+                <button type="button" class="am-btn am-btn-primary am-radius"><i class="am-icon-qq"> </i> QQ登录</button>
+            </a>
+        </div>
+    </div>
+    <p></p>
+    <!--login end-->
+    <script type="text/javascript" src="https://validator.niceue.com/releases/1.1.3/dist/jquery.validator.min.js?local=zh-CN" ></script>
+</block>

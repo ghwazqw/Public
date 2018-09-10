@@ -1,0 +1,71 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <div id='div1' class="col-md-12">
+        <!-- Table -->
+        <form class="form-horizontal" action="#" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">用户名 : </lable>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                            <span class="input-group-addon" >
+                                <span class="glyphicon glyphicon-text-color"></span>
+                            </span>
+                <select class="form-control" name="user_name" id="user_name" onchange="sel()" data-rule="required">
+                    <option value="">请选择用户</option>
+                    <foreach name="info_data" item="user" >
+                        <option value="{$user.user_name}">{$user.user_xm}</option>
+                    </foreach>
+                </select>
+            </div><br/><!--END-->
+            <script>
+                function sel() {
+                    var info=$("#user_name").val();
+                    $.ajax({
+                        type:"POST", //以post提交数据
+                        url:'/home/user/getBdUser',  //提交URL
+                        data:{"username":info}, //提交数据
+                        success:function (data, state) { //成功调用回调信息
+                            $("#dqje").val(data);
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                            //alert(textStatus);
+                        },
+                        timeout: 60000, //执行最大时间，超过该时间为超时
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                            alert("服务器响应超时，请稍候重试：" + errorThrown);
+                            return false;
+                        }
+
+                    });
+                }
+            </script>
+
+            <input type="hidden" class="form-control" name="czr" id="czr" placeholder="请输入用户类型" value="{$globar_user:user_name}" />
+
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">帐户可用余额 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="dqje" id="dqje" placeholder="" value="" readonly/>
+            <div class="input-group-addon">.00</div>
+        </div><br/><!--END--><br />
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">注入金额 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="zrje" id="zrje" placeholder="" value="" data-rule="required" />
+            <div class="input-group-addon">.00</div>
+        </div><br/><!--END--><br />
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"></lable>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" id="submit">
+                    <button type="submit" class="btn btn-success">保存</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+            </div>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" id="info"></div>
+        </form>
+    </div>
+
+
+</block>

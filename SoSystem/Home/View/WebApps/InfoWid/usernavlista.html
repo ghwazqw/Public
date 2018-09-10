@@ -1,0 +1,12 @@
+
+<div class="am-panel am-panel-primary">
+    <div class="am-panel-hd">
+        <h3 class="am-panel-title"><i class="am-icon-user am-icon-fw"> </i> {$w_title}</h3>
+    </div>
+    <ul class="am-list am-list-static">
+        <foreach name="w_data" item="d">
+            <li ><a href="{$d.info_link}" style="height: 35px;padding-top: -10px;margin-top: -10px"><i class="{$d.info_ico}"> </i> {$d.info_title}</a></li>
+        </foreach>
+    </ul>
+    <!--<div class="am-panel-footer"></div>-->
+</div>

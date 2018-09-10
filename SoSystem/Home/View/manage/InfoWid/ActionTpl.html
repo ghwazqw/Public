@@ -1,0 +1,7 @@
+
+<input type="hidden" id="action" value="{$action}" />
+<div id="infolidata" style="display: none">
+    <foreach name='ActInfo' item='Info' >
+        <li><a href='{$Info.action_link}' role='button' data-toggle='modal'  title='{$Info.action_note}'>{$Info.action_ico} {$Info.action_name}</a></li>
+    </foreach>
+</div>

@@ -1,0 +1,104 @@
+<extend name="manage/index/base_user" />
+<block name="customer">
+    <include file="manage/infowid/ActionTpl"/>
+    <script type="text/javascript">
+        function delinfo(data,ryid) {
+            if(confirm("请确认是否删除，该操作不可恢复！")){
+                //alert(data);
+                location.href="/home/News/delNewsinfo?table=info_tb&id="+data;
+            }
+        };
+    </script>
+    <script type="text/html" id="tpl_ptype">
+        <span><a href="#">{ptype}</a> </span>
+    </script>
+    <script>
+        var datinfo=[
+            <foreach name='MetaData' item='Info' >
+            [{$Info.info_id},'{$Info.im_key}','{$Info.im_value}'],
+        </foreach>
+            [-1,'','']
+        ];
+        function getMeta(info_id,im_key,defaultvalue) {
+            for (var i=0;i<datinfo.length;i++){
+                if (datinfo[i][0]==info_id && datinfo[i][1]==im_key)
+                    return datinfo[i][2];
+            }
+            if (defaultvalue)
+                return defaultvalue;
+            else
+            if (im_key=="link")
+                return '没有信息';
+            else
+                return 0;
+        }
+        function getMetaList(info_id,im_key,tpl_id) {
+            var ret="";
+            //alert(tpl_id);
+            var tpl_content=$("#"+tpl_id).html(); //模板内容
+            //alert(tpl_content);
+            for (var i=0;i<datinfo.length;i++){
+                if (datinfo[i][0]==info_id && datinfo[i][1]==im_key)
+                    ret+=tpl_content.replace("{"+im_key+"}",datinfo[i][2]);
+            }
+            //alert(ret);
+            return ret;
+        }
+    </script>
+    <ol class="breadcrumb">
+        <li><a href="#">管理首页</a></li>
+        <li class="active">天龙八部信息管理</li>
+    </ol>
+    <table id="gridtable" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px;margin-top: -50px">
+        <thead>
+        <tr style="background: #8bc5eb; color: #ffffff">
+            <th nowrap>序号</th>
+            <th nowrap>标题</th>
+            <th nowrap>发布者</th>
+            <th nowrap>信息来源</th>
+            <th nowrap>简介</th>
+            <th nowrap>操作时间</th>
+            <th nowrap>类型</th>
+            <th nowrap>属性信息</th>
+            <th nowrap>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $i = 0;?><br/>
+        <foreach name='InfoData' item='Info' >
+            <?php $i++;?>
+            <tr>
+                <td>{$i}</td>
+                <td nowrap><a href="/home/news/newsdal?id={$Info.id}">{$Info.info_title}</a></td>
+                <td>{$Info.info_user}</td>
+                <td nowrap>{$Info.info_laiyuan}</td>
+                <td nowrap>
+                    <a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='资讯简介' data-content='{$Info.info_des}'><span class='glyphicon glyphicon-folder-open'></span></a>
+                    </td>
+                <td nowrap>{$Info.info_datetime}</td>
+                <td><if condition="($Info.info_type eq 1) ">天龙八部</if></td>
+                <td>点击量： <script>document.write(getMeta({$Info.id},"dianji"))</script>
+                    评论数： <script>document.write(getMeta({$Info.id},"review"))</script>
+                    外部链接：<script>document.write(getMeta({$Info.id},"link"))</script>
+                    <!--规格： <script>document.write(getMetaList({$Info.id},'ptype',"tpl_ptype"))</script>-->
+                </td>
+                <td>
+                    <include file="manage/infowid/ActionBut"/>
+                </td>
+
+            </tr>
+        </foreach>
+        </tbody>
+        <script>
+            $(function () {
+                $('[data-toggle="popover"]').popover({
+                    trigger: 'hover',//鼠标以上时触发弹出提示框
+                    html:true, //打开html支持
+                })
+            })
+        </script>
+    </table>
+
+
+    <script type="text/javascript" charset="utf8" src="__PUBLIC__/bs/sysjs/sys_datatable.js"></script>
+</block>

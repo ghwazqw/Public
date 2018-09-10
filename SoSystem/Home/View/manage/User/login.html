@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <link href="__PUBLIC__/manage/css/styles.css" type="text/css" media="screen" rel="stylesheet" />
+  <script type="text/javascript" src="__PUBLIC__/bs/js/jquery1.9.1.js" ></script>
+  <script type="text/javascript" src="__PUBLIC__/bs/Validator/jquery.validator.js?local=zh-CN" ></script>
+  <title>资产信息管理系统/用户名录</title>
+</head>
+<body id="login">
+<form method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+<div id="wrapper">
+  <div id="content">
+    <div id="header">
+      <h1>
+        <!--<a href="#">qwewqe</a>--></h1>
+    </div>
+    <div id="darkbanner" class="banner320">
+      <h2>Login System</h2>
+    </div>
+    <div id="darkbannerwrap">
+    </div>
+      <fieldset class="form">
+        <p>
+          <label class="loginlabel" for="Username">
+            用户名:</label>
+          <input class="logininput ui-keyboard-input ui-widget-content ui-corner-all" name="Username" id="Username" placeholder="UserName" type="text" value=""  data-rule="required"/>
+        </p>
+        <p>
+          <label class="loginlabel" for="textPwd">
+            密码:</label>
+          <span>
+           <input class="logininput"   name="textPwd" id="textPwd" type="password" data-rule="required"/></span>
+        </p>
+        <p >
+          <label class="loginlabel" for="txtcode">
+            验证码:</label>
+          <span>
+                        <input name="txtcode" class="logininput" id="txtcode" type="text" data-rule="required"/>
+          </span>
+        </p>
+        <p style="padding-left: 78px;margin-top: -20px;margin-bottom: 10px">
+        <img src="/home/index/vercode" style="width: 130px;height: 32px;;margin-top: 10px"  onclick="this.src='/home/index/vercode?id='+Math.random();" title="点击刷新" />
+          <span style="color:#ff0000">{$errorInfo}</span>
+          <span class="label label-success">{$sussInfo}</span>
+        </p>
+        <button id="loginbtn" type="submit" class="positive" name="Submit">登 录</button>
+        <ul id="forgottenpassword">
+          <li class="boldtext">|</li>
+          <li>
+            <input id="remember" type="checkbox" name="save" id="save"> 一周内免登录</li>
+
+        </ul>
+      </fieldset>
+  </div>
+</div>
+<div id="wrapperbottom_branding">
+  <div id="wrapperbottom_branding_text">
+    忘记密码请与系统管理员联系</div>
+</div>
+</form>
+</body>

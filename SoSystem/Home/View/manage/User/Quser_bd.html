@@ -1,0 +1,111 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+    <?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+    <div id='div1' class="col-md-12">
+        <!-- Table -->
+        <form class="form-horizontal" action="#" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">用户名 : </lable>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+                            <span class="input-group-addon" >
+                                <span class="glyphicon glyphicon-text-color"></span>
+                            </span>
+                <select class="form-control" name="user_name" id="user_name" onchange="sel()" data-rule="required">
+                    <option value="">请选择用户</option>
+                    <foreach name="info_data" item="user" >
+                        <option value="{$user.user_name}">{$user.user_xm}</option>
+                    </foreach>
+                </select>
+            </div><br/><!--END-->
+            <script>
+                function sel() {
+                    var info=$("#user_name").val();
+                    var url='/home/user/getQuser?info='+info;
+                    $.getJSON(url,function (data) {
+                        $.each(data,function (i,value) {
+                            var tjm=value.user_tjm;
+                            var tjr=value.user_tjr;
+                            var jb=value.user_jb;
+                            var lx=value.user_lx;
+                            $("#user_tjr").val(tjr);
+                            $("#user_tjm").val(tjm);
+                            $("#user_jb").val(jb);
+                            $("#user_lx").val(lx);
+                        })
+                    });
+                    $.ajax({
+                        type:"POST", //以post提交数据
+                        url:'/home/user/getjyinfo',  //提交URL
+                        data:{"info":info}, //提交数据
+                        success:function (data, state) { //成功调用回调信息
+                            if (data>0){
+                                $("#submit").hide();
+                                $("#info").html("<span style='color: #ff0000'>该用户已经交易，无法再次进行交易</span>");
+
+                            }else{
+                                $("#submit").show();
+                                $("#info").html("");
+                            }
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                            //alert(textStatus);
+                        },
+                        timeout: 60000, //执行最大时间，超过该时间为超时
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                            alert("服务器响应超时，请稍候重试：" + errorThrown);
+                            return false;
+                        }
+
+                    });
+                }
+            </script>
+
+            <input type="hidden" class="form-control" name="user_type" id="user_type" placeholder="请输入用户类型" />
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">报单员 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="zcr" id="zcr" placeholder="请输入用户类型" value="{$globar_user:user_name}" readonly />
+        </div><br/><!--END-->
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">可用金额 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="kyje" id="kyje" placeholder="报单员可用金额" value="{$dqje}" readonly />
+        </div><br/><!--END-->
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">交易金额 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+            <input type="text" class="form-control" name="jy_je" id="jy_je" placeholder="请输入交易金额" value="{$jyje}" readonly/>
+            <div class="input-group-addon">.00</div>
+        </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">推荐码 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input name="user_jb" id="user_jb" type="hidden" value="{$user.user_jb}"><input readonly type="text" class="form-control" name="user_tjm" id="user_tjm" value="{$user.user_tjm}" placeholder="请输入推荐码" data-rule="required"/>
+        </div><br/><!--END--><lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">推荐人 : </lable><div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+            <input readonly type="text" class="form-control" name="user_tjr" value="{$user.user_tjr}" id="user_tjr" placeholder="请输入推荐人" data-rule="required"/>
+        </div><br/><!--END-->    <br />
+            <lable class="col-md-2 control-label" style="text-align: right;font-size: 14px"></lable>
+            <php>if ($dqje<=1000) :</php>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" id="submit">
+               该报单员可用金额不足，请与公司联系注入资金后可开始报单。
+            </div>
+            <php>else:</php>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" id="submit">
+                    <button type="submit" class="btn btn-success">保存</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+            </div>
+            <php>endif ;</php>
+            <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" id="info"></div>
+        </form>
+    </div>
+
+
+</block>

@@ -1,0 +1,18 @@
+<extend name="manage/index/base_user" title="报废信息查询"/>
+
+<block name="customer">
+<script>
+    function printHTML(page)
+    {
+        var bodyHTML=window.document.body.innerHTML;
+        window.document.body.innerHTML=$(page).html();
+        window.print();
+        window.document.body.innerHTML=bodyHTML;
+    }
+</script>
+<body>
+<a href="javascript:printHTML('#div1')"><span class="glyphicon glyphicon-print"> 打印信息</span></a>
+<div id='div1' style="width: 150px;border: 1px solid #000000">
+<img src="/home/index/qrcode" style="width: 90px"/>
+</div>
+</block>

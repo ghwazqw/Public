@@ -1,0 +1,78 @@
+<extend name="manage/index/base" />
+<block name="customer">
+    <div class="box-body">
+        <php>if (!$keyword) :</php>
+        <php>else :</php>
+        <div class="col-md-12 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/Home/cgxx/cgxx_class">楼宇信息</a>
+                </li>
+                <li class="active">
+                    房屋信息
+                </li>
+            </ul>
+        </div>
+        <php>endif ;</php>
+    <div class="content-wrapper" style="width: 97%;margin: 0 auto">
+            <!-- /.box-header -->
+                <table id="example1" class="table table-bordered table-striped table-condensed" style="font-size: 12px">
+                    <thead>
+                    <tr style="font-size: 12px">
+                        <th style="width: 5%;">编号</th>
+                        <th >房间名称</th>
+                        <th >资产类别</th>
+                        <th >资产编码</th>
+                        <th >发证日期</th>
+                        <th >证号编号</th>
+                        <th >财产保管人</th>
+                        <th >坐落位置</th>
+                        <th >面积</th>
+                        <th >所在楼层</th>
+                        <th style="width: 8%">土地使用性质</th>
+                        <th style="width: 8%">操作</th>
+                        <!--<th style="width: 4%">Down</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <php>if( $count > 0  ):</php>
+                    <foreach name="info_data" item="cg" >
+                        <tr style="font-size: 12px">
+
+                            <td style="text-align: center">{$cg.id}</td>
+                            <td><a href="#"  title="人员信息:张盟;相关设备：空调、沙发等">{$cg.homename}({$cg.houserooms})</a></td>
+                            <td>{$cg.zclb}</td>
+                            <td>{$cg.zcbm}</td>
+                            <td>{$cg.fzrq}</td>
+                            <td>{$cg.fczbh}</td>
+                            <td>{$cg.glyxm}</td>
+                            <td>{$cg.zlwz}</td>
+                            <td style="text-align: right">{$cg.mj}㎡</td>
+                            <td>{$cg.szlc}</td>
+                            <td>{$cg.nolur}</td>
+                            <td><a href="/home/LfangManage/Fpei?fj_id={$cg.id}&fj_name={$cg.homename}">分配资产</a></td>
+                            <!--<td><a href="__PUBLIC__/glxh/downloads/{$cg.cg_xmbh}.pdf" target="_blank" style="text-align: center"><span class="fa fa-download"></span></a></td>-->
+
+                        </tr>
+                    </foreach>
+                    <php>else:</php>
+                    </tbody>
+
+                </table>
+                    <span style="color: red" >“{$keyword}”</span>该关键字下没有楼宇信息。
+                <br/><br/><br/>
+                    <php> endif;</php>
+
+                    </tbody>
+
+                </table>
+                <ul class="pagination">
+                    {$pagebar}
+                </ul>
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+</block>

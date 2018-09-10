@@ -1,0 +1,75 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+
+    <div class="col-md-12 col-xs-12" nowrap>
+
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="提现信息搜索......" name="keyword" value="{$keyword}">
+
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <!--<li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div id='div1' class="col-md-12">
+        <!-- Table -->
+        <table id="gridtable" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>用户名</th>
+                <th nowrap>提现金额</th>
+                <th nowrap>申请时间</th>
+                <th nowrap>状态</th>
+                <th nowrap>审核人</th>
+                <th nowrap>审核时间</th>
+                <!--<th nowrap>审批意见</th>-->
+                <th nowrap>放款确认时间</th>
+                <th nowrap>实际到帐金额</th>
+                <th nowrap>操作</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td>{$Info.username}({~$MetaValue=R('User/UserMeta',array($Info['username']),"API")})</td>
+                <td style="text-align: right">￥{$Info.tx_je}.00</td>
+                <td>{$Info.tx_sj}</td>
+                <td><if condition="$Info.tx_zt eq '1' ">申请</if>
+                    <if condition="$Info.tx_zt eq '5' ">审批中</if>
+                    <if condition="$Info.tx_zt eq '10' ">通过，财务放款中</if>
+                    <if condition="$Info.tx_zt eq '100' ">财务放款成功</if>
+                    <if condition="$Info.tx_zt eq '7' ">驳回</if></td>
+                <td>{$Info.tx_shr}</td>
+                <td>{$Info.tx_shsj}</td>
+                <!--<td>{$Info.tx_spyj}</td>-->
+                <td>{$Info.tx_fkqrsj}</td>
+                <td style="text-align: right">￥{$Info.tx_sjdzje}.00</td>
+                <td></td>
+            </tr>
+            </foreach>
+        </table>
+
+    </div>
+    <ul class="pagination">
+        {$pagebar}
+    </ul>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+</block>

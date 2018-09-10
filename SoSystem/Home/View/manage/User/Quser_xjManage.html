@@ -1,0 +1,73 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+<block name="customer">
+
+    <div class="col-md-12 col-xs-12" nowrap>
+
+        <div class="input-group" style="text-align: right">
+            <form class="navbar-form navbar-left" method="get">
+                <input type="text" class="form-control" placeholder="帐户信息搜索......" name="keyword" value="{$keyword}">
+
+                    <button class="btn btn-default" type="submit">搜索</button>
+            </form>
+            <div class="btn-group" style="margin-top: 8px">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li >
+                        <a href="#form-1" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div id='div1' class="col-md-12">
+        <!-- Table -->
+        <table id="gridtable" class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <th nowrap>序号</th>
+                <th nowrap>帐户类型</th>
+                <th nowrap>当前金额</th>
+                <!--<th nowrap>总提现金额</th>
+                <th nowrap>总收益金额</th>-->
+                <th nowrap>所属用户</th>
+                <th nowrap>所属用户ID</th>
+                <th nowrap>开设/激活时间</th>
+                <!--<th nowrap>推荐码</th>-->
+                <th nowrap>帐户状态</th>
+            </tr>
+            <?php $i = 0;?><br/>
+            <foreach name='InfoData' item='Info' >
+                <?php $i++;?>
+                <tr>
+                <td>{$i}</td>
+                <td><if condition="$Info.cat_type eq '1' ">现金帐户<else />信用帐户</if></td>
+                    <td>{$Info.cat_dqje}</td>
+                    <!--<td>{$Info.cat_ztxje}</td>
+                    <td>{$Info.cat_zsyje}</td>-->
+                    <td>{$Info.cat_username}({~$MetaValue=R('User/UserMeta',array($Info['cat_username']),"API")})</td>
+                    <td>{$Info.cat_userid}</td>
+                    <td>{$Info.cat_sj}</td>
+                    <!--<td>{$Info.cat_tjm}</td>-->
+                    <td>
+                        <if condition="$Info.cat_zt eq 0 "><a href="#" class="btn btn-warning btn-xs disabled" role="button">未激活</a><else />
+                            <a href="#" class="btn btn-success btn-xs" role="button">已激活</a>
+                        </if>
+            </td>
+
+            </tr>
+            </foreach>
+        </table>
+        <script>
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })
+        </script>
+    </div>
+    <ul class="pagination">
+        {$pagebar}
+    </ul>
+</block>
