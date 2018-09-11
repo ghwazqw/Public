@@ -266,6 +266,41 @@ class RestfulController extends RestController {
                 break;
         }
     }
+
+    //加载手机验证码
+    public function getlogincode(){
+        switch ($this->_method){
+            case 'post':
+                $mob=I("mobile");
+                $io=new UserAPI();
+                if ($io->chmob($mob)){ //检测不能过的情况
+                    $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                    $result["msg"]="没有查询到该用户";
+                    $result["code"]=200;
+                    $this->response($result,'json');
+                }else{
+                    $ii=new TxSmsAPI();
+                    if ($ii->SmsSender()){
+                        $result["total"] = 1; //分页时需要获取记录总数，键值为total
+                        $result["msg"]="验证码发送成功";
+                        $result["code"]=200;
+                        $this->response($result,'json');
+                    }else{
+                        $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                        $result["msg"]="发送失败，请重试";
+                        $result["code"]=200;
+                        $this->response($result,'json');
+                    }
+                }
+                break;
+            default :
+                $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                $result["msg"]="不允许get方式请求";
+                $result["code"]=200;
+                $this->response($result,'json');
+                break;
+        }
+    }
     //检测手机号是否存在
     public function chmobile(){
         switch ($this->_method){
@@ -293,6 +328,33 @@ class RestfulController extends RestController {
         }
 
     }
+    //检测手机号是否存在
+    public function cgmobile(){
+        switch ($this->_method){
+            case 'post':
+                $mob=I("mobile");
+                $ii=new UserAPI();
+                if ($ii->chmob($mob)){
+                    $result["total"] = 1; //分页时需要获取记录总数，键值为total
+                    $result["msg"]="没有该用户信息";
+                    $result["code"]=200;
+                    $this->response($result,'json');
+                }else{
+                    $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                    $result["msg"]="已查询到该用户";
+                    $result["code"]=200;
+                    $this->response($result,'json');
+                }
+                break;
+            default :
+                $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                $result["msg"]="不允许get方式请求";
+                $result["code"]=200;
+                $this->response($result,'json');
+                break;
+        }
+
+    }
     //手机用户注册接口
     public function MobRegister(){
         switch ($this->_method){
@@ -307,6 +369,58 @@ class RestfulController extends RestController {
                     $result["total"] = 0;
                     $result["msg"]=$ii->_Msg;
                     $result["code"]=200;
+                    $this->response($result,'json');
+                }
+                break;
+            default :
+                $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                $result["msg"]="不允许get方式请求";
+                $result["code"]=200;
+                $this->response($result,'json');
+                break;
+        }
+    }
+    //手机用户验证码登录接口
+    public function MobLogin(){
+        switch ($this->_method){
+            case 'post':
+                $ii=new UserAPI();
+                if ($ii->Qlogin()){
+                    $result["total"] = 1;
+                    $result["msg"]=$ii->_Msg;
+                    $result["code"]=200;
+                    $this->response($result,'json');
+                }else{
+                    $result["total"] = 0;
+                    $result["msg"]=$ii->_Msg;
+                    $result["code"]=200;
+                    $this->response($result,'json');
+                }
+                break;
+            default :
+                $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                $result["msg"]="不允许get方式请求";
+                $result["code"]=200;
+                $this->response($result,'json');
+                break;
+        }
+    }
+    //验证cookie信息
+    public function chcookie(){
+        switch ($this->_method){
+            case 'post':
+                $key=C("cookkey");
+                $str=I("cookieinfo");
+                if (!$str){
+                    $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                    $result["msg"]="信息没有输入";
+                    $result["code"]=200;
+                    $this->response($result,'json');
+                }else{
+                    $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                    $result["msg"]="解析成功";
+                    $result["code"]=200;
+                    $result["content"]=DxydDecrypt($str,$key);
                     $this->response($result,'json');
                 }
                 break;

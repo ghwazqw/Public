@@ -18,9 +18,9 @@ class LoginAPI
         }else{
             $ip = get_client_ip(); //获取客户端IP
             $Table=M("user_tb");
-            $where["user_name"]=array("eq",$get_UserName);
+            //$where["user_name"]=array("eq",$get_UserName);
             $where["user_moblie"]=array("eq",$get_mob);
-            $where["user_email"]=array("eq",$get_email);
+            //$where["user_email"]=array("eq",$get_email);
             $where['_logic']='OR';
             $count=$Table->where($where)->count();
             $ret=$Table->where($where)->select();

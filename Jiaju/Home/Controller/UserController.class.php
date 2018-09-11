@@ -104,6 +104,10 @@ class UserController extends PublicController {
             $this->assign("title","用户注册");
             $this->theme("webapps")->display("");
         }
-
+    }
+    //前端用户登录
+    public function Qlogin(){
+        $this->assign("title","用户登录");
+        $this->theme("webapps")->display("");
     }
 }

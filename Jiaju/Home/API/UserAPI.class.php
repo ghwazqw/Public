@@ -626,6 +626,31 @@ class UserAPI
             }
         }
     }
+    //手机登录
+    function Qlogin(){
+        $scode=session("mobcode");
+        $code=I("code");
+        $mobile=I("mobile");
+        if (!$mobile || !$code || !$scode){
+            $this->_Msg='部分数据为空';
+            return false;
+        }else{
+            if ($code!=$scode){
+                //$this->_Msg='用户输入：'.$code.'Session:'.$scode.'验证码不匹配';
+                $this->_Msg='验证码输入错误';
+                return false;
+            }else{
+                $ii=new LoginAPI();
+                if (!$ii->QuserLogin($mobile)){
+                    $this->_Msg.='登录失败';
+                    return false;
+                }else{
+                    $this->_Msg.=',登录成功';
+                    return true;
+                }
+            }
+        }
+    }
 }	
 
 ?>
