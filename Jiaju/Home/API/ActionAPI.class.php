@@ -152,7 +152,6 @@ class ActionAPI
             case 99;  //99为系统登录
                 $Act="系统登录";
                 break;
-
             case 90;  //90为用户"新增"操作
                 $Act="用户新增";
                 break;
@@ -168,16 +167,14 @@ class ActionAPI
             default;
                 $Act="";
         }
-
-
         if ($zt==1){
             $info="操作成功";
             \Think\Log::write($get_UserName.':'.$Act.$info."，操作时间：".$Acttime."，客户端IP地址：".$ip,'INFO');
         }elseif ($zt==0){
             $info="操作失败";
+            $info.=$RcodeType;
             \Think\Log::write($get_UserName.':'.$Act.$info."，操作时间：".$Acttime."，客户端IP地址：".$ip,'WARN');
         }
-
     }
     //用户缓存处理
     function UserCache($mobile){

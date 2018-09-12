@@ -74,6 +74,14 @@ class TxSmsAPI
         //接收前台传递变量
          $time=I("time");
          $mobile=I("mobile"); //手机号
+
+         //判断接收参数是否正确
+         $ii=new ActionAPI();
+         if (!$time || !$mobile){
+             $ii->UserLogInfoRecode(50,0,$mobile,1,'参数为空'); //记录日志
+             return false;
+         }
+
          //发送参数设置
          $type=0; //短信类型，单一指定模板0
 
@@ -109,7 +117,7 @@ class TxSmsAPI
         "tpl_id":'.$tpl_id.'
         }';
 
-         $ii=new ActionAPI();
+
          $ret=$this->get_web($send_url,$sms_tpl);
          $retdata=$this->json2array($ret);
              if ($retdata["result"]==0){

@@ -26,7 +26,7 @@ class BooksAPI
         if (!$sort){
             $sort="id";
         }
-        if ($limit==""){
+        if ($limit=="" && !$id){
             $this->_Msg='请求值过大,请指定范围后重试';
             $this->_page_count=0;
         }else{
