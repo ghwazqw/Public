@@ -85,8 +85,8 @@ class JobAPI
         if (!$id){
             $this->_page_count=$count=$TableName->where($mmmap)->order($sort." ". $order)->count();
         }else{
-            $where["id"]=array("eq",$id);
-            $this->_page_count=$count=$TableName->where($mmmap)->order($sort." ". $order)->count();
+            //$where["id"]=array("eq",$id);
+            $this->_page_count=$count=$TableName->where("id= $id")->order($sort." ". $order)->count();
         }
 
         $Page = new \Think\Page($count,$limit);
@@ -97,8 +97,8 @@ class JobAPI
         if (!$id){
             $this->_main_data=$TableName->where($mmmap)->order($sort." ". $order)->LIMIT($offset.','.$limit)->select(); //据取值完成
         }else{
-            $where["id"]=array("eq",$id);
-            $this->_main_data=$TableName->where($mmmap)->order($sort." ". $order)->LIMIT($offset.','.$limit)->select(); //据取值完成
+            //$where["id"]=array("eq",$id);
+            $this->_main_data=$TableName->where("id= $id")->order($sort." ". $order)->LIMIT($offset.','.$limit)->select(); //据取值完成
         }
         //echo $TableName->getLastSql();
         if ($count==0){

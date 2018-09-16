@@ -254,7 +254,8 @@
             }
             //编辑数据
             function editinfo(id) {
-                //alert(id);
+                alert(id);
+                //return false;
                 var url="/Jobs/PositionInfo?id=" + id;
                 $("#pos").html("编辑");
                 $.getJSON(url,function (data) {
