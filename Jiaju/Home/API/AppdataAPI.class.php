@@ -10,7 +10,11 @@ namespace Home\API;
 
 
 class AppdataAPI
+
 {
+    public $_UploadFile=""; //上传文件路径
+    public $_Msg="";
+
    public function AuthentState($appid,$restid,$token){
 
    }
@@ -185,6 +189,27 @@ class AppdataAPI
         //$Verify->useImgBg =true;   //背景图片
         $Verify->entry();
         /*$this->theme("manage")->display();*/
+    }
+    //上传文件类封
+    function UpLoadFile(){
+        $config = C('up_file'); //读取上传文件配置
+        $Upload= new \Think\Upload($config);
+        // 上传文件
+        $info   =   $Upload->upload();
+        if(!$info) {// 上传错误提示错误信息
+            //$this->error($upload->getError());
+            $this->_Msg=$Upload->getError();
+            return false;
+        }else{// 上传成功
+            //$this->success('上传成功');
+            $filetable=M("infofile_tb");
+            foreach ($info as $file) {
+                //$this->assign("photo_add",$file['savepath'] . $file['savename']);
+                //$filetable->info_id=$ret;
+                $this->_UploadFile=$file['savepath'] . $file['savename'];
+                return true;
+            }
+        }
     }
 
 }

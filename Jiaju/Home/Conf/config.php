@@ -123,7 +123,7 @@ return array(
     //路由开启
     'URL_ROUTER_ON'   => true,
     'URL_ROUTE_RULES'=>array(
-    'login'=>'/index/login',
+    'login'=>'/user/login',
         //资讯处理
         //'newslist'=>'/restful/newslist', //资讯列表
         //'newssortlist'=>'/restful/newssortlist', //资讯分类列表

@@ -33,7 +33,7 @@ class IndexController extends Controller {
             echo "error";
         }
     }
-    public function login(){
+    /*public function login(){
         if (!$_POST){
             $this->assign("title","|用户登录");
             $this->theme("webapps")->display();
@@ -50,7 +50,7 @@ class IndexController extends Controller {
                 eval($a->actionInfo);
             }
         }
-    }
+    }*/
     public function VarImg(){
         $ii=new AppdataAPI();
         $ii->Varcode();

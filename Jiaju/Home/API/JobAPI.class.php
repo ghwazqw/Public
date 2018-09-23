@@ -107,6 +107,96 @@ class JobAPI
             $this->_Msg='获取成功';
         }
     }
+    //读取应聘信息
+    function JobsList($id){
+        $limit=I("limit"); //从前端获取每页显示的数量
+        $order=I("order"); //排序方式获取
+        $sort=I("sort"); //排序字段获取
+        $offset=I("offset"); //排序位置获取
+        $search=I("search"); //获取搜索关键字
+        $status=I("status"); //状态信息
+
+        if (!$sort){
+            $sort="id";
+        }
+        /*if (!$order){
+            $order="desc";
+        }*/
+        $TableName=M("job_tb");
+        $where["name"]=array("like","%$search%");
+        $where["education"]=array("like","%$search%");
+        $where['_logic']='OR';
+
+        if ($status!=""){
+            if ($search!=""){
+                $mmmap['_complex']=$where;
+            }
+            $mmmap['status']=array('eq',$status);
+            $mmmap['_logic']='AND';
+        }else{
+            $mmmap['_complex']=$where;
+        }
+        //echo $status;
+
+
+        if (!$id){
+            $this->_page_count=$count=$TableName->where($mmmap)->order($sort." ". $order)->count();
+        }else{
+            //$where["id"]=array("eq",$id);
+            $this->_page_count=$count=$TableName->where("id= $id")->order($sort." ". $order)->count();
+        }
+
+        $Page = new \Think\Page($count,$limit);
+
+        //$Page->parameter=$this->_keyword;
+        $this->_page_bar=$Page->show(); //把分布内容赋值给变量
+        $this->_page_ys=$Page->totalPages;
+        if (!$id){
+            $this->_main_data=$TableName->where($mmmap)->order($sort." ". $order)->LIMIT($offset.','.$limit)->select(); //据取值完成
+        }else{
+            //$where["id"]=array("eq",$id);
+            $this->_main_data=$TableName->where("id= $id")->order($sort." ". $order)->LIMIT($offset.','.$limit)->select(); //据取值完成
+        }
+        //echo $TableName->getLastSql();
+        if ($count==0){
+            $this->_Msg='数据结果为0';
+        }else{
+            $this->_Msg='获取成功';
+        }
+    }
+    //编辑应聘信息
+    function EditJobsInfo($id){
+        $AddData=D("job_tb");  //注意去除前缀
+            $AddData->name=I("name"); //姓名
+            $AddData->sex=I("sex"); //性别
+            $AddData->Age=I("Age"); //年龄
+            $AddData->education=I("education"); //学历
+            $AddData->time=date('Y-m-d H:i:s',time()); //上传时间
+            $AddData->tel=I("tel"); //电话
+            $AddData->email=I("email"); //邮箱
+            $AddData->file=I("file"); //简历附件
+            $AddData->positionid=I("positionid"); //职位ID
+            $AddData->status=1; //状态
+        $ii=new AppdataAPI();
+        if ($ii->UpLoadFile()){
+            $AddData->file=$ii->_UploadFile;
+        }else{
+            $this->_Msg=$ii->_Msg;
+        }
+        if (!$id){
+            $ret=$AddData->add();
+        }else{
+            $ret=$AddData->where("id= $id")->save();
+        }
+        if (!$ret){
+            $this->_Msg.="编辑失败";
+            return false;
+        }else{
+            $this->_Msg.="编辑成功";
+            return true;
+        }
+
+    }
 }	
 
 ?>

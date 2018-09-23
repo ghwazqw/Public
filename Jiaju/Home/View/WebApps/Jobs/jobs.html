@@ -3,69 +3,49 @@
     <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
     <!--Model表单开始-->
     <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <form role="form" id="editform"  method="post" action="/jobs/EditPosition" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+        <form role="form" method="post" action="/jobs/EditJobs" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}" enctype="multipart/form-data">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title" id="myModalLabel">
-                            <span id="pos">增加</span>职位信息
+                            <span id="pos">增加</span>应聘信息
                         </h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>职位名称</label >
-                            <input type="text" class="form-control" name="position" id="position" placeholder="请输入职位名称" data-rule="required" />
-                            <input type="hidden" id="id" name="id" />
+                            <label>姓名</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="请输入姓名" data-rule="required" />
                         </div>
                         <div class="form-group">
-                            <label>部门名称</label>
-                            <input type="text" class="form-control" name="department" id="department" placeholder="请输入部门名称" data-rule="required" />
-                        </div>
-                        <div class="form-group">
-                            <label>发布人</label>
-                            <input type="text" class="form-control" name="release_people" id="release_people" placeholder="请输入发布人" value="{$username}" data-rule="required" />
-                        </div>
-                        <div class="form-group">
-                            <label>工作地址</label>
-                            <input type="text" class="form-control" name="address" id="address" placeholder="请输入工作地址" data-rule="required" />
-                        </div>
-                        <div class="form-group">
-                            <label>工作年限</label>
-                            <input type="text" class="form-control" name="Year" id="Year" placeholder="请输入工作年限" data-rule="required" />
-                        </div>
-                        <div class="form-group">
-                            <label>职位内容</label>
-                            <textarea style="height: 100px" class="form-control" name="position_content" id="position_content" placeholder="请输入职位内容" data-rule="required"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>学历要求</label>
-                            <input type="text" class="form-control" name="school" id="school" placeholder="请输入学历要求" data-rule="required" />
-                        </div>
-                        <div class="form-group">
-                            <label>发布时间</label>
-                            <input type="text" readonly class=" form-control" name="time" id="time" placeholder="请选择发布时间"/>
-                        </div>
-                        <script>
-                        $("#time").datetimepicker({
-                            format: "yyyy-mm-dd",
-                            autoclose: true,
-                            todayBtn: true,
-                            language:"zh-CN",
-                            minView:"month"
-                        });
-                    </script>
-                        <div class="form-group">
-                            <label>职位状态</label>
-                            <select id="status" name="status" class="form-control">
-                                <option value="1">有效</option>
-                                <option value="0">无效</option>
+                            <label>应聘职位</label>
+                            <select class="form-control" name="positionid" id="positionid">
+                                <foreach name='DataInfo' item='Info'>
+                                <option value="{$Info.id}">{$Info.position}</option>
+                                </foreach>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>薪资范围</label>
-                            <input type="text" class="form-control" name="salary" id="salary" placeholder="请输入薪资范围" data-rule="required" />
+                            <label>性别</label>
+                            <input type="text" class="form-control" name="sex" id="sex" placeholder="请输入性别" data-rule="required" />
                         </div>
+                        <div class="form-group">
+                            <label>学历</label>
+                            <input type="text" class="form-control" name="education" id="education" placeholder="请输入学历" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>电话</label>
+                            <input type="text" class="form-control" name="tel" id="tel" placeholder="请输入电话" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>邮箱</label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="请输入邮箱" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>简历附件</label>
+                            <input type="file" class="form-control" name="file" id="file" placeholder="请输入简历附件" />
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -75,7 +55,6 @@
             </div>
             </form>
     </div>
-    <!--表单结束-->
     <!--Model招聘详细内容开始-->
     <div class="modal fade" id="content" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -105,7 +84,7 @@
             </li>
 
             <li class="active">
-                <a href="#">职位信息管理</a>
+                <a href="#">应聘信息管理</a>
             </li>
 
         </ul>
@@ -150,33 +129,40 @@
                         width:50,
                         align: 'center'
                     },
-                    {field: 'position', title: "职位名称",class: 'editinfo', align: 'left'},
-                    {field: 'department',title:'招聘部门',align:'left'},
-                    {field: 'release_people',title:'发布人',align:'right'},
-                    {field: 'address',title:'工作地址',align:'left'},
-                    {field: 'year', title: '工作年限要求',align: 'left'},
-                    {field: 'school', title: '学历要求',align: 'left'},
-                    {field: 'time', title: '发布时间',align: 'left'},
-                    {field: 'id', title: '信息内容',align: 'left',formatter:function (value, row, index) {
-                            return '<a href="#content" onclick="info('+ value +')" data-toggle="modal" ><span class="glyphicon glyphicon-folder-open"></span></a>';
+                    {field: 'name', title: "应聘人姓名",class: 'editinfo', align: 'left'},
+                    {field: 'sex',title:'性别',align:'left'},
+                    {field: 'age',title:'年龄',align:'right'},
+                    {field: 'tel',title:'电话',align:'left'},
+                    {field: 'email', title: '电子邮箱',align: 'left',formatter:function (value, row, index) {
+                            return '<a href="Mailto:'+value+'">'+value+'</a>';
                         }},
-                    {field: 'status', title: '状态',align: 'left',formatter:function (value,row,index) {
+                    {field: 'positionid', title: '应聘职位',align: 'left'},
+                    {field: 'time', title: '求职时间',align: 'left'},
+
+                    {field: 'status', title: '简历状态',align: 'left',formatter:function (value,row,index) {
                             if (value==1){
                                 return '<span class="label label-success">生效</span>';
                             }else{
                                 return '<span class="label label-danger">无效</span>';
                             }
                         }},
-                    {field: 'salary', title: '薪资范围',align: 'right'},
+                    {field: 'education', title: '学历',align: 'right'},
+                    {field: 'file', title: '简历附件',align: 'left',formatter:function (value, row, index) {
+                        if (value){
+                            return '<a href="'+value+'" target="_blank">'+value+'</a>';
+                        }else{
+                            return '没有上传附件';
+                        }
+
+                        }},
                     {field: 'id',title:'功能操作',align:'left',formatter:function (value) {
                             return '<div class="btn-group" role="group">' +
                                 '<input class="btn btn-success btn-xs" onclick="editinfo('+value+')" href="#form-1" data-toggle="modal" type="button" value="编辑" title="编辑信息" />' +
                                 '<input class="btn btn-danger btn-xs" onclick="delinfo('+value+')" type="button" value="删除" title="删除该招聘信息" />' +
-                                '<input class="btn btn-warning btn-xs" href="#?posid='+value+'" type="button" value="应聘" title="查询该职位应聘情况" />' +
                                 '</div>';
                         }}
                 ],
-                url:'/jobs/PositionInfo', //请求地址
+                url:'/jobs/JobsInfo', //请求地址
                 method: 'get', //请求方式
                 datatype:'json', //返回数据格式
                 //striped: true,       //是否显示行间隔色
@@ -232,7 +218,7 @@
         <script>
             //异步表格所必须
             var opt={
-                url: "/jobs/PositionInfo",
+                url: "/jobs/JobsInfo",
                 type:"get",
                 silent: true,
                 query:{

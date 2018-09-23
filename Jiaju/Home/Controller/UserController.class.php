@@ -3,12 +3,13 @@ namespace Home\Controller;
 
 use Home\API\ActionAPI;
 use Home\API\DelDataAPI;
+use Home\API\LoginAPI;
 use Home\API\UserAPI;
 
 class UserController extends PublicController {
     public function _initialize(){
         parent::_initialize();
-        parent::_IsAuth();
+        //parent::_IsAuth();
     }
     public function index(){
            $this->theme("web")->display("");
@@ -109,5 +110,24 @@ class UserController extends PublicController {
     public function Qlogin(){
         $this->assign("title","用户登录");
         $this->theme("webapps")->display("");
+    }
+    //后端用户登录
+    public function login(){
+        if (!$_POST){
+            $this->assign("title","|用户登录");
+            $this->theme("webapps")->display();
+        }else {
+            $get_UserName = I("Username");
+            $a = new LoginAPI();
+            $a -> UserLogin();
+            $io=new ActionAPI();
+            //exit();
+            //$info=$a->_info;
+            if ($a->actionInfo!="")
+            {
+                $io->UserLogInfoRecode(99,0,$get_UserName,1); //记录日志
+                eval($a->actionInfo);
+            }
+        }
     }
 }

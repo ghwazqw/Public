@@ -63,6 +63,7 @@ class TxSmsAPI
 
     //发送短信
      function SmsSender(){
+         session("mobcode",null);
         //读取短信配置
          $sms=C("Tx_sms");
          $appkey=$sms["Sms_appkey"]; //appkey
@@ -84,7 +85,6 @@ class TxSmsAPI
 
          //发送参数设置
          $type=0; //短信类型，单一指定模板0
-
          $code=mt_rand(100000,999999); //随机数验证码
          session('mobcode',$code); //设置SESSION
 

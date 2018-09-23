@@ -32,6 +32,17 @@ class JobsController extends RestController {
         $this->theme("webapps")->display();
     }
 
+    //应聘信息管理
+    public function jobs(){
+        $id="";
+        $ii=new JobAPI();
+        $ii->PositionList($id);
+        $this->assign("DataInfo",$ii->_main_data);
+        //var_dump($ii->_main_data);
+        $this->assign("title","应聘信息管理");
+        $this->theme("webapps")->display();
+    }
+
     //加载职位信息列表
     public function PositionInfo(){
         switch ($this->_method) {
@@ -39,6 +50,21 @@ class JobsController extends RestController {
                 $id=I("id");
                 $ii=new JobAPI();
                 $ii->PositionList($id);
+                $total=$ii->_page_count;
+                $result["total"] = $total; //分页时需要获取记录总数，键值为total
+                $result['code'] = '200'; //状态码
+                $result["msg"] = $ii->_Msg;
+                $result["data"] = $ii->_main_data; //获取的记录信息，注意数组名称要与前端的指定名称想同
+                $this->response($result,'json'); //返回JSON接口
+        }
+    }
+    //加载职位信息列表
+    public function JobsInfo(){
+        switch ($this->_method) {
+            case 'get': // get请求处理代码
+                $id=I("id");
+                $ii=new JobAPI();
+                $ii->JobsList($id);
                 $total=$ii->_page_count;
                 $result["total"] = $total; //分页时需要获取记录总数，键值为total
                 $result['code'] = '200'; //状态码
@@ -97,7 +123,34 @@ class JobsController extends RestController {
                 break;
 
         }
-
     }
+    //编辑应聘信息
+    public function EditJobs(){
+        $id=I("id");
+        switch ($this->_method) {
+            case 'post':
+                $ii = new JobAPI();
+                if ($ii->EditJobsInfo($id)) {
+                    $result["total"] = 1; //分页时需要获取记录总数，键值为total
+                    $result['code'] = '200'; //状态码
+                    $result["msg"] = $ii->_Msg;
+                    $this->response($result,'json'); //返回JSON接口
+                    //$this->success($ii->_Msg, '/jobs/jobs', 1);
+                } else {
+                    $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                    $result['code'] = '200'; //状态码
+                    $result["msg"] = $ii->_Msg; //信息
+                    //$this->response($result,'json'); //返回JSON接口
+                    //$this->error($ii->_Msg);
+                }
+                break;
 
+            default :
+                $result["total"] = 0; //分页时需要获取记录总数，键值为total
+                $result["msg"]="不允许get方式请求";
+                $result["code"]=200;
+                $this->response($result,'json');
+                break;
+        }
+    }
 }

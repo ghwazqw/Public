@@ -636,8 +636,8 @@ class UserAPI
             return false;
         }else{
             if ($code!=$scode){
-                //$this->_Msg='用户输入：'.$code.'Session:'.$scode.'验证码不匹配';
-                $this->_Msg='验证码输入错误';
+                $this->_Msg='用户输入：'.$code.'Session:'.$scode.'验证码不匹配';
+                //$this->_Msg='验证码输入错误';
                 return false;
             }else{
                 $ii=new LoginAPI();
