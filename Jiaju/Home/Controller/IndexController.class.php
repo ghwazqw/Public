@@ -6,7 +6,11 @@ use Home\API\AppdataAPI;
 use Home\API\LoginAPI;
 use Think\Controller;
 
-class IndexController extends Controller {
+class IndexController extends PublicController {
+    public function _initialize(){
+        parent::_initialize();
+        //parent::_IsAuth();
+    }
 
     public function index(){
         $ii=new AppdataAPI();
@@ -54,6 +58,10 @@ class IndexController extends Controller {
     public function VarImg(){
         $ii=new AppdataAPI();
         $ii->Varcode();
+    }
+    public function rule(){
+        $this->assign("title","规则管理");
+        $this->theme("webapps")->display();
     }
 
 }

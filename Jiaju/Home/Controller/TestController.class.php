@@ -36,6 +36,7 @@ class TestController extends PublicController {
         $input_list=new FromAPI();
         $input_list->list_input();
         $lx=I("lx");
+
         $this->assign("lx",$lx);
         $this->assign("list_input",$input_list->_List_input_list);
         $this->theme("manage")->display();
@@ -51,8 +52,10 @@ class TestController extends PublicController {
         $this->assign("Table",$list->_TableNmae);
         $input_list=new FromAPI();
         $input_list->list_input();
+        $act=I("act");
+        $this->assign("act",$act);
         $this->assign("list_input",$input_list->_List_input_list);
-        $this->theme("manage")->display("list");
+        $this->theme("manage")->display("jslist");
 
     }
     public function page(){
