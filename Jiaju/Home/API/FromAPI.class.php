@@ -6,6 +6,7 @@ class FromAPI
 	public $_CommentName="";
 	public $_TableNmae="";
 	public $_List_input_list="";
+	public $_main_data=array();
 	public $_lx="";
 	function Act_from(){
 		//$table_name="zc_cq_qx_user_tb";
@@ -65,7 +66,45 @@ class FromAPI
             socket_close($client);  //关掉客户机
             }
         socket_close($socket);
-
+    }
+    //处理字段默认配置
+    function codesetup($code,$showtext,$actsort,$write,$sort,$default,$tablename,$id){
+	    $Table=M("codeact_tb");
+	    $Table->code=$code;
+	    $Table->showtext=$showtext;
+	    $Table->actsort=$actsort;
+	    $Table->write=$write;
+	    $Table->sort=$sort;
+	    $Table->tablename=$tablename;
+	    $Table->default=$default;
+	    if (!$id){
+             $ret=$Table->add();
+         }else{
+	        $ret=$Table->where("id=$id")->save();
+         }
+         if ($ret){
+             return true;
+         }else{
+             return false;
+         }
+    }
+    //判断表配置是否存在
+    function chcodeset($tablename){
+	    $table=M("codeact_tb");
+	    $where["tablename"]=array("eq",$tablename);
+	    $count=$table->where($where)->count();
+	    if ($count>0){
+	        return false;
+         }else{
+             return true;
+         }
+    }
+    //读取配置信息
+    function LoadCodeInfo($tablename){
+        $table=M("codeact_tb");
+        $where["tablename"]=array("eq",$tablename);
+        $ret=$table->where($where)->select();
+        $this->_main_data=$ret;
     }
 
 }	

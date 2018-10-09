@@ -1,0 +1,88 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+
+
+   <!--{$fo.column_name}/{$fo.column_comment}/{$fo.data_type}<br />-->
+
+    <div class="container-fluid" >
+
+            <form method="post" class="form-inline">
+                <label>数据库表</label>
+            <select name="table" class="selectpicker show-tick form-control" id="table" >
+                <option value ="">请选择</option>
+                <foreach name="Table" item="T" >
+                    <option value ="{$T.table_name}">{$T.table_comment}({$T.table_name})</option>
+                </foreach>
+            </select>
+            <button autocomplete="off" class="btn btn-success" id="sub" type="submit">提交</button>
+            </form>
+        <hr/>
+        </div>
+
+    <div class="col-md-12">
+    <h4>字段信息表 <small>{$TableName}</small></h4>
+        <table class="table table-hover table-bordered table-condensed table-responsive table-striped" style="font-size: 12px">
+            <tr style="background: #8bc5eb; color: #ffffff">
+                <td>序号</td>
+                <td>字段名</td>
+                <td>显示文本</td>
+                <td>字段类型</td>
+                <td>长度</td>
+                <td>操作</td>
+            </tr>
+            <?php $i = 0;?>
+            <foreach name='formname' item='fo' >
+                <?php $i++;?>
+            <tr>
+                <td style="width: 60px">{$i}</td>
+                <td>
+                    <a href="#" onclick="editname{$i}('{$fo.column_name}')" id="{$fo.column_name}">{$fo.column_name}</a>
+                    <input name="{$fo.column_name}" id="set_{$fo.column_name}" style="display: none;width: 150px" class="form-control" onblur="savename{$i}()" />
+                </td>
+                <td>{$fo.column_comment}</td>
+                <td>{$fo.data_type}</td>
+                <td>{$fo.column_type}</td>
+                <td>操作</td>
+            </tr>
+                <script>
+                    function editname{$i}(name) {
+                        $("#{$fo.column_name}").hide();
+                        $("#set_{$fo.column_name}").val(name);
+                        $("#set_{$fo.column_name}").show();
+                    }
+                    //alert(name);
+                    function savename{$i}() {
+                        var setname=$("#{$fo.column_name}").html();
+                        //alert (setname);
+                        var newname=$("#set_{$fo.column_name}").val();
+                        $("#set_{$fo.column_name}").hide();
+                        var tablename="{$TableName}";
+                        //alert(tablename);
+                        $.ajax({
+                            type:"POST", //以post提交数据
+                            url:"/test/setname",  //提交URL
+                            data:{"name":newname,"tablename":tablename,"setname":setname}, //提交数据
+                            success:function (data, state) { //成功调用回调信息
+                                alert(data);
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息，可用于状态保存
+                                //alert(textStatus);
+                            },
+                            timeout: 60000, //执行最大时间，超过该时间为超时
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                //alert('修改成功');
+                                $("#{$fo.column_name}").html(newname);
+                                $("#{$fo.column_name}").show();
+                            }
+
+                        });
+
+                    }
+                </script>
+
+            </foreach>
+        </table>
+    </div>
+
+</block>
