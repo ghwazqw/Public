@@ -85,8 +85,8 @@
                         <a class="btn btn-link-1 btn-link-1-twitter" href="#">
                             <i class="fa fa-qq"></i> QQ登录
                         </a>
-                        <a class="btn btn-link-1 btn-link-1-google-plus" href="#">
-                            <i class="fa fa-google-plus"></i> Google Plus
+                        <a class="btn btn-link-1 btn-link-1-google-plus" href="#" id="customBtn">
+                            <i class="fa fa-google-plus"></i> Google +
                         </a>
                     </div>
                 </div>
@@ -107,7 +107,38 @@
 <!--[if lt IE 10]>
 <script src="__PUBLIC__/jiaju/assets/js/placeholder.js"></script>
 <![endif]-->
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script>
+    var googleUser = {};
+    var startApp = function() {
+        gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                client_id: '243918772610-4l2u12ga4gortsamfudl1e1q59of20e7.apps.googleusercontent.com', //客户端ID
+                cookiepolicy: 'single_host_origin',
+                scope: 'profile' //可以请求除了默认的'profile' and 'email'之外的数据
+            });
+            attachSignin(document.getElementById('customBtn'));
+        });
+    };
 
+    function attachSignin(element) {
+        auth2.attachClickHandler(element, {},
+            function(googleUser) {
+                var profile = auth2.currentUser.get().getBasicProfile();
+
+                console.log('ID: ' + profile.getId());
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail());
+            },
+            function(error) {
+                console.log(JSON.stringify(error, undefined, 2));
+            });
+    }
+    startApp();
+    </script>
 </body>
 
 </html>

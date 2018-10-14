@@ -23,7 +23,7 @@
 define('APP_PATH','./jiaju/');
         //define('APP_PATH','./Jzpnew/');
 
-// 引入ThinkPHP入口文件
+// 引入系统入口文件
         require './DxydPHP/DxydPHP.php';
 //phpinfo();
 }
