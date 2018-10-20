@@ -20,10 +20,7 @@
             }
         });
     </script>
-
-
     <div class="kjtd_kj" style="height: 900px">
-
 <div class="kjtd_title">
     <ul class="breadcrumb">
         <li>
@@ -39,7 +36,9 @@
             <a href="#"> 投资需求详细信息</a>
         </li>
     </ul>
+
     <foreach name='InfoData' item='InfoData' >
+        <div style="text-align: right;padding-right: 10px"><a href="/home/test/pdftest?id={$InfoData.id}&table=tzxq"> <i class="glyphicon glyphicon-download"></i> 生成PDF文件 </a></div>
     <div class="kjtd_title_list" id="kjtd_title_list">
         <li class="current">一、投资需求</li>
         <li>二、投资人基本信息</li>

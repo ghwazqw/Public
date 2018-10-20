@@ -29,14 +29,16 @@
         <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
             <tr style="background: #347ab7; color: #ffffff">
                 <th nowrap>序号</th>
-                <th >会议需求描述</th><th >会议会展类型</th><th >会议会展方向</th><th >会议意向城市</th><th >会议意向日期</th><th >会议预算</th>                        <th nowrap>操作</th>
+                <th >会议需求描述</th><th >会议会展类型</th><th >会议会展方向</th><th >会议意向城市</th><th >会议意向日期</th><th >会议预算</th> <th >申请时间</th>                        <th nowrap>操作</th>
             </tr>
             <?php $i = 0;?><br/>
             <foreach name='InfoData' item='Info' >
                 <?php $i++;?>
                 <tr>
                 <td>{$i}</td>
-                <td><a href="/home/ywmanage/hyxq?id={$Info.id}">{$Info.gl_xqms}</a></td><td>{$Info.gl_hylx}</td><td>{$Info.gl_hyfx}</td><td>{$Info.gl_hycs}</td><td>{$Info.gl_hyrq}</td><td style="text-align: right">{$Info.gl_hyys}万元</td><td></td>
+                <td><a href="/home/ywmanage/hyxq?id={$Info.id}">{$Info.gl_xqms|mb_substr=0,40,'UTF-8'}</a></td><td>{$Info.gl_hylx}</td><td>{$Info.gl_hyfx}</td><td>{$Info.gl_hycs}</td><td>{$Info.gl_hyrq}</td><td style="text-align: right">{$Info.gl_hyys}万元</td>
+                    <td>{$Info.gl_cjsj}</td>
+                    <td></td>
             </tr>
             </foreach>                </table>
 

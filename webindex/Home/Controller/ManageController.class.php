@@ -161,6 +161,17 @@ class ManageController extends Controller {
         $this->assign("page_count",$ii->_page_size);
         $this->theme("50")->display();
     }
+    //专家入库
+    public function zjrk_manage(){
+        $ii=new YwzxManageAPI();
+        $ii->loadzjrkdata();
+        $this->assign("InfoData",$ii->_main_data); //主表数据
+        $this->assign("pagebar",$ii->_page_bar);    //分页组件
+        $this->assign("count",$ii->_page_count);    //统计数据
+        $this->assign("keyword",$ii->_keyword);
+        $this->assign("page_count",$ii->_page_size);
+        $this->theme("50")->display();
+    }
     public function uttest(){
 
         $this->theme("50")->display();

@@ -29,12 +29,14 @@
         <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
             <tr style="background: #347ab7; color: #ffffff">
                 <th nowrap>序号</th>
-                <th >咨询内容</th><th >咨询内容所处阶段</th><th >咨询领域</th><th >项目简介</th><th >需求描述</th><th >投入预算</th>                        <th nowrap>操作</th>
+                <th >咨询内容</th><th >咨询内容所处阶段</th><th >咨询领域</th><th >项目简介</th><th >需求描述</th><th >投入预算</th> <th >申请时间</th>                       <th nowrap>操作</th>
             </tr>
             <?php $i = 0;?><br/>
             <foreach name='InfoData' item='Info' >                    <?php $i++;?>                    <tr>
                 <td>{$i}</td>
-                <td><a href="/home/ywmanage/kjzx?id={$Info.id}">{$Info.gl_zxnr}</a></td><td>{$Info.gl_zxnrscjd}</td><td>{$Info.gl_zxly}</td><td>{$Info.gl_xmjj}</td><td>{$Info.gl_xqms}</td><td>{$Info.gl_trys}万元</td><td></td>
+                <td><a href="/home/ywmanage/kjzx?id={$Info.id}">{$Info.gl_zxnr}</a></td><td>{$Info.gl_zxnrscjd}</td><td>{$Info.gl_zxly}</td><td>{$Info.gl_xmjj}</td><td>{$Info.gl_xqms}</td><td>{$Info.gl_trys}万元</td>
+                <td>{$Info.gl_cjsj}</td>
+                <td></td>
             </tr>
             </foreach>                </table>
         <ul class="pagination">

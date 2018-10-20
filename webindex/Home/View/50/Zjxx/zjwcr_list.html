@@ -61,8 +61,12 @@
   	<td>{$zj.cg_wcrbyyx}({$zj.cg_wcrzgxl})</td>
     <td><a href="/index.php/Home/Cgxx/cgxx_class/?keyword={$zj.cg_wcrxm}">主要从事项目</a></td>
       <td><!--<a id="modal-940791" href="#act_qr" role="button" data-toggle="modal"><span class="glyphicon glyphicon-remove"></span></a>-->
+            <if condition="$username eq 'admin_gk' ">
           <a href="/index.php/home/zjxx/zjxx_edit?id={$zj.id}&type=3" title="编辑数据"><span class="glyphicon glyphicon-pencil"></span></a>
           <a href="#" onclick="deleteinfo({$zj.id},{$zj.zj_type})" title="删除数据"><span class="glyphicon glyphicon-trash"></span></a>
+                <else/>
+                没有权限
+          </if>
       </td>
   </tr>
    </foreach>

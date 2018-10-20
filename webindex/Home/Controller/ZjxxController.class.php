@@ -30,6 +30,10 @@ class ZjxxController extends Controller {
        $this->theme("50")->display();
    }
     public function  zjwcr_list(){
+        //读取当前COOKie信息
+        $get_logincook=$_COOKIE['user_info'];
+        $get_user_log=unserialize($get_logincook);
+        $user_name=$get_user_log->user_name;
         $ii=new ZjxxAPI();
         $ii->zjwcrdata();
         $this->assign("info_data",$ii->_main_data);
@@ -50,6 +54,7 @@ class ZjxxController extends Controller {
         $this->assign("cg_wcryddh",$ii->_keyword["cg_wcryddh"]);
         $this->assign("lx",$ii->_lx);
         //$this->assign("type",$ii->_type);
+        $this->assign("username",$user_name);
         $this->assign("zj_type",$ii->_keyword["zj_type"]);
         $this->theme("50")->display();
     }

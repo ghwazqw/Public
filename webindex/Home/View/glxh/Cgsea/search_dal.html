@@ -48,14 +48,14 @@
                     $dw = explode(',',$source);
                 </php>
                 <php>
-                    for($index=0;$index<count($dw);$index++)
+                    for($index=0;$index<2;$index++)
                     {
                     </php>
                 {$dw[$index]} |
                 <php>
                 }
                 ;</php>
-                </span></div>
+                </span><a href="#" onclick="info()" style="color: #ff0000">查看更多...</a></div>
             <div class="cg_dal_dw" ><li><a name="wcr">主要完成人</a></li></div>
 
             <div class="cg_dal_dw_content">
@@ -64,13 +64,22 @@
                 </php>
 
                 <php>
-                    for($index=0;$index<count($dw);$index++)
+                    for($index=0;$index<2;$index++)
                     {
                 </php>
-                <a href="/index.php/Home/zjsea/search/?keyword={$dw[$index]}" target="_blank"> <span style="color:#045fbc">{$dw[$index]}</span></a> |
+
+                <!--<a href="/index.php/Home/zjsea/search/?keyword={$dw[$index]}" target="_blank"> <span style="color:#045fbc">{$dw[$index]}</span></a>-->
+                <a href="#" onclick="info()" > <span style="color:#045fbc">{$dw[$index]}</span></a> |
+
+                <script>
+                    function info() {
+                        alert("暂未开放的权限");
+                    }
+                </script>
                 <php>
                     }
                     ;</php>
+                <a href="#" onclick="info()" style="color: #ff0000">查看更多...</a>
             </div>
             <div class="cg_dal_dw" ><li><a name="sj">成果完成时间</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="ly">课题来源</a>
 
@@ -91,8 +100,8 @@
                 <br/>
             </foreach>
             <div class="cg_dal_dw" ><li><a name="zhaiyao">成果摘要</a></li></div>
-            <div class="cg_dal_content" style="line-height: 30px;font-size: 16px">{$cg.cg_xmjj}</div>
-            <div class="cg_download" id="cg_download"><span style="color: #ffffff"> 详细文件下载</span></div>
+            <div class="cg_dal_content" style="line-height: 30px;font-size: 16px;color:#ff0000">暂未开放的权限</div>
+            <!--<div class="cg_download" id="cg_download"><span style="color: #ffffff"> 详细文件下载</span></div>-->
             <div class="cg_dal_gjc" ><a name="gjc">关键词：<span style="color:#045fbc">{$cg.cg_gjz}</span></a></div>
 
         </foreach>
@@ -114,7 +123,9 @@
                     $dw = explode(',',$source);
                 </php>
                 <php>
-                    for($index=0;$index<count($dw);$index++)
+
+                    //for($index=0;$index<count($dw);$index++)
+                    for($index=0;$index<count(2);$index++)
                     {
                     </php>
                 {$dw[$index]} |
@@ -130,7 +141,7 @@
                 </php>
 
                 <php>
-                    for($index=0;$index<count($dw);$index++)
+                    for($index=0;$index<2;$index++)
                     {
                 </php>
                 <span style="color:#045fbc">{$dw[$index]}</span> |
@@ -157,8 +168,8 @@
                 <br/>
             </foreach>
             <div class="cg_dal_dw" ><li>成果摘要</li></div>
-            <div class="cg_dal_content" style="line-height: 30px;font-size: 16px">{$cg.cg_xmjj}</div>
-            <div class="cg_download" id="cg_download"><span style="color: #ffffff"> 详细文件下载</span></div>
+            <div class="cg_dal_content" style="line-height: 30px;font-size: 16px;color:#ff0000">您的权限不足，请登录或者提升会员等级以获取更多内容</div>
+            <!--<div class="cg_download" id="cg_download"><span style="color: #ffffff"> 详细文件下载</span></div>-->
             <div class="cg_dal_gjc" >关键词：<span style="color:#045fbc">{$cg.cg_gjz}</span></div>
 
         </foreach>

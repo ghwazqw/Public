@@ -29,12 +29,13 @@
         <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
             <tr style="background: #347ab7; color: #ffffff">
                 <th nowrap>序号</th>
-                <th >产品名称</th><th >产品体现形式</th><th >应用领域</th><th >产品简介</th><th >使用区域</th><th >产品推广形式</th>                        <th nowrap>操作</th>
+                <th >产品名称</th><th >产品体现形式</th><th >应用领域</th><th >产品简介</th><th >使用区域</th><th >产品推广形式</th> <th >申请时间</th>                <th nowrap>操作</th>
             </tr>
             <?php $i = 0;?><br/>
             <foreach name='InfoData' item='Info' >                    <?php $i++;?>                    <tr>
                 <td>{$i}</td>
                 <td><a href="/home/ywmanage/gjxq?id={$Info.id}">{$Info.gl_cpmc}</a></td><td>{$Info.gl_txxs}</td><td>{$Info.gl_yyly}</td><td>{$Info.gl_cpjj}</td><td>{$Info.gl_syqy}</td><td>{$Info.gl_tgxs}</td>
+                <td>{$Info.gl_cjsj}</td>
                 <td>
                     <if condition="$InfoData.gl_tjzt eq 1 ">首页<else />
                         <a href="/home/ywmanage/gjxq_edit?id={$Info.id}" title="推荐到首页"><i class="glyphicon glyphicon-home"></i></a>

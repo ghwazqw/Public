@@ -16,6 +16,7 @@
         <hr style="margin-top: -3px">
         <p style="color: #575757;font-size: 14px;margin-top: -15px">来源：中华人民共和国交通运输部</php></p>
         <br />
+        {$msg}
         <table style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px;border: 1px solid #000000;color: #000000">
 
             <tr style="background: #dfebfe;color: #4b6db0;height: 40px;font-size: 14px;border: 1px solid #000000">
@@ -47,9 +48,16 @@
             <php> endif;</php>
 
         </table>
+        <div class="cg_download" id="cg_download"><a href="#" onclick="info()" ><span style="color: #ffffff"> 详细文件下载</span></a></div>
+        <!--
         <div class="cg_download" id="cg_download"><a href="__PUBLIC__/Uploads/HJ/{$cg_zsbh}.<php>if ($cg_zsbh==2016 || $cg_zsbh==2015) :</php>doc<php>else :</php>pdf<php>endif ;</php>" target="_blank"><span style="color: #ffffff"> 详细文件下载</span></a></div>
+-->
     </div>
-
+    <script>
+        function info() {
+            alert("暂未开放的权限");
+        }
+    </script>
 
 </div>
     <div class="clear"></div>

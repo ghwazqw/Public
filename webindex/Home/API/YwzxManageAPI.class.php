@@ -14,7 +14,7 @@ class YwzxManageAPI {
 
     //成果入库
     function loadmatedata($where){
-        $TableName=M("quser_cgrk_tb");
+        $TableName=M("cgrk_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_cgmc"]  = array('like',"%$this->_keyword%");
@@ -36,7 +36,7 @@ class YwzxManageAPI {
     }
     //成果需求
     function loadxqsqdata($where){
-        $TableName=M("quser_xqsq_tb");
+        $TableName=M("xqsq_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_xqnr"]  = array('like',"%$this->_keyword%");
@@ -58,7 +58,7 @@ class YwzxManageAPI {
     }
     //供需对接
     function loadgjxqdata($where){
-        $TableName=M("quser_gjxq_tb");
+        $TableName=M("gjxq_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_cpmc"]  = array('like',"%$this->_keyword%");
@@ -80,7 +80,7 @@ class YwzxManageAPI {
     }
     //会议会展
     function loadhyxqdata($where){
-        $TableName=M("quser_hyxq_tb");
+        $TableName=M("hyxq_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_xqms"]  = array('like',"%$this->_keyword%");
@@ -98,11 +98,11 @@ class YwzxManageAPI {
 
         $this->_page_bar=$Page->show(); //把分布内容赋值给变量
         $this->_main_data=$TableName->where($where)->order("id DESC")->LIMIT($Page->firstRow.','.$Page->listRows)->select(); //主表数据取值完成
-        echo $TableName->getLastSql();
+        //echo $TableName->getLastSql();
     }
     //科技咨询
     function loadkjzxdata($where){
-        $TableName=M("quser_kjzx_tb");
+        $TableName=M("kjzx_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_zxnr"]  = array('like',"%$this->_keyword%");
@@ -123,7 +123,7 @@ class YwzxManageAPI {
     }
     //成果评估
     function loadcgpgdata($where){
-        $TableName=M("quser_cgpg_tb");
+        $TableName=M("cgpg_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["id"]  = array('like',"%$this->_keyword%");
@@ -145,7 +145,7 @@ class YwzxManageAPI {
     }
     //科研咨询
     function loadkyzxdata($where){
-        $TableName=M("quser_kyzx_tb");
+        $TableName=M("kyzx_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_zxnr"]  = array('like',"%$this->_keyword%");
@@ -167,7 +167,7 @@ class YwzxManageAPI {
     }
     //创业融资
     function loadrzxqdata($where){
-        $TableName=M("quser_rzxq_tb");
+        $TableName=M("rzxq_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_jgxz"]  = array('like',"%$this->_keyword%");$where["gl_xmmc"]  = array('like',"%$this->_keyword%");$where["gl_hzdw"]  = array('like',"%$this->_keyword%");$where["gl_xmztzje"]  = array('like',"%$this->_keyword%");$where["gl_xmyyly"]  = array('like',"%$this->_keyword%");$where["gl_yrzje"]  = array('like',"%$this->_keyword%");$where["gl_zjyt"]  = array('like',"%$this->_keyword%");$where["gl_rzfs"]  = array('like',"%$this->_keyword%");$where["gl_zjtrfs"]  = array('like',"%$this->_keyword%");                $where['_logic']='OR';
@@ -461,6 +461,7 @@ class YwzxManageAPI {
         $hf_content=I("hf_content");
         $gl_hdzt=I("gl_hdzt");
         $hf_hfr=I("hf_hfr");
+        //exit($gl_hdzt);
         if (!$id){
             echo "Id Error!";
             exit();
@@ -469,7 +470,7 @@ class YwzxManageAPI {
             //改变业务状态
             $Edit_data=D("quser_lxxx_tb");
             $Edit_data->gl_hdzt=$gl_hdzt;
-            $Edit_data->where("gl_ywid=$id")->save();
+            $ret=$Edit_data->where("gl_ywid=$id")->save();
             //增加回复信息
             $add_data=D("quser_hfxx_tb");
             $add_data->hf_content=$hf_content;
@@ -482,14 +483,68 @@ class YwzxManageAPI {
         }
 
     }
+
+    function zjhfxxdata(){
+        $id=I("hf_ywid");
+        $gl_ywlx=I("hf_ywlx");
+        $hf_content=I("hf_content");
+        $gl_hdzt=I("gl_hdzt");
+        $hf_hfr=I("hf_hfr");
+        //exit($gl_hdzt);
+        if (!$id){
+            echo "Id Error!";
+            exit();
+        }
+        else{
+            //改变业务状态
+            $Edit_data=D("quser_lxxx_tb");
+            $Edit_data->gl_hdzt=$gl_hdzt;
+            $ret=$Edit_data->where("id=$id")->save();
+            //增加回复信息
+            $add_data=D("quser_hfxx_tb");
+            $add_data->hf_content=$hf_content;
+            $add_data->hf_ywid=$id;
+            $add_data->hf_sj=date('Y-m-d H:i:s',time());
+            $add_data->hf_hfr=$hf_hfr;
+            $add_data->hf_ywlx=$gl_ywlx;
+            $add_data->add();
+            redirect('/home/manage', 1, '回复成功，正在跳转...');
+        }
+
+    }
+
     //投资意向
     function loadtzxqdata($where){
-        $TableName=M("quser_tzxq_tb");
+        $TableName=M("tzxq_vm");
         $this->_keyword=I("keyword");
         if ($this->_keyword!=""){
             $where["gl_ntzxm"]  = array('like',"%$this->_keyword%");
             $where["gl_ntzgm"]  = array('like',"%$this->_keyword%");
             $where["gl_ntzfs"]  = array('like',"%$this->_keyword%");
+            $where["gl_ntzjd"]  = array('like',"%$this->_keyword%");
+            $where["gl_tzrmc"]  = array('like',"%$this->_keyword%");
+            $where["gl_zsd"]  = array('like',"%$this->_keyword%");
+            $where["gl_zczb"]  = array('like',"%$this->_keyword%");
+            $where["gl_tzrlx"]  = array('like',"%$this->_keyword%");
+            $where['_logic']='OR';
+        }
+        //加载主表数据
+        $this->_page_count=$count=$TableName->where($where)->order("id DESC")->count();
+        $Page = new \Think\Page($count,$this->_page_size);
+        //$Page->parameter=$this->_keyword;
+
+        $this->_page_bar=$Page->show(); //把分布内容赋值给变量
+        $this->_main_data=$TableName->where($where)->order("id DESC")->LIMIT($Page->firstRow.','.$Page->listRows)->select(); //主表数据取值完成
+        //echo $TableName->getLastSql();
+    }
+    //专职入库
+    function loadzjrkdata($where){
+        $TableName=M("zjinfoxx_vm");
+        $this->_keyword=I("keyword");
+        if ($this->_keyword!=""){
+            $where["cg_wcrxm"]  = array('like',"%$this->_keyword%");
+            $where["cg_wcrxb"]  = array('like',"%$this->_keyword%");
+            $where["cg_wcrchj"]  = array('like',"%$this->_keyword%");
             $where["gl_ntzjd"]  = array('like',"%$this->_keyword%");
             $where["gl_tzrmc"]  = array('like',"%$this->_keyword%");
             $where["gl_zsd"]  = array('like',"%$this->_keyword%");

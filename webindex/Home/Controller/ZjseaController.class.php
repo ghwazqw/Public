@@ -10,6 +10,7 @@ class ZjseaController extends Controller {
         $this->assign("pagebar",$ii->_page_bar);
         $this->assign("count",$ii->_page_count);
         $this->assign("zj_type",$this->_lx);
+        $this->assign("userinfo",$ii->_username);
         //echo $ii->_keyword["zj_type"];
         $this->assign("title","中国公路科技成果转化平台|专家信息");
         $this->theme("glxh")->display("zjxx_list_1");

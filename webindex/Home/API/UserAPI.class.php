@@ -1,5 +1,7 @@
 <?php
+
 namespace Home\API;
+
 use Home\Lib\PasswordHash;
 
 class UserAPI //填写控制器名称规则:"控制器名称+API"
@@ -79,7 +81,6 @@ class UserAPI //填写控制器名称规则:"控制器名称+API"
             $ex->getMessage();
             $this->actionInfo = '{$this->assign("errorInfo","该用户名被占用，请检查！");}';
         }
-
     }
 
     //编辑用户信息
@@ -309,126 +310,188 @@ class UserAPI //填写控制器名称规则:"控制器名称+API"
     }
 
 
-	function login(){
-	   $get_UserName = I("post.Username","","/^\w{3,20}$/");
-       $get_UserPwd = I("post.textPwd","","/^\w{3,20}$/");
-		$getcode=I("post.txtcode");
-		$get_sj=I("post.sj");
-		$get_lx=I("post.aa");
-		$ip = get_client_ip();
-		//后端用户登录
-		if ($get_lx!="q") {
+    function login()
+    {
+        $get_UserName = I("post.Username", "", "/^\w{3,20}$/");
+        $get_UserPwd = I("post.textPwd", "", "/^\w{3,20}$/");
+        $getcode = I("post.txtcode");
+        $get_sj = I("post.sj");
+        $get_lx = I("post.aa");
+        $ip = get_client_ip();
+        //后端用户登录
+        if ($get_lx != "q") {
 
-		$Verify = new \Think\Verify();
-			//登录日志存储过程
-			$model = M("");
+            $Verify = new \Think\Verify();
+            //登录日志存储过程
+            $model = M("");
 
-       if ($get_UserName=="" || $get_UserPwd==""){
+            if ($get_UserName == "" || $get_UserPwd == "") {
 
-       	 $this->actionInfo='$this->assign("errorInfo","用户名密码输入错误，请检查！");';
-		   $sql = "call sp_user_login('{$get_UserName}','Error','$ip','user/pwd null')";
-		   $ref = $model -> query($sql);
-       return; 
-       }
-		else if(!$Verify->check($getcode)){
-			$this->actionInfo='$this->assign("errorInfo","验证码输入错误，请检查！");';
+                $this->actionInfo = '$this->assign("errorInfo","用户名密码输入错误，请检查！");';
+                $sql = "call sp_user_login('{$get_UserName}','Error','$ip','user/pwd null')";
+                $ref = $model->query($sql);
+                return;
+            } else if (!$Verify->check($getcode)) {
+                $this->actionInfo = '$this->assign("errorInfo","验证码输入错误，请检查！");';
 
-			return;
-		}
-       else
-       {
-       	$result=M("qx_user_tb")->where("user_name='".$get_UserName."' and user_lx=1")->limit(1)->select();
-       	if ($result && count($result)==1){
-       		//对比密码
-       		$user_pwd=$result[0]["user_pwd"];
-			$ph=new PasswordHash(8, FALSE);
-       		if ($ph->CheckPassword($get_UserPwd,$user_pwd)){
-       			//$this->actionInfo='{$this->assign("sussInfo","登录成功！");}';
-       			$use_log=new \stdclass();
-       			$use_log->user_id=$result[0]["id"];
-       			$use_log->user_name=$get_UserName;
-				$use_log->user_xm=$result[0]["user_xm"];
-				$use_log->user_comp=$result[0]["user_comp"];
-				$use_log->user_lx="q";
-				if ($get_sj!=""){
-       			setcookie("user_info",serialize($use_log),time()+3600,"/");
-					$sql = "call sp_user_login('{$get_UserName}','successful','$ip','1 day')";
-					$ref = $model -> query($sql);
-				}
-				else{
-				setcookie("user_info",serialize($use_log),time()+3600*12*7,"/");
-					$this->actionInfo="header('location:/index.php/home/Manage');";
-					$sql = "call sp_user_login('{$get_UserName}','successful','$ip','7 day')";
-					$ref = $model -> query($sql);
-				}
+                return;
+            } else {
+                $result = M("qx_user_tb")->where("user_name='" . $get_UserName . "' and user_lx=1")->limit(1)->select();
+                if ($result && count($result) == 1) {
+                    //对比密码
+                    $user_pwd = $result[0]["user_pwd"];
+                    $ph = new PasswordHash(8, FALSE);
+                    if ($ph->CheckPassword($get_UserPwd, $user_pwd)) {
+                        //$this->actionInfo='{$this->assign("sussInfo","登录成功！");}';
+                        $use_log = new \stdclass();
+                        $use_log->user_id = $result[0]["id"];
+                        $use_log->user_name = $get_UserName;
+                        $use_log->user_xm = $result[0]["user_xm"];
+                        $use_log->user_comp = $result[0]["user_comp"];
+                        $use_log->user_lx = "q";
+                        if ($get_sj != "") {
+                            setcookie("user_info", serialize($use_log), time() + 3600, "/");
+                            $sql = "call sp_user_login('{$get_UserName}','successful','$ip','1 day')";
+                            $ref = $model->query($sql);
+                        } else {
+                            setcookie("user_info", serialize($use_log), time() + 3600 * 12 * 7, "/");
+                            $this->actionInfo = "header('location:/index.php/home/Manage');";
+                            $sql = "call sp_user_login('{$get_UserName}','successful','$ip','7 day')";
+                            $ref = $model->query($sql);
+                        }
 
-       			return; //不再执行以下操作
-       		}
-       		else{
-       			$this->actionInfo='{$this->assign("errorInfo","密码错误！");}';
-				$sql = "call sp_user_login('{$get_UserName}','error','$ip','password error')";
-				$ref = $model -> query($sql);
-       			return; //不再执行以下操作
-       		}
-       		
-       	}
-       	else{
-       		$this->actionInfo='$this->assign("errorInfo","无此用户，请检查！");';
-			$sql = "call sp_user_login('{$get_UserName}','error','$ip','username error')";
-			$ref = $model -> query($sql);
-       	    return;
-       	}
-       }	
-	}
-		//前端用户登录
-		else{
-			$Verify = new \Think\Verify();
+                        return; //不再执行以下操作
+                    } else {
+                        $this->actionInfo = '{$this->assign("errorInfo","密码错误！");}';
+                        $sql = "call sp_user_login('{$get_UserName}','error','$ip','password error')";
+                        $ref = $model->query($sql);
+                        return; //不再执行以下操作
+                    }
 
-			if ($get_UserName=="" || $get_UserPwd==""){
-				$this->actionInfo='$this->assign("errorInfo","用户名密码输入错误，请检查！");';
-				return;
-			}
-			else if(!$Verify->check($getcode)){
-				$this->actionInfo='$this->assign("errorInfo","验证码输入错误，请检查！");';
-				return;
-			}
-			else
-			{
-				$result=M("qx_user_tb")->where("user_name='".$get_UserName."' and user_lx=2 and user_sfyx=1")->limit(1)->select();
-				if ($result && count($result)==1){
-					//对比密码
-					$user_pwd=$result[0]["user_pwd"];
-					$ph=new PasswordHash(8, FALSE);
-					if ($ph->CheckPassword($get_UserPwd,$user_pwd)){
-						//$this->actionInfo='{$this->assign("sussInfo","登录成功！");}';
-						$use_log=new \stdclass();
-						$use_log->user_id=$result[0]["id"];
-						$use_log->user_name=$get_UserName;
-						$use_log->user_xm=$result[0]["user_xm"];
-						$use_log->user_comp=$result[0]["user_comp"];
-						$use_log->user_lx="h";
-						if ($get_sj!=""){
-							setcookie("user_info",serialize($use_log),time()+3600,"/");
-						}
-						else{
-							setcookie("user_info",serialize($use_log),time()+3600*12*7,"/");
-						}
-						$this->actionInfo="header('location:/index.php/home/Quser/user_cent');";
-						return; //不再执行以下操作
-					}
-					else{
-						$this->actionInfo='{$this->assign("errorInfo","密码错误！");}';
-						return; //不再执行以下操作
-					}
-				}
-				else{
-					$this->actionInfo='$this->assign("errorInfo","无此用户或正在审核中！");';
-					return;
-				}
-			}
-		}
-	}
-	
-}	
+                } else {
+                    $this->actionInfo = '$this->assign("errorInfo","无此用户，请检查！");';
+                    $sql = "call sp_user_login('{$get_UserName}','error','$ip','username error')";
+                    $ref = $model->query($sql);
+                    return;
+                }
+            }
+        } //前端用户登录
+        else {
+            $Verify = new \Think\Verify();
+
+            if ($get_UserName == "" || $get_UserPwd == "") {
+                $this->actionInfo = '$this->assign("errorInfo","用户名密码输入错误，请检查！");';
+                return;
+            } else if (!$Verify->check($getcode)) {
+                $this->actionInfo = '$this->assign("errorInfo","验证码输入错误，请检查！");';
+                return;
+            } else {
+                $result = M("qx_user_tb")->where("user_name='" . $get_UserName . "' and user_lx=2 and user_sfyx=1")->limit(1)->select();
+                if ($result && count($result) == 1) {
+                    //对比密码
+                    $user_pwd = $result[0]["user_pwd"];
+                    $ph = new PasswordHash(8, FALSE);
+                    if ($ph->CheckPassword($get_UserPwd, $user_pwd)) {
+                        //$this->actionInfo='{$this->assign("sussInfo","登录成功！");}';
+                        $use_log = new \stdclass();
+                        $use_log->user_id = $result[0]["id"];
+                        $use_log->user_name = $get_UserName;
+                        $use_log->user_xm = $result[0]["user_xm"];
+                        $use_log->user_comp = $result[0]["user_comp"];
+                        $use_log->user_lx = "h";
+                        if ($get_sj != "") {
+                            setcookie("user_info", serialize($use_log), time() + 3600, "/");
+                        } else {
+                            setcookie("user_info", serialize($use_log), time() + 3600 * 12 * 7, "/");
+                        }
+                        $this->actionInfo = "header('location:/index.php/home/Quser/user_cent');";
+                        return; //不再执行以下操作
+                    } else {
+                        $this->actionInfo = '{$this->assign("errorInfo","密码错误！");}';
+                        return; //不再执行以下操作
+                    }
+                } else {
+                    $this->actionInfo = '$this->assign("errorInfo","无此用户或正在审核中！");';
+                    return;
+                }
+            }
+        }
+    }
+
+    function WxUserLogin($username, $get_sj)
+    {
+        if ($username=="") {
+            exit($username);
+        } else {
+            $result = M("qx_user_tb")->where("user_name='" . $username . "' and user_lx=2 and user_sfyx=1")->limit(1)->select();
+            if ($result && count($result) == 1) {
+                $use_log = new \stdclass();
+                $use_log->user_id = $result[0]["id"];
+                $use_log->user_name = $username;
+                $use_log->user_xm = $result[0]["user_xm"];
+                $use_log->user_comp = $result[0]["user_comp"];
+                $use_log->user_lx = "h";
+                if (!$get_sj) {
+                    setcookie("user_info", serialize($use_log), time() + 3600, "/");
+                } else {
+                    setcookie("user_info", serialize($use_log), time() + 3600 * 12 * 7, "/");
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    function UserBuding($username,$uid){
+        $Table=M("qx_user_tb");
+        $where["user_name"]=array("eq",$username);
+        $userInfo=$Table->where($where)->getField("user_name");
+        if (!$userInfo){
+            $Table->user_name = I("Username");
+            $Table->user_regdate = date('Y-m-d h:i:s');
+            $Table->user_sfyx = 1;
+            $Table->user_lx = 2;
+            $ret = $Table->add();
+            if ($ret){
+                if ($this->wxUidBudding($username,$uid)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }else{
+            if ($this->wxUidBudding($username,$uid)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+    //绑定微信
+    function wxUidBudding($username,$uid){
+        $WxTable=M("wxlogin_tb");
+        $wxwhere["openid"]=array("eq",$uid);
+        $buduser=$WxTable->where($wxwhere)->getField("user_name");
+        //exit($WxTable->_sql());
+        if (!$buduser){
+            $WxTable->user_name=$username;
+            $ret=$WxTable->where($wxwhere)->save();
+            if ($ret){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    //读取用户扩展信息
+    function varUserInfo($username){
+        $Table=M("wxlogin_tb");
+        $where["user_name"]=array("eq",$username);
+        $this->_main_data=$Table->where($where)->select();
+    }
+
+}
 
 ?>

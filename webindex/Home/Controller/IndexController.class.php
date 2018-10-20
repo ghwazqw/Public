@@ -13,6 +13,9 @@ use Think\Verify;
 use Home\API\CgxxAPI;
 class IndexController extends Controller {
     public function index(){
+        $get_logincook=$_COOKIE['user_info'];
+        $get_user_log=unserialize($get_logincook);
+        $user_name=$get_user_log->user_name;
         $ii=new CgxxAPI();
         $ii->loadmatedata();
         $this->assign("count",$ii->_page_count);    //统计数据
@@ -20,6 +23,7 @@ class IndexController extends Controller {
         $io=new ZjxxAPI();
         $io->zjwcrdata();
         $this->assign("zjcount",$io->_page_count);
+        $this->assign("userinfo",$user_name);
 
         $this->assign("title","中国公路科技成果转化平台");
         if ($_POST){

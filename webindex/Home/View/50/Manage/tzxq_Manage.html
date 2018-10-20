@@ -29,12 +29,14 @@
         <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
             <tr style="background: #347ab7; color: #ffffff">
                 <th nowrap>序号</th>
-                <th >拟投资项目</th><th >拟投资规模</th><th >拟投资地区</th><th >拟投资方式</th><th >拟投资阶段</th><th >投资人名称</th><th >注所地(住所)</th><th >注册资本</th><th >投资人类型</th>                        <th nowrap>操作</th>
+                <th >拟投资项目</th><th >拟投资规模</th><th >拟投资地区</th><th >拟投资方式</th><th >拟投资阶段</th><th >投资人名称</th><th >注所地(住所)</th><th >注册资本</th><th >投资人类型</th> <th >申请时间</th>                       <th nowrap>操作</th>
             </tr>
             <?php $i = 0;?><br/>
             <foreach name='InfoData' item='Info' >                    <?php $i++;?>                    <tr>
                 <td>{$i}</td>
-                <td><a href="/home/ywmanage/tzxq?id={$Info.id}">{$Info.gl_ntzxm}</a></td><td>{$Info.gl_ntzgm}</td><td>{$Info.gl_ntzdq}</td><td>{$Info.gl_ntzfs}</td><td>{$Info.gl_ntzjd}</td><td>{$Info.gl_tzrmc}</td><td>{$Info.gl_zsd}</td><td>{$Info.gl_zczb}</td><td>{$Info.gl_tzrlx}</td><td></td>
+                <td><a href="/home/ywmanage/tzxq?id={$Info.id}">{$Info.gl_ntzxm}</a></td><td>{$Info.gl_ntzgm}</td><td>{$Info.gl_ntzdq}</td><td>{$Info.gl_ntzfs}</td><td>{$Info.gl_ntzjd}</td><td>{$Info.gl_tzrmc}</td><td>{$Info.gl_zsd}</td><td>{$Info.gl_zczb}</td><td>{$Info.gl_tzrlx}</td>
+                <td>{$Info.gl_cjsj}</td>
+                <td></td>
             </tr>
             </foreach>                </table>
         <ul class="pagination">

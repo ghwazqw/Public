@@ -9,7 +9,11 @@
     <div class="sea_Kj_left">
         <div class="col-md-12 column" style="text-align: left">
             <div style="width: 187px;height: 40px;background: #6cd89c;text-align: center;color: #ffffff;line-height: 40px;font-size: 16px;float: left">
-                <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px"></span> <a href="/index.php/home/zjsea" style="color: #ffffff">高级搜索</a>
+                <php>if ($userinfo!="") :</php>
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px"></span> <a href="/home/zjsea" style="color: #ffffff">高级搜索</a>
+                <php>else :</php>
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="margin-right: 20px"></span> <a href="#" onclick="info()" style="color: #ffffff">高级搜索</a>
+                <php>endif ;</php>
 
             </div>
             <div class="col-lg-9" >
@@ -52,6 +56,7 @@
             </div><!-- /.col-lg-6 -->
             <div class="clear"></div>
             <p style="margin-top: 40px"></p>
+            <php>if ($userinfo!="") :</php>
             <foreach name="info_data" item="zj" >
                 <div style="width: 100%;height: 360px;margin-top: 10px">
                     <div id="title_1" class="zjxx_title_left" style="text-align: center;padding-right: 10px;">
@@ -79,10 +84,41 @@
                     </div>
                 </div>
             </foreach>
+            <php>else :</php>
+        <foreach name="info_data" item="zj" >
+            <div style="width: 100%;height: 360px;margin-top: 10px">
+                <div id="title_1" class="zjxx_title_left" style="text-align: center;padding-right: 10px;">
+                    <b><php>if ($zj["zj_type"]==3) :</php>行业专家顾问<php>elseif ($zj["zj_type"]==2) :</php>专家委员<php>elseif ($zj["zj_type"]==1) :</php>青年专家委员<php>endif ;</php></b>
+                </div>
+                <div id="title_2" class="zjxx_title_right">Industry Experts
+                    <span class="zjxx_mroe"><a href="#" onclick="info()" style="color: #ffffff" > More...</a></span>
+                </div>
+                <div class="clear"></div>
+                <div style="width: 95%;height: 230px;margin: 0 auto;margin-top: 30px">
+                    <div style="width: 183px;height: 230px;border: 1px solid #cccccc;float: left;margin: 0 auto;line-height: 230px">
+                        <a href="#" onclick="info()" ><img class="media-object" <php>if ($zj["zj_photo"]=="") :</php>
+                            src="__PUBLIC__/glxh/images/nophoto.png" style="width: 181px"
+                            <php>else :</php>src="/{$zj.zj_photo}" style="width: 182px" ;<php>endif ;</php> alt="{$zj.gl_zjxm}"  >
+                        </a>
+                    </div>
+                    <div style="width: 70%;height: 230px;border: 1px solid #cccccc;float: right;margin-right: 80px;padding-top: 26px;padding-left: 10px"><img src="__PUBLIC__/glxh/images/jiang.png">
+                        <a href="#" onclick="info1()"> <span id="title" style="padding-left:15px;color: #bd1320;font-size: 16px">{$zj.cg_wcrxm} <php>if ($zj["zj_type"]==3) :</php>行业专家顾问<php>elseif ($zj["zj_type"]==2) :</php>专家委员<php>elseif ($zj["zj_type"]==1) :</php>青年专家委员<php>endif ;</php>
+                        </a><br />
+                        <p style="padding-left:45px;color: #535353;font-size: 14px">从事专业：{$zj.cg_wcrzyzc}专业</p>
+                        <p style="padding-left:45px;color: #535353;font-size: 14px">主要成就：{$zj.cg_wcrchj}</p>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </foreach>
+            <php>endif ;</php>
             <ul class="pagination">
                 {$pagebar}
             </ul>
-        </div>
+        <php>if (!$userinfo) :</php>
+        <span style="margin-left: 20px;margin-top: 20px"> 目前您为浏览用户，暂只能查看前3页信息，成为<a href="/home/Quser/user_reg" >注册用户</a>（或<a href="/?a=user_login&c=Quser" >登陆</a>）即可查看超过<span style="font-size: 18px;color:#ff0000">15000+</span>的专家信息资源</span>
+        <php>endif ;</php>    </div>
         </div>
     <div class="sea_Kj_right">
         <div class="cg_rk_bq"><a href="/index.php/home/ywcent/zjrk" style="color: #fff"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> 专家信息入库申请</a></div>
@@ -94,6 +130,13 @@
 <div class="clear"></div>
 </div>
 
-
+    <script>
+        function info() {
+            alert("目前您为浏览用户，暂只能进行普通搜索，成为注册用户（或登陆）即可进行高级搜索");
+        }
+        function info1() {
+            alert("目前您为浏览用户，暂不能浏览详细信息，成为注册用户（或登陆）即可进行该操作");
+        }
+    </script>
 
 </block>

@@ -1,4 +1,4 @@
-<extend name="glxh/index/base_user"  title="专家入库"/>
+<extend name="50/index/base_ywmanage"  title="需求信息"/>
 <block name="customer">
 
     <script type="text/javascript">
@@ -20,152 +20,136 @@
             }
         });
     </script>
-    <script>
-        $ (function () {
-            var myDate = new Date();
-            var h = myDate.getFullYear();
-            var m = myDate.getMonth() + 1;
-            var d = myDate.getDate()+10;
-            var dd = h + "-" + m + "-" + d;
-            $("#calendar1").val(dd);
 
-        })
-    </script>
-    <script type="text/javascript" src="__PUBLIC__/glxh/js/birthday.js"></script>
-    <script>
-        $(function () {
-            $.ms_DatePicker({
-                YearSelector: ".sel_year",
-                MonthSelector: ".sel_month",
-                DaySelector: ".sel_day"
-            });
-            $.ms_DatePicker();
-        });
-    </script>
-    <style>
-        .alert{display: none;}
-    </style>
-    {~$qnavbar=w("Nav/qdef")}
+    <div class="kjtd_kj" style="height: 850px">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">首页</a>
+            </li>
+            <li>
+                <a href="#">管理中心</a>
+            </li>
+            <li>
+                <a href="/home/manage/zjrk_manage">专家入库信息管理</a>
+            </li>
+            <li class="active">
+                <a href="#">专家入库详细信息</a>
+            </li>
 
-    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
-        <foreach name="qnavbar" item="nav" >
-            <a href="{$nav.nav_link}" class="btn" >{$nav.nav_name}</a>
-        </foreach>
+        </ul>
+        <foreach name='InfoData' item='InfoData' >
+            <div style="text-align: right;padding-right: 10px"><a href="/home/test/pdftest?id={$InfoData.id}&table=zjrk" target="_blank"> <i class="glyphicon glyphicon-download"></i> 生成PDF文件 </a></div>
 
-    </div>
-    <form method="post" enctype="multipart/form-data">
-<div class="kjtd_kj" style="height: 1000px">
-    <div class="kjtd_kj_left">
-        <div class="user_cnet_kj_menu">
-            {:W('Info/load',array(5))}
-            {:W('Info/load',array(6))}
-            {:W('Info/load',array(7))}
-        </div>
-    </div>
-    <div class="kjtd_kj_right">
-<div class="kjtd_title">
-    <div class=lan_qukuai>&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/glxh/images/rz_tu.png">&nbsp;&nbsp;<b>专家入库申请</b> </div>
-    <div class="lan_title"><a href="/" style="color: #957d7d;">返回首页》</a></div>
-</div>
-    <br /><br /><br />
-    <div class="kjtd_title_list" id="kjtd_title_list">
-        <li class="current">一、基本信息</li>
-        <li >二、教育经历</li>
-        <li>三、工作经历</li>
-    </div>
-    <div class="kjtd_qc"></div>
-    <span class="label label-warning">{$errorInfo}</span>
-    <span class="label label-success">{$sussInfo}</span>
-    <div id="xxzx_content">
-        <!--TAB标签一-->
-        <ul style="display:block;" >
+            <div class="kjtd_title_list" id="kjtd_title_list">
+                <li class="current">一、基本信息</li>
+                <li>二、拟申请专家库类型</li>
+                <li>三、教育经历</li>
+                <li>四、工作经历</li>
+                <li>五、联系信息</li>
+                <li>六、信息状态及回复</li>
+
+            </div>
+            <div class="kjtd_qc"></div>
+            <span class="label label-warning">{$errorInfo}</span>
+            <span class="label label-success">{$sussInfo}</span>
+            <div id="xxzx_content">
+                <!--TAB标签一-->
+                <ul style="display:block;" >
 
                     <div class="kjtd_from">
                         <!--行1!-->
                         <div class="kjtd_from_left">姓名：</div>
                         <div class="kjtd_from_right">
-                            <input type="text" name="gl_lxr" placeholder="姓名" class="form-control" style="width: 250px"/>
+                            <span>{$InfoData.cg_wcrxm}</span>
+                            <input type="hidden" name="gl_cjr" value="{$globar_user:user_name}">
                         </div>
                         <div class="kjtd_from_left">性别：</div>
                         <div class="kjtd_from_right">
-                            <select name="zj_type" class="form-control" style="width: 20%">
-                                <option value="男">男</option>
-                                <option value="女">女</option>
-                            </select>
+                            {$InfoData.cg_wcrxb}
                         </div>
                         <div class="kjtd_from_left">民族：</div>
                         <div class="kjtd_from_right">
-                            <input type="text" name="gl_lxr" placeholder="民族" class="form-control" style="width: 250px"/>
+                            {$InfoData.cg_wcrmz}
                         </div>
                         <div class="kjtd_from_left">出生日期：</div>
                         <div class="kjtd_from_right">
-                            <select id="sel_year" style="height: 25px"></select>年 &nbsp;<select id="sel_month" style="height: 25px"></select>&nbsp;月 <select id="sel_day" style="height: 25px"></select>日
+                            {$InfoData.cg_wcrcsny}
                         </div>
                         <div class="kjtd_from_left">所属地区：</div>
                         <div class="kjtd_from_right">
-                            <input type="text" name="gl_lxr" placeholder="所属地区" class="form-control" style="width: 250px"/>
+                            {$InfoData.cg_wcrjg}
                         </div>
                         <div class="kjtd_from_left">身份证号：</div>
                         <div class="kjtd_from_right">
-                            <input type="text" name="gl_lxr" placeholder="身份证号" class="form-control" style="width: 250px"/>
+                            {$InfoData.cg_wcrsfzh}
                         </div>
-
                     </div>
 
 
-        </ul>
-        <!--TAB标签二-->
-        <ul style="display:none;">
-            <div class="kjtd_from_left">毕业院校：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="毕业院校" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">专业：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="专业" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">毕业时间：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="毕业时间" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">最高学历：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="最高学历" class="form-control" style="width: 250px"/>
-            </div>
-        </ul>
-        <!--TAB标签二-->
-        <ul style="display:none;">
-            <div class="kjtd_from_left">工作单位：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="工作单位" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">工作年限：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="工作年限" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">担任职务：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="担任职务" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">技术职称：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="技术职称" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">职业标签：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="最多填写6项，中间以,分割" class="form-control" style="width: 250px"/>
-            </div>
-            <div class="kjtd_from_left">主要专业技术：</div>
-            <div class="kjtd_from_right">
-                <input type="text" name="gl_lxr" placeholder="主要专业技术" class="form-control" style="width: 250px"/>
-            </div>
-        </ul>
+                </ul>
 
 
+                <ul style="display:none;">
+                    <div class="kjtd_from_left">拟申请专家库类型：</div>
+                    <div class="kjtd_from_right">
+                        <php>if ($InfoData["zj_type"]==1) :</php>青年专家委员<php>elseif ($InfoData["zj_type"]==2) :</php>专家委员<php>else :</php>行业专家顾问<php>endif ;</php>
+                    </div>
+                </ul>
+                <ul style="display:none;">
+                    <div class="kjtd_from_left">毕业院校：</div>
+                    <div class="kjtd_from_right">
+                        {$InfoData.cg_wcrbyyx}
+                    </div>
+                    <div class="kjtd_from_left">专业：</div>
+                    <div class="kjtd_from_right">
+                        {$InfoData.cg_wcrzyzc}
+                    </div>
+                    <div class="kjtd_from_left">毕业时间：</div>
+                    <div class="kjtd_from_right">
 
+                    </div>
+                    <div class="kjtd_from_left">最高学历：</div>
+                    <div class="kjtd_from_right">
+                        {$InfoData.cg_wcrzgxl}
+                    </div>
+                </ul>
+
+                <ul style="display:none;">
+                    <div class="kjtd_from_left">工作单位：</div>
+                    <div class="kjtd_from_right">
+                        {$InfoData.cg_wcrgzdw}
+                    </div>
+                    <div class="kjtd_from_left">工作年限：</div>
+                    <div class="kjtd_from_right">
+
+                    </div>
+                    <div class="kjtd_from_left">担任职务：</div>
+                    <div class="kjtd_from_right">
+                        {$InfoData.cg_wcrxzzw}
+                    </div>
+                    <div class="kjtd_from_left">技术职称：</div>
+                    <div class="kjtd_from_right">
+                        {$InfoData.cg_wcrjszc}
+                    </div>
+                    <div class="kjtd_from_left">职业标签：</div>
+                    <div class="kjtd_from_right">
+
+                    </div>
+                    <div class="kjtd_from_left">主要专业技术：</div>
+                    <div class="kjtd_from_right">
+                        {$InfoData.cg_wcrzyzc}
+                    </div>
+                </ul>
+                <!--TAB标签二-->
+                <ul style="display:none;">
+                    <include file="50/ywmanage/lx_us" />
+                </ul>
+                <!--TAB标签六!-->
+                <ul style="display:none;">
+                    <include file="50/ywmanage/hfzx" />
+                </ul>
+
+            </div>
+        </foreach>
     </div>
-        <include file="glxh/ywcent/submit" />
-</div>
-</div>
-        </form>
 </block>

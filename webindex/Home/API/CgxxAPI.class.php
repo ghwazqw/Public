@@ -2,6 +2,7 @@
 namespace Home\API;
 class CgxxAPI
 {
+
     public $_page_size="25"; //每页显示条数
     public $_page_bar=""; //分布组件需要展示的内容
     public $_page_count=""; //统计数量
@@ -15,6 +16,8 @@ class CgxxAPI
     public $_xmbh=""; //项目编号
     public $_lx=""; //类型
     public $_nd=""; //奖励年度
+    public $_username="";
+    public $_Msg="";
 
 
     function loadmatedata($where){
@@ -54,11 +57,23 @@ class CgxxAPI
                 $where['cg_xmbh']  = array('like',"%$this->_keyword%");  //项目编号
             }
         }
+
         //加载主表数据
         $this->_page_count=$count=M("cgxxjc_tb")->where($where)->order("cg_wcsj DESC")->count();
-        $Page = new \Think\Page($count,$this->_page_size);
-        //$Page->parameter=$this->_keyword;
+        $get_logincook=$_COOKIE['user_info'];
+        $get_user_log=unserialize($get_logincook);
+        $user_name=$get_user_log->user_name;
+        //echo $count;
+        if (!$user_name && $count>75){
+            $this->_page_count=75;
+            $count=75;
+            $this->_username="";
+        }else{
+            $this->_username=$user_name;
+        }
 
+        //$Page->parameter=$this->_keyword;
+        $Page = new \Think\Page($count,$this->_page_size);
         $this->_page_bar=$Page->show(); //把分布内容赋值给变量
         $this->_main_data=M("cgxxjc_tb")->where($where)->order("cg_wcsj DESC")->LIMIT($Page->firstRow.','.$Page->listRows)->select(); //主表数据取值完成
         //echo M("cgxxjc_tb")->getLastSql();
@@ -105,6 +120,7 @@ class CgxxAPI
                //echo M("wcdw_vm")->_sql();
                 //echo M('Hjcg_vm')->getLastSql();
             }
+
         }
 
     }
@@ -240,6 +256,10 @@ class CgxxAPI
         //echo M("cgwcdw_tb")->_sql();
     }
     function cgtg_list($where){
+        $get_logincook=$_COOKIE['user_info'];
+        $get_user_log=unserialize($get_logincook);
+        $user_name=$get_user_log->user_name;
+
 
         $cg_mc=I("cg_mc");
         $cg_sbdw=I("cg_sbdw");
@@ -262,12 +282,20 @@ class CgxxAPI
             $where['cg_sbdw'] = array('like', "%$cg_sbdw%");
             $where['cg_zsbh'] = array('like', "$cg_zsbh%");
             $where['cg_lx'] = array('eq', "$cg_lx");
+            $mmmap['_complex']=$where;
 
 
             $this->_page_count = $count = M("cgtg_tb")->where($where)->order("cg_zsbh ")->count();
             $Page = new \Think\Page($count, $this->_page_size);
             $this->_page_bar = $Page->show(); //把分布内容赋值给变量
-            $this->_main_data = M("cgtg_tb")->where($where)->order("cg_zsbh ")->select(); //主表数据取值完成
+            if (!$user_name){
+                $this->_Msg='目前您为浏览用户，只能看到目录前10项，成为<a href="/home/Quser/user_reg" >注册用户</a>（或<a href="/?a=user_login&c=Quser" >登陆</a>）即可查看全部信息';
+                $this->_main_data = M("cgtg_tb")->where($where)->order("cg_zsbh ")->limit(0,10)->select(); //主表数据取值完成
+            }else{
+                $this->_main_data = M("cgtg_tb")->where($where)->order("cg_zsbh ")->select(); //主表数据取值完成
+            }
+
+            //echo M("cgtg_tb")->_sql();
         }
             elseif ($cg_lx==2){
                 $data = array(
@@ -282,13 +310,19 @@ class CgxxAPI
                 $where['cg_xmbh'] = array('like', "$cg_nd%");
                 $where['cg_lx'] = array('eq', "$cg_lx");
                 //$where['cg_zsbh'] = array('eq', "");
-
-
-                $this->_page_count = $count = M("hjtg_vm")->where($where)->order("gl_jlsz")->count();
+                $mmmap['_complex']=$where;
+                if (!$user_name){
+                    $mmmap["cg_jldj"]  = array('in',"三等奖,二等奖");
+                    $this->_username="";
+                    $this->_Msg='目前您为浏览用户，只能看到二、三等奖目录，成为<a href="/home/Quser/user_reg" >注册用户</a>（或<a href="/?a=user_login&c=Quser" >登陆</a>）即可查看特、一等奖目录';
+                }else{
+                    $this->_username=$user_name;
+                }
+                $this->_page_count = $count = M("hjtg_vm")->where($mmmap)->order("gl_jlsz")->count();
                 $Page = new \Think\Page($count, $this->_page_size);
                 $this->_page_bar = $Page->show(); //把分布内容赋值给变量
-                $this->_main_data = M("hjtg_vm")->where($where)->order("gl_jlsz")->select(); //主表数据取值完成
-                //echo M("cgtg_tb")->_sql();
+                $this->_main_data = M("hjtg_vm")->where($mmmap)->order("gl_jlsz")->select(); //主表数据取值完成
+                //echo M("hjtg_vm")->_sql();
             }
         }
         else{
@@ -320,7 +354,6 @@ class CgxxAPI
         $this->_page_bar=$Page->show(); //把分布内容赋值给变量
         $this->_main_data=M("cgxxjc_tb")->where($where)->order("cg_wcsj DESC")->LIMIT($Page->firstRow.','.$Page->listRows)->select(); //主表数据取值完成
         //echo M("cgxxjc_tb")->getLastSql();
-
     }
 
 }

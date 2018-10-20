@@ -16,6 +16,7 @@
         <hr style="margin-top: -3px">
         <p style="color: #575757;font-size: 14px;margin-top: -15px">日期：<php>echo date("Y年m月d日");</php> 来源：中国公路学会</php></p>
         <br />
+        <span style="text-align: left">{$msg}</span>
         <table style="font-size: 12px;width: 100%;line-height: 25px;border-collapse: collapse;margin-top: 10px;border: 1px solid #000000;color: #000000">
 
             <tr style="background: #dfebfe;color: #4b6db0;height: 40px;font-size: 14px;border: 1px solid #000000">
@@ -31,7 +32,14 @@
                 <?php $i++;?>
                 <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;border: 1px solid #000000" >
                     <td style="width: 50px;text-align: center;border: 1px solid #000000">{$zj.cg_xmbh}</td>
-                    <td style="border: 1px solid #000000;text-align: left;padding-left: 3px"><a href="/index.php/home/cgsea/search_dal?id={$zj.id}" target="_blank">{$zj.cg_mc}</a></td>
+                    <td style="border: 1px solid #000000;text-align: left;padding-left: 3px">
+                        <php>if ($username!='') :</php>
+                        <!--<a href="/home/cgsea/search_dal?id={$zj.id}" target="_blank">{$zj.cg_mc}</a>-->
+                        <a href="#" onclick="info()" >{$zj.cg_mc}</a>
+                        <php>else :</php>
+                        {$zj.cg_mc}
+                        <php>endif ;</php>
+                    </td>
                     <td style="border: 1px solid #000000;text-align: left;padding-left: 3px">{$zj.cg_sbdw}</td>
                     <td style="border: 1px solid #000000">{$zj.cg_jldj}</td>
                 </tr>
@@ -48,7 +56,11 @@
 
         </table>
     </div>
-
+    <script>
+        function info() {
+            alert("暂未开放的权限");
+        }
+    </script>
 
 </div>
     <div class="clear"></div>

@@ -1,12 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<extend name="glxh/index/base_user" title="用户注册"/>
+<block name="customer">
+    {~$qnavbar=w("Nav/qdef")}
 
-</head>
-<body>
-<input type="text" name="username" /><br />
-<input type="text" name="password" />
-</body>
-</html>
+    <div class="sd_uiuyyt_xsdfxfx" style="margin: 0 auto;margin-bottom:20px;">
+        <foreach name="qnavbar" item="nav">
+            <a href="{$nav.nav_link}" class="btn">{$nav.nav_name}</a>
+        </foreach>
+
+    </div>
+    <div class="wd2">
+        <p class="mt20">
+            当前位置：<a href="/">首页</a> >> 用户操作
+        </p>
+        <p></p>
+        <!--/绑定用户-->
+        <div id="userBudding">
+            <h4>绑定用户</h4>
+            <form method="post" action="/home/user/bindingUser" >
+                <div class="form-group">
+                    <input type="text" class="form-control" name="Username" id="Username" placeholder="输入用户名" style="width: 80%">
+                    <input type="hidden" name="uid" value="{$uid}">
+                </div>
+                <button type="submit" class="btn btn-default">提交</button>
+                <button type="reset" class="btn btn-default">重置</button>
+                <span class="label label-warning">{$errorInfo}</span>
+                <span class="label label-success">{$sussInfo}</span>
+            </form>
+        </div>
+
+    </div>
+
+</block>

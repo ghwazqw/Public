@@ -2,6 +2,7 @@
 namespace Home\Controller;
 use Home\API\HdxxAPI;
 use Home\API\QregAPI;
+use Home\API\WxchatAPI;
 use Home\API\YwzxManageAPI;
 use Think\Controller;
 use Home\API\UserAPI;
@@ -28,6 +29,9 @@ class QuserController extends Controller {
 
         }
         else{
+            $ii=new WxchatAPI();
+            $ii->select_appid();
+            $this->assign("appid",$ii->_wxapp_id);
             $this->assign("title","中国公路科技成果转化平台|用户注册");
             $this->theme("glxh")->display();
         }
@@ -45,7 +49,6 @@ class QuserController extends Controller {
             {
                 eval($ii->actionInfo);
             }
-
         }
         $this->assign("title","中国公路科技成果转化平台|用户信息编辑");
         $this->theme("glxh")->display();
@@ -94,6 +97,9 @@ class QuserController extends Controller {
         else
         {
         }
+        $ii=new WxchatAPI();
+        $ii->select_appid();
+        $this->assign("appid",$ii->_wxapp_id);
         $this->assign("title","中国公路科技成果转化平台|用户登录");
         $this->theme("glxh")->display();
     }
@@ -103,6 +109,10 @@ class QuserController extends Controller {
         $get_logincook=$_COOKIE['user_info'];
         $get_user_log=unserialize($get_logincook);
         $user_name=$get_user_log->user_name;
+        //读取扩展信息
+        $ii=new UserAPI();
+        $ii->varUserInfo($user_name);
+        $this->assign("userVar",$ii->_main_data);
         $TableName=M("ywcount_vm");
 
         //读取全部更新
@@ -227,7 +237,6 @@ class QuserController extends Controller {
             	exit();
             }*/
         }
-       
    }
 
 }

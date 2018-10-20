@@ -29,14 +29,23 @@
         <table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
             <tr style="background: #347ab7; color: #ffffff">
                 <th nowrap>序号</th>
-                <th >需求内容</th><th >需求类型</th><th >需求领域</th><th >投入预算</th><th >需求描述</th><th >截止日期</th>                        <th nowrap>操作</th>
+                <th >需求内容</th>
+                <th >需求类型</th>
+                <th >需求领域</th>
+                <th >投入预算</th>
+                <th >需求描述</th>
+                <th >截止日期</th>
+                <th >申请时间</th>
+                <th nowrap>操作</th>
             </tr>
             <?php $i = 0;?><br/>
             <foreach name='InfoData' item='Info' >
                 <?php $i++;?>
                 <tr>
                 <td>{$i}</td>
-                <td><a href="/home/ywmanage/xqsq?id={$Info.id}">{$Info.gl_xqnr}</a></td><td>{$Info.gl_xqlx}</td><td>{$Info.gl_xqly}</td><td style="text-align: right">{$Info.gl_trys}万元</td><td>{$Info.gl_xqms}</td><td>{$Info.gl_jzrq|strtotime|date="Y-m-d",###}</td><td></td>
+                <td><a href="/home/ywmanage/xqsq?id={$Info.id}">{$Info.gl_xqnr}</a></td><td>{$Info.gl_xqlx}</td><td>{$Info.gl_xqly}</td><td style="text-align: right">{$Info.gl_trys}万元</td><td>{$Info.gl_xqms}</td><td>{$Info.gl_jzrq|strtotime|date="Y-m-d",###}</td>
+                    <td>{$Info.gl_cjsj}</td>
+                    <td></td>
             </tr>
             </foreach>
         </table>

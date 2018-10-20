@@ -18,7 +18,21 @@
                 })
             }
         });
+        function pdfhthml(page) {
+            $('#content').val("1111");
+            var bodyHTML=window.document.body.innerHTML;
+            window.document.body.innerHTML=$(page).html();
+            var info=window.document.body.innerHTML;
+            /*var par={"content":info};
+            $.post("/home/test/pdftest",par,function (data) {
+                //console.log(data);
+                window.open(data);
+            });*/
+            window.open("/home/test/pdftest?content="+window.document.body.innerHTML);
+            window.document.body.innerHTML=bodyHTML;
+        }
     </script>
+
 
     <form method="post" enctype="multipart/form-data" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
 <div class="kjtd_kj" style="height: 1350px">
@@ -36,9 +50,12 @@
             <a href="#">成果入库详细信息</a>
         </li>
 
+
     </ul>
+    <div style="text-align: right;padding-right: 10px">
     <foreach name='InfoData' item='InfoData' >
-    <div class="kjtd_title_list" id="kjtd_title_list">
+        <div style="text-align: right;padding-right: 10px"><a href="/home/test/pdftest?id={$InfoData.id}&table=cgrk" target="_blank"> <i class="glyphicon glyphicon-download"></i> 生成PDF文件 </a></div>
+        <div class="kjtd_title_list" id="kjtd_title_list">
         <li class="current">一、成果信息</li>
         <li>二、知识产权</li>
         <li>三、成果应用状态及交易信息</li>

@@ -53,11 +53,27 @@ class UserController extends Controller {
        		eval($a->actionInfo);
        	}
        }
-       else
-       {
-       }
        $this->theme("50")->display();
+    }
+    public function bindingUser(){
+        $username=I("Username");
+        $uid=I("uid");
 
+        if (!$username || !$uid){
+            $this->error("输入错误!");
+        }else{
+            $ii=new UserAPI();
+            if ($ii->UserBuding($username,$uid)){
+                if ($ii->WxUserLogin($username,false)){
+                    $this->success('绑定成功,系统自动登录成功', '/', 1);
+                }else{
+                    $this->success('绑定成功,系统自动登录失败，将转入登录页面进行手动登录', '/?a=user_login&c=Quser', 2);
+                }
+            }else{
+                $this->error("该用户名已被其他用户绑定，请更换后重试！");
+            }
+
+        }
     }
    
 }

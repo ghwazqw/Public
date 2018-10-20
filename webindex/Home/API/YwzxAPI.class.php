@@ -234,6 +234,8 @@ class YwzxAPI {
                 $info_lx_tb->gl_hdzt= 1;
 
                 $info_lx_tb->add();
+                $ii=new UserAPI();
+                $ii->CsendMail(I("gl_lxr"),'成果入库');
                 $this->actionInfo='{$this->assign("sussInfo","信息保存成功，请继续！");}';
             }
 

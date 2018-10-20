@@ -40,10 +40,12 @@
                                         主要成果：<?php $i = 0;?>
                                         <foreach name="cg_data" item="cg" >
                                             <?php $i++;?>
-                                            <h5><a href="/index.php/home/cgsea/search_dal/?id={$cg.id}" target="_blank">{$i}. {$cg.cg_cgmc}</a> <span class="label label-default">({$cg.cg_wcsj|strtotime|date="Y-m",###})</span></h5>
+                                            <h5><a href="#" onclick="info()">{$i}. {$cg.cg_cgmc}</a> <span class="label label-default">({$cg.cg_wcsj|strtotime|date="Y-m",###})</span></h5>
                                             <li style="font-size: 12px">主要完成人：{$cg.cg_zywcr} </li>
                                         </foreach>
                                     </div>
+                                    <a href="#" onclick="info()" style="color: #ff0000">查看更多...</a></div>
+
                                 </div>
                             </div>
                         </foreach>
@@ -54,4 +56,9 @@
         </div>
         <div class="clear"></div>
     </div>
+    <script>
+        function info() {
+            alert("暂未开放的权限");
+        }
+    </script>
 </block>

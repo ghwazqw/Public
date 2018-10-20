@@ -15,6 +15,8 @@ class CgseaController extends Controller {
         $ii->loadclassdata();
         $this->assign("class_data",$ii->_class_data); //主分类数据
         $this->assign("class_mtea_data",$ii->_class_meta_data);
+        $this->assign("userinfo",$io->_username);
+        //echo $ii->_username;
         $view_lx=I("view_lx");
         //echo $view_lx;
         $this->assign("title","中国公路科技成果转化平台|成果信息中心");
@@ -73,6 +75,7 @@ class CgseaController extends Controller {
     public function hj_dal(){
         $ii=new CgxxAPI();
         $ii->cgtg_list();
+        $this->assign("msg",$ii->_Msg); //未注册时的消息
         $this->assign("info_data",$ii->_main_data); //主表数据
         $this->assign("pagebar",$ii->_page_bar);    //分页组件
         $this->assign("pagecount",$ii->_page_size);
@@ -87,6 +90,7 @@ class CgseaController extends Controller {
     public function glhj_dal(){
         $ii=new CgxxAPI();
         $ii->cgtg_list();
+        $this->assign("msg",$ii->_Msg); //未注册时的消息
         $this->assign("info_data",$ii->_main_data); //主表数据
         $this->assign("pagebar",$ii->_page_bar);    //分页组件
         $this->assign("pagecount",$ii->_page_size);
@@ -94,6 +98,7 @@ class CgseaController extends Controller {
         $this->assign("jlnd",$ii->_keyword['cg_nd']);
         $this->assign("cg_mc",$ii->_keyword['cg_mc']);
         $this->assign("cg_sbdw",$ii->_keyword['cg_sbdw']);
+        $this->assign("username",$ii->_username);
 
         $this->assign("title","中国公路科技成果转化平台|中国公路学会科学技术奖");
 

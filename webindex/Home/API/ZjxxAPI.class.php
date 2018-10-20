@@ -12,6 +12,7 @@ class ZjxxAPI
     public $_type="";
     public $_lx="";
     public $actionInfo="";
+    public $_username="";
 
     function loadmatedata($where,$wheredal){
         //加载输入关键字
@@ -63,7 +64,7 @@ class ZjxxAPI
                 //取出相关成果数据
                 $set_zj_xm=$set_zj_xm.",";
                 $wheredal['cg_zywcr']  = array('like',"%$set_zj_xm%");
-                $this->_meta_data=$ret=M("cgxxjc_tb")->where($wheredal)->order("cg_wcsj desc")->select();
+                $this->_meta_data=$ret=M("cgxxjc_tb")->where($wheredal)->limit(0,2)->order("cg_wcsj desc")->select();
                 //echo M("cgxxjc_tb")->_sql();
             }
 
@@ -230,6 +231,17 @@ class ZjxxAPI
         }
         $this->_page_count=$count=M("zjwc_tb")->where($where)->order("zj_type desc")->count();
         $this->_lx=$lx;
+        $get_logincook=$_COOKIE['user_info'];
+        $get_user_log=unserialize($get_logincook);
+        $user_name=$get_user_log->user_name;
+        //echo $count;
+        if (!$user_name && $count>30){
+            $this->_page_count=30;
+            $count=30;
+            $this->_username="";
+        }else{
+            $this->_username=$user_name;
+        }
 
         $Page = new \Think\Page($count,$this->_page_size);
         $this->_page_bar=$Page->show(); //把分布内容赋值给变量

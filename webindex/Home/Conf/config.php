@@ -1,69 +1,71 @@
-<?php
+ï»¿<?php
 return array(
-    'DEFAULT_FILTER'        => 'strip_tags,htmlspecialchars', //¹ýÂËº¯Êý
+    'DEFAULT_FILTER'        => 'strip_tags,htmlspecialchars', //è¿‡æ»¤å‡½æ•°
     'URL_MODEL'=>2,
-    'URL_HTML_SUFFIX' =>'.html', //¾²Ì¬HTML·ÃÎÊ
+    'URL_HTML_SUFFIX' =>'.html', //é™æ€HTMLè®¿é—®
 
-    //Êý¾Ý¿âÅäÖÃÀà
-    'DB_TYPE'   => 'mysql', // Êý¾Ý¿âÀàÐÍ
-    'DB_USER'   => 'glxh', // ÓÃ»§Ãû
-    'DB_PWD'    => 'glxh', // ÃÜÂë
-    'DB_PORT'   => 3306,   //¶Ë¿ÚºÅ
-    'DB_PREFIX' => 'gl_', // Êý¾Ý¿â±íÇ°×º
+    //æ•°æ®åº“é…ç½®ç±»
+    'DB_TYPE'   => 'mysql', // æ•°æ®åº“ç±»åž‹
+    'DB_USER'   => 'glxh', // ç”¨æˆ·å
+    'DB_PWD'    => 'glxh', // å¯†ç 
+    'DB_PORT'   => 3306,   //ç«¯å£å·
+    'DB_PREFIX' => 'gl_', // æ•°æ®åº“è¡¨å‰ç¼€
     'DB_DSN'    => 'mysql:host=123.59.105.68;dbname=glxh;charset=utf8',
-    /*'DB_TYPE'   => 'mysql', // Êý¾Ý¿âÀàÐÍ
-    'DB_USER'   => 'glxhfine_f', // ÓÃ»§Ãû
-    'DB_PWD'    => 'CC@CO7DKy6', // ÃÜÂë
-    'DB_PORT'   => 3306,   //¶Ë¿ÚºÅ
-    'DB_PREFIX' => 'gl_', // Êý¾Ý¿â±íÇ°×º
+    /*'DB_TYPE'   => 'mysql', // æ•°æ®åº“ç±»åž‹
+    'DB_USER'   => 'glxhfine_f', // ç”¨æˆ·å
+    'DB_PWD'    => 'CC@CO7DKy6', // å¯†ç 
+    'DB_PORT'   => 3306,   //ç«¯å£å·
+    'DB_PREFIX' => 'gl_', // æ•°æ®åº“è¡¨å‰ç¼€
     'DB_DSN'    => 'mysql:host=103.60.223.6;dbname=glxhfine;charset=utf8',*/
-    //'LOAD_EXT_CONFIG' => 'Huser', //ÓÃ»§µÇÂ¼ÅäÖÃ
-    'LOAD_EXT_CONFIG' => 'Redis_config', //redis·þÎñÆ÷ÅäÖÃ
-    'LOAD_EXT_CONFIG' => 'user', //Ç°¶ËÓÃ»§µÇÂ¼
-    //Í¼Æ¬ÉÏ´«
+    //'LOAD_EXT_CONFIG' => 'Huser', //ç”¨æˆ·ç™»å½•é…ç½®
+    'LOAD_EXT_CONFIG' => 'Redis_config', //redisæœåŠ¡å™¨é…ç½®
+    'LOAD_EXT_CONFIG' => 'user', //å‰ç«¯ç”¨æˆ·ç™»å½•
+    //å›¾ç‰‡ä¸Šä¼ 
     "uploadfile"=>array('maxSize'=> 3145728,
         'rootPath'=> './',
         'savePath'  => 'Public/Uploads/',
         'exts'=>array('jpg', 'gif', 'png', 'jpeg','pdf'),
         'autoSub'  => true,
         'subName'    =>    array('date','Ymd'),
-        'thumb' => true, //Éú³ÉËõÂÔÍ¼
-        //ÉèÖÃÐèÒªÉú³ÉËõÂÔÍ¼µÄÎÄ¼þºó×º
-        'thumbPrefix' => 'm_,s_', //Éú³ÉÁ½ÕÅËõÂÔÍ¼
-        //ÉèÖÃËõÂÔÍ¼×î´ó¿í¶È
+        'thumb' => true, //ç”Ÿæˆç¼©ç•¥å›¾
+        //è®¾ç½®éœ€è¦ç”Ÿæˆç¼©ç•¥å›¾çš„æ–‡ä»¶åŽç¼€
+        'thumbPrefix' => 'm_,s_', //ç”Ÿæˆä¸¤å¼ ç¼©ç•¥å›¾
+        //è®¾ç½®ç¼©ç•¥å›¾æœ€å¤§å®½åº¦
         'thumbMaxWidth' => array('400,100'),
-         //ÉèÖÃËõÂÔÍ¼×î´ó¸ß¶È
+         //è®¾ç½®ç¼©ç•¥å›¾æœ€å¤§é«˜åº¦
          'thumbMaxHeight'=> array('400,100'),
     ),
-    //ÎÄ¼þÉÏ´«
+    //æ–‡ä»¶ä¸Šä¼ 
     "up_file"=>array('maxSize'=> 3145728,
         'rootPath'=> './',
         'savePath'  => 'Public/Uploads/',
         'exts'=>array('rar', 'doc', 'docx', 'ppt','pptx','pdf'),
         'autoSub'  => true,
         'subName'    =>    array('date','Ymd'),
-        //'thumb' => true, //Éú³ÉËõÂÔÍ¼
-        //ÉèÖÃÐèÒªÉú³ÉËõÂÔÍ¼µÄÎÄ¼þºó×º
-        //'thumbPrefix' => 'm_,s_', //Éú³ÉÁ½ÕÅËõÂÔÍ¼
-        //ÉèÖÃËõÂÔÍ¼×î´ó¿í¶È
+        //'thumb' => true, //ç”Ÿæˆç¼©ç•¥å›¾
+        //è®¾ç½®éœ€è¦ç”Ÿæˆç¼©ç•¥å›¾çš„æ–‡ä»¶åŽç¼€
+        //'thumbPrefix' => 'm_,s_', //ç”Ÿæˆä¸¤å¼ ç¼©ç•¥å›¾
+        //è®¾ç½®ç¼©ç•¥å›¾æœ€å¤§å®½åº¦
         //'thumbMaxWidth' => array('400,100'),
-        //ÉèÖÃËõÂÔÍ¼×î´ó¸ß¶È
+        //è®¾ç½®ç¼©ç•¥å›¾æœ€å¤§é«˜åº¦
         //'thumbMaxHeight'=> array('400,100'),
     ),
-    // ÅäÖÃÓÊ¼þ·¢ËÍ·þÎñÆ÷
-    'MAIL_HOST' =>'smtp.163.com',//smtp·þÎñÆ÷µÄÃû³Æ
-    'MAIL_SMTPAUTH' =>TRUE, //ÆôÓÃsmtpÈÏÖ¤
-    'MAIL_USERNAME' =>'ghwzln@163.com',//ÄãµÄÓÊÏäÃû
-    'MAIL_FROM' =>'ghwzln@163.com',//·¢¼þÈËµØÖ·
-    'MAIL_FROMNAME'=>'ÖÐ¹ú¹«Â·¿Æ¼¼³É¹û×ª»¯Æ½Ì¨',//·¢¼þÈËÐÕÃû
-    'MAIL_PASSWORD' =>'ghwytr3530',//ÓÊÏäÃÜÂë
-    'MAIL_CHARSET' =>'utf-8',//ÉèÖÃÓÊ¼þ±àÂë
-    'MAIL_ISHTML' =>TRUE, // ÊÇ·ñHTML¸ñÊ½ÓÊ¼þ
-    /*Î¢ÐÅÈÏÖ¤µÇÂ¼ÐÅÏ¢*/
-    'wx_appid'=>'wxddf6d906e5dd86f8',
-    'wx_appsecret'=>'ec73fc66c095fbcbe7d3405922a583c8',
 
-         //Â·ÓÉ¿ªÆô   
+    'MAIL_HOST' =>'smtp.163.com',
+    'MAIL_SMTPAUTH' =>TRUE, //
+    'MAIL_USERNAME' =>'m15321319512@163.com',//
+    'MAIL_FROM' =>'m15321319512@163.com',//
+    'MAIL_FROMNAME'=>'ä¸­å›½å…¬å¸å­¦ä¼š--ä¸­å›½å…¬è·¯ç§‘æŠ€æˆæžœè½¬åŒ–å¹³å°',//
+    'MAIL_PASSWORD' =>'qwe123',//
+    'MAIL_CHARSET' =>'utf-8',//
+    'MAIL_ISHTML' =>TRUE, //
+
+    'wx_appid'=>'wxddf6d906e5dd86f8', //å¾®ä¿¡APPID
+    'wx_appsecret'=>'ec73fc66c095fbcbe7d3405922a583c8', //å¾®ä¿¡APPKEY
+    'QQ_appid'=>'101509471', //QQ APPID
+    'QQ_APPKEY'=>'9259533dc427af31704341a8828b93fb', //qq APPKEY
+
+     //è·¯ç”±å¼€å¯
     'URL_ROUTER_ON'   => true,
     'URL_ROUTE_RULES'=>array(
     'login'=>'/?a=login&c=User',

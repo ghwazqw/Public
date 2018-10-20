@@ -169,15 +169,19 @@ class YwmanageController extends Controller {
     }
     public function zjrk(){
         if ($_POST){
-            $a= new YwzxAPI();
-            $a->add_djxm();
-            if($a->actionInfo!=""){
-                eval($a->actionInfo);
+            $ii=new YwzxManageAPI();
+            $ii->zjhfxxdata();
+            if($ii->actionInfo!=""){
+                eval($ii->actionInfo);
             }
         }
-        $this->assign("title","中国公路科技成果转化平台|用户中心|融资需求");
+        $ii=new YwzxManageAPI();
+        $ii->loadzjxxinfo();
+        $this->assign("InfoData",$ii->_main_data);
+        $this->assign("HfData",$ii->_dateil_data);
+        $this->assign("title","中国公路科技成果转化平台|用户中心|专家入库详细管理");
 
-        $this->theme("50")->display();
+        $this->theme("50")->display("");
     }
     public function  gjxq(){
         if ($_POST){

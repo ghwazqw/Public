@@ -3,6 +3,7 @@ namespace Home\Controller;
 use Home\API\FromAPI;
 use Home\API\NewsAPI;
 use Home\API\PdfAPI;
+use Home\API\UserAPI;
 use Home\API\WxchatAPI;
 use Think\Controller;
 
@@ -109,17 +110,36 @@ class TestController extends Controller {
         $this->assign("appid",$ii->_wxapp_id);
         $this->theme("glxh")->display("");
     }
-    function wxloginretrue(){
-        $ii=new WxchatAPI();
-        $ii->reauest_info();
-        if ($ii->_zt==0){
-            $this->error('扫描失败，即将重试','/home/test/wxlogin',1);
+
+    function wxloginretrue()
+    {
+        $sort='Wx';
+        $ii = new WxchatAPI();
+        $ii->reauest_info($sort);
+
+        //exit($ii->_username);
+        switch ($ii->_zt) {
+            case 0:
+                $this->error('扫描失败，即将重试', '/home/test/wxlogin', 1);
+                break;
+            case 2:
+                //exit("您还没有绑定用户");
+                $this->assign("uid",$ii->_uid);
+                $this->theme("glxh")->display("");
+                break;
+            case 100;
+                $io = new UserAPI();
+                if ($io->WxUserLogin($ii->_username, false)) {
+                    $this->success('登录成功', '/', 1);
+                }
+                break;
+            case 1;
+                $this->assign("uid",$ii->_uid);
+                $this->theme("glxh")->display("");
+                break;
         }
         //$this->theme("glxh")->display("");
-
     }
-
-
 
    
 }

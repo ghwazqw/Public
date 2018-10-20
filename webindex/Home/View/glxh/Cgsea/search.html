@@ -4,7 +4,20 @@
     <div class="sea_Kj_left">
         <div class="lx-about" >
             <div class="lx-sea-div"><img src="__PUBLIC__/glxh/images/menu-about-ico.png"> <a href="/" style="color: #ffffff;"> 首页</a> --> 全部分类
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/index.php/home/cgsea" style="color: #ffffff;">高级检索</a></div>
+                <php>if ($userinfo!="") :</php>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/index.php/home/cgsea" style="color: #ffffff;">高级检索</a>
+                <php>else :</php>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="info()" style="color: #ffffff;">高级检索</a>
+                <php>endif ;</php>
+            </div>
+            <script>
+                function info() {
+                    alert("目前您为浏览用户，暂只能进行普通搜索，成为注册用户（或登陆）即可进行高级搜索");
+                }
+                function info1(){
+                    alert("目前您为浏览用户，暂只能查看列表信息，成为注册用户（或登陆）即可查看成果的详细信息");
+                }
+            </script>
 
                 <form name="searchform" method="get" action="/index.php/home/cgsea/search/">
                     <div class="col-md-8 column row" style="text-align: right;">
@@ -37,6 +50,7 @@
         <p style="height: 60px"></p>
         <div class="sea_lx">分组浏览：</div>
         <div class="sea_lx_1" style="padding-left: 103px">
+            <php>if ($userinfo!="") :</php>
             <foreach name="class_data" item="class" >
                 <p style="font-size:13px;line-height: 28px;color: #1C93EB">
                     <span><a href="?keyword={$class.cglx_mc}" style="color:  #1C93EB">{$class.cglx_mc}</a>：</span>
@@ -47,6 +61,19 @@
                     </foreach>
                 </p>
             </foreach>
+            <php>else :</php>
+            <foreach name="class_data" item="class" >
+                <p style="font-size:13px;line-height: 28px;color: #1C93EB">
+                    <span><a href="#" onclick="info()" style="color:  #1C93EB">{$class.cglx_mc}</a>：</span>
+                    <foreach name="class_mtea_data" item="meta" >
+                        <php> if( $meta['cglx_sjid'] == $class['id'] ):</php>
+                        <a href="#" onclick="info()" style="margin-left:8px;color:  #1C93EB" >{$meta.cglx_mc}</a>
+                        <php> endif;</php>
+                    </foreach>
+                </p>
+            </foreach>
+            <php>endif ;</php>
+
         </div>
         <hr class="sea_hr"/>
         <div >
@@ -70,7 +97,12 @@
                 <tr style="font-size: 13px;line-height: 35px;border-bottom:1px solid #cccccc;color: #4b6db0;" id="{$i}">
                     <td style="width: 50px;text-align: center">{$i}</td>
                     <!--<td style="white-space: nowrap;text-align: right">{$cg.cg_wcsj|strtotime|date="Y年m月",###}</td>-->
+                    <php>if ($userinfo!="") :</php>
                     <td style="padding-left: 15px"><a href="/index.php/home/cgsea/search_dal?id={$cg.id}" style="color: #4b6db0">{$cg.cg_cgmc}</a></td>
+                    <php>else :</php>
+                    <td style="padding-left: 15px"><a href="#" onclick="info1()" style="color: #4b6db0">{$cg.cg_cgmc}</a></td>
+                    <php>endif ;</php>
+
                     <td>{$cg.cg_dq|mb_substr=0,2,'UTF-8'}</td>
                     <td style="text-align: center;padding-left: 15px">{$cg.cg_wcsj|strtotime|date="Y年",###}</td>
                     <td style="padding-left: 15px;text-align: left">{$cg.cg_xkflmc|mb_substr=0,30,'UTF-8'}</td>
@@ -97,21 +129,39 @@
         <ul class="pagination">
             {$pagebar}
         </ul>
+        <php>if (!$userinfo) :</php>
+        <span style="margin-left: 20px;margin-top: 20px"> 目前您为浏览用户，暂只能查看前3页成果目录，成为<a href="/home/Quser/user_reg" >注册用户</a>（或<a href="/?a=user_login&c=Quser" >登陆</a>）即可查看<span style="font-size: 18px;color:#ff0000">3000+</span>的成果导航所有目录及简介</span>
+        <php>endif ;</php>
     </div>
     <!--右框架!-->
     <div class="sea_Kj_right">
         <div class="cg_rk_bq"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> <a href="/index.php/home/ywcent/cgrk" style="color: #ffffff">科技成果入库申请</a></div>
         <div class="cg_gjc_title">热门关键词 </div>
+        <php>if ($userinfo!="") :</php>
         <div class="cg_gjc_title_ul">
-        <li style="list-style-type:none;"><a href="?keyword=沥青路面" class="btn btn-danger btn-xs" >沥青路面</a>
-            <a href="?keyword=车辙" class="btn btn-danger btn-xs" >车辙</a>
-            <a href="?keyword=隧道" class="btn btn-danger btn-xs" >隧道</a>
-           <!-- <a href="?keyword=智能交通" class="btn btn-danger btn-xs" >智能交通</a>-->
-            <a href="?keyword=节能减排" class="btn btn-danger btn-xs" >节能减排</a>
-            <a href="?keyword=绿色公路" class="btn btn-danger btn-xs" >绿色公路</a>
+            <li style="list-style-type:none;"><a href="?keyword=沥青路面" class="btn btn-danger btn-xs" >沥青路面</a>
+                <a href="?keyword=车辙" class="btn btn-danger btn-xs" >车辙</a>
+                <a href="?keyword=隧道" class="btn btn-danger btn-xs" >隧道</a>
+                <!-- <a href="?keyword=智能交通" class="btn btn-danger btn-xs" >智能交通</a>-->
+                <a href="?keyword=节能减排" class="btn btn-danger btn-xs" >节能减排</a>
+                <a href="?keyword=绿色公路" class="btn btn-danger btn-xs" >绿色公路</a>
             </li>
 
         </div>
+        <php>else :</php>
+        <div class="cg_gjc_title_ul">
+            <li style="list-style-type:none;"><a href="#" onclick="info()" class="btn btn-danger btn-xs" >沥青路面</a>
+                <a href="#" onclick="info()" class="btn btn-danger btn-xs" >车辙</a>
+                <a href="#" onclick="info()" class="btn btn-danger btn-xs" >隧道</a>
+                <!-- <a href="?keyword=智能交通" class="btn btn-danger btn-xs" >智能交通</a>-->
+                <a href="#" onclick="info()" class="btn btn-danger btn-xs" >节能减排</a>
+                <a href="#" onclick="info()" class="btn btn-danger btn-xs" >绿色公路</a>
+            </li>
+
+        </div>
+
+        <php>endif ;</php>
+
         <div class="cg_gjc_title">为您推荐 </div>
         <div class="cg_gjc_title_ul">
             <li><a href="?keyword=" >目前还没有推荐信息</a></li>
