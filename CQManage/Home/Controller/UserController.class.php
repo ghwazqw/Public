@@ -48,6 +48,7 @@ class UserController extends Controller {
         $this->assign("page_count",$ii->_page_size);
         $this->assign("comp",$ii->_comp) ;
         $this->assign("zt",$ii->_zt);
+        $this->assign("yh",$ii->_yh);
         //读取角色信息
         $io=new RoleAPI();
         $io->loadmatedata();

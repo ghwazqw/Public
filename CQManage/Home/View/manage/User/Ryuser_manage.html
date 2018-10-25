@@ -527,7 +527,11 @@
                             <option value="1"  <php>if ($zt=='1') :</php>selected<php>endif ;</php>>在职</option>
                             <option value="0" <php>if ($zt=='0') :</php>selected<php>endif ;</php>>不在职</option>
                         </select>
-
+                        <select name="ry_yh" class="form-control">
+                            <option value="">请选择用户状态</option>
+                            <option value="1"  <php>if ($yh=='1') :</php>selected<php>endif ;</php>>用户信息查询</option>
+                            <option value="0" <php>if ($yh=='0') :</php>selected<php>endif ;</php>>非系统用户查询</option>
+                        </select>
                         <button class="btn btn-default" type="submit">搜索</button>
                     </form>
                     <div class="btn-group" style="margin-top: 8px">

@@ -3,7 +3,32 @@ $user_info=$_COOKIE['user_info'];
 $globar_user=unserialize($user_info);
 ?>
 <php> if($globar_user):</php>
-    <a href="#">欢迎：{$globar_user:user_name}({$globar_user:user_role})</a>
+<if condition="$globar_user:user_role eq '系统管理员'">
+    <li class="layui-nav-item" id="video1111">
+        <a href="#" id="HtList" title="合同到期提醒"><span class="glyphicon glyphicon-tags"></span><span class="layui-badge" id="count">{$count}</span></a>
+    </li>
+
+</if>
+<li class="layui-nav-item">
+    <a href="#">欢迎：{$globar_user:user_xm}({$globar_user:user_role})</a>
+    <dl class="layui-nav-child" style="line-height: 30px">
+        <dd>
+            <a href="#" id="MyInfo" title="我的信息"><i class="fa fa-lock" aria-hidden="true"></i> 个人信息</a>
+        </dd>
+        <dd>
+            <a href="#" id="repassword"><i class="fa fa-gear" aria-hidden="true"></i> 修改密码</a>
+        </dd>
+        <!--<dd id="lock">
+            <a href="javascript:;">
+                <i class="fa fa-lock" aria-hidden="true" style="padding-right: 3px;padding-left: 1px;"></i> 锁屏 (Alt+L)
+            </a>
+        </dd>-->
+        <dd>
+            <a href="?do=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
+        </dd>
+    </dl>
+</li>
+
 <php> else:</php>
     <a href="/?a=login&c=User" class="hidden-xs" style="font-size: 12px">登录</a>
 <php> endif;</php>

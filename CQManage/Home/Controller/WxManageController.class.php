@@ -8,8 +8,9 @@ use Home\API\ZcxxAPI;
 use Think\Controller;
 class WxManageController extends Controller {
     function index(){
+        $usercomp="";
         $ii=new WxManageAPI();
-        $ii->loadmatedata("维修",0);
+        $ii->loadmatedata("维修",0,$usercomp);
         $this->assign("InfoData",$ii->_main_data); //主表数据
         $this->assign("pagebar",$ii->_page_bar);    //分页组件
         $this->assign("count",$ii->_page_count);    //统计数据
@@ -18,8 +19,13 @@ class WxManageController extends Controller {
         $this->theme("manage")->display();
     }
     function WxView(){
+        //读取当前登录用户信息
+        $userinfo=new UserAPI();
+        $userinfo=$userinfo->getuser();
+        $usercomp=$userinfo->user_comp;
+
         $ii=new WxManageAPI();
-        $ii->loadmatedata("维修审批",100);
+        $ii->loadmatedata("维修审批",100,$usercomp);
         $this->assign("InfoData",$ii->_main_data); //主表数据
         $this->assign("pagebar",$ii->_page_bar);    //分页组件
         $this->assign("count",$ii->_page_count);    //统计数据

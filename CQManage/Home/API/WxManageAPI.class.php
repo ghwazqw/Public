@@ -14,7 +14,7 @@ class WxManageAPI
     public $actionInfo=""; //返回要执行的动作
     public $_sblx=""; //设备类型
     //维修信息
-    function loadmatedata($lx,$zt){
+    function loadmatedata($lx,$zt,$comp){
         $TableName=M("sbxx_log_tb");
         $this->_keyword=I("keyword");
             $where["sblx"]  = array('like',"%$this->_keyword%");
@@ -40,6 +40,9 @@ class WxManageAPI
             $where['_logic']='OR';
             $mmmap['_complex']=$where;
             $mmmap['ywlx']=array('like',"$lx%");
+            if ($comp!=""){
+                $mmmap['zc_sqwxbm']=array('eq',"$comp%");
+            }
             //$mmmap['spzt']=array('eq',$zt);
             $mmmap['_logic']='AND';
         //加载主表数据

@@ -19,14 +19,17 @@ class UserAPI
     public $_comp=""; //组织机构
     public $_username="";
     public $_usercomp=""; //当前用户组织机构
+    public $_yh="";
 
     function loadRyuandata(){
         $TableName=M("ryxx_tb");
         $ry_zt=I("ry_zt");
+        $ry_yh=I("ry_yh");
         $this->_comp=I("comp");
         //echo $this->_comp;
         $this->_keyword=I("keyword");
         $this->_zt=$ry_zt;
+        $this->_yh=$ry_yh;
         if ($this->_keyword!=""){
             $where["ry_xm"]  = array('like',"%$this->_keyword%");
             $where["ry_zw"]  = array('like',"%$this->_keyword%");
@@ -45,13 +48,18 @@ class UserAPI
             $mapp['ry_zt']=array('eq',$ry_zt);
             $mapp['_logic']='AND';
         }
+        if ($ry_yh!=""){
+            $mapp['_complex']=$where;
+            $mapp['ry_yh']=array('eq',$ry_yh);
+            $mapp['_logic']='AND';
+        }
         if ($this->_comp!==""){
             $mapp['_complex']=$where;
             $mapp['ry_bm']=array('eq',$this->_comp);
             $mapp['_logic']='AND';
         }
         //加载主表数据
-        $this->_page_count=$count=$TableName->where($where)->count();
+        $this->_page_count=$count=$TableName->where($mapp)->count();
         $Page = new \Think\Page($count,$this->_page_size);
         //$Page->parameter=$this->_keyword;
 
