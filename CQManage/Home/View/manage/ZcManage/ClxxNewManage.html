@@ -83,7 +83,9 @@
                         //console.log(row)
                     }*/},
                     { field: 'zc_gzcxh', title: '改装车型号' },
-                    { field: 'zc_bh', title: '资产编号' },
+                    { field: 'zc_bh', title: '资产编号',formatter:function (value) {
+                            return "'"+value;
+                        } },
                     { field: 'zc_rjlx', title: '资产二级分类' },
                     { field: 'zc_mc', title: '资产名称' },
                     { field: 'zc_jldw', title: '单位' },
@@ -117,7 +119,13 @@
                     },
                     { field: 'zc_zt', title: '状态',formatter:function (value) {
                             if (value==1){
-                                return '<span class="label label-success">在用</span>'
+                                return '<span class="label label-success">在用</span>';
+                            }else if(value==4){
+                                return '<span class="label label-warning">拟报废</span>';
+                            }else if(value==10){
+                                return '<span class="label label-danger">已报废</span>';
+                            }else if (value=2){
+                                return '<span class="label label-danger">维修中</span>';
                             }
                         }},
 

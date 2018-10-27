@@ -8,9 +8,8 @@ use Home\API\ZcxxAPI;
 use Think\Controller;
 class WxManageController extends Controller {
     function index(){
-        $usercomp="";
         $ii=new WxManageAPI();
-        $ii->loadmatedata("维修",0,$usercomp);
+        $ii->loadmatedata("维修",0);
         $this->assign("InfoData",$ii->_main_data); //主表数据
         $this->assign("pagebar",$ii->_page_bar);    //分页组件
         $this->assign("count",$ii->_page_count);    //统计数据
@@ -19,13 +18,8 @@ class WxManageController extends Controller {
         $this->theme("manage")->display();
     }
     function WxView(){
-        //读取当前登录用户信息
-        $userinfo=new UserAPI();
-        $userinfo=$userinfo->getuser();
-        $usercomp=$userinfo->user_comp;
-
         $ii=new WxManageAPI();
-        $ii->loadmatedata("维修审批",100,$usercomp);
+        $ii->loadmatedata("维修审批",100);
         $this->assign("InfoData",$ii->_main_data); //主表数据
         $this->assign("pagebar",$ii->_page_bar);    //分页组件
         $this->assign("count",$ii->_page_count);    //统计数据
@@ -34,18 +28,18 @@ class WxManageController extends Controller {
         $this->theme("manage")->display();
     }
     function Wxsp(){
-    $ii=new UserAPI();
-    $ii->GetUserInfo();
-    $this->assign("zcusername",$ii->_username); //当前用户名信息
-    $this->assign("date",date('Y-m-d',time())); //当前日期信息
-    $ii=new WxManageAPI();
-    $ii->LoadWxSpdata(2);
-    $this->assign("InfoData",$ii->_main_data); //主表数据
-    $this->assign("pagebar",$ii->_page_bar);    //分页组件
-    $this->assign("count",$ii->_page_count);    //统计数据
-    $this->assign("keyword",$ii->_keyword);
-    $this->assign("page_count",$ii->_page_size);
-    $this->theme("manage")->display();
+        $ii=new UserAPI();
+        $ii->GetUserInfo();
+        $this->assign("zcusername",$ii->_username); //当前用户名信息
+        $this->assign("date",date('Y-m-d',time())); //当前日期信息
+        $ii=new WxManageAPI();
+        $ii->LoadWxSpdata(2);
+        $this->assign("InfoData",$ii->_main_data); //主表数据
+        $this->assign("pagebar",$ii->_page_bar);    //分页组件
+        $this->assign("count",$ii->_page_count);    //统计数据
+        $this->assign("keyword",$ii->_keyword);
+        $this->assign("page_count",$ii->_page_size);
+        $this->theme("manage")->display();
     }
     function Wxqr(){
         $ii=new UserAPI();
@@ -159,8 +153,8 @@ class WxManageController extends Controller {
         $io=new ZcxxAPI();
         $io->SbxxZt($sblx,$sbid,$zt);
         if ($io->_zt==1){ //调用设备记录类
-        $content="该业务发生于：".date("Y-m-d H:i:s")."，由".I("czr")."对".I("sbmc").", 编号：".I("sbbh")."的资产设备进行了维修申请。";
-        $io->SbxxInfoAdd($content,$zt); //调用日志操作类
+            $content="该业务发生于：".date("Y-m-d H:i:s")."，由".I("czr")."对".I("sbmc").", 编号：".I("sbbh")."的资产设备进行了维修申请。";
+            $io->SbxxInfoAdd($content,$zt); //调用日志操作类
             if ($io->_zt>0){ //调用设备审批类
                 $logid=$io->_zt;
                 $io->SbSpxx($logid);
@@ -178,6 +172,7 @@ class WxManageController extends Controller {
         $ii=new ActionAPI();
         $ii->ChId($id);
         $io=new ZcxxAPI();
+        //改变审批状态
         $io->SbSpxx($id);
         if ($io->_zt>0){
             $ic=new ZcxxAPI();

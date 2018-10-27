@@ -160,16 +160,12 @@
                         <td>{$Info.zc_sqr}</td>
                         <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.zc_note}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
 
-                        <!--<td>{$Info.zc_wxsj|strtotime|date="Y-m-d",###}</td>
-                        <td>{$Info.zc_fsje}</td>-->
-                        <td><a href="#spform" role="button" data-toggle="modal" title="审批过程记录查询" onclick="spview({$Info.id},'{$Info.sbmc}')"><if condition="$Info.spzt eq 100">已完工确认</if></a></td>
-                        <td style="text-align: right">￥{$Info.zc_fsje}.00</td>
-                        <td>{$Info.zc_wxsj|strtotime|date="Y-m-d",###}</td>
-                        <!--
-                                        <td><a tabindex='0' role='button' data-placement='left' data-toggle='popover' data-trigger='focus' title='备注信息' data-content='{$Info.cznr}'><span class='glyphicon glyphicon-folder-open'></span></a></td>
-                        -->
-                        <!--<td><a href="#form-1" role="button" data-toggle="modal" title="维修审批" onclick="spsub({$Info.id},'{$Info.sbmc}','{$Info.zc_sqly}',{$Info.sbid},'{$Info.sblx}')"><span class="glyphicon glyphicon-cog"></span></a>&nbsp;
-                        </td>-->
+                        <td><a href="#spform" role="button" data-toggle="modal" title="审批过程记录查询" onclick="spview({$Info.id},'{$Info.sbmc}')">
+
+                            <if condition="$Info.spzt eq 100">已完工确认</if><if condition="$Info.spzt eq 1">驳回</if></a></td>
+                        <td style="text-align: right">￥{$Info.zc_fsje}</td>
+                        <td><if condition="$Info.spzt eq 100">{$Info.zc_wxsj|strtotime|date="Y-m-d",###}<else />暂无维修时间</if></td>
+
                     </tr>
                 </foreach>
             </table>
@@ -218,6 +214,8 @@
                                 var sp_zt="审批通过，维修中";
                             }else if (value.sp_zt==2){
                                 var sp_zt="提交维修审批，审批中";
+                            }else if (value.sp_zt==1){
+                                var sp_zt="驳回";
                             }
                             var tr="<tr>" +
                                 "<td>"+value.sp_tjr+"</td>" +

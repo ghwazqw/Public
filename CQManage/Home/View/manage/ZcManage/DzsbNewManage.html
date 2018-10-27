@@ -113,7 +113,13 @@
                     },
                     { field: 'zc_zt', title: '状态',formatter:function (value) {
                             if (value==1){
-                                return '<span class="label label-success">在用</span>'
+                                return '<span class="label label-success">在用</span>';
+                            }else if(value==4){
+                                return '<span class="label label-warning">拟报废</span>';
+                            }else if(value==10){
+                                return '<span class="label label-danger">已报废</span>';
+                            }else if (value=2){
+                                return '<span class="label label-danger">维修中</span>';
                             }
                         }},
 

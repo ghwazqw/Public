@@ -297,6 +297,7 @@ class ZcxxAPI
     }
     /*封装用户设备操作日志类*/
     function SbxxInfoAdd($ActContent,$zt,$logid){
+
         $TableName=M("sbxx_log_tb");
         if (!$logid){
             $TableName->sblx=I("sblx");
@@ -313,7 +314,9 @@ class ZcxxAPI
             $TableName->zc_sqwxbm=I("zc_sqwxbm");
             $TableName->zc_sqly=I("zc_sqly");
             $TableName->zc_sqr=I("zc_sqr");
-            $TableName->zc_wxsj=I("zc_wxsj");
+            if (I("zc_wxsj")!=""){
+                $TableName->zc_wxsj=I("zc_wxsj");
+            }
             $TableName->zc_note=I("zc_note");
             $TableName->zc_fsje=I("zc_wxje");
             $TableName->spzt=$zt;
@@ -329,6 +332,11 @@ class ZcxxAPI
             //echo $TableName->_sql();
             $this->_zt=$ret;
         }
+        if ($ret){
+            return true;
+        }else{
+            return false;
+        }
 
     }
     /*封装设备主表状态操作类*/
@@ -338,6 +346,11 @@ class ZcxxAPI
         $where["id"]=array("eq",$sbid);
         $ret=$TableName->where($where)->save();
         $this->_zt=$ret;
+        if ($ret){
+            return true;
+        }else{
+            return false;
+        }
     }
     /*设备审批类*/
     function SbSpxx($LogId){
@@ -352,6 +365,11 @@ class ZcxxAPI
         $TableName->sp_sj=date('Y-m-d H:i:s',time()); //后端获取日期
         $ret=$TableName->add();
         $this->_zt=$ret;
+        //驳回时改变资产状态
+        if (I("spzt")==1){
+            $io=new ZcxxAPI();
+            $io->SbxxZt(I("sblx"),I("sbid"),1);
+        }
     }
     function SpInfoList(){
         $id=I("log_id");

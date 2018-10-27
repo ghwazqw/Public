@@ -301,7 +301,7 @@ class ZcManageController extends RestController  {
             $a->AddHtxx();
             $this->success('合同信息增加成功','/Home/ZcManage/HtManage',1);
         }else{
-            $this->theme("manage")->display("Ht_Manage");
+            $this->theme("manage")->display("");
         }
     }
     public function HtList(){

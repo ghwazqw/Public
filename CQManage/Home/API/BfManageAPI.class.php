@@ -224,7 +224,13 @@ class BfManageAPI
             //$this->error('保存失败，请检查网络或与系统管理员联系！','javascript:history.back(-1);',1);
             redirect('javascript:history.back(-1);', 1, '保存失败，请检查网络或与系统管理员联系！');
         else
+            $ii=new WxManageAPI();
+        if ($ii->UpdateZT(I("sblx"),I("sbid"),10)){
             redirect('/Home/BfManage/BfManage', 1, '报废信息确认成功，正在返回...');
+        }else{
+            redirect('/Home/WxManage/BfManage', 3, '提交成功，资产状态改变失败...');
+        }
+
     }
     //报废信息重新发起申请
     function BfCxSq(){
