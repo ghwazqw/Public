@@ -4,13 +4,29 @@ namespace Home\API;
 class DelDataAPI
 {
     public $_info="";
-    //树形数据删除
+    //菜单数据删除
     function Deltreeinfo($Table,$id){
         if (!$Table || !$id){
             echo "信息错误，请检查!";
         }else{
             $Acttable=D($Table);
             $count=D($Table)->where("menu_sjid=$id")->count();
+            if ($count>=1){
+                echo "下属还有信息，请先删除！";
+                exit();
+            }else{
+                $Acttable->where("id=$id")->delete();
+                echo "信息删除成功!";
+            }
+        }
+    }
+    //树形数据删除
+    function DelTreeNewInfo($Table,$id,$where){
+        if (!$Table || !$id || !$where){
+            echo "信息错误，请检查!";
+        }else{
+            $Acttable=D($Table);
+            $count=D($Table)->where($where)->count();
             if ($count>=1){
                 echo "下属还有信息，请先删除！";
                 exit();
@@ -36,6 +52,17 @@ class DelDataAPI
                     $Acttable->where("id=$id")->delete();
                 }
             }
+            //echo $Acttable->_sql();
+            return true;
+        }
+    }
+    //按照条件删除数据
+    function DelSortInfo($Table,$where){
+        if (!$Table || !$where){
+            return false;
+        }else{
+            $Acttable=M($Table);
+            $Acttable->where($where)->delete();
             //echo $Acttable->_sql();
             return true;
         }

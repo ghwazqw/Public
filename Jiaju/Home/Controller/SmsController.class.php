@@ -7,7 +7,7 @@
  */
 namespace Home\Controller;
 use Home\API\TxSmsAPI;
-use Home\API\UserAPI;
+
 
 class SmsController extends PublicController {
     //发送短信页面
@@ -17,20 +17,22 @@ class SmsController extends PublicController {
     //获取验证码
     public function getcode(){
         $mob=I("mobile");
-        $io=new UserAPI();
-        if (!$io->chmob($mob)){ //检测不能过的情况
-            $zt=0;
-            echo $zt;
-        }else{
             $ii=new TxSmsAPI();
-            $ii->SmsSender();
-        }
+            if ($ii->SmsSender($mob)){
+                echo "OK";
+            }else{
+                echo "error";
+            }
     }
     //短信回调信息处理
     public function smscallback(){
         $Data=$GLOBALS['HTTP_RAW_POST_DATA'];
         $ii=new TxSmsAPI();
-        $ii->CallBackSms($Data);
+        if ($ii->CallBackSms($Data)){
+            echo "发送成功";
+        }else{
+            echo "error";
+        }
     }
     //加密处理
     public function cookpass(){

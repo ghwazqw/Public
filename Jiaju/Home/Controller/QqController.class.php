@@ -4,10 +4,9 @@ namespace Home\Controller;
 
 use Home\API\ActionAPI;
 use Home\API\FromAPI;
-use Home\API\UserAPI;
 use Think\Controller;
 
-class TestController extends PublicController
+class qqController extends PublicController
 {
     function _initialize()
     {
@@ -181,9 +180,6 @@ class TestController extends PublicController
 
     public function upload()
     {
-        $ii=new UserAPI();
-        $ii->GetUserInfo();
-        $get_UserName=$ii->_username;
         $config = C('uploadfile'); //读取上传文件配置类
         $upload = new \Think\Upload($config);// 实例化上传类
         //上传文件
@@ -193,17 +189,14 @@ class TestController extends PublicController
         } else {// 上传成功
             //$this->success('上传成功！');
             foreach ($info as $file) {
+                //$this->assign("photo_add",$file['savepath'] . $file['savename']);
                 $zc_photo = $file['savepath'] . $file['savename'];
-                $io=new ActionAPI();
-                if ($io->UploadImg('/'.$zc_photo,'AD',$get_UserName)){
-                    echo json_encode(array('code' => 200, 'src' => "/" . $zc_photo,'Msg' => '上传成功'));
-                }else{
-                    echo json_encode(array('code' => 500,'Msg' => '上传失败'));
-                }
             }
+            echo json_encode(array('code' => 200, 'src' => "/" . $zc_photo));
             //echo $zc_photo;
         }
     }
+
     public function setname()
     {
         $tablename = I("tablename");

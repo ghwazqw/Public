@@ -62,7 +62,7 @@ class TxSmsAPI
 
 
     //发送短信
-     function SmsSender(){
+     function SmsSender($mobil){
          session("mobcode",null);
         //读取短信配置
          $sms=C("Tx_sms");
@@ -124,6 +124,7 @@ class TxSmsAPI
                  //echo '1';
                  //$this->Smstable($mobile,$time,$code,$yx_date,1,$retdata["result"]); //记录发送信息至数据库
                  $ii->UserLogInfoRecode(50,1,$mobile,1); //记录日志
+
                  //$ii->UserCache($mobile); //记录缓存
                  return true;
              }else{
@@ -160,8 +161,10 @@ class TxSmsAPI
         }
         if ($report_status=="SUCCESS"){
             $ii->UserLogInfoRecode(49,1,$mobile,1);
+            return true;
         }else{
             $ii->UserLogInfoRecode(49,0,$mobile,1);
+            return false;
         }
     }
 }	

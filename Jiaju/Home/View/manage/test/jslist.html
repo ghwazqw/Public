@@ -165,6 +165,16 @@
             <h4>前端Js驱动表格代码：<small>{$TableName}</small></h4>
             <textarea style="width: 100%;height: 500px">
                 <script>
+                    //异步表格所必须
+                    var opt = {
+                        url: "/ProductAPI/ProductInfo", //注意手工修改
+                        type: "get",
+                        silent: true,
+                        query: {
+                            type: 1,
+                            level: 2
+                        }
+                    };
                     $('#exp').bootstrapTable({
                         columns: [{
                             checkbox: true
@@ -239,22 +249,141 @@
                             exclude_inputs: false
                         });
                     }
+                    //编辑信息保存
+                    function PutSubmit() {
+                    <foreach name="formname" item="fo" >
+                        var {$fo.column_name} = $("#{$fo.column_name}").val();
+                        </foreach>
+                        //console.log(id);
+                        $.ajax({
+                            type: "post",
+                            url: "/ProductAPI/", //注意修改
+                            //contentType: "application/json",
+                            data: {<foreach name="formname" item="fo" >"{$fo.column_name}": {$fo.column_name},</foreach>},
+                            success: function (data) {
+                                if (data.code = 200) {
+                                    $("#ok").show().delay(1000).hide(100);
+                                    $("#exp").bootstrapTable('refresh', opt);
+                                } else {
+                                    $("#error").show().delay(2000).hide(200);
+                                    //console.log(data.msg);
+                                    return false;
+                                }
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                //alert(textStatus);
+                            },
+                            timeout: 60000,
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                return false;
+                            }
+                        })
+                    }
+                    //读取详细信息
+                    function Editinfo(id) {
+                        if (!id) {
+                            alert("请选择一个信息!");
+                            return false;
+                        } else {
+                            //alert(id);
+
+                            $.ajax({
+                                type: "get",
+                                url: "/ProductAPI/ProductTpl", //注意手工修改
+                                contentType: "application/json",
+                                data: {"id": id},
+                                success: function (data, state) { //成功调用回调信息
+                                    if (data.code == 200) {
+                                        $.each(data.data, function (i, value) {
+                                        <foreach name="formname" item="fo" >
+                                            $("#{$fo.column_name}").val(value.{$fo.column_name});
+                                        </foreach>
+                                        })
+                                        //console.log(data.data);
+                                        //$("#ok").show().delay(1000).hide(100);
+                                        //$("#exp").bootstrapTable('refresh', opt);
+                                    } else if (data.code == 500) {
+                                        $("#error").show().delay(1000).hide(100);
+                                        return false;
+                                    }
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                    //alert(textStatus);
+                                },
+                                timeout: 60000,
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                    return false;
+                                }
+                            })
+                        }
+                    }
+                    //删除信息
+                    function delinfo(id) {
+                        if (!id) {
+                            alert("请选择一个信息!");
+                            return false;
+                        } else {
+                            var massage = confirm("删除后不可恢复，请确认!");
+                            if (massage == true) {
+                                $.ajax({
+                                    type: "delete",
+                                    url: "/ProductAPI/EditTplInfo?id=" + id, //注意手工修改
+                                    success: function (data, state) { //成功调用回调信息
+                                        if (data.code == 200 && data.total == 1) {
+                                            $("#ok").show().delay(1000).hide(100);
+                                            $("#exp").bootstrapTable('refresh', opt);
+                                        } else if (data == 500) {
+                                            $("#error").show().delay(1000).hide(100);
+                                            return false;
+                                        }
+                                    },
+                                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                        //alert(textStatus);
+                                    },
+                                    timeout: 60000,
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                        alert("服务器响应超时，请稍候重试：" + textStatus);
+                                        return false;
+                                    }
+                                })
+                            }
+                        }
+                    }
+
                 </script>
             </textarea>
         </div>
         <div class="col-md-6">
-            <h4>标准控制器代码：<small>{$TableName}</small></h4>
-            <pre style="width: 100%;height: 500px">
-                $id=I("id");
-                $ii->{$TableName}matedata($id);
-                $this->assign("InfoData",$ii->_main_data); //主表数据
-                $this->assign("pagebar",$ii->_page_bar);    //分页组件
-                $this->assign("count",$ii->_page_count);    //统计数据
-                $this->assign("keyword",$ii->_keyword);
-                $this->assign("page_count",$ii->_page_size);
-                $this->theme("")->display();
+            <h4>表单验证代码：<small>{$TableName}</small></h4>
+            <textarea style="width: 100%;height: 500px">
+                //表单验证代码
+                    $(function () {
+                        $('form').bootstrapValidator({
+                            message: 'This value is not valid',
+                            feedbackIcons: {
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                <foreach name="formname" item="fo" >
+                            {$fo.column_name}: {
+                                    message: '{$fo.column_comment}验证失败',
+                                    validators: {
+                                        notEmpty: {
+                                            message: '{$fo.column_comment}不能为空'
+                                        }
+                                    }
+                                },
+                                </foreach>
 
-            </pre>
+
+                            }
+                        });
+                    });
+            </textarea>
         </div>
     </div>
 

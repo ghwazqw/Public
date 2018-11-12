@@ -12,7 +12,7 @@ return array(
     //***********************************SESSION设置**********************************
     'SESSION_OPTIONS'         =>  array(
         'name'                =>  'Code',                    //设置session名
-        'expire'              =>  3600*15,                         //SESSION保存15天
+        'expire'              =>  3600,                         //SESSION保存3600秒
         'use_trans_sid'       =>  1,                               //跨页传递
         'use_only_cookies'    =>  0,                               //是否只开启基于cookies的session的会话方式
     ),
@@ -110,8 +110,8 @@ return array(
         'Sms_appid'=>'1400097559', //appid
         'Sms_appkey'=>'9bd9cfe28446a10771fa48c9e907e98e', //appkey
         'random'=>54322, //五位随机数
-        'tpl_id'=>138099, //内容模板ID
-        'sign'=>'金正品图书' //短信签名
+        'tpl_id'=>138099, //短信内容模板(非签名)ID
+        'sign'=>'中路汇' //短信签名
 
     ),
     /*apptoken开关*/

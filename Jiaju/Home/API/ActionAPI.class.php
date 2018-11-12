@@ -15,6 +15,8 @@ class ActionAPI
     public $_class_data=""; //类型数据
     public $_class_meta_data=""; //关键字数据
     public $actionInfo=""; //返回要执行的动作
+    public $_Msg="";
+    public $_ImgUrl="";
 
     //读取用户登录操作信息
     function loadUserLoginData(){
@@ -54,8 +56,10 @@ class ActionAPI
     //封装判断ID类
     function ChId($id){
         if (!$id){
-            echo "Id Error";
-            exit();
+            $this->_Msg="id error";
+            return false;
+        }else{
+            return true;
         }
     }
     //客户端token认证
@@ -220,5 +224,45 @@ class ActionAPI
             $ret=$Table->add();
         }
         return $ret;
+    }
+    //临时图片上传类
+    function ImgUpload($sort){
+
+        $config = C('uploadfile'); //读取上传文件配置类
+        $upload = new \Think\Upload($config);// 实例化上传类
+        //上传文件
+        $info = $upload->upload();
+
+        if (!$info) {// 上传错误提示错误信息
+            $this->_Msg=$upload->getError();
+            return false;
+            //$this->error($upload->getError());
+        } else {// 上传成功
+            //$this->success('上传成功！');
+            foreach ($info as $file) {
+                $zc_photo = $file['savepath'] . $file['savename'];
+                $this->_ImgUrl=$zc_photo;
+                return true;
+            }
+        }
+    }
+
+    //临时图片上传信息表
+    function UpTmppImg($imgUrl,$sort,$username){
+        if (!$username){
+            return false;
+        }else{
+        $Table=M("imgtmp_tb");
+        $Table->imageurl=$imgUrl;
+        $Table->sort=$sort;
+        $Table->username=$username;
+        $Table->updatetime=date('Y-m-d H:i:s',time());
+        $ret=$Table->add();
+        if ($ret){
+            return true;
+        }else{
+            return false;
+        }
+        }
     }
 }
