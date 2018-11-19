@@ -1,0 +1,199 @@
+<extend name="manage/index/base_user" title="用户管理"/>
+
+<block name="customer">
+
+
+   <!--{$fo.column_name}/{$fo.column_comment}/{$fo.data_type}<br />-->
+
+        <div class="form-inline" style="text-align: left">
+
+            <form method="post">
+                <label>数据库表</label>
+            <select name="table" class="selectpicker show-tick form-control" id="table" >
+                <option value ="">请选择</option>
+                <foreach name="Table" item="T" >
+                    <option value ="{$T.table_name}">{$T.table_comment}({$T.table_name})</option>
+                </foreach>
+            </select>
+            <button autocomplete="off" class="btn btn-default" id="sub" type="submit">提交</button>
+            </form>
+        </div>
+<hr />
+    <!--<table class="table table-hover table-bordered table-condensed table-responsive table-striped" >
+        <tr style="background: #8bc5eb;color:#fff">
+            <foreach name="formname" item="fo" >
+            <th nowrap>{$fo.column_comment}</th>
+            </foreach>
+        </tr>
+    </table>-->
+
+
+    <div class="col-md-12" style="padding-left: 10px">
+        <form class="form-horizontal" method="post" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_right',timely:1}">
+    <foreach name="formname" item="fo" >
+
+    <?php
+        $col_name=$fo['column_name'];
+        $max_len=$fo['character_maximum_length'];
+        $col_type=$fo['data_type'];
+        $comment=$fo['column_comment'];
+        $comment=explode("|",$comment);
+
+         //文本框
+        if ($col_type=="varchar"){
+        if (!$comment[1] ){
+        if ($max_len<=255){
+            $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-text-color"></span>
+        </span>
+        <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'" data-rule="required"/>
+        </div><br/>';
+        }
+    elseif ($max_len>255 &&$max_len<=1000){
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-file"></span>
+        </span>
+    <textarea class="form-control" style="height: 100px" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"></textarea>
+</div><br/>';
+    }
+    elseif ($max_len>1000){
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+    <textarea class="ckeditor form-control" style="height: 100px" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"></textarea>
+</div><br/>';
+    }
+             //echo $InputTxt;
+        }
+        //数字型
+        elseif ($comment[1]=="int") {
+        $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-sound-6-1"></span>
+        </span>
+         <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+          </div><br/>';
+        //echo $InputTxt;
+        }
+        //二维码
+       elseif ($comment[1]=="Dcode") {
+       $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-qrcode"></span>
+        </span>
+        <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+        </div><br/>';
+        //echo $InputTxt;
+        }
+    //文件上传
+    elseif ($comment[1]=="File") {
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+    <input type="file" id="exampleInputFile" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'">
+    <p class="help-block">请上传DOC/PDF/RAR/ZIP类型的文件.</p>
+    </div>';
+    echo $FileUp;
+    }
+    //条形码
+    elseif ($comment[1]=="Rcode") {
+    $InputTxt='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+    <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+</div><br/>';
+    //echo $InputTxt;
+    }
+
+        }
+    //小数类型
+    $InputNumber='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+        <span class="input-group-addon" >
+            <span class="glyphicon glyphicon-barcode"></span>
+        </span>
+    <input type="text" class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请输入'.$comment[0].'"/>
+    <div class="input-group-addon">.00</div>
+</div><br/>';
+        //日期选择框
+        if ($col_type=="datetime"){
+        //$col_date_id="$('#".$fo['column_name']."')";
+        //echo $col_date_id;
+        $InputDate='<div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px">
+         <span class="input-group-addon" ><span class="glyphicon glyphicon-time"></span></span>
+         <input type="text" readonly class=" form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'" placeholder="请选择'.$comment[0].'"/>
+          </div><br/>';
+        //echo $InputDate;
+        $ActJs='<script>
+        $("#'.$fo['column_name'].'").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        language:"zh-CN",
+            minView:"month"
+        });
+        </script>';
+        //echo $ActJs;
+        }
+        //下拉选择
+        if ($comment[1]=="LxSelect"){
+          $col_type=$comment[1];
+          $select='<div class="col-sm-6 input-group-sm" style=""><select class="form-control" name="'.$fo['column_name'].'" id="'.$fo['column_name'].' ">';
+           $tb_name=$comment[2];
+            $id_mc=$comment[3];
+            $lx_mc=$comment[4];
+           $tb= M($tb_name);
+           $ret=$tb->where()->select();
+           //var_export($ret);
+            //echo $tb->_sql();
+        $select.="<option value='' selected>请选择类型</option>";
+        foreach($ret as $s_data){
+        $select.="<option value='".$s_data[$id_name]."'>".$s_data[$lx_mc]."</option>";
+        }
+            $select.="</select></div><br />";
+        //echo $select;
+        }
+        //单选按钮
+        if ($comment[1]=="RadioSelect"){
+        $col_type=$comment[1];
+        $RadioSelect='<div class="col-sm-6 input-group-sm" style=""><label class="radio-inline"><input type="radio"  value="1" checked name="'.$fo['column_name'].'" id="'.$fo['column_name'].'"/>有效</label>
+        <label class="radio-inline"><input type="radio"  value="0" name="'.$fo['column_name'].'" id="'.$fo['column_name'].'"/> 无效</label> </div>';
+        //echo $RadioSelect;
+        }
+        //lable样式
+        $comment=$comment[0];
+        $LableTxt='<lable class="col-md-2 control-label" style="text-align: right;font-size: 14px">'.$comment.' : </lable>';
+        switch($col_type)
+        {
+        case "varchar":
+        echo $LableTxt.$InputTxt;
+        echo "<!--END-->";
+        break;
+        case "datetime":
+        echo $LableTxt.$InputDate.$ActJs;
+        echo "<!--END-->";
+        break;
+        case "LxSelect";
+        echo $LableTxt.$select."<br />";
+        echo "<!--END-->";
+        break;
+        case "RadioSelect";
+        echo $LableTxt .$RadioSelect."<br />";
+        echo "<!--END-->";
+        break;
+        case "double":
+        echo $LableTxt.$InputNumber.$ActJs;
+        echo "<!--END-->";
+        break;
+
+        }
+    ;?>
+        </foreach>
+    <br />
+    {$LableTxt}
+    <div class="col-sm-8 input-group input-group-sm" style="padding-left: 15px" >
+    <button type="submit" class="btn btn-success">保存</button>
+    <button type="reset" class="btn btn-default">重置</button>
+        </div>
+
+    </form>
+        </div>
+</block>

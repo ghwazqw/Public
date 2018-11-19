@@ -1,0 +1,78 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <link href="__PUBLIC__/bs/css/bootstrap.min.css" rel="stylesheet">
+    <script src="__PUBLIC__/bs/js/register.js" rel="stylesheet"></script>
+    <include file="WebApps/widget/navbar" />
+    <hr />
+
+    <!--===========layout-container================-->
+    <div class="container " style="margin: 0 auto;text-align: center;">
+        <div class="am-u-md-12" >
+            <form method="post" >
+                <div class="form-inline" style="height: 70px;text-align: left">
+                    <label >用户名</label><br/>
+                    <input type="text" class="form-control" name="Username" id="Username" placeholder="6-20位字母或数字的组合" style="width: 50%">
+                    <input type="hidden" name="aa" value="q" >
+                    <span id="user_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                    <span id="user_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                </div>
+                <div class="form-inline" style="height: 70px;text-align: left">
+                    <label>电子邮箱</label><br/>
+                    <input type="text" class="form-control" name="Email" id="Email" placeholder="请输入Email信息" style="width: 50%">
+                    <span id="Email_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                    <span id="Email_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                </div>
+                <div class="form-inline" style="height: 70px;text-align: left">
+                    <label>推荐码</label><br/>
+                    <input type="text" class="form-control" name="user_tjr" id="user_tjr" placeholder="请输入推荐码信息" style="width: 50%">
+                    <span id="tjr_chck" style="color: #ff0000;display: none"></span>
+                    <span id="tjr_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                </div>
+                <div class="clear"></div>
+                <div class="form-inline" style="height: 70px;text-align: left">
+                    <label>密码</label><br/>
+                    <input type="password" class="form-control" name="textPwd" id="textPwd" placeholder="6-20位字母、数字、符号的组合" style="width: 50%">
+                    <span id="pass_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                    <span id="pass_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                </div>
+                <div class="clear"></div>
+                <div class="form-inline" style="height: 70px;text-align: left">
+                    <label>请再次输入密码</label><br/>
+                    <input type="password" class="form-control" name="tPwd" id="rePwd" placeholder="6-20位字母、数字、符号的组合" style="width: 50%">
+                    <span id="repass_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                    <span id="repass_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                </div>
+                <div class="form-inline" style="height: 70px;text-align: left">
+                    <label>输入验证码</label><br/>
+                    <input type="text" class="form-control" name="txtcode" id="txtcode" placeholder="请输入验证码信息">
+                    <img src="/index.php/home/index/vercode" style="width: 130px;height: 32px;cursor: pointer"  onclick="this.src='/home/index/vercode?id='+Math.random();" title="点击刷新"/>
+                    <span id="code_chck" class="glyphicon glyphicon-remove" style="color: #ff0000;display: none"></span>
+                    <span id="code_ok" class="glyphicon glyphicon-ok" style="color: #0785e9;display: none"></span>
+                </div>
+                <div class="form-inline" style="height: 70px;text-align: left">
+                    <button type="button" class="btn btn-success"  id="Submit" autocomplete="off">提交</button>
+                    <!--<a role="button" class="btn btn-danger" data-loading-text="提交中..." id="regSubmit" autocomplete="off">提交</a>-->
+                    <button type="reset" class="btn btn-default">重置</button>
+                    <div class="label label-warning" id="Info"></div>
+                </div>
+            </form>
+        </div>
+        <div class="am-u-md-3" style="text-align: left;margin-top: -300px;line-height: 35px;margin-right: 50px">
+            <a href="#" class="contact-btn" style="margin-bottom: 10px" onclick="kf()">
+                <button type="button" class="am-btn am-btn-success am-radius"><i class="am-icon-weixin"> </i> 微信登录</button>
+            </a>
+            <a href="/home/index/register.html" class="contact-btn" onclick="kf()">
+                <button type="button" class="am-btn am-btn-primary am-radius"><i class="am-icon-qq"> </i> QQ登录</button>
+            </a>
+        </div>
+
+    </div>
+    </div>
+
+    <script>
+        function kf() {
+            alert("近期开放，敬请期待！");
+        }
+    </script>
+
+</block>

@@ -1,0 +1,137 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <div class="container-fluid" style="margin-top: 60px">
+        <!--导入Excel文件插件-->
+        <script type="text/javascript" src="/Public/bs/js/jquery.table2excel.min.js" ></script>
+        <!--菜单导航开始-->
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">管理系统首页</a>
+            </li>
+            <li class="active">
+                <a href="#">{$title}</a>
+            </li>
+        </ul>
+        <!--菜单导航结束-->
+        <!--工具栏开始-->
+        <div id="toolbar">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu" style="margin-top: -8px">
+                    <li >
+                        <a href="#form-1" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                    <li >
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--工具栏结束-->
+        <!--表格开始-->
+        <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+               data-classes="table table-hover"
+               data-show-columns="true"
+               data-height="600"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-toolbar="#toolbar"
+        >
+        </table>
+        <!--表格结束-->
+    </div>
+    <script>
+        $('#exp').bootstrapTable({
+            columns: [{
+                checkbox: true
+            },{field: 'id', title: '序号.', formatter: function (value, row, index) {
+                    //return index + 1;
+                    return (index+1);
+                },
+                width:50,
+                align: 'center'
+            },
+                {field:'name',title:'名称',align:'left',formatter:function (value,row,index) {
+                        if (value==1){
+                            return '<span class="label label-success">1</span>';
+                        }else{
+                            return value;
+                        }
+                    }},{field:'title',title:'标题',align:'left',formatter:function (value,row,index) {
+                        if (value==1){
+                            return '<span class="label label-success">1</span>';
+                        }else{
+                            return value;
+                        }
+                    }}
+                    ,{field:'status',title:'状态',align:'left',formatter:function (value,row,index) {
+                        if (value==1){
+                            return '<span class="label label-success">有效</span>';
+                        }else{
+                            return '<span class="label label-danger">无效</span>';
+                        }
+                    }},{field:'lx',title:'类型0为菜单，1为操作功能',align:'left',formatter:function (value,row,index) {
+                        if (value==1){
+                            return '<span class="label label-success">功能</span>';
+                        }else{
+                            return '<span class="label label-warning">菜单</span>';
+                        }
+                    }},
+                {field: 'id',title:'功能操作',align:'left',formatter:function (value) {
+                        return '<div class="btn-group" role="group">' +
+                            '<input class="btn btn-success btn-xs" onclick="editinfo('+value+')" href="#form-1" data-toggle="modal" type="button" value="编辑" title="编辑信息" />' +
+                            '<input class="btn btn-danger btn-xs" onclick="delinfo('+value+')" type="button" value="删除" title="删除该信息" />' +
+                            '</div>';
+                    }}
+            ],
+            url:'/app', //请求控制器地址
+            method: 'get', //请求方式
+            datatype:'json', //返回数据格式
+            //striped: true,       //是否显示行间隔色
+            height:760,//高度调整
+            undefinedText:'--', //数据为空时的显示内容
+            /*工具栏处理*/
+            toolbar: '#toolbar',//指定工具栏
+            toolbarAlign:'left', //工具样位置
+            striped: true, //是否显示行间隔色
+            //earchText:'请输入搜索内容', //搜索默认文字
+
+
+            /*分页处理*/
+            dataField: "data", //读取后端给出的JSON中的数据记录集合，必须与后端保证一致
+            pageNumber: 1, //初始化加载第一页，默认第一页
+            pagination:true,//是否分页
+            //clickToSelect: true, //
+            queryParamsType:'limit',//查询参数组织方式
+            //contentType: "application/x-www-form-urlencoded",//发送到服务器的数据编码类型
+            sidePagination:'server',//指定服务器端分页
+            pageSize:50,//单页记录数
+            pageList:[25,50,100,500,'All'],//分页步进值
+            data_local: "zh-US",//表格汉化
+            showRefresh:true,//刷新按钮
+            showColumns:true,
+            sortOrder:'',  //排序规则
+            sortName:'id' //排序字段
+            //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+
+        });
+        //导出Excel文件处理
+        function expinfo(){
+            var myDate = new Date();
+            $("#exp").table2excel({
+                exclude: ".noExl",
+                name: "Excel Document Name.xls",
+                filename: myDate.toLocaleString()+".xls",
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: false
+            });
+        }
+    </script>
+
+</block>

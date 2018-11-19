@@ -1,0 +1,130 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+
+    <script>
+        function RoleSelect(id,rolename) {
+            //window.location.reload();
+            //alert(id);
+            $("input").prop("checked", false);
+            var v=id;
+            var n=rolename;
+            $("#select_roleid").val(v);
+            $("#select_rolename").val(n);
+            //$("input:radio[name='roleid']").attr("checked",false);
+            $("#role_id").val(id);
+            $("#RoleName").html(rolename+' | 菜单信息列表');
+            var url = "/User/RoleAuthMenu?id=" + v;
+            $.getJSON(url,function (data) {
+                //遍历回传到的Json数据，取出该角色下的菜单信息
+                $.each(data,function (i,value) {
+                    //alert(value.id);
+                    var menuid=value.id;
+                    $("#menu"+menuid).prop("checked","checked");
+                    $("#class_"+menuid).prop("checked","checked");
+                })
+            })
+        }
+        function sub() {
+            $("#select_info").val(info);
+            var info="";
+            $("input[name='Menu_s_id']").each(function (i) {
+                if ($(this).prop("checked")){
+                    info+=$(this).val()+',';
+                }
+            });
+            //info=info.substring(0,info.Length-1); //去除最后的,号
+            info = info.substr(0, info.length - 1);
+            //alert(info);
+            $("#select_info").val(info);
+            var roleid=$("#select_roleid").val();
+            var rolename=$("#select_rolename").val();
+            if (!roleid || !rolename){
+                alert("请选择角色");
+                return false;
+            }else if (!info){
+                alert("请至少选择一个菜单");
+            }else{
+                $("#subedit").submit();
+            }
+
+        }
+
+    </script>
+    <div class="container-fluid" style="margin-top: 60px">
+    <ul class="breadcrumb">
+        <li>
+            <a href="/">管理系统首页</a>
+        </li>
+
+        <li class="active">
+            <a href="#">{$title}</a>
+        </li>
+
+    </ul>
+    <div id='div1' class="col-md-12" >
+        <div class="col-md-2" >
+            <div class="list-group ">
+                <a href="#" class="list-group-item active">
+                    <span class="glyphicon glyphicon-list-alt"></span> 角色信息列表
+                </a>
+                <foreach name="RoleData" item="role" >
+                    <a href="#" class="list-group-item" onclick="RoleSelect({$role.id},'{$role.title}')">{$role.title}
+                        <!--<span >
+                            <input type="radio" name="roleid" id="roleid{$role.id}" class="form-inline" id="roleid{$role.id}" />
+                        </span>-->
+                    </a>
+                </foreach>
+            </div>
+        </div>
+        <form method="post" action="/Role/EditRoleMenu" id="subedit">
+            <div class="col-md-10" >
+                <h4 id="RoleName">菜单信息列表</h4>
+                <input type="hidden" name="role_id" id="role_id" >
+                <input id="select_info" type="hidden"  name="select_info" style="width: 400px" value="">
+                <input id="select_roleid" type="hidden" name="select_roleid" value="">
+                <input id="select_rolename" type="hidden" name="select_rolename" value="">
+                <button type="button" onclick="sub()" class="btn btn-success" style="margin-bottom: 50px;float: right">配置权限提交</button>
+                <foreach name="class_meta_data" item="class_mtea" >
+                    <script>
+                        function select_menu{$class_mtea.id}() {
+                            //$("#{$class_mtea.id} input").attr("checked", true);
+                            $("#{$class_mtea.id} input").each(function (i) {
+                                if ($(this).prop("checked")){
+                                    $(this).prop("checked",false)
+                                }else{
+                                    $(this).prop("checked",true)
+                                }
+                            })
+
+                        }
+                    </script>
+                    <div class="clear"></div>
+                    <div class="panel panel-default" id="{$class_mtea.id}">
+                        <!--<input type="text" id="menu_id{$class_mtea.id}" name="selectmenu" value="">-->
+                        <div class="panel-heading">
+                            <button type="button" class="btn btn-danger btn-xs" onclick="select_menu{$class_mtea.id}()">选择</button>
+                            <input type="checkbox" style="display: none" name="Menu_s_id" id="class_{$class_mtea.id}" value="{$class_mtea.id}" /> <b>{$class_mtea.menu_mc}</b>
+                            <script>
+                                function mero{$class_mtea.id}() {
+                                    if ($("#class_{$class_mtea.id}").prop("checked",false)){
+                                        $("#class_{$class_mtea.id}").prop("checked",true)
+                                    }
+                                }
+                            </script>
+                        </div>
+                        <div class="panel-body">
+                            <foreach name="mtea_data" item="mtea" >
+                                <php> if( $mtea['menu_sjid'] == $class_mtea['id'] ):</php>
+
+                                <span style="margin-right: 30px"><input type="checkbox" name="Menu_s_id" id="menu{$mtea.id}" value="{$mtea.id}" onchange="mero{$class_mtea.id}()"> {$mtea.menu_mc}</span>
+                                <php>endif ;</php>
+                            </foreach>
+                        </div>
+                    </div>
+                </foreach>
+                <span style="text-align: right"><button type="button" onclick="sub()" class="btn btn-success">配置权限提交</button></span>
+            </div>
+        </form>
+    </div>
+    </div>
+</block>

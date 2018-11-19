@@ -1,0 +1,45 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <div class="calendar">
+    <foreach name='InfoData' item='Info' >
+    <ol class="breadcrumb">
+        <li><a href="#">管理首页</a></li>
+        <li><a href="/news/newsmanage">资讯信息管理</a></li>
+        <li class="active">{$Info.n_title}</li>
+    </ol>
+        <div class="col-md-9 column">
+            <div class="articleContent">
+                <h2 class="title">
+                    {$Info.n_title}
+                </h2>
+                <div class="property">
+                    <span>文章来源：{$Info.n_author}</span> <span>作者：{$Info.n_author}</span> <span>发布日期：{$Info.n_datetime}</span> <span>资讯类型：{$Info.lx_name}</span> <span></span>
+                </div>
+                <hr/>
+                <div id="contentTxt">
+                    <p><img src="{$Info.n_photo}" width="100%"></p>
+                    {$Info.n_content}
+                </div>
+            </div>
+            <hr />
+            <div>
+                <assign name="keyword_c" value="$Info[n_keyword]" />
+                <?php
+                    $keyword_a=explode(",",$keyword_c);
+                ?>
+                <h4>关键词：
+                    <small>
+                        <foreach name="keyword_a" item="v">
+                                {$v} |&nbsp;
+                        </foreach>
+                    </small>
+                </h4></div>
+            <hr />
+            <div><h4>信息统计：<small>点击量：{$n_cilck+$data_cilck} </small></h4></div>
+        </div>
+        <div class="col-md-3">
+            1111
+        </div>
+    </foreach>
+    </div>
+</block>

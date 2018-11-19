@@ -1,0 +1,306 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+    <!--Model表单开始-->
+    <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form role="form" method="post" action="/jobs/EditJobs" data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}" enctype="multipart/form-data">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <span id="pos">增加</span>应聘信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>姓名</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="请输入姓名" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>应聘职位</label>
+                            <select class="form-control" name="positionid" id="positionid">
+                                <foreach name='DataInfo' item='Info'>
+                                <option value="{$Info.id}">{$Info.position}</option>
+                                </foreach>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>性别</label>
+                            <input type="text" class="form-control" name="sex" id="sex" placeholder="请输入性别" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>学历</label>
+                            <input type="text" class="form-control" name="education" id="education" placeholder="请输入学历" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>电话</label>
+                            <input type="text" class="form-control" name="tel" id="tel" placeholder="请输入电话" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>邮箱</label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="请输入邮箱" data-rule="required" />
+                        </div>
+                        <div class="form-group">
+                            <label>简历附件</label>
+                            <input type="file" class="form-control" name="file" id="file" placeholder="请输入简历附件" />
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+    </div>
+    <!--Model招聘详细内容开始-->
+    <div class="modal fade" id="content" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="Label">
+                        <span id="title"></span>详细内容
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <span id="infocontent"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!--表单结束-->
+    <div class="container-fluid" style="margin-top: 60px">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">管理系统首页</a>
+            </li>
+
+            <li class="active">
+                <a href="#">应聘信息管理</a>
+            </li>
+
+        </ul>
+        <div id="toolbar">
+            <div class="btn-group">
+
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu" style="margin-top: -8px">
+                    <li >
+                        <a href="#form-1" onclick="editinfo()" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                    <li >
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
+                    </li>
+                </ul>
+            </div>
+            <span id="ok" style="display:none;" class="label label-success">操作成功</span>
+            <span id="error" style="display:none;" class="label label-danger">操作失败</span>
+        </div>
+        <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+               data-classes="table table-hover"
+               data-show-columns="true"
+               data-height="600"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-toolbar="#toolbar"
+        ></table>
+        <script>
+            $('#exp').bootstrapTable({
+                columns: [{
+                    checkbox: true
+                },
+                    {field: 'id', title: '序号.', formatter: function (value, row, index) {
+                            //return index + 1;
+                            return (index+1);
+                        },
+                        width:50,
+                        align: 'center'
+                    },
+                    {field: 'name', title: "应聘人姓名",class: 'editinfo', align: 'left'},
+                    {field: 'sex',title:'性别',align:'left'},
+                    {field: 'age',title:'年龄',align:'right'},
+                    {field: 'tel',title:'电话',align:'left'},
+                    {field: 'email', title: '电子邮箱',align: 'left',formatter:function (value, row, index) {
+                            return '<a href="Mailto:'+value+'">'+value+'</a>';
+                        }},
+                    {field: 'positionid', title: '应聘职位',align: 'left'},
+                    {field: 'time', title: '求职时间',align: 'left'},
+
+                    {field: 'status', title: '简历状态',align: 'left',formatter:function (value,row,index) {
+                            if (value==1){
+                                return '<span class="label label-success">生效</span>';
+                            }else{
+                                return '<span class="label label-danger">无效</span>';
+                            }
+                        }},
+                    {field: 'education', title: '学历',align: 'right'},
+                    {field: 'file', title: '简历附件',align: 'left',formatter:function (value, row, index) {
+                        if (value){
+                            return '<a href="'+value+'" target="_blank">'+value+'</a>';
+                        }else{
+                            return '没有上传附件';
+                        }
+
+                        }},
+                    {field: 'id',title:'功能操作',align:'left',formatter:function (value) {
+                            return '<div class="btn-group" role="group">' +
+                                '<input class="btn btn-success btn-xs" onclick="editinfo('+value+')" href="#form-1" data-toggle="modal" type="button" value="编辑" title="编辑信息" />' +
+                                '<input class="btn btn-danger btn-xs" onclick="delinfo('+value+')" type="button" value="删除" title="删除该招聘信息" />' +
+                                '</div>';
+                        }}
+                ],
+                url:'/jobs/JobsInfo', //请求地址
+                method: 'get', //请求方式
+                datatype:'json', //返回数据格式
+                //striped: true,       //是否显示行间隔色
+                height:760,//高度调整
+                undefinedText:'--', //数据为空时的显示内容
+                /*工具栏处理*/
+                toolbar: '#toolbar',//指定工具栏
+                toolbarAlign:'left', //工具样位置
+                striped: true, //是否显示行间隔色
+                //earchText:'请输入搜索内容', //搜索默认文字
+
+                /*分页处理*/
+                dataField: "data", //读取后端给出的JSON中的数据记录集合，必须与后端保证一致
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                pagination:true,//是否分页
+                //clickToSelect: true, //
+                queryParamsType:'limit',//查询参数组织方式
+                //contentType: "application/x-www-form-urlencoded",//发送到服务器的数据编码类型
+                sidePagination:'server',//指定服务器端分页
+                pageSize:50,//单页记录数
+                pageList:[25,50,100,500,'All'],//分页步进值
+                data_local: "zh-US",//表格汉化
+                showRefresh:true,//刷新按钮
+                showColumns:true,
+                sortOrder:'',  //排序规则
+                sortName:'id' //排序字段
+                //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+            });
+        </script>
+        <script>
+            function expinfo(){
+                var myDate = new Date();
+                $("#exp").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name.xls",
+                    filename: myDate.toLocaleString()+".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: false
+                });
+            }
+
+            $(function () {
+                $('[data-toggle="popover"]').popover(
+                    {
+                        trigger: 'hover',//鼠标以上时触发弹出提示框
+                        html: true,//开启html 为true的话，data-content里就能放html代码了
+                    }
+                )
+            })
+
+        </script>
+        <script>
+            //异步表格所必须
+            var opt={
+                url: "/jobs/JobsInfo",
+                type:"get",
+                silent: true,
+                query:{
+                    type:1,
+                    level:2
+                }
+            };
+            $(function (){
+                $("[data-toggle='popover']").popover();
+            });
+            function info(id) {
+                var url="/Jobs/PositionInfo?id=" + id;
+                $.getJSON(url,function (data) {
+                    $.each(data.data,function (i, value) {
+                        $("#title").html(value.position);
+                        $("#infocontent").html(value.position_content);
+                    })
+                })
+            }
+            //编辑数据
+            function editinfo(id) {
+                //alert(id);
+                //return false;
+                var url="/Jobs/PositionInfo?id=" + id;
+                $("#pos").html("编辑");
+                $.getJSON(url,function (data) {
+                    $.each(data.data,function (i, value) {
+                        $("#position").val(value.position);
+                        $("#department").val(value.department);
+                        $("#release_people").val(value.release_people);
+                        $("#address").val(value.address);
+                        $("#Year").val(value.year);
+                        $("#position_content").val(value.position_content);
+                        $("#school").val(value.school);
+                        $("#status").val(value.status);
+                        $("#salary").val(value.salary);
+                        $("#time").val(value.time);
+                        $("#id").val(id);
+                    })
+                });
+                if (!id){
+                    $('#editform')[0].reset();
+                    $("#pos").html("增加");
+                }
+            }
+            //删除信息
+            function delinfo(id) {
+                if (!id){
+                    alert("请选择一个信息!");
+                    return false;
+                }else{
+                    var massage=confirm("删除后不可恢复，请确认!");
+                    if (massage==true){
+                        $.ajax({
+                            type : "delete",
+                            url:"/jobs/EditPosition?id="+id,
+                            //contentType: "application/json",
+                            datatype:"json",
+                            //data:{"id":id},
+                            success:function (data, state) { //成功调用回调信息
+                                if (data.total==1){
+                                    $("#ok").show().delay(1000).hide(100);
+                                    $("#exp").bootstrapTable('refresh', opt);
+                                    //window.location.reload();
+                                }else{
+                                    $("#error").show().delay(1000).hide(100);
+                                    return false;
+                                }
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                //alert(textStatus);
+                            },
+                            timeout: 60000,
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                return false;
+                            }
+                        })
+                    }
+                }
+
+            }
+        </script>
+    </div>
+</block>

@@ -1,0 +1,15 @@
+<?php
+$user_info=$_COOKIE['user_info'];
+$globar_user=unserialize($user_info);
+?>
+
+<php> if($globar_user):</php>
+<span style="font-size: 12px">欢迎：{$globar_user:user_name},来到{$sys_title}
+<a href="/home/Quser/user_cent" style="color:#ffffff">用户中心</a> | <a href="?do=logout" style="color:#ffffff">注销</a>
+
+<php> else:</php>
+
+<a href="/home/Quser/login" style="color:#ffffff">登录</a>
+<a href="/home/index/register" style="color:#ffffff">注册</a>
+</span>
+<php> endif;</php>

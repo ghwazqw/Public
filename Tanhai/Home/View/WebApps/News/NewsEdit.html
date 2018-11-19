@@ -1,0 +1,258 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+    <div class="container-fluid" style="margin-top: 60px">
+        <!--Nav Start-->
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">管理系统首页</a>
+            </li>
+
+            <li>
+                <a href="/News/NewsManage">资讯信息管理</a>
+            </li>
+            <li class="active">
+                <a href="#">资讯信息编辑</a>
+            </li>
+
+        </ul>
+        <!--nav end-->
+
+        <!--add start-->
+        <if condition="$id eq ''">
+        <div class="row clearfix" style="align-content: center">
+            <div class="col-md-9 column">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>资讯类型</label>
+                        <select name="n_lxid" class="selectpicker show-tick form-control" id="n_lxid" >
+                            <option value ="">请选择</option>
+                            <foreach name="SortInfo" item="M_dat" >
+                                <option value ="{$M_dat.id}">{$M_dat.name}</option>
+                            </foreach>
+                        </select>
+
+                        <!--<label class="alert" role="alert" for="zx_lx" style="width: 200px;line-height: 20px;height: 20px"></label>!-->
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">资讯标题<span class="alert" for="n_title" style="font-size: 12px;height: 20px;color: red"></span></label>
+                        <input type="text" class="form-control" for="n_title" name="n_title" id="n_title" placeholder="输入资讯标题">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯关键词</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">SEO</span>
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="n_keyword">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯来源</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon4">来源</span>
+                            <input type="text" class="form-control" id="basic-url11" aria-describedby="basic-addon3" name="n_laiyuan">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯作者</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon99">作者</span>
+                            <input type="text" class="form-control" id="basic-url1" aria-describedby="basic-addon3" name="n_author">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯推荐</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon99">推荐</span>
+                            <select class="form-control" name="n_recomm" id="n_recomm">
+                                <option>请选择</option>
+                                <option>推荐</option>
+                                <option>不推荐</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">新闻附件上传</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon5">新闻附件上传</span>
+                            <div id="fileupload">
+                                <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="photo1" onchange="addfile()" ><br />
+                            </div>
+                            <script>
+                                function addfile() {
+                                    for(var i = 2; i < 5; i++){
+                                        $("#fileupload").append(" <input type='file' class='form-control' id='basic-url2' aria-describedby='basic-addon3' name='photo"+i+"'><br / >");
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                         <label for="basic-url">新闻图片上传</label>
+                             <div class="upload-box" style="width: 100%;border: none">
+                                 <div class="image-box clear">
+                                     <section class="upload-section">
+                                         <div class="upload-btn"></div>
+                                         <input type="file" name="file" id="upload-input" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="multiple" />
+
+                                     </section>
+
+                                 </div>
+
+                             </div>
+                     </div>-->
+                    <div class="form-group">
+                        <label for="basic-url">资讯简介</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" >简述</span>
+                            <textarea class="form-control" rows="3" name="n_note"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯内容</label>
+                        <div id="weditor">
+                            <p></p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="text1" name="content" />
+                    <button autocomplete="off" class="btn btn-success" id="sub" type="submit">提交</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+
+                </form>
+            </div>
+            <div class="col-md-3 column">
+                热门标签
+            </div>
+        </div>
+        <!--Add End-->
+        <else/>
+        <!--Edit Start-->
+            <foreach name="InfoData" item="Dal" >
+        <div class="row clearfix" style="align-content: center">
+            <div class="col-md-9 column">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>资讯类型</label>
+                        <select name="n_lxid" class="selectpicker show-tick form-control" id="n_lxid" >
+                            <option value ="">请选择</option>
+                            <foreach name="SortInfo" item="M_dat" >
+                                <option value ="{$M_dat.id}"  <php>if ($M_dat["id"]==$Dal["n_lxid"]) :</php>selected<php>endif ;</php>>{$M_dat.name}</option>
+                            </foreach>
+                        </select>
+
+                        <!--<label class="alert" role="alert" for="zx_lx" style="width: 200px;line-height: 20px;height: 20px"></label>!-->
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">资讯标题<span class="alert" for="n_title" style="font-size: 12px;height: 20px;color: red"></span></label>
+                        <input type="text" class="form-control" for="n_title" name="n_title" id="n_title" placeholder="输入资讯标题" value="{$Dal.n_title}">
+                        <input type="hidden" name="id" value="{$Dal.n_id}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯关键词</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">SEO</span>
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="n_keyword" value="{$Dal.n_keyword}">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯来源</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon4">来源</span>
+                            <input type="text" class="form-control" id="basic-url11" aria-describedby="basic-addon3" name="n_laiyuan" value="{$Dal.n_author}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯作者</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon99">作者</span>
+                            <input type="text" class="form-control" id="basic-url1" aria-describedby="basic-addon3" name="n_author" value="{$Dal.n_author}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯推荐</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon99">推荐</span>
+                            <select class="form-control" name="n_recomm" id="n_recomm">
+                                <option value="1" <php>if ($Dal['n_recomm']==1) :</php>selected<php>endif ;</php>>推荐</option>
+                                <option value="0" <php>if ($Dal['n_recomm']==0) :</php>selected<php>endif ;</php>>不推荐</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">新闻附件上传</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon5">新闻附件上传</span>
+                            <div id="fileupload">
+                                <input type="file" class="form-control" id="basic-url2" aria-describedby="basic-addon3" name="photo1" onchange="addfile()" ><br />
+                            </div>
+                            <script>
+                                function addfile() {
+                                    for(var i = 2; i < 5; i++){
+                                        $("#fileupload").append(" <input type='file' class='form-control' id='basic-url2' aria-describedby='basic-addon3' name='photo"+i+"'><br / >");
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                         <label for="basic-url">新闻图片上传</label>
+                             <div class="upload-box" style="width: 100%;border: none">
+                                 <div class="image-box clear">
+                                     <section class="upload-section">
+                                         <div class="upload-btn"></div>
+                                         <input type="file" name="file" id="upload-input" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple="multiple" />
+
+                                     </section>
+
+                                 </div>
+
+                             </div>
+                     </div>-->
+                    <div class="form-group">
+                        <label for="basic-url">资讯简介</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" >简述</span>
+                            <textarea class="form-control" rows="3" name="n_note">{$Dal.n_note}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-url">资讯内容</label>
+                        <div id="weditor">
+                            {$Dal.n_content}
+                        </div>
+                    </div>
+                    <input type="hidden" id="text1" name="content" />
+                    <button autocomplete="off" class="btn btn-success" id="sub" type="submit">提交</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                    <span class="label label-warning" id="errorInfo">{$errorInfo}</span>
+
+                </form>
+            </div>
+            <div class="col-md-3 column">
+                热门标签
+            </div>
+        </div>
+            </foreach>
+
+        </if>
+        <!--Edit End-->
+        <script src="__PUBLIC__/bs/js/wangEditor.min.js"></script>
+        <script type="text/javascript">
+            var E = window.wangEditor
+            var editor = new E('#weditor')
+            editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+            var $text1 = $('#text1')
+            editor.customConfig.onchange = function (html) {
+                // 监控变化，同步更新到 textarea
+                $text1.val(html)
+            }
+            editor.create()
+            // 初始化 textarea 的值
+            $text1.val(editor.txt.html())
+        </script>
+        <!--editor end-->
+
+    </div>
+</block>
