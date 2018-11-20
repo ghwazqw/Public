@@ -1,4 +1,4 @@
-<extend name="WebApps/index/base"  title="index"/>
+<extend name="Web/index/base"  title="index"/>
 <block name="customer">
 <!--Banner广告开始-->
     <div class="index_slider">
@@ -69,64 +69,18 @@
                 </ul>
             </div>
             <div class="grid_2">
+
                 <div class="col-md-3 span_6">
                     <div class="box_inner">
-                        <img src="__PUBLIC__/tanhai/images/p1.jpg" class="img-responsive" alt=""/>
+                        <img src="{$img[0]}" class="img-responsive" alt="{$Info.product_name}"/>
+
                         <div class="sale-box"> </div>
                         <div class="desc">
-                            <h3>Ullamcorper suscipit</h3>
-                            <h4>178,90 $</h4>
+                            <h3>{$Info.product_name}</h3>
+                            <h4>{$Info.product_price} ￥</h4>
                             <ul class="list2">
                                 <li class="list2_left"><span class="m_1"><a href="#" class="link">加入购物车</a></span></li>
                                 <li class="list2_right"><span class="m_2"><a href="#" class="link1">立即购买</a></span></li>
-                                <div class="clearfix"> </div>
-                            </ul>
-                            <div class="heart"> </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 span_6">
-                    <div class="box_inner">
-                        <img src="__PUBLIC__/tanhai/images/p2.jpg" class="img-responsive" alt=""/>
-                        <div class="sale-box"> </div>
-                        <div class="desc">
-                            <h3>Ullamcorper suscipit</h3>
-                            <h4>178,90 $</h4>
-                            <ul class="list2">
-                                <li class="list2_left"><span class="m_1"><a href="#" class="link">Add to Cart</a></span></li>
-                                <li class="list2_right"><span class="m_2"><a href="#" class="link1">See More</a></span></li>
-                                <div class="clearfix"> </div>
-                            </ul>
-                            <div class="heart"> </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 span_6">
-                    <div class="box_inner">
-                        <img src="__PUBLIC__/tanhai/images/p3.jpg" class="img-responsive" alt=""/>
-                        <div class="sale-box"> </div>
-                        <div class="desc">
-                            <h3>Ullamcorper suscipit</h3>
-                            <h4>178,90 $</h4>
-                            <ul class="list2">
-                                <li class="list2_left"><span class="m_1"><a href="#" class="link">Add to Cart</a></span></li>
-                                <li class="list2_right"><span class="m_2"><a href="#" class="link1">See More</a></span></li>
-                                <div class="clearfix"> </div>
-                            </ul>
-                            <div class="heart"> </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 span_6">
-                    <div class="box_inner">
-                        <img src="__PUBLIC__/tanhai/images/p4.jpg" class="img-responsive" alt=""/>
-                        <div class="sale-box"> </div>
-                        <div class="desc">
-                            <h3>Ullamcorper suscipit</h3>
-                            <h4>178,90 $</h4>
-                            <ul class="list2">
-                                <li class="list2_left"><span class="m_1"><a href="#" class="link">Add to Cart</a></span></li>
-                                <li class="list2_right"><span class="m_2"><a href="#" class="link1">See More</a></span></li>
                                 <div class="clearfix"> </div>
                             </ul>
                             <div class="heart"> </div>
@@ -138,4 +92,19 @@
         </div>
     </div>
     <!--服务信息结束-->
+    <script type="text/html" id="tpl_ptype">
+        <li>
+            <span><a href="#">{ptype}</a> </span>
+        </li>
+
+    </script>
+
+    <script>
+        var url="/ProductAPI/ProductInfo?limit=4";
+        $.getJSON(url,function (data) {
+            $.each(data.data,function (i, value) {
+                //console.log(value.product_name);
+            })
+        })
+    </script>
 </block>

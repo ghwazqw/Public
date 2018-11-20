@@ -4,6 +4,7 @@ namespace Home\Controller;
 use Home\API\ActionAPI;
 use Home\API\AppdataAPI;
 use Home\API\LoginAPI;
+use Home\API\ProductAPI;
 use Think\Controller;
 
 class IndexController extends PublicController {
@@ -18,7 +19,12 @@ class IndexController extends PublicController {
         $this->assign("sysconfig",$ii->_server_info);
         $sysinfo=C("SysConfig");
         $this->assign("sysinfo",$sysinfo);
-        //var_dump($sysinfo);
+        //获取前4条信息
+        $id="";
+        $ii = new ProductAPI();
+        $ii->pt_product_tbmatedata($id,4);
+        $this->assign("ProductInfo",$ii->_main_data);
+        //var_dump($ii->_main_data);
            $this->assign("title","檀海商城--首页");
            $this->theme("web")->display();
     }

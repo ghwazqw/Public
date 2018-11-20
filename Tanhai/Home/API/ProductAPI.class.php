@@ -178,11 +178,12 @@ class ProductAPI
         }
     }
     //加载商品信息表
-    function pt_product_tbmatedata($id)
+    function pt_product_tbmatedata($id,$limit)
     {
         //echo $id;
-
-        $limit = I("limit"); //从前端获取每页显示的数量
+        if (!$limit){
+            $limit = I("limit"); //从前端获取每页显示的数量
+        }
         $order = I("order"); //排序方式获取
         $sort = I("sort"); //排序字段获取
         $offset = I("offset"); //排序位置获取
@@ -216,9 +217,9 @@ class ProductAPI
         }
         //加载主表数据
         if (!$id) {
-            $this->_page_count = $count = $TableName->where($where)->count(); //加载获取到的数据量
+            $this->_page_count = $count = $TableName->where($where)->LIMIT($offset . ',' . $limit)->count(); //加载获取到的数据量
         }else{
-            $this->_page_count = $count = $TableName->where("id=$id")->count(); //加载获取到的数据量
+            $this->_page_count = $count = $TableName->where("id=$id")->LIMIT($offset . ',' . $limit)->count(); //加载获取到的数据量
         }
         $Page = new \Think\Page($count, $limit);
         //$Page->parameter=$this->_keyword;
@@ -227,10 +228,49 @@ class ProductAPI
         $this->_page_bar = $Page->show(); //把分布内容赋值给变量
         $this->_page_ys = $Page->totalPages;
         if (!$id) {
-            $this->_main_data = $TableName->where($where)->order($sort . " " . $order)->LIMIT($offset . ',' . $limit)->select(); //据取值完成
+            $ret = $TableName->where($where)->order($sort . " " . $order)->LIMIT($offset . ',' . $limit)->select(); //据取值完成
+
         } else { //ID不为空时读取详细信息
-            $this->_main_data = $TableName->where("id=$id")->order($sort . " " . $order)->LIMIT($offset . ',' . $limit)->select(); //据取值完成
+            $ret = $TableName->where("id=$id")->order($sort . " " . $order)->LIMIT($offset . ',' . $limit)->select(); //据取值完成
         }
+        //加载扩展信息
+        foreach ($ret as $row) {
+            $pid=$row["id"];
+            //加载图片
+            $this->ImgInfo($pid);
+            //$imgUrl="";
+            $imgUrl = array_column($this->_dateil_data,'imgurl');
+
+            //加载规格型号信息
+            $this->ModelInfo($pid);
+            $info="";
+            foreach ($this->_dateil_data as $Mod){
+                if ($Mod["product_id"]==$pid){
+                    $info.=
+                        $Mod['im_title'].":".$Mod['im_value'].",";
+                }
+            }
+            $ggxh=$info;
+
+
+
+            $results[]=[
+                'id'=>$row["id"],
+                'product_name'=>$row["product_name"],
+                'sort_id'=>$row["sort_id"],
+                'product_price'=>$row["product_price"],
+                'product_costprice'=>$row["product_costprice"],
+                'product_taxrate'=>$row["product_taxrate"],
+                'product_note'=>$row["product_note"],
+                'product_status'=>$row["product_status"],
+                'product_volumes'=>$row["product_volumes"],
+                'sort_mc'=>$row["sort_mc"],
+                'imgUrl'=>$imgUrl,
+                'ggxhinfo'=>$ggxh
+            ];
+        }
+        $this->_main_data=$results;
+
         //echo $TableName->getLastSql();
         if ($count == 0) {
             $this->_Msg = '数据结果为0';
@@ -393,6 +433,14 @@ class ProductAPI
         $ViewTable=M("productimg_tb");
         $where["product_id"]=array("eq",$id);
         $ret=$ViewTable->where($where)->select();
+        $this->_dateil_data=$ret;
+        $this->_Msg="获取成功";
+    }
+    //读取商品规格信息
+    function ModelInfo($id){
+        $ModelTable=M("product_meta_tb");
+        $where["product_id"]=array("eq",$id);
+        $ret=$ModelTable->where($where)->select();
         $this->_dateil_data=$ret;
         $this->_Msg="获取成功";
     }
