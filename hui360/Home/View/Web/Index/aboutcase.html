@@ -1,0 +1,55 @@
+<extend name="Web/index/base" />
+<block name="customer">
+	<!-- breadcurmbs -->
+	<foreach name='InfoData' item='Info' >
+	<section class="blasa-section r-breadcurmbs-1">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="wrap_breadcrumbs_1">
+						<h1 class="breadcurmbs-head">About Us
+						</h1>
+						<ul class="breadcrumbs_content_1 ">
+							<li><a href="/" title="home"> Home </a> /</li>
+							<li><a href="/index/about"><span>About Us</span></a></li>
+							<li><span>{$Info.n_title}</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- about us 2 (tabs) -->
+	<section class="blasa-section about_us_page_2">
+		<div class="container">
+			<div class="tab">
+				<ul class="tabs">
+					<li><a href="#"><h4>{$Info.n_title}</h4></a></li>
+				</ul>
+				<!-- / tabs -->
+				<div class="tab_content">
+					<div class="tabs_item">
+
+						<div class="tab_content_text about_us">
+
+							<p>
+								{$Info.n_content}
+							</p>
+							<p style="text-align: right;margin-right: 10px"> <span>發布時間：{$Info.n_datetime}</span></p>
+						</div>
+					</div>
+
+					<!-- / tabs_item -->
+				</div>
+				<!-- / tab_content -->
+			</div>
+			<!-- / tab -->
+
+			<div class="row row_features_3 align-items-center justify-content-center">
+				<p style="height: 60px"></p>
+			</div>
+		</div>
+	</section>
+	</foreach>
+</block>

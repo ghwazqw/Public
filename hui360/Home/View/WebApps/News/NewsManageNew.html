@@ -1,0 +1,156 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+    <div class="container-fluid" style="margin-top: 60px">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">管理系统首页</a>
+            </li>
+
+            <li class="active">
+                <a href="#">资讯信息管理</a>
+            </li>
+
+        </ul>
+        <div class="alert alert-warning" id="warning" style="display: none">
+
+        </div>
+        <div id="toolbar">
+            <div class="btn-group">
+
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu" style="margin-top: -8px">
+                    <li >
+                        <a href="/News/NewsEdit" role="button" data-toggle="modal"  title="新增"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                    <!--<li >
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
+                    </li>-->
+                </ul>
+            </div>
+
+        </div>
+        <hr/>
+        <div class="col-md-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            资讯分类
+                        </a><small>News Sort</small>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <foreach name="SortData" item="Info" >
+                            <a href="#" class="list-group-item">{$Info.name}</a>
+                        </foreach>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <foreach name="InfoData" item="M_dat" >
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="__PUBLIC__/jiaju/assets/img/logo.png" alt="{$M_dat.n_title}" style="width: 64px">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4><a class="media-heading" href="/News/NewsDal/id/{$M_dat.n_id}.html" target="_blank">{$M_dat.n_title}</a><small> 资讯类型：{$M_dat.lx_name}</small></h4>
+                        <!--<h4><a class="media-heading" href="{:U('Newstest/News_dal',array('info_id'=>$M_dat['info_id']))}">{$M_dat.info_title}</a></h4><!-->
+                        <p>{$M_dat.n_note}</p>
+
+                        <!--<span>点击量：<script>document.write(getMeta({$M_dat.info_id},'views'));</script></span>
+                                            <span>评论数：<script>document.write(getMeta({$M_dat.info_id},'review'));</script></span>
+                            <span>来源：<script>document.write(getMeta({$M_dat.info_id},'laiYyan'));</script></span>
+                            <span>类型：<php> if($M_dat["info_type"]==1):</php>通知公告<php> endif;</php><php> if($M_dat["info_type"]==2):</php>政策解读<php> endif;</php></span>-->
+
+                        </p>
+
+                        <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                            <!--<a href="#" class="btn btn-primary" role="button" title="首页推荐"><i class="fa fa-home" aria-hidden="true"></i></a>-->
+                            <a href="/News/NewsEdit?id={$M_dat.n_id}" class="btn btn-success" role="button" title="编辑信息"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <a href="#" onclick="delinfo({$M_dat.n_id})" class="btn btn-danger" role="button" title="删除信息"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <!--<button type="button" class="btn btn-default">点击量:100</button>-->
+                            <a href="#" class="btn btn-default" role="button" title="点赞数"><i class="fa fa-heart-o" aria-hidden="true"></i> 100</a>
+                            <php>if ($M_dat['n_recomm']==1) :</php>
+                            <a href="#" class="btn btn-default" role="button" title="重点推荐"><i class="fa fa-heart" aria-hidden="true"></i> 推荐</a>
+                            <php>endif ;</php>
+
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </foreach>
+        </div>
+    </div>
+    <!--<div class="container">
+        <h3>警告框（Alert）插件 alert() 方法</h3>
+        <div id="myAlert" class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+            <strong>警告！</strong>您的网络连接有问题。
+        </div>
+        <script type="text/javascript">
+            $(function() {
+                $("div#myAlert").bind('click',function () {
+                    alert("警告消息框被关闭。");
+                });
+            });
+        </script>
+    </div>-->
+
+    <!--<script>
+        function delinfo(id) {
+            var i=id;
+            if (!i){
+                var info='<a href="#" class="close" data-dismiss="alert"> &times;</a><strong>警告！</strong>信息读取错误。';
+                $("#warning").html(info);
+                $("#warning").css("display","block");
+
+                //alert("请选择一个分类!");
+                return false;
+            }else{
+                var info='<a href="#" class="close" data-dismiss="alert"> &times;</a><strong>警告！</strong>删除的数据不可恢复，请确认。' +
+                    '<a href="#" title="确认删除！"><i class="fa fa-check" aria-hidden="true"></i></a> <i class="fa fa-times" aria-hidden="true"></i>';
+                $("#warning").html(info);
+                $("#warning").show();
+            }
+        }
+    </script>-->
+    <script>
+        function delinfo(id) {
+            if (!id){
+                alert("信息读取错误");
+                return false;
+            }else
+            {
+                var massage=confirm("删除后不可恢复，请确认!");
+                if (massage==true){
+                    $.ajax({
+                        type : "get",
+                        url:"/News/NewsDel",
+                        data:{"sort":2,"id":id},
+                        success:function (result, state) { //成功调用回调信息
+                            alert(result);
+                            window.location.reload();
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                            //alert(textStatus);
+                        },
+                        timeout: 60000,
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                            alert("服务器响应超时，请稍候重试：" + errorThrown +textStatus);
+                            return false;
+                        }
+                    })
+            }
+            }
+        }
+    </script>
+</block>

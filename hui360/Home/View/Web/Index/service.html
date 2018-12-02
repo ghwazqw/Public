@@ -1,0 +1,107 @@
+<extend name="Web/index/base" />
+<block name="customer">
+	<!-- breadcurmbs -->
+	<foreach name='InfoData' item='Info' >
+		<!-- breadcurmbs -->
+		<section class="blasa-section r-breadcurmbs-1">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="wrap_breadcrumbs_1">
+							<h1 class="breadcurmbs-head">Barter Platform
+							</h1>
+							<ul class="breadcrumbs_content_1 ">
+								<li><a href="#" title="home"> Home </a> /</li>
+								<li><span>Barter</span></li>
+								<li><span>{$Info.n_title}</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<section class="blasa-section page-details left-sidebar">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-12 col-12 sidebar-col">
+						<div class="wrap_page_sidebar">
+							<div class="widget tp_widget related_widget">
+								<div class="content_widget ">
+									<ul class="related_service_list">
+										<li <if condition="$Info.n_id eq 86 ">class="current"</if>>
+											<a href="/index/service/html/86.html" title="平臺介紹">平臺介紹</a>
+										</li>
+										<li <if condition="$Info.n_id eq 87 ">class="current"</if>>
+											<a href="/index/service/html/87.html" title="聯盟合作">聯盟合作</a>
+										</li>
+										<li <if condition="$Info.n_id eq 88 ">class="current"</if>>
+											<a href="/index/service/html/88.html" title="平臺特色">平臺特色</a>
+										</li>
+										<li <if condition="$Info.n_id eq 90 ">class="current"</if>>
+											<a href="/index/service/html/90.html" title="以需易需">以需易需</a>
+										</li>
+										<li <if condition="$Info.n_id eq 91 ">class="current"</if>>
+										<a href="/index/service/html/91.html" title="以業易業">以業易業</a>
+										</li>
+										<li <if condition="$Info.n_id eq 89 ">class="current"</if>>
+										<a href="/index/service/html/89.html" title="全國服務網點">全國服務網點</a>
+										</li>
+
+									</ul>
+								</div>
+							</div>
+
+							<div class="widget tp_widget contact_widget">
+								<div class="head_widget">
+									<h3>Contact Us</h3>
+								</div>
+								<div class="content_widget ">
+									<ul class="contact_us_list">
+										<li>
+											<span class="wcontact_icon"><i class="fas fa-map-marker"></i></span>
+											<div class="wcontact_text">
+												<h3>Address</h3>
+												<p>{$address}<br />{$addressx}</p>
+											</div>
+										</li>
+										<li>
+											<span class="wcontact_icon"><i class="fas fa-mobile-alt"></i></span>
+											<div class="wcontact_text">
+												<h3>Phone</h3>
+												<p>(Phone)
+													<br /> {$tel}</p>
+											</div>
+										</li>
+										<li>
+											<span class="wcontact_icon"><i class="fas fa-envelope"></i></span>
+											<div class="wcontact_text">
+												<h3>Email</h3>
+												<p>{$email}</p>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9 col-md-12 col-12 pagecontent-col">
+						<article class="wrap_page_content single-page">
+							<!-- images carousel -->
+							<div class="row-page-section">
+								<h2 style="text-align: center">{$Info.n_title}</h2>
+								<p>
+									{$Info.n_content}
+								</p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+	</foreach>
+</block>

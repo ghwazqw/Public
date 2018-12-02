@@ -1,0 +1,390 @@
+<extend name="WebApps/index/base" />
+
+<block name="customer">
+
+
+   <!--{$fo.column_name}/{$fo.column_comment}/{$fo.data_type}<br />-->
+
+    <div class="container-fluid" >
+
+            <form method="post" class="form-inline">
+                <label>数据库表</label>
+            <select name="table" class="selectpicker show-tick form-control" id="table" >
+                <option value ="">请选择</option>
+                <foreach name="Table" item="T" >
+                    <option value ="{$T.table_name}">{$T.table_comment}({$T.table_name})</option>
+                </foreach>
+            </select>
+                <input type="checkbox" class="form-control" name="act" value="1" /> 是否带有操作菜单
+            <button autocomplete="off" class="btn btn-success" id="sub" type="submit">提交生成</button>
+            </form>
+        <hr/>
+        </div>
+
+    <div class="col-md-12">
+    <div class="col-md-6">
+        <h4>API类代码：<small>{$TableName}</small></h4>
+    <textarea style="width: 100%;height: 500px">
+            class ****API //填写控制器名称规则:"控制器名称+API"
+            {
+            public $_page_size="50"; //每页显示条数
+            public $_page_bar=""; //分布组件需要展示的内容
+            public $_page_count=""; //统计数量
+            public $_main_data=array(); //主表数据
+            public $_dateil_data=array();  //子表数据
+            public $_keyword=""; //关键字数据
+            public $_Msg=""; //信息输出
+
+                function {$TableName}matedata($id){
+
+                $limit=I("limit"); //从前端获取每页显示的数量
+                $order=I("order"); //排序方式获取
+                $sort=I("sort"); //排序字段获取
+                $offset=I("offset"); //排序位置获取
+                $search=I("search"); //获取搜索关键字
+
+                if (!$sort){
+                    $sort="id"; //默认排序字段
+                }
+                if (!$order){
+                    $order="desc"; //默认排序方式
+                }
+                if (!$offset){
+                    $offset=0; //默认数据读取
+                }
+                if (!$limit){
+                    $limit=this->_page_size; //前台未传参时，默认每页显示为50条数据
+                }
+
+                $TableName=M("{$TableName}"); //注意去除表头
+                $this->_keyword=$search;
+                if ($this->_keyword!=""){
+                <foreach name="formname" item="fo" >
+                    $where["{$fo.column_name}"]  = array('like',"%$this->_keyword%");
+                </foreach>
+                    $where['_logic']='OR';
+                }
+                //加载主表数据
+                 $this->_page_count=$count=$TableName->where($where)->count(); //加载获取到的数据量
+                 $Page = new \Think\Page($count,$limit);
+                 //$Page->parameter=$this->_keyword;
+
+
+                 $this->_page_bar=$Page->show(); //把分布内容赋值给变量
+                 $this->_page_ys=$Page->totalPages;
+                 if (!$id){
+                 $this->_main_data=$TableName->where($where)->order($sort." ". $order)->LIMIT($offset.','.$limit)->select(); //据取值完成
+                 }else{ //ID不为空时读取详细信息
+                 $this->_main_data=$TableName->where("id=$id")->order($sort." ". $order)->LIMIT($offset.','.$limit)->select(); //据取值完成
+                 }
+                 //echo $TableName->getLastSql();
+                 if ($count==0){
+                    $this->_Msg='数据结果为0';
+                    }else{
+                    $this->_Msg='获取成功';
+                    }
+            }
+            }
+
+            </textarea>
+    </div>
+        <div class="col-md-6">
+            <h4>前端Html代码：<small>{$TableName}</small></h4>
+            <textarea style="width: 100%;height: 500px">
+                <div class="container-fluid" style="margin-top: 60px">
+                <!--导入Excel文件插件-->
+                <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
+                <!--菜单导航开始-->
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/">管理系统首页</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">{$TableName}管理</a>
+                    </li>
+                </ul>
+                <!--菜单导航结束-->
+                <!--工具栏开始-->
+                <div id="toolbar">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">功能列表</span>
+                    </button>
+                    <ul class="dropdown-menu" style="margin-top: -8px">
+                        <li >
+                            <a href="#form-1" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                        </li>
+                        <li >
+                            <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+                <!--工具栏结束-->
+                <!--表格开始-->
+                <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+                       data-classes="table table-hover"
+                       data-show-columns="true"
+                       data-height="600"
+                       data-search="true"
+                       data-show-refresh="true"
+                       data-show-toggle="true"
+                       data-toolbar="#toolbar"
+                >
+                </table>
+                <!--表格结束-->
+                </div>
+            </textarea>
+
+        </div>
+        <div class="col-md-6">
+            <h4>Json接口控制器代码：<small>{$TableName}</small></h4>
+            <pre style="width: 100%;height: 500px">
+                $id=I("id");
+                switch ($this->_method){
+                    case 'get': // get请求处理代码
+                        $ii=new ****API(); //自行修改API接口
+                        $ii->{$TableName}matedata($id);
+                        $total=$ii->_page_count;
+                        $result["total"] = $total; //分页时需要获取记录总数，键值为total
+                        $result['code'] = '200'; //状态码
+                        $result["msg"] = $ii->_Msg;
+                        $result["data"] = $ii->_main_data; //获取的记录信息，注意数组名称要与前端的指定名称想同
+                        $this->response($result,'json'); //返回JSON接口
+                        break;
+                    case 'put': // put请求处理代码
+                        break;
+                    case 'post': // post请求处理代码
+                        break;
+        }
+            </pre>
+        </div>
+        <div class="col-md-6">
+            <h4>前端Js驱动表格代码：<small>{$TableName}</small></h4>
+            <textarea style="width: 100%;height: 500px">
+                <script>
+                    //异步表格所必须
+                    var opt = {
+                        url: "/ProductAPI/ProductInfo", //注意手工修改
+                        type: "get",
+                        silent: true,
+                        query: {
+                            type: 1,
+                            level: 2
+                        }
+                    };
+                    $('#exp').bootstrapTable({
+                        columns: [{
+                            checkbox: true
+                        },{field: 'id', title: '序号.', formatter: function (value, row, index) {
+                                    //return index + 1;
+                                    return (index+1);
+                                },
+                                width:50,
+                                align: 'center'
+                            },
+                            <foreach name="formname" item="fo" >
+                        <php>if ($fo['data_type']=='int' || $fo['data_type']=='tinyint') :</php>
+                            {field:'{$fo.column_name}',title:'{$fo.column_comment}',align:'left',formatter:function (value,row,index) {
+                                    if (value==1){
+                                        return '<span class="label label-success">1</span>';
+                                    }else{
+                                        return value;
+                                    }
+                                }},
+                        <php>else :</php>
+                            {field:'{$fo.column_name}',title:'{$fo.column_comment}',align:'left'},
+                            <php>endif ;</php>
+                            </foreach>
+                            <php>if ($act==1) :</php>
+                                {field: 'id',title:'功能操作',align:'left',formatter:function (value) {
+                                    return '<div class="btn-group" role="group">' +
+                                        '<input class="btn btn-success btn-xs" onclick="editinfo('+value+')" href="#form-1" data-toggle="modal" type="button" value="编辑" title="编辑信息" />' +
+                                        '<input class="btn btn-danger btn-xs" onclick="delinfo('+value+')" type="button" value="删除" title="删除该招聘信息" />' +
+                                        '</div>';
+                                }}
+                            <php>endif ;</php>
+                        ],
+                        url:'/restful/Bookinfo', //请求控制器地址
+                        method: 'get', //请求方式
+                        datatype:'json', //返回数据格式
+                        //striped: true,       //是否显示行间隔色
+                        height:760,//高度调整
+                        undefinedText:'--', //数据为空时的显示内容
+                        /*工具栏处理*/
+                        toolbar: '#toolbar',//指定工具栏
+                        toolbarAlign:'left', //工具样位置
+                        striped: true, //是否显示行间隔色
+                        //earchText:'请输入搜索内容', //搜索默认文字
+
+
+                        /*分页处理*/
+                        dataField: "data", //读取后端给出的JSON中的数据记录集合，必须与后端保证一致
+                        pageNumber: 1, //初始化加载第一页，默认第一页
+                        pagination:true,//是否分页
+                        //clickToSelect: true, //
+                        queryParamsType:'limit',//查询参数组织方式
+                        //contentType: "application/x-www-form-urlencoded",//发送到服务器的数据编码类型
+                        sidePagination:'server',//指定服务器端分页
+                        pageSize:50,//单页记录数
+                        pageList:[25,50,100,500,'All'],//分页步进值
+                        data_local: "zh-US",//表格汉化
+                        showRefresh:true,//刷新按钮
+                        showColumns:true,
+                        sortOrder:'',  //排序规则
+                        sortName:'id' //排序字段
+                        //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+                    });
+                    //导出Excel文件处理
+                    function expinfo(){
+                        var myDate = new Date();
+                        $("#exp").table2excel({
+                            exclude: ".noExl",
+                            name: "Excel Document Name.xls",
+                            filename: myDate.toLocaleString()+".xls",
+                            exclude_img: true,
+                            exclude_links: true,
+                            exclude_inputs: false
+                        });
+                    }
+                    //编辑信息保存
+                    function PutSubmit() {
+                    <foreach name="formname" item="fo" >
+                        var {$fo.column_name} = $("#{$fo.column_name}").val();
+                        </foreach>
+                        //console.log(id);
+                        $.ajax({
+                            type: "post",
+                            url: "/ProductAPI/", //注意修改
+                            //contentType: "application/json",
+                            data: {<foreach name="formname" item="fo" >"{$fo.column_name}": {$fo.column_name},</foreach>},
+                            success: function (data) {
+                                if (data.code = 200) {
+                                    $("#ok").show().delay(1000).hide(100);
+                                    $("#exp").bootstrapTable('refresh', opt);
+                                } else {
+                                    $("#error").show().delay(2000).hide(200);
+                                    //console.log(data.msg);
+                                    return false;
+                                }
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                //alert(textStatus);
+                            },
+                            timeout: 60000,
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                return false;
+                            }
+                        })
+                    }
+                    //读取详细信息
+                    function Editinfo(id) {
+                        if (!id) {
+                            alert("请选择一个信息!");
+                            return false;
+                        } else {
+                            //alert(id);
+
+                            $.ajax({
+                                type: "get",
+                                url: "/ProductAPI/ProductTpl", //注意手工修改
+                                contentType: "application/json",
+                                data: {"id": id},
+                                success: function (data, state) { //成功调用回调信息
+                                    if (data.code == 200) {
+                                        $.each(data.data, function (i, value) {
+                                        <foreach name="formname" item="fo" >
+                                            $("#{$fo.column_name}").val(value.{$fo.column_name});
+                                        </foreach>
+                                        })
+                                        //console.log(data.data);
+                                        //$("#ok").show().delay(1000).hide(100);
+                                        //$("#exp").bootstrapTable('refresh', opt);
+                                    } else if (data.code == 500) {
+                                        $("#error").show().delay(1000).hide(100);
+                                        return false;
+                                    }
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                    //alert(textStatus);
+                                },
+                                timeout: 60000,
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                    alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                    return false;
+                                }
+                            })
+                        }
+                    }
+                    //删除信息
+                    function delinfo(id) {
+                        if (!id) {
+                            alert("请选择一个信息!");
+                            return false;
+                        } else {
+                            var massage = confirm("删除后不可恢复，请确认!");
+                            if (massage == true) {
+                                $.ajax({
+                                    type: "delete",
+                                    url: "/ProductAPI/EditTplInfo?id=" + id, //注意手工修改
+                                    success: function (data, state) { //成功调用回调信息
+                                        if (data.code == 200 && data.total == 1) {
+                                            $("#ok").show().delay(1000).hide(100);
+                                            $("#exp").bootstrapTable('refresh', opt);
+                                        } else if (data == 500) {
+                                            $("#error").show().delay(1000).hide(100);
+                                            return false;
+                                        }
+                                    },
+                                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                        //alert(textStatus);
+                                    },
+                                    timeout: 60000,
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                        alert("服务器响应超时，请稍候重试：" + textStatus);
+                                        return false;
+                                    }
+                                })
+                            }
+                        }
+                    }
+
+                </script>
+            </textarea>
+        </div>
+        <div class="col-md-6">
+            <h4>表单验证代码：<small>{$TableName}</small></h4>
+            <textarea style="width: 100%;height: 500px">
+                //表单验证代码
+                    $(function () {
+                        $('form').bootstrapValidator({
+                            message: 'This value is not valid',
+                            feedbackIcons: {
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                <foreach name="formname" item="fo" >
+                            {$fo.column_name}: {
+                                    message: '{$fo.column_comment}验证失败',
+                                    validators: {
+                                        notEmpty: {
+                                            message: '{$fo.column_comment}不能为空'
+                                        }
+                                    }
+                                },
+                                </foreach>
+
+
+                            }
+                        });
+                    });
+            </textarea>
+        </div>
+    </div>
+
+</block>
