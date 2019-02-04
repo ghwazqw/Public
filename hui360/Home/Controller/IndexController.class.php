@@ -5,6 +5,7 @@ namespace Home\Controller;
 use Home\API\ActionAPI;
 use Home\API\ActivitiesAPI;
 use Home\API\AppdataAPI;
+use Home\API\CourseAPI;
 use Home\API\NewsAPI;
 
 
@@ -19,7 +20,7 @@ class IndexController extends PublicController {
         $this->assign("sysinfo",$sysinfo);
         //var_dump($sysinfo);
            $this->assign("title","首頁");
-           $this->theme("web")->display();
+           $this->theme("webApps")->display();
     }
     public function About(){
         $this->assign("title","關於我們");
@@ -62,15 +63,13 @@ class IndexController extends PublicController {
         $this->theme("web")->display();
     }
     public function Entrepreneur(){
-        $id=I("html");
-        //检查传入参数是否完整
-        $ii=new ActionAPI();
-        $ii->ChId($id);
-        $io=new NewsAPI();
-        $io->NewsInfo($id);
+        $id=I("id");
+
+        $io=new CourseAPI();
+        $io->pt_course_tbmatedata($id);
         $this->assign("InfoData",$io->_main_data);
-        //var_export($io->_main_data);
-        $this->assign("title","專業家專區");
+        var_export($io->_main_data);
+        $this->assign("title","課程列表");
         $this->theme("web")->display();
     }
     public function training(){

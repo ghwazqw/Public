@@ -24,6 +24,13 @@ return array(
     'DB_PORT'   => 3306,   //端口号
     'DB_PREFIX' => 'pt_', // 数据库表前缀
     'DB_DSN'    => 'mysql:host=47.93.18.121;dbname=hui360;charset=utf8',
+    /*//数据库配置类
+    'DB_TYPE'   => 'mysql', // 数据库类型
+    'DB_USER'   => 'kxb', // 用户名
+    'DB_PWD'    => 'kxb123456', // 密码
+    'DB_PORT'   => 3306,   //端口号
+    'DB_PREFIX' => 'Shang_', // 数据库表前缀
+    'DB_DSN'    => 'mysql:host=47.93.18.121;dbname=kxb;charset=utf8',*/
 
     /*//数据库配置类
     'DB_TYPE'   => 'mysql', // 数据库类型
@@ -82,20 +89,20 @@ return array(
     ),
     'LOAD_EXT_CONFIG' => 'user', //用户登录扩展
     "SysConfig"=>array(
-        'SystemName'=>'匯360',
+        'SystemName'=>'網天下',
         'isMoblie'=>'0', //是否启用手机版支持,1为支持,0为关闭
         'ICP'=>'京ICP备18040391号',
         'tel'=>'+886（2）2608-2656',
         'email'=>'Service@net2cc.com',
         'wexin'=>'none',
         'note'=>'',
-        'about'=>'匯360',
-        'copyright'=>'copyright © 2010-2018 <a href="/">Net2cc.Com</a> 版权所有',
-        'Tech'=>'匯360',
-        'address'=>'中国.北京.台灣',
-        'addressx'=>'台北市承德路四段327號11樓',
-        'SEO_Title'=>'匯360',
-        'SEO_Keyword'=>'匯360,电子商务,图书,信息服務,商業，計劃，企業，企劃',
+        'about'=>'網天下',
+        'copyright'=>'copyright © 2010-2019 <a href="/">Net2cc.Com</a> 版权所有',
+        'Tech'=>'網天下',
+        'address'=>'中国.台灣.台北',
+        'addressx'=>'承德路4段327號11樓',
+        'SEO_Title'=>'網天下',
+        'SEO_Keyword'=>'網天下,电子商务,图书,信息服務,商業，計劃，企業，企劃',
         'Logo'=>'/Public/hui360/images/logo.png',
         ),
 

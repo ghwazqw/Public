@@ -25,11 +25,11 @@ class FromAPI
 	}
 	function List_table(){
 		$Model = M();
-		$this->_TableNmae=$ret=$Model->query("select * from information_schema.tables where table_schema='hui360'and table_name not like 'zc_cq_pt%' ");
+		$this->_TableNmae=$ret=$Model->query("select * from information_schema.tables where table_schema='hui360' ");
 	}
 	function page_table(){
 		$Model = M();
-		$this->_TableNmae=$ret=$Model->query("select * from information_schema.tables where table_schema='hui360'and table_name not like 'zc_cq_pt%' ");
+		$this->_TableNmae=$ret=$Model->query("select * from information_schema.tables where table_schema='hui360'");
 	}
 
 	function list_input(){

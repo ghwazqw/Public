@@ -1,4 +1,4 @@
-<extend name="Web/index/base" />
+<extend name="web/Index/base" />
 <block name="customer">
 	<!-- breadcurmbs -->
 	<foreach name='InfoData' item='Info' >
@@ -8,11 +8,11 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="wrap_breadcrumbs_1">
-							<h1 class="breadcurmbs-head">Entrepreneur area
+							<h1 class="breadcurmbs-head">Course Info
 							</h1>
 							<ul class="breadcrumbs_content_1 ">
 								<li><a href="#" title="home"> Home </a> /</li>
-								<li><span>Entrepreneur</span></li>
+								<li><span>Course</span></li>
 								<li><span>{$Info.n_title}</span></li>
 							</ul>
 						</div>
@@ -30,8 +30,8 @@
 							<div class="widget tp_widget related_widget">
 								<div class="content_widget ">
 									<ul class="related_service_list">
-										<li <if condition="$Info.n_id eq 82 ">class="current"</if>>
-											<a href="/index/Entrepreneur/html/82.html" title="專區介紹">專區介紹</a>
+										<li <if condition="$Info.n_id eq 4 ">class="current"</if>>
+											<a href="/index/Entrepreneur/html/4.html" title="專區介紹">專區介紹</a>
 										</li>
 										<li <if condition="$Info.n_id eq 83 ">class="current"</if>>
 											<a href="/index/Entrepreneur/html/83.html" title="電商人才專區">電商人才專區</a>
@@ -85,9 +85,20 @@
 						<article class="wrap_page_content single-page">
 							<!-- images carousel -->
 							<div class="row-page-section">
-								<h2 style="text-align: center">{$Info.n_title}</h2>
+								<h2 style="text-align: center">{$Info.co_title}</h2>
 								<p>
-									{$Info.n_content}
+									{$Info.co_content}
+								</p>
+								<p>
+									開課日期1：{$Info.co_date} 台北<br />
+									開課日期2：{$Info.co_date2} 台中<br />
+									開課日期3：{$Info.co_date3} 高雄<br />
+								</p>
+								<p>
+									早鳥標價：NT{$Info.co_zmoney}<br />
+									原價：NT{$Info.co_money}<br />
+									VIP：{$Info.co_vip}<br />
+									以上價格均為未稅價格。
 								</p>
 							</div>
 						</article>

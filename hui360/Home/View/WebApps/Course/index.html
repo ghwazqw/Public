@@ -1,0 +1,260 @@
+<extend name="WebApps/index/base"/>
+<block name="customer">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js"></script>
+    <!--Model表单开始-->
+    <div class="modal fade" id="form-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form role="form" method="post" action="/CourseAPI/CouAPI"
+              data-validator-option="{stopOnError:false, timely:2, theme:'yellow_top',timely:1}">
+            <div class="modal-dialog" style="width: 60%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            增加課程信息
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group"><label>課程日期1</label><input type="text" readonly class=" form-control"
+                                                                           name="co_date" id="co_date"
+                                                                           placeholder="请选择課程日期1"/></div>
+                        <script>
+                            $("#co_date").datetimepicker({
+                                format: "yyyy-mm-dd",
+                                autoclose: true,
+                                todayBtn: true,
+                                language: "zh-CN",
+                                minView: "month"
+                            });
+                        </script>
+                        <div class="form-group"><label>課程日期2</label><input type="text" readonly class=" form-control"
+                                                                           name="co_date2" id="co_date2"
+                                                                           placeholder="请选择課程日期2"/></div>
+                        <script>
+                            $("#co_date2").datetimepicker({
+                                format: "yyyy-mm-dd",
+                                autoclose: true,
+                                todayBtn: true,
+                                language: "zh-CN",
+                                minView: "month"
+                            });
+                        </script>
+                        <div class="form-group"><label>課程日期3</label><input type="text" readonly class=" form-control"
+                                                                           name="co_date3" id="co_date3"
+                                                                           placeholder="请选择課程日期3"/></div>
+                        <script>
+                            $("#co_date3").datetimepicker({
+                                format: "yyyy-mm-dd",
+                                autoclose: true,
+                                todayBtn: true,
+                                language: "zh-CN",
+                                minView: "month"
+                            });
+                        </script>
+                        <div class="form-group"><label>上課時間</label><input type="text" class="form-control"
+                                                                          name="co_sktime" id="co_sktime"
+                                                                          placeholder="请输入上課時間"
+                        value="早8:30-中午12:00"
+                        />
+                        </div>
+                        <div class="form-group"><label>課程題目</label><input type="text" class="form-control"
+                                                                          name="co_title" id="co_title"
+                                                                          placeholder="请输入課程題目" />
+                        </div>
+                        <div class="form-group"><label>早鳥標價</label><input type="text" class="form-control"
+                                                                          name="co_zmoney" id="co_zmoney"
+                                                                          placeholder="请输入早鳥標價" />
+                        </div>
+                        <div class="form-group"><label>正常價格</label><input type="text" class="form-control"
+                                                                          name="co_money" id="co_money"
+                                                                          placeholder="请输入正常價格" />
+                        </div>
+                        <div class="form-group"><label>VIP</label><input type="text" class="form-control" name="co_vip"
+                                                                         id="co_vip" placeholder="请输入VIP"
+                                                                         value="1.5張上課證"
+                        />
+                            <input type="hidden" id="text1" name="content" />
+                        </div>
+                        <div class="form-group">
+                            <label >課程內容</label>
+                            <div id="weditor">
+                                {$Dal.n_content}
+                            </div>
+                        </div>
+                        </div>
+
+                        
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="__hash__"
+                   value="c18681c3dbadd9fcf03dc3a93a0c4474_958c4ae496be981d7dd50a7d69e459f4"/></form>
+    </div>
+    <!--表单结束-->
+    <div class="container-fluid" style="margin-top: 60px">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">管理系统首页</a>
+            </li>
+
+            <li class="active">
+                <a href="#">課程信息管理</a>
+            </li>
+
+        </ul>
+        <div id="toolbar">
+            <div class="btn-group">
+
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> 功能列表
+                </button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">功能列表</span>
+                </button>
+                <ul class="dropdown-menu" style="margin-top: -8px">
+                    <li>
+                        <a href="#form-1" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
+                    </li>
+                    <li>
+                        <a href="#" role="button" data-toggle="modal" onclick="expinfo()" title="导出结果"><span
+                                class="glyphicon glyphicon-download"></span> 导出结果</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+               data-classes="table table-hover"
+               data-show-columns="true"
+               data-height="600"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-toolbar="#toolbar"
+        ></table>
+        <script>
+            $('#exp').bootstrapTable({
+                columns: [{
+                    checkbox: true
+                },
+                    {field: 'co_title', title: '課程題目', align: 'left'},
+                    {field: 'co_date', title: '課程日期1', align: 'left'},
+                    {field: 'co_date2', title: '課程日期2', align: 'left'},
+                    {field: 'co_date3', title: '課程日期3', align: 'left'},
+                    {field: 'co_sktime', title: '上課時間', align: 'left'},
+
+                    /*{field: 'co_content', title: '課程內容', align: 'left'},*/
+                    {field: 'co_zmoney', title: '早鳥標價', align: 'right'},
+                    {field: 'co_money', title: '正常價格', align: 'right'},
+                    {field: 'co_vip', title: 'VIP', align: 'left'},
+                    {
+                        field: 'co_status', title: '課程狀態', align: 'left', formatter: function (value, row, index) {
+                            if (value == 1) {
+                                return '<span class="label label-success">正在招生中</span>';
+                            } else {
+                                return '<span class="label label-danger">已過期</span>';
+                            }
+                        }
+                    },
+                    {field: 'co_datetime', title: '發布時間', align: 'left'},
+                    /*{field: 'co_photo', title: '課程圖片', align: 'left'},*/
+
+                ],
+                url: '/CourseAPI/CouAPI', //请求地址
+                method: 'get', //请求方式
+                datatype: 'json', //返回数据格式
+                //striped: true,       //是否显示行间隔色
+                height: 760,//高度调整
+                undefinedText: '--', //数据为空时的显示内容
+                /*工具栏处理*/
+                toolbar: '#toolbar',//指定工具栏
+                toolbarAlign: 'left', //工具样位置
+                striped: true, //是否显示行间隔色
+                //earchText:'请输入搜索内容', //搜索默认文字
+
+
+                /*分页处理*/
+                dataField: "data", //读取后端给出的JSON中的数据记录集合，必须与后端保证一致
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                pagination: true,//是否分页
+                //clickToSelect: true, //
+                queryParamsType: 'limit',//查询参数组织方式
+                //contentType: "application/x-www-form-urlencoded",//发送到服务器的数据编码类型
+                sidePagination: 'server',//指定服务器端分页
+                pageSize: 50,//单页记录数
+                pageList: [25, 50, 100, 500, 'All'],//分页步进值
+                data_local: "zh-US",//表格汉化
+                showRefresh: true,//刷新按钮
+                showColumns: true,
+                sortOrder: '',  //排序规则
+                sortName: 'id' //排序字段
+                //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+
+            });
+        </script>
+        <script>
+            function expinfo() {
+                var myDate = new Date();
+                $("#exp").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name.xls",
+                    filename: myDate.toLocaleString() + ".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: false
+                });
+            }
+
+            function delinfo(id) {
+                var i = id;
+                if (!i) {
+                    alert("请选择一个分类!");
+                    return false;
+                } else {
+                    var massage = confirm("删除后不可恢复，请确认!");
+                    if (massage == true) {
+                        $.ajax({
+                            type: "get",
+                            url: "/News/NewsDel",
+                            data: {"sort": 1, "id": i},
+                            success: function (result, state) { //成功调用回调信息
+                                alert(result);
+                                window.location.reload();
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                //alert(textStatus);
+                            },
+                            timeout: 60000,
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                alert("服务器响应超时，请稍候重试：" + errorThrown);
+                                return false;
+                            }
+                        })
+                    }
+                }
+
+            }
+        </script>
+        <!--Edit End-->
+        <script src="__PUBLIC__/bs/js/wangEditor.min.js"></script>
+        <script type="text/javascript">
+            var E = window.wangEditor
+            var editor = new E('#weditor')
+            editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+            var $text1 = $('#text1')
+            editor.customConfig.onchange = function (html) {
+                // 监控变化，同步更新到 textarea
+                $text1.val(html)
+            }
+            editor.create()
+            // 初始化 textarea 的值
+            $text1.val(editor.txt.html())
+        </script>
+        <!--editor end-->
+    </div>
+</block>

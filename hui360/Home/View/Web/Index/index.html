@@ -1,397 +1,273 @@
-<extend name="web/index/base" />
+<extend name="Web/index/base" />
 <block name="customer">
+			<!----- start-slider---->
+			<!----start-slider-script---->
+			<script src="__PUBLIC__/hui360/js/responsiveslides.min.js"></script>
+			 <script>
+			    // You can also use "$(window).load(function() {"
+			    $(function () {
+			      // Slideshow 4
+			      $("#slider4").responsiveSlides({
+			        auto: true,
+			        pager: true,
+			        nav: true,
+			        speed: 500,
+			        namespace: "callbacks",
+			        before: function () {
+			          $('.events').append("<li>before event fired.</li>");
+			        },
+			        after: function () {
+			          $('.events').append("<li>after event fired.</li>");
+			        }
+			      });
+			
+			    });
+			  </script>
+			<!----//End-slider-script---->
+			<!-- Slideshow 4 -->
+			    <div  id="top" class="callbacks_container">
+			      <ul class="rslides" id="slider4">
+			        <li>
+			          <img src="__PUBLIC__/hui360/images/slide.jpg" alt="">
+			          <div class="caption text-center">
+			          	<div class="slide-text-info">
+			          		<a class="btn1" href="#"><span>易物天下</span></a>
+			          		<h1>把<span>资产或生活刚需产品</span> 当钱花</h1>
 
-<!-- slider section -->
-<section class="blasa-slider blasa-slider-4">
-    <div class="owl-carousel r_slider" data-dots="off" data-fade="true">
-        <div class="r_wrap_slider r_wrap_slider_5">
-            <div class="r_slider_img" style="background-image:url(__PUBLIC__/hui360/images/aslide_7.jpg)"></div>
-            <div class="container container_slider_caption">
-                <div class="r-slider-container r-slider-container-5">
-                    <div class="r-slider-conten r-slider-conten-5 b-align-center">
-                        <h2 class="slider-title-3 tp_animate_when_visible zoom-out" data-speed="500">
-                            盤活存量
-                        </h2>
-                        <p class="tp_animate_when_visible tp-pullTop" data-delay="600" data-speed="600">
-                            房子、土地、车子、塔位、墓地、生前契约、积分、劵、币，1:1兑换商码，融通变现金
-                        </p>
-                        <a href="#" class="slider-btn get-qoute tp_animate_when_visible fade-top" data-delay="700" data-speed="600">了解詳細</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="r_wrap_slider r_wrap_slider_5">
-            <div class="r_slider_img" style="background-image:url(__PUBLIC__/hui360/images/blog_4.jpg)">
+			          		<div class="slide-text">
+			          			<p>房子、土地、车子、塔位、墓地、生前契约</p>
+			          		</div>
+			          		<a class="btn2" href="#"><span>查閱詳細</span></a>
+			          	</div>
+			          </div>
+			        </li>
+			        <li>
+			          <img src="__PUBLIC__/hui360/images/slide.jpg" alt="">
+			          <div class="caption text-center">
+			          	<div class="slide-text-info">
+			          		<a class="btn1" href="#"><span>盘活存量</span></a>
+			          		<h1>1:1 <span> 兑换商码，融通变现金 </span></h1>
+			          		<div class="slide-text">
+			          			<p>房子、土地、车子、塔位、墓地、生前契约、积分、劵、币</p>
+			          		</div>
+							<a class="btn2" href="#"><span>查閱詳細</span></a>
+			          	</div>
+			          </div>
+			        </li>
+			        <li>
+			          <img src="__PUBLIC__/hui360/images/slide.jpg" alt="">
+			           <div class="caption text-center">
+			           	<div class="slide-text-info">
+			          		<a class="btn1" href="#"><span >一链万端</span></a>
+			          		<h1>帮助企业 <span>供应链电商化通起来</span> 互相导流消费倍速扩张</h1>
+			          		<div class="slide-text">
+			          			<p>用互联网做产业互联、互联产业，消费互联、互联消费.</p>
+			          		</div>
+							<a class="btn2" href="#"><span>查閱詳細</span></a>
+			          	</div>
+			          </div>
+			        </li>
+					  <li>
+						  <img src="__PUBLIC__/hui360/images/slide.jpg" alt="">
+						  <div class="caption text-center">
+							  <div class="slide-text-info">
+								  <a class="btn1" href="#"><span>为你成功脱困</span></a>
+								  <h1>脱离贫穷!  <span>财富加速前进!</span> </h1>
+								  <div class="slide-text">
+									  <p>人脉变现、资产变现，资本价值提升.</p>
+								  </div>
+								  <a class="btn2" href="#"><span>查閱詳細</span></a>
+							  </div>
+						  </div>
+					  </li>
+					  <li>
+						  <img src="__PUBLIC__/hui360/images/slide.jpg" alt="">
+						  <div class="caption text-center">
+							  <div class="slide-text-info">
+								  <a class="btn1" href="#"><span>训练很贵不训练更贵</span></a>
+								  <h1>『卓越领导系列』 <span>『顶尖销售系列』</span> 『闪耀讲师培训』</h1>
+								  <div class="slide-text">
+									  <p>英国发展中心模组『卓越领导系列』『顶尖销售系列』『闪耀讲师培训』课程是国内金融行业、光电和电子产业的见证!</p>
+								  </div>
+								  <a class="btn2" href="#"><span>查閱詳細</span></a>
+							  </div>
+						  </div>
+					  </li>
+					  <li>
+						  <img src="__PUBLIC__/hui360/images/slide.jpg" alt="">
+						  <div class="caption text-center">
+							  <div class="slide-text-info">
+								  <a class="btn1" href="#"><span>汇360帮线下店家</span></a>
+								  <h1>消费者人数增加、<span>销量扩大</span> </h1>
+								  <div class="slide-text">
+									  <p>打通互联网渠道，让“消费者人数增加、销量扩大”，自然形成消费者推荐消费者.</p>
+								  </div>
+								  <a class="btn2" href="#"><span>查閱詳細</span></a>
+							  </div>
+						  </div>
+					  </li>
+					  <li>
+						  <img src="__PUBLIC__/hui360/images/slide.jpg" alt="">
+						  <div class="caption text-center">
+							  <div class="slide-text-info">
+								  <a class="btn1" href="#"><span>盈利模式九宫格</span></a>
+								  <h1>裂变 <span>企业6000倍</span> 的课程</h1>
+								  <div class="slide-text">
+									  <p>互联网工具30倍: 100万以上信息化商城 + 微信智能化小程序 + 消费者推荐消费者，三大工具直接让你流通.</p>
+								  </div>
+								  <a class="btn2" href="#"><span>查閱詳細</span></a>
+							  </div>
+						  </div>
+					  </li>
+			      </ul>
+			    </div>
+			    <div class="clearfix"> </div>
+			<!----- //End-slider---->
+			<!----start-services---->
+			<div id="ser" class="services">
+				<div class="container">
+					<div class="services-head text-center">
+						<h3>易物天下</h3>
+						<p>汇360，通过互联网OMO经济模式+易物经济，做“铺路搭桥”为沉滞的商品铺设通道。</p>
+					</div>
+					<!-----start-services-grids---->
+					<div class="services-grids">
+						<div class="col-md-4 services-grid">
+							<div class="col-md-3 services-grid-left">
+								<a class="top-icon1" href="#"><span> </span></a>
+							</div>
+							<div class="col-md-9 services-grid-right">
+								<h4><a href="#">聯盟合作</a></h4>
+								<p>特别号召全国合伙人“易物创业”<br />
+									汇360易物平台，让你用全国的闲置资产转换成自己创业资本金(钱)。
+								</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="col-md-4 services-grid">
+							<div class="col-md-3 services-grid-left">
+								<a class="top-icon2" href="#"><span> </span></a>
+							</div>
+							<div class="col-md-9 services-grid-right">
+								<h4><a href="#">平臺介紹</a></h4>
+								<p>该平台采用S2B- Supply chain platform To business供应链智能服務.</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="col-md-4 services-grid">
+							<div class="col-md-3 services-grid-left">
+								<a class="top-icon3" href="#"><span> </span></a>
+							</div>
+							<div class="col-md-9 services-grid-right">
+								<h4><a href="#">平臺特色</a></h4>
+								<p>人人服务人人，让人人都有虚拟网上大店铺,把1千万人群链接起来，为消费者带来增值.</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="col-md-4 services-grid">
+							<div class="col-md-3 services-grid-left">
+								<a class="top-icon4" href="#"><span> </span></a>
+							</div>
+							<div class="col-md-9 services-grid-right">
+								<h4><a href="#">全國服務據點</a></h4>
+								<p>物流商业和物流融资和物流投资本来就是易物(易业)交易模式的核心，也就是易物(业)另类投资的主要方式.</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="col-md-4 services-grid">
+							<div class="col-md-3 services-grid-left">
+								<a class="top-icon5" href="#"><span> </span></a>
+							</div>
+							<div class="col-md-9 services-grid-right">
+								<h4><a href="#">以需易需</a></h4>
+								<p>汇360，资本置换重新配置经营权的转换，化腐朽为神奇，修复商品生态链的破缺，让厂店家重新把握商机。</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="col-md-4 services-grid">
+							<div class="col-md-3 services-grid-left">
+								<a class="top-icon6" href="#"><span> </span></a>
+							</div>
+							<div class="col-md-9 services-grid-right">
+								<h4><a href="#">以業易業</a></h4>
+								<p>把信息链、资金链、生产链、市场链的各类闲置，进行融通与流通,形成“以业易业”价值经济效益.</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+			</div>
+			<!----//End-services---->
+					<!-----//End-services-grids---->
+					<!---- start-about----->
+					<div id="about" class="about">
+						<div class="container">
+							<div class="about-head">
+								<h4>关于我们</h4>
+								<h5>About US</h5>
+								<p>汇360，聚焦以人为中心，产生“数据为价值”。通过网上大店铺为“自营流量入口”，帮助B-Business端和F-Factory端企业打通互联网渠道，让“存量变现和产量、销量扩大”，聚集产业“共赢链做市值”。</p>
+							</div>
+								<!----- start-about-grids----->
+								<div class="about-grids">
+									<div class="col-md-7 about-grid-left">
+										<span> </span>
+									</div>
+									<div class="col-md-5 about-grid-right">
+										<h5>品牌价值</h5>
+										<p>
+											定位:  盘活存量、扩大销量『企业资产变现』<br />
+											使命: 帮助1千万企业家供应链电商化流通起来 <br />
+											愿景: 360资产都可数字量化的金融流通资产 <br />
+											口号: 越成功的人士『越会善用资源变现』
 
-            </div>
-            <div class="container container_slider_caption">
-                <div class="r-slider-container r-slider-container-5">
-                    <div class="r-slider-conten r-slider-conten-5 b-align-center">
-                        <h2 class="slider-title-3 tp_animate_when_visible zoom-out" data-speed="500">
-                            一鏈萬端，世界本無界何來跨界
-                        </h2>
-                        <p class="tp_animate_when_visible tp-pullTop" data-delay="600" data-speed="600">
-                            用互聯網做產業互聯、互聯產業，消費互聯、互聯消費，幫助企業把供應鏈電商化通起來線上線下互相導流消費倍速擴張
-                        </p>
-                        <a href="#" class="slider-btn get-qoute tp_animate_when_visible fade-top" data-delay="700" data-speed="600">了解詳細</a>
-                    </div>
-                </div>
-            </div>
+										</p>
+										<a class="about-btn" href="#">More ...</a>
+									</div>
+									<div class="clearfix"> </div>
+								</div>
+								<!----- //End-about-grids----->
+							</div>
+						</div>
+		<!---- //End-about----->
+		<div class="tlinks">Collect from <a href="http://www.cssmoban.com/" >企业网站模板</a></div>
 
-        </div>
-        <div class="r_wrap_slider r_wrap_slider_5">
-            <div class="r_slider_img" style="background-image:url(__PUBLIC__/hui360/images/aslide_4.jpg)">
+         <!----//End-portfolio---->
 
-            </div>
-            <div class="container container_slider_caption">
-                <div class="r-slider-container r-slider-container-5">
-                    <div class="r-slider-conten r-slider-conten-5 b-align-center">
-                        <h2 class="slider-title-3 tp_animate_when_visible zoom-out" data-speed="500">
-                            訓練很貴，不訓練更貴
-                        </h2>
-                        <p class="tp_animate_when_visible tp-pullTop" data-delay="600" data-speed="600">
-                            英國發展中心模組『卓越領導系列』『頂尖銷售系列』『閃耀講師培訓』課程是國內金融行業、光電和電子產業的見證！
-                        </p>
-                        <a href="#" class="slider-btn get-qoute tp_animate_when_visible fade-top" data-delay="700" data-speed="600">了解詳細</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- solutions section -->
-
-<section class="blasa-section solutions-section">
-    <div class="container">
-        <div class="row row_solutions justify-content-center align-items-center ">
-            <div class="col-lg-4 col-md-9 col-sm-9 col-12 col-solution">
-                <div class="wrap_solution tp_animate_when_visible fade-bottom" data-offest="80%" data-speed="800" >
-                    <div class="wrap_solution_img" style="background-image:url(__PUBLIC__/hui360/images/aslide_10.jpg);">
-
-                        <a href="#" class="solution_more" title="read more"><i class="fas fa-plus"></i></a>
-
-                    </div>
-                    <div class="soltion-text">
-                        <h3>
-                            專業團隊
-                        </h3>
-                        <p>Raising a heavy fur muff that covered the whole of her lower towards the viewer gregor  gilded frame.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-9 col-sm-9 col-12 col-solution">
-                <div class="wrap_solution tp_animate_when_visible fade-bottom" data-offest="80%" data-speed="800" >
-                    <div class="wrap_solution_img" style="background-image:url(__PUBLIC__/hui360/images/cp_2.jpg);">
-
-                        <a href="#" class="solution_more" title="read more"><i class="fas fa-plus"></i></a>
-
-                    </div>
-                    <div class="soltion-text">
-                        <h3>
-                            數據精益
-                        </h3>
-                        <p>Raising a heavy fur muff that covered the whole of her lower towards the viewer gregor  gilded frame.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-9 col-sm-9 col-12 col-solution">
-                <div class="wrap_solution tp_animate_when_visible fade-bottom" data-offest="80%" data-speed="800">
-                    <div class="wrap_solution_img" style="background-image:url(__PUBLIC__/hui360/images/cp_1.jpg);">
-
-                        <a href="#" class="solution_more" title="read more"><i class="fas fa-plus"></i></a>
-
-                    </div>
-                    <div class="soltion-text">
-                        <h3>
-                            專屬設計
-                        </h3>
-                        <p>Raising a heavy fur muff that covered the whole of her lower towards the viewer gregor  gilded frame.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- about section 5 -->
-<section class="blasa-section about-section-2">
-    <div class="custom_container">
-        <div class="row">
-            <div class="col-lg-6 col-md-12 col-12 col-aboutus-img">
-                <div class="wrap_aboutus_img tp_animate_when_visible fade-left" data-offest="60%">
-                    <img src="__PUBLIC__/hui360/images/about_us.png" alt="about company" />
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12 col-12 col-about-text">
-                <div class="wrap_about_5 tp_animate_when_visible fade-right" data-offest="60%" data-delay="400">
-                    <div class="section-head">
-                        <span class="small-title">About us</span>
-                        <h2 class="head-title">
-
-                            我們可以快速提高您的
-                        </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation .</p>
-
-                    </div>
-                    <div class="wrap_skills why_us_skills">
-                        <h4 class="skill-title">Web Consultant</h4>
-                        <div id="progress_bar_3" class="tagpoint_progress_bar progress_bar_lin" data-to="59" data-type="line" data-stockwidth="1" data-color="#f6364d" data-trailcolor="#403e3e" data-trailwidth="1" data-pfontsize="32" data-pfontcolor="#fff" data-lfsize="16">
-                        </div>
-                        <h4 class="skill-title">Business Consulting</h4>
-                        <div id="progress_bar_4" class="tagpoint_progress_bar progress_bar_lin" data-to="91" data-type="line" data-stockwidth="1" data-color="#f6364d" data-trailcolor="#403e3e" data-trailwidth="1" data-pfontsize="32" data-pfontcolor="#fff" data-lfsize="16">
-                        </div>
-
-                        <h4 class="skill-title">Advanced Plan</h4>
-                        <div id="progress_bar_5" class="tagpoint_progress_bar progress_bar_lin" data-to="70" data-type="line" data-stockwidth="1" data-color="#f6364d" data-trailcolor="#403e3e" data-trailwidth="1" data-pfontsize="32" data-pfontcolor="#fff" data-lfsize="16">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- our solutions -->
-<section class="blasa-section makebusiness-section">
-    <div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-12 tp_animate_when_visible fade-bottom" data-offest="80%" data-speed="600">
-                <div class="wrap_business_head ">
-                    <span class="small-title">Why choose us</span>
-                    <h2 class="head-title"> Perfect Solutions to <br />
-                        grow up your Successfuly
-
-                    </h2>
-                </div>
-            </div>
-            <div class="col-lg-9 col-md-12 col-12 tp_animate_when_visible fade-bottom" data-offest="80%" data-speed="700" data-delay="300">
-                <div class="wrap_business_text " >
-                    <p>Tax efficiency is an attempt to minimize tax liability when given many different financial decisions to be tax efficient.Enthusiastically leverage existing premium quality vectors with enterprise-wide innovation collaboration. Phosfluorescently leverage others enterprise-wide “outside the box” thinking with busines collaboration and idea-sharing. Proactively leverage other rather than inter</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-12 col-12 tp_animate_when_visible fade-left" data-offest="80%" data-speed="600" data-delay="400">
-                <ul class="business-list " >
-                    <li><span>Money back gruerntee</span></li>
-                    <li><span>Professional Support</span></li>
-                    <li><span>Creative Team</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Service layout 5 -->
-<section class="blasa-section service-4-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="wrap_service_4 tp_animate_when_visible fade-top" >
-                        <span class="service_2_icon">
-                            <i class="fas fa-chart-bar"></i>
-                        </span>
-                    <div class="service_4_text">
-                        <h3>Advanced Plan</h3>
-                        <p>
-                            Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries layouts.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="wrap_service_4 tp_animate_when_visible fade-top" data-delay="200" data-offest="60%">
-                        <span class="service_2_icon">
-                            <i class="fas fa-balance-scale"></i>
-                        </span>
-                    <div class="service_4_text">
-                        <h3>Law Consulting</h3>
-                        <p>
-                            Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries layouts.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="wrap_service_4 tp_animate_when_visible fade-top" data-delay="300" data-offest="60%">
-                        <span class="service_2_icon">
-                            <i class="fas fa-chart-line"></i>
-                        </span>
-                    <div class="service_4_text">
-                        <h3>Customer Stratgy</h3>
-                        <p>
-                            Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries layouts.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="wrap_service_4 tp_animate_when_visible fade-top" data-delay="400" >
-                        <span class="service_2_icon">
-                            <i class="fas fa-compass"></i>
-                        </span>
-                    <div class="service_4_text">
-                        <h3>Plan Operation</h3>
-                        <p>
-                            Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries layouts.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-<!-- counter section -->
-<div class="blasa-section counter-section-4">
-    <div class="container">
-        <div class="row  tp_fact_row">
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12 achieves_col tp_animate_when_visible fade-top"  data-speed="700" data-offest="70%">
-                <div class="tp_counter_section construction_facts">
-                    <div class="tp_wrap-acheiv">
-                        <span class="tpcountr_icon"><i class='fas fa-award'></i></span>
-                        <div class="tp_counter_wrapvalus">
-                            <span class="tp-counter odometer " data-to="67">0</span>
-                            <span class="tp_medium_title  acheiv-counter-title">Awards</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12 achieves_col tp_animate_when_visible fade-top"  data-speed="600" data-offest="70%">
-                <div class="tp_counter_section construction_facts">
-                    <div class="tp_wrap-acheiv">
-                        <span class="tpcountr_icon"><i class='fas fa-briefcase'></i></span>
-                        <div class="tp_counter_wrapvalus">
-                            <span class="tp-counter  odometer" data-to="989">0</span>
-                            <span class="tp_medium_title  acheiv-counter-title">Projects </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12 achieves_col tp_animate_when_visible fade-top"  data-speed="500" data-offest="70%">
-                <div class="tp_counter_section construction_facts">
-                    <div class="tp_wrap-acheiv">
-                            <span class="tpcountr_icon">
-                                    <i class='fas fa-user'></i>
-
-                                </span>
-                        <div class="tp_counter_wrapvalus">
-                            <span class="tp-counter  odometer" data-to="481">0</span>
-                            <span class="tp_medium_title  acheiv-counter-title">Employees</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12 achieves_col tp_animate_when_visible fade-top"  data-speed="500" data-offest="70%">
-                <div class="tp_counter_section construction_facts">
-                    <div class="tp_wrap-acheiv">
-                        <span class="tpcountr_icon"><i class='fas fa-chart-line'></i></span>
-                        <div class="tp_counter_wrapvalus">
-                            <span class="tp-counter  odometer" data-to="77">0</span>
-                            <span class="tp_medium_title  acheiv-counter-title">ShowCases</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- last blogs -->
-<section class="blasa-section blogs-section-4">
-    <div class="container">
-        <div class="row justify-content-center align-items-end row-head-blogs">
-            <div class="col-lg-4 col-md-12 col-12">
-                <div class="section-head b-align-left">
-                        <span class="small-title">
-                                Our Blogs
-                            </span>
-                    <h2 class="head-title">
-                        Explore <br /> Recent Articles
-                    </h2>
-                </div>
-            </div>
-            <div class="col-lg-8 col-md-12 col-12">
-                <p class="col-blogs-desc">
-                    Quisque posuere est sit amet dui convallis lobortis. Curabitur ut sapien quis ipsum gravida sagittis eget vitae sem. Suspendisse in nisi condimentum, convallis leo ac, mollis nulla. Aenean venenatis finibus elementum. Integer nec sem tellus.
-                </p>
-            </div>
-        </div>
-        <div class="row_blogs_2 carousel-blogs owl-carousel">
-
-
-            <div class="col-blog-2">
-                <div class="wrap_blog_2" style="background-image: url(__PUBLIC__/hui360/images/blog_4.jpg);">
-
-                    <div class="wrap-blog-text">
-                        <ul class="r-datameta">
-                            <li><a href="#" title="author name" class="r-author"><i class="fas fa-user"></i>Admin</a></li>
-                            <li><span class="r-data"><i class="fas fa-clock"></i> March 22,2018</span></li>
-                        </ul>
-                        <h2>
-                            <a href="#" title="blog title">
-                                City that is loaded up with tourist spots and noteworthy.
-                            </a>
-                        </h2>
-
-                        <div class="ream_more">
-                            <a href="#" title="read more">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-blog-2">
-                <div class="wrap_blog_2" style="background-image: url(__PUBLIC__/hui360/images/aslide_4.jpg);">
-
-                    <div class="wrap-blog-text">
-                        <ul class="r-datameta">
-                            <li><a href="#" title="author name" class="r-author"><i class="fas fa-user"></i>Admin</a></li>
-                            <li><span class="r-data"><i class="fas fa-clock"></i> March 22,2018</span></li>
-                        </ul>
-                        <h2>
-                            <a href="#" title="blog title">
-                                City that is loaded up with tourist spots and noteworthy.
-                            </a>
-                        </h2>
-
-                        <div class="ream_more">
-                            <a href="#" title="read more">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-blog-2">
-                <div class="wrap_blog_2" style="background-image: url(__PUBLIC__/hui360/images/cp_10.jpg);">
-
-                    <div class="wrap-blog-text">
-                        <ul class="r-datameta">
-                            <li><a href="#" title="author name" class="r-author"><i class="fas fa-user"></i>Admin</a></li>
-                            <li><span class="r-data"><i class="fas fa-clock"></i> March 22,2018</span></li>
-                        </ul>
-                        <h2>
-                            <a href="#" title="blog title">
-                                City that is loaded up with tourist spots and noteworthy.
-                            </a>
-                        </h2>
-
-                        <div class="ream_more">
-                            <a href="#" title="read more">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
+         <!----start-contact---->
+         <div id="contact" class="contact">
+         	<div class="container">
+         		<div class="contact-head text-center">
+         			<h3>联系我们</h3>
+         		</div>
+         		<div class="contact-grids">
+         			<div class="col-md-7 contact-left">
+         				<h4>Sent mail</h4>
+         						<form>
+									<input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}">
+									<input type="text" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}">
+									<input type="text" value="Phone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Phone';}">
+									<textarea onfocus="if(this.value == 'Message ') this.value='';" onblur="if(this.value == '') this.value='Message *;">Message </textarea>
+									<input type="submit" value="@ 發送郵件" />
+								</form>	
+         			</div>
+         			<div class="col-md-5 contact-right">
+         				<h4>Contact info</h4><br />
+         				<p><span class="icon1"> </span><a href="#">{$tel}</a></p><br />
+         				<p><span class="icon2"> </span>{$email}</p><br />
+         				<p><span class="icon3"> </span><label>{$address}, {$addressx}</label></p><br />
+         				<h4>Follow us on</h4><br />
+         				<ul class="list-unstyled list-inline">
+         					<li><a class="face" href="#"><span> </span></a></li>
+         					<li><a class="drib" href="#"><span> </span></a></li>
+         					<li><a class="twitt" href="#"><span> </span></a></li>
+         					<li><a class="sanp" href="#"><span> </span></a></li>
+         					<li><a class="gpluse" href="#"><span> </span></a></li>
+         				</ul>
+         			</div>
+         			<div class="clearfix"> </div>
+         		</div>
+         	</div>
+         </div>
+         <!----//End-contact---->
 </block>
