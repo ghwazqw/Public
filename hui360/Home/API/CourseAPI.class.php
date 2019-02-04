@@ -48,12 +48,11 @@ class CourseAPI
             $where["co_zmoney"] = array('like', "%$this->_keyword%");
             $where["co_money"] = array('like', "%$this->_keyword%");
             $where["co_vip"] = array('like', "%$this->_keyword%");
-            //$where["co_status"] = array('like', "%$this->_keyword%");
+            $where["co_status"] = array('like', "%$this->_keyword%");
             //$where["co_datetime"] = array('like', "%$this->_keyword%");
             $where["co_photo"] = array('like', "%$this->_keyword%");
             $where['_logic'] = 'OR';
         }
-
         //加载主表数据
         $this->_page_count = $count = $TableName->where($where)->count(); //加载获取到的数据量
         $Page = new \Think\Page($count, $limit);

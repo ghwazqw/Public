@@ -37,6 +37,7 @@ class ActivitiesAPI
             $AddData->actdate = date('Y-m-d H:i:s',time()); //提交時間
             $AddData->isuser = $username; //是否會員
             $AddData->activitiesid = I("activitiesid"); //參與活動信息
+            $AddData->address=I("address"); //參會地址
             $ret=$AddData->add();
             if ($ret){
                 return true;

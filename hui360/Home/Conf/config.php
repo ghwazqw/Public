@@ -91,7 +91,7 @@ return array(
     "SysConfig"=>array(
         'SystemName'=>'網天下',
         'isMoblie'=>'0', //是否启用手机版支持,1为支持,0为关闭
-        'ICP'=>'京ICP备18040391号',
+        'ICP'=>'',
         'tel'=>'+886（2）2608-2656',
         'email'=>'Service@net2cc.com',
         'wexin'=>'none',
@@ -102,7 +102,8 @@ return array(
         'address'=>'中国.台灣.台北',
         'addressx'=>'承德路4段327號11樓',
         'SEO_Title'=>'網天下',
-        'SEO_Keyword'=>'網天下,电子商务,图书,信息服務,商業，計劃，企業，企劃',
+        'SEO_Keyword'=>'網天下,你我流通平台,指尖上的流水,產業互聯網化+IP社群經濟+易物變現,鄭玖鏮,供應鏈管理,節稅,牧者,作者,同工,基督,國度,號角雲,李正一,鄭玖鏮,橄欖基金會,華宣出版社,基督生命,基督論壇報,,基督教今日報,以琳書坊,校園,香港天道,
+        華宣,OMO,google',
         'Logo'=>'/Public/hui360/images/logo.png',
         ),
 

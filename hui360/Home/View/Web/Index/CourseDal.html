@@ -1,0 +1,120 @@
+<extend name="web/Index/base" />
+<block name="customer">
+    <!-- breadcurmbs -->
+
+        <!-- breadcurmbs -->
+        <section class="blasa-section r-breadcurmbs-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="wrap_breadcrumbs_1">
+                            <h1 class="breadcurmbs-head">Course Info
+                            </h1>
+                            <ul class="breadcrumbs_content_1 ">
+                                <li><a href="#" title="home"> Home </a> /</li>
+                                <li><span>Course</span></li>
+                                <li><span>{$Info.n_title}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="blasa-section page-details left-sidebar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12 col-12 sidebar-col">
+                        <div class="wrap_page_sidebar">
+                            <div class="widget tp_widget related_widget">
+                                <div class="content_widget ">
+                                    <ul class="related_service_list">
+                                        其他課程
+                                        <foreach name='listData' item='list' >
+                                       <li style="font-size: 14px">
+                                        <a href="/index/CourseDal/id/{$list.id}.html">{$list.co_title}</a>
+                                       </li>
+                                        </foreach>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget tp_widget contact_widget">
+                                <div class="head_widget">
+                                    <h3>Contact Us</h3>
+                                </div>
+                                <div class="content_widget ">
+                                    <ul class="contact_us_list">
+                                        <li>
+                                            <span class="wcontact_icon"><i class="fas fa-map-marker"></i></span>
+                                            <div class="wcontact_text">
+                                                <h3>Address</h3>
+                                                <p>{$address}<br />{$addressx}</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span class="wcontact_icon"><i class="fas fa-mobile-alt"></i></span>
+                                            <div class="wcontact_text">
+                                                <h3>Phone</h3>
+                                                <p>(Phone)
+                                                    <br /> {$tel}</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span class="wcontact_icon"><i class="fas fa-envelope"></i></span>
+                                            <div class="wcontact_text">
+                                                <h3>Email</h3>
+                                                <p>{$email}</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-12 col-12 pagecontent-col">
+                        <article class="wrap_page_content single-page">
+                            <!-- images carousel -->
+                            <div class="row-page-section">
+                                <foreach name='InfoData' item='Info' >
+                                <h4>{$Info.co_title} </h4>
+                                    <small>發布時間：{$Info.co_datetime} 主講老師：鄭玖鏮 <span style="margin-left: 30px"><a href="http://line.naver.jp/R/msg/text/?LINE%E3%81%A7%E9%80%81%E3%82%8B%0D%0Ahttp%3A%2F%2Fline.naver.jp%2F" target="_blank"><img src="http://www.net2cc.com/upimgs/share-a.png" width="50" alt="用LINE傳送" /></a></span>
+
+                                    <a href="/index/application.html?&id={$Info.id}" class="btn btn-default btn-xs" role="button" style="margin-left: 30px" >立即報名</a>
+                                    </small>
+                                <hr />
+                                    <p>
+                                        {$Info.co_content}
+                                    </p>
+                                    <p>
+                                        開課日期1：{$Info.co_date} 台北 {$Info.co_sktime}<br />
+                                        開課日期2：{$Info.co_date2} 台中 {$Info.co_sktime}<br />
+                                        開課日期3：{$Info.co_date3} 高雄 {$Info.co_sktime}<br />
+                                    </p>
+                                    <p>
+                                        早鳥標價：NT{$Info.co_zmoney}<br />
+                                        原價：NT{$Info.co_money}<br />
+                                        VIP：{$Info.co_vip}<br />
+                                        以上價格均為未稅價格。
+                                    </p>
+                                    <p>
+                                        【上課地點】<br />
+                                        台北班 : 台北市中正區青島西路7號9樓 (近台北火車站)女青年會<br />
+                                        台中班 : 台中市西屯區臺灣大道三段658號3樓 (近中港交流道)Rich19中國文化大學推廣部<br />
+                                        高雄班 : 高雄班前金區中正四路215號3樓 (華國世貿金融中心大樓)文化大學推廣中心
+
+                                    </p>
+                                    <a href="/index/application.html?&id={$Info.id}" class="btn btn-default btn-xs" role="button" style="margin-left: 30px" >立即報名</a>
+                                </foreach>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+</block>

@@ -20,7 +20,7 @@ class IndexController extends PublicController {
         $this->assign("sysinfo",$sysinfo);
         //var_dump($sysinfo);
            $this->assign("title","首頁");
-           $this->theme("webApps")->display();
+           $this->theme("web")->display();
     }
     public function About(){
         $this->assign("title","關於我們");
@@ -68,8 +68,38 @@ class IndexController extends PublicController {
         $io=new CourseAPI();
         $io->pt_course_tbmatedata($id);
         $this->assign("InfoData",$io->_main_data);
-        var_export($io->_main_data);
+       // var_export($io->_main_data);
+        $this->assign("title","匯360--公開班");
+        $this->theme("web")->display();
+    }
+    public function Course(){
+        $id=I("id");
+        /*if (!$id){
+            echo "id error";
+            exit();
+        }*/
+        $io=new CourseAPI();
+        $io->pt_course_tbmatedata($id);
+        $this->assign("InfoData",$io->_main_data);
+        // var_export($io->_main_data);
         $this->assign("title","課程列表");
+        $this->theme("web")->display();
+    }
+    public function CourseDal(){
+        $id=I("id");
+        $iid="";
+        if (!$id){
+            echo "id error";
+            exit();
+        }
+        $io=new CourseAPI();
+        $io->pt_course_tbmatedata($id);
+        $this->assign("InfoData",$io->_main_data);
+        $ii=new CourseAPI();
+        $ii->pt_course_tbmatedata($iid);
+        $this->assign("listData",$ii->_main_data);
+        // var_export($io->_main_data);
+        $this->assign("title","課程詳細信息");
         $this->theme("web")->display();
     }
     public function training(){
@@ -85,13 +115,13 @@ class IndexController extends PublicController {
         $this->theme("web")->display();
     }
     public function application(){
-        $id=I("html");
+        $id=I("id");
         $type="活動課程";
         //检查传入参数是否完整
         $ii=new ActionAPI();
         $ii->ChId($id);
-        $io=new NewsAPI();
-        $io->applicationinfo($type);
+        $io=new CourseAPI();
+        $io->pt_course_tbmatedata($id);
         $this->assign("InfoData",$io->_main_data);
         //var_export($io->_main_data);
         $this->assign("title","在線報名");

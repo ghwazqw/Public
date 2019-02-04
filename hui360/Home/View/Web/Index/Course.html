@@ -1,0 +1,103 @@
+<extend name="web/Index/base" />
+<block name="customer">
+    <!-- breadcurmbs -->
+
+        <!-- breadcurmbs -->
+        <section class="blasa-section r-breadcurmbs-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="wrap_breadcrumbs_1">
+                            <h1 class="breadcurmbs-head">Course Info
+                            </h1>
+                            <ul class="breadcrumbs_content_1 ">
+                                <li><a href="#" title="home"> Home </a> /</li>
+                                <li><span>Course</span></li>
+                                <li><span>{$Info.n_title}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="blasa-section page-details left-sidebar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12 col-12 sidebar-col">
+                        <div class="wrap_page_sidebar">
+                            <div class="widget tp_widget related_widget">
+                                <div class="content_widget ">
+                                    <ul class="related_service_list">
+                                        <li <if condition="$Info.n_id eq 4 ">class="current"</if>>
+                                        <a href="/index/Entrepreneur/html/4.html" title="專區介紹">專區介紹</a>
+                                        </li>
+                                        <li <if condition="$Info.n_id eq 83 ">class="current"</if>>
+                                        <a href="/index/Entrepreneur/html/83.html" title="電商人才專區">電商人才專區</a>
+                                        </li>
+                                        <li <if condition="$Info.n_id eq 84 ">class="current"</if>>
+                                        <a href="/index/Entrepreneur/html/84.html" title="諮詢輔導">諮詢輔導</a>
+                                        </li>
+                                        <li <if condition="$Info.n_id eq 85 ">class="current"</if>>
+                                        <a href="/index/Entrepreneur/html/85.html" title="盈利模式九宮格">盈利模式九宮格</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget tp_widget contact_widget">
+                                <div class="head_widget">
+                                    <h3>Contact Us</h3>
+                                </div>
+                                <div class="content_widget ">
+                                    <ul class="contact_us_list">
+                                        <li>
+                                            <span class="wcontact_icon"><i class="fas fa-map-marker"></i></span>
+                                            <div class="wcontact_text">
+                                                <h3>Address</h3>
+                                                <p>{$address}<br />{$addressx}</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span class="wcontact_icon"><i class="fas fa-mobile-alt"></i></span>
+                                            <div class="wcontact_text">
+                                                <h3>Phone</h3>
+                                                <p>(Phone)
+                                                    <br /> {$tel}</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <span class="wcontact_icon"><i class="fas fa-envelope"></i></span>
+                                            <div class="wcontact_text">
+                                                <h3>Email</h3>
+                                                <p>{$email}</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-12 col-12 pagecontent-col">
+                        <article class="wrap_page_content single-page">
+                            <!-- images carousel -->
+                            <div class="row-page-section">
+                                <h2>正在報名的課程</h2>
+                                <foreach name='InfoData' item='Info' >
+                                <a href="/index/CourseDal/id/{$Info.id}.html">{$Info.co_title}</a> <span style="text-align: right;margin-left: 20px">{$Info.co_datetime}</span><br />
+                                    <hr />
+                                </foreach>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+</block>

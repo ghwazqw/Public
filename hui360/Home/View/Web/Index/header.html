@@ -1,74 +1,206 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html >
+<html lang="en-US">
+
 <head>
+    <meta charset="utf-8">
     <title>{$sys_title}--{$title}</title>
-    <link href="__PUBLIC__/hui360/css/bootstrap.css" rel='stylesheet' type='text/css' />
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <meta name="keywords" content="{$SEO_Title}" />
+    <meta name="description" content="{$SEO_Keyword}" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="__PUBLIC__/hui360/js/jquery.min.js"></script>
-    <!---- start-smoth-scrolling---->
-    <script type="text/javascript" src="__PUBLIC__/hui360/js/move-top.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/hui360/js/easing.js"></script>
-    <!--<script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-            });
-        });
-    </script>-->
-    <!---- start-smoth-scrolling---->
-    <!-- Custom Theme files -->
-    <link href="__PUBLIC__/hui360/css/theme-style.css" rel='stylesheet' type='text/css' />
-    <!-- Custom Theme files -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    </script>
-    <!--webfonts-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-        <!--webfonts-->
-        <!--start-top-nav-script-->
-        <script>
-        $(function() {
-            var pull 		= $('#pull');
-            menu 		= $('nav ul');
-            menuHeight	= menu.height();
-            $(pull).on('click', function(e) {
-                e.preventDefault();
-                menu.slideToggle();
-            });
-            $(window).resize(function(){
-                var w = $(window).width();
-                if(w > 320 && menu.is(':hidden')) {
-                    menu.removeAttr('style');
-                }
-            });
-        });
-    </script>
-    <!----//End-top-nav-script---->
+    <link rel="stylesheet" href="__PUBLIC__/hui360/css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/hui360/css/all.min.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/hui360/css/owl.carousel.min.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/hui360/css/light-box.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/hui360/css/tp-animation.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/hui360/css/style.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/hui360/css/responsive.css" media="all">
+
 </head>
-<body>
-<!-----start-container----->
-<!----- start-header---->
-<div id="home" class="header">
-    <div class="container">
-        <div class="logo">
-            <a href="#"><img src="{$logo}" title="logo" style="width: 40px" /></a>
-        </div>
-        <!----start-top-nav---->
-        <nav class="top-nav">
-            <ul class="top-nav">
-                <li <if condition="$title eq '首页'">class="active"<else />class="page-scroll"</if>><a href="/" class="scroll">首頁 <span> </span></a></li>
-                <li <if condition="$title eq '关于我们'">class="active"<else />class="page-scroll"</if>><a href="/about" class="scroll">關於我們 <span> </span></a></li>
-                <li <if condition="$title eq '存量变现'">class="active"<else />class="page-scroll"</if>><a href="/Stock" class="scroll">存量變現 <span> </span></a></li>
-                <li <if condition="$title eq '易物平台'">class="active"<else />class="page-scroll"</if>><a href="/barter" class="scroll">易物平台  <span> </span></a></li>
-                <li <if condition="$title eq '企业家专区'">class="active"<else />class="page-scroll"</if>><a href="/Entrepreneur" class="scroll">企業家專區<span> </span></a></li>
-                <li <if condition="$title eq '企业内部培训'">class="active"<else />class="page-scroll"</if>><a href="/Train" class="scroll">企業內部培訓<span> </span></a></li>
-                <li <if condition="$title eq '个人微创业'">class="active"<else />class="page-scroll"</if>><a href="/Personal" class="scroll">個人微創業<span> </span></a></li>
-                <li <if condition="$title eq '商城入口'">class="active"<else />class="page-scroll"</if>><a href="http://www.hui360.cn" target="_blank" class="scroll">商城入口<span> </span></a></li>
-            </ul>
-            <a href="#" id="pull"><img src="__PUBLIC__/hui360/images/nav-icon.png" title="menu" /></a>
-        </nav>
-        <div class="clearfix"> </div>
-    </div>
+
+<body >
+
+<!-- perload section -->
+<div id="preloader">
+    <div id="preloader-inner"></div>
 </div>
-<!----- //End-header---->
+<!-- header section -->
+<header class="tp-main-menu header-menu-4 sticky-header ">
+    <!-- top logo/contac inf -->
+    <div class="top-nav">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 col-md-4 col-sm-5 col-12">
+                    歡迎您的光臨
+                </div>
+                <div class="col-lg-7 col-md-8  col-sm-7 col-12">
+                    <ul class="get_quote_list">
+                        <li class="q_phone"><a href="#" title="+343 277 7782"><i class="fas fa-mobile-alt"></i>{$tel}</a>
+                        </li>
+                        <li class="q_mail"><a href="mailto:info@company.com" title="info@company.com"><i class="fas fa-envelope"></i>{$email}</a>
+                        </li>
+                        <li class="q_contact_btn"><a href="/index/application.html" title="contact us">報名入口</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-menu">
+        <div class="container">
+            <div class="row row_menu_1">
+                <div class="col-lg-2 col-md-12 col-12 col-logo-3">
+                    <div class="tagpoint-wrap-logo ">
+                        <a href="index.html" title="Rafaa HTML Template">
+
+                            <img src="__PUBLIC__/hui360/images/logo.png" alt="匯360" class="tp_whitelogo" style="width: 50px">
+                            <img src="__PUBLIC__/hui360/images/logo.png" alt="匯360" class="tp_darklogo" style="width: 50px">
+
+                        </a>
+                        <span class="phone_menu  primary-color">
+                                                <i class="fas fa-bars"></i>
+                                            </span>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-md-12 col-12">
+                    <nav class="tp-menu tagpoint-menu-1">
+                        <ul class="tagpoint-main-menu ">
+                            <li class="current_page_item has-sub">
+                                <i class="  fas fa-chevron-down tp_phone_dropdown"></i>
+                                <a title="Home" href="/">
+                                    首頁
+                                </a>
+
+                            </li>
+                            <li class="has-sub mega-menu ">
+                                <i class="  fas fa-chevron-down tp_phone_dropdown"></i>
+                                <a title="About Us" href="/index/about.html">
+                                    關於我們
+                                </a>
+                                <ul class="sub-menu">
+                                            <li>
+                                                <a title="Home" href="/index/about.html"> 公司簡介 </a>
+                                            </li>
+                                            <li>
+                                                <a title="Home" href="/index/aboutcase/id/75.html"> 近期案例 </a>
+                                            </li>
+                                            <li>
+                                                <a title="Home" href="/index/aboutcase/id/74.html"> 聯盟合作 </a>
+                                            </li>
+                                            <li>
+                                                <a title="Home" href="/index/aboutcase/id/76.html"> 兩岸貿易 </a>
+                                            </li>
+                                            <li>
+                                                <a title="Home" href="/index/aboutcase/id/77.html"> 師資團隊 </a>
+                                            </li>
+                                        </ul>
+                            </li>
+                            <li class="has-sub">
+                                <i class="  fas fa-chevron-down tp_phone_dropdown"></i>
+                                <a title="About Us" href="/index/liquidation/id/78.html">
+                                    存量變現
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a title="庫存盤活" href="/index/liquidation/id/80.html">庫存盤活</a>
+                                    </li>
+                                    <li>
+                                        <a title="新融資模式" href="/index/liquidation/id/79.html">新融資模式</a>
+                                    </li>
+                                    <li>
+                                        <a title="資產盤活" href="/index/liquidation/id/78.html">資產盤活</a>
+                                    </li>
+                                    <li>
+                                        <a title="積分、卷、幣盤活" href="/index/liquidation/id/81.html">積分、卷、幣盤活</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="has-sub">
+                                <i class="  fas fa-chevron-down tp_phone_dropdown"></i>
+                                <a title="service" href="/index/service/html/86.html">
+
+                                    易物平臺
+                                </a>
+                                <ul class="sub-menu  ">
+                                    <li>
+                                        <a title="Home" href="/index/service/html/86.html">平臺介紹 </a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/service/html/87.html">聯盟合作 </a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/service/html/88.html">平臺特色</a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/service/html/90.html">以需易需 </a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/service/html/91.html">以業易業 </a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/service/html/89.html">全國服務網點 </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="has-sub">
+                                <i class="  fas fa-chevron-down tp_phone_dropdown"></i>
+                                <a title="/index/Entrepreneur/html/82.html" href="#">
+                                    企業家專區
+                                </a>
+                                <ul class="sub-menu  ">
+                                    <li>
+                                        <a title="專區介紹" href="/index/Entrepreneur/html/82.html">專區介紹</a>
+                                    </li>
+                                    <li>
+                                        <a title="電商人才專區" href="/index/Entrepreneur/html/83.html">電商人才專區</a>
+                                    </li>
+                                    <li>
+                                        <a title="諮詢輔導" href="/index/Entrepreneur/html/84.html" >諮詢輔導</a>
+                                    </li>
+                                    <li>
+                                        <a title="盈利模式九宮格" href="/index/Entrepreneur/html/85.html">盈利模式九宮格</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <i class="  fas fa-chevron-down tp_phone_dropdown"></i>
+                                <a title="Services" href="/index/Course">
+                                    培訓課程
+                                </a>
+                                <!--<ul class="sub-menu  ">
+                                    <li>
+                                        <a title="Home" href="/index/training/html/92.html">管理训练计划(MTP)</a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/training/html/93.html">监督者教育(TWI)</a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/training/html/94.html">閃耀講師培訓</a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/training/html/95.html">銷售系列</a>
+                                    </li>
+                                    <li>
+                                        <a title="Home" href="/index/training/html/96.html">研習式體驗課程</a>
+                                    </li>
+                                </ul>-->
+                            </li>
+                            <li class="tp_wrap_search">
+                                <span class="wrat_search_icon"><i class="fas fa-search"></i> </span>
+                                <div class="search-content search-content_3">
+                                    <form class="tagpoint-nav-search" id="tagpoint-navsearch">
+                                        <input type="text" name="s" value="" placeholder="信息檢索..." id="lns-search">
+                                        <button class="lns-button" type="submit">Search</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
