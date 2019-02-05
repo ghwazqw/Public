@@ -69,7 +69,7 @@ class IndexController extends PublicController {
         $io->pt_course_tbmatedata($id);
         $this->assign("InfoData",$io->_main_data);
        // var_export($io->_main_data);
-        $this->assign("title","匯360--公開班");
+        $this->assign("title","課程列表");
         $this->theme("web")->display();
     }
     public function Course(){
@@ -82,7 +82,7 @@ class IndexController extends PublicController {
         $io->pt_course_tbmatedata($id);
         $this->assign("InfoData",$io->_main_data);
         // var_export($io->_main_data);
-        $this->assign("title","課程列表");
+        $this->assign("title","匯360--公開班");
         $this->theme("web")->display();
     }
     public function CourseDal(){

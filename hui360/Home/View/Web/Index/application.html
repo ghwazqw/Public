@@ -89,8 +89,18 @@
 							<p class="contact-form-el">
 								<select class="form-control" name="activitiesid">
 									<foreach name='InfoData' item='Info' >
-									<option value="{$Info.n_id}">{$Info.n_title}</option>
+									<option value="{$Info.id}">{$Info.co_title}</option>
 									</foreach>
+								</select>
+							</p>
+						</div>
+
+						<div class="col-12">
+							<p class="contact-form-el">
+								<select class="form-control" name="address">
+									<option>台北</option>
+									<option>台中</option>
+									<option>高雄</option>
 								</select>
 							</p>
 						</div>
