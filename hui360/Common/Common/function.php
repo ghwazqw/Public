@@ -17,13 +17,13 @@ function sendMail($to, $title, $content) {
     $mail->Password = C('MAIL_PASSWORD') ; //邮箱密码
     $mail->From = C('MAIL_FROM'); //发件人地址（也就是你的邮箱地址）
     $mail->FromName = C('MAIL_FROMNAME'); //发件人姓名
-    $mail->AddAddress($to,"尊敬的用户");
+    $mail->AddAddress($to,"您好！"); //
     $mail->WordWrap = 50; //设置每行字符长度
     $mail->IsHTML(C('MAIL_ISHTML')); // 是否HTML格式邮件
     $mail->CharSet=C('MAIL_CHARSET'); //设置邮件编码
     $mail->Subject =$title; //邮件主题
     $mail->Body = $content; //邮件内容
-    $mail->AltBody = "北京鼎玺盈动科技有限公司"; //邮件正文不支持HTML的备用显示
+    $mail->AltBody = "報名郵件"; //邮件正文不支持HTML的备用显示
     return($mail->Send());
 }
 

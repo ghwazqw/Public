@@ -9,11 +9,10 @@
 namespace Home\Controller;
 
 
-use Home\API\ActionAPI;
-use Home\API\DelDataAPI;
-use Home\API\ProductAPI;
-use Home\API\TreeAPI;
-use Home\API\UserAPI;
+
+
+use Home\API\ActivitiesAPI;
+use Home\API\CourseAPI;
 
 class CourseController extends PublicController
 {
@@ -27,6 +26,39 @@ class CourseController extends PublicController
     public function index(){
         $this->assign("title","課程信息管理");
         $this->theme("WebApps")->display();
+    }
+    public function CourseManage(){
+        $this->theme("WebApps")->display();
+    }
+    //資費郵件發送
+    public function SendJfAPI(){
+        $email=I("email");
+        $id=I("id");
+        if (!$email || !$id){
+            $this->error('id error');
+        }else{
+            $ii=new ActivitiesAPI();
+            if ($ii->SendJfInfo($email,$id)){
+                $this->success("交費通知郵件發送成功!");
+            }else{
+                $this->error("交費通知郵件發送失敗!");
+            }
+        }
+    }
+    //提醒郵件發送
+    public function SendTfAPI(){
+        $email=I("email");
+        $id=I("id");
+        if (!$email || !$id){
+            $this->error('id error');
+        }else{
+            $ii=new ActivitiesAPI();
+            if ($ii->SendTfInfo($email,$id)){
+                $this->success("提醒郵件發送成功!");
+            }else{
+                $this->error("提醒郵件發送失敗!");
+            }
+        }
     }
 
 

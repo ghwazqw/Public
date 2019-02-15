@@ -3,28 +3,28 @@
 <block name="customer">
 
 
-   <!--{$fo.column_name}/{$fo.column_comment}/{$fo.data_type}<br />-->
+    <!--{$fo.column_name}/{$fo.column_comment}/{$fo.data_type}<br />-->
 
     <div class="container-fluid" >
 
-            <form method="post" class="form-inline">
-                <label>数据库表</label>
+        <form method="post" class="form-inline">
+            <label>数据库表</label>
             <select name="table" class="selectpicker show-tick form-control" id="table" >
                 <option value ="">请选择</option>
                 <foreach name="Table" item="T" >
                     <option value ="{$T.table_name}">{$T.table_comment}({$T.table_name})</option>
                 </foreach>
             </select>
-                <input type="checkbox" class="form-control" name="act" value="1" /> 是否带有操作菜单
+            <input type="checkbox" class="form-control" name="act" value="1" /> 是否带有操作菜单
             <button autocomplete="off" class="btn btn-success" id="sub" type="submit">提交生成</button>
-            </form>
+        </form>
         <hr/>
-        </div>
+    </div>
 
     <div class="col-md-12">
-    <div class="col-md-6">
-        <h4>API类代码：<small>{$TableName}</small></h4>
-    <textarea style="width: 100%;height: 500px">
+        <div class="col-md-6">
+            <h4>API类代码：<small>{$TableName}</small></h4>
+            <textarea style="width: 100%;height: 500px">
             class ****API //填写控制器名称规则:"控制器名称+API"
             {
             public $_page_size="50"; //每页显示条数
@@ -35,7 +35,7 @@
             public $_keyword=""; //关键字数据
             public $_Msg=""; //信息输出
 
-                function {$TableName}matedata($id){
+                function {$TableName}($id){
 
                 $limit=I("limit"); //从前端获取每页显示的数量
                 $order=I("order"); //排序方式获取
@@ -53,7 +53,7 @@
                     $offset=0; //默认数据读取
                 }
                 if (!$limit){
-                    $limit=this->_page_size; //前台未传参时，默认每页显示为50条数据
+                    $limit=$this->_page_size; //前台未传参时，默认每页显示为50条数据
                 }
 
                 $TableName=M("{$TableName}"); //注意去除表头
@@ -87,14 +87,16 @@
             }
 
             </textarea>
-    </div>
+        </div>
         <div class="col-md-6">
             <h4>前端Html代码：<small>{$TableName}</small></h4>
             <textarea style="width: 100%;height: 500px">
+                <link href="__PUBLIC__/Manage/CSS/layui.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/Manage/JS/layui.all.js"></script>
                 <div class="container-fluid" style="margin-top: 60px">
                 <!--导入Excel文件插件-->
                 <script type="text/javascript" src="__PUBLIC__/bs/js/jquery.table2excel.min.js" ></script>
-                <!--菜单导航开始-->
+                    <!--菜单导航开始-->
                 <ul class="breadcrumb">
                     <li>
                         <a href="/">管理系统首页</a>
@@ -103,27 +105,24 @@
                         <a href="#">{$TableName}管理</a>
                     </li>
                 </ul>
-                <!--菜单导航结束-->
-                <!--工具栏开始-->
+                    <!--菜单导航结束-->
+                    <!--工具栏开始-->
                 <div id="toolbar">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" ></span> 功能列表</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">功能列表</span>
-                    </button>
-                    <ul class="dropdown-menu" style="margin-top: -8px">
-                        <li >
-                            <a href="#form-1" data-toggle="modal"><span class="glyphicon glyphicon-cloud-upload"></span> 新增</a>
-                        </li>
-                        <li >
-                            <a href="#" role="button" data-toggle="modal" onclick="expinfo()"  title="导出结果"><span class="glyphicon glyphicon-download"></span> 导出结果</a>
-                        </li>
-                    </ul>
+                 <div class="btn-group" role="group">
+                <button type="button" href="#form-1" data-toggle="modal" class="btn btn-primary btn-xs" onclick="clearForm()"><span
+                        class="glyphicon glyphicon-file" ></span> 新增{$Fwlx}
+                </button>
+                <button type="button" role="button" data-toggle="modal" onclick="expinfo()" title="导出结果"
+                        class="btn btn-success btn-xs"><span
+                        class="glyphicon glyphicon-export"></span> 导出
+                </button>
+
+            </div>
+            <span id="ok" style="display:none;" class="label label-success">操作成功</span>
+            <span id="error" style="display:none;" class="label label-danger">操作失败</span>
                 </div>
-                </div>
-                <!--工具栏结束-->
-                <!--表格开始-->
+                    <!--工具栏结束-->
+                    <!--表格开始-->
                 <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
                        data-classes="table table-hover"
                        data-show-columns="true"
@@ -134,7 +133,7 @@
                        data-toolbar="#toolbar"
                 >
                 </table>
-                <!--表格结束-->
+                    <!--表格结束-->
                 </div>
             </textarea>
 
@@ -146,7 +145,7 @@
                 switch ($this->_method){
                     case 'get': // get请求处理代码
                         $ii=new ****API(); //自行修改API接口
-                        $ii->{$TableName}matedata($id);
+                        $ii->{$TableName}($id);
                         $total=$ii->_page_count;
                         $result["total"] = $total; //分页时需要获取记录总数，键值为total
                         $result['code'] = '200'; //状态码
@@ -167,7 +166,7 @@
                 <script>
                     //异步表格所必须
                     var opt = {
-                        url: "/ProductAPI/ProductInfo", //注意手工修改
+                        url: "#", //注意手工修改
                         type: "get",
                         silent: true,
                         query: {
@@ -175,10 +174,50 @@
                             level: 2
                         }
                     };
+                    window.operateEvents = {
+                        'click #DelInfo':function (e, value, row, index) { //删除按钮
+                            if (!row.id) {
+                                layer.alert('错误，请选择一个信息!', {icon: 2});
+                                return false;
+                            } else {
+                                var massage = confirm("删除后不可恢复，请确认!");
+                                if (massage == true) {
+                                    $.ajax({
+                                        type: "delete",
+                                        url: "#?id=" + row.id, //自定义提交类
+                                        success: function (data, state) { //成功调用回调信息
+                                            if (data.code == 200 && data.total == 1) {
+                                                $("#ok").show().delay(1000).hide(100);
+                                                $("#exp").bootstrapTable('refresh', opt);
+                                            } else if (data == 500) {
+                                                $("#error").show().delay(1000).hide(100);
+                                                return false;
+                                            }
+                                        },
+                                        complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                            //alert(textStatus);
+                                        },
+                                        timeout: 60000,
+                                        error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                            alert("服务器响应超时，请稍候重试：" + textStatus);
+                                            return false;
+                                        }
+                                    })
+                                }
+                            }
+                        },
+                        'click #EditInfo':function (e, value, row, index) { //编辑信息
+
+                        <foreach name="formname" item="fo" >
+                                $("#{$fo.column_name}").val(row.{$fo.column_name});
+                        </foreach>
+                            $("#id").val(row.id);
+                        },
+                    };
                     $('#exp').bootstrapTable({
                         columns: [{
-                            checkbox: true
-                        },{field: 'id', title: '序号.', formatter: function (value, row, index) {
+                                checkbox: true
+                            },{field: 'id', title: '序号.', formatter: function (value, row, index) {
                                     //return index + 1;
                                     return (index+1);
                                 },
@@ -187,27 +226,27 @@
                             },
                             <foreach name="formname" item="fo" >
                         <php>if ($fo['data_type']=='int' || $fo['data_type']=='tinyint') :</php>
-                            {field:'{$fo.column_name}',title:'{$fo.column_comment}',align:'left',formatter:function (value,row,index) {
-                                    if (value==1){
-                                        return '<span class="label label-success">1</span>';
-                                    }else{
-                                        return value;
-                                    }
-                                }},
-                        <php>else :</php>
-                            {field:'{$fo.column_name}',title:'{$fo.column_comment}',align:'left'},
-                            <php>endif ;</php>
-                            </foreach>
-                            <php>if ($act==1) :</php>
-                                {field: 'id',title:'功能操作',align:'left',formatter:function (value) {
-                                    return '<div class="btn-group" role="group">' +
-                                        '<input class="btn btn-success btn-xs" onclick="editinfo('+value+')" href="#form-1" data-toggle="modal" type="button" value="编辑" title="编辑信息" />' +
-                                        '<input class="btn btn-danger btn-xs" onclick="delinfo('+value+')" type="button" value="删除" title="删除该招聘信息" />' +
-                                        '</div>';
-                                }}
-                            <php>endif ;</php>
-                        ],
-                        url:'/restful/Bookinfo', //请求控制器地址
+                    {field:'{$fo.column_name}',title:'{$fo.column_comment}',align:'left',formatter:function (value,row,index) {
+                        if (value==1){
+                            return '<span class="label label-success">1</span>';
+                        }else{
+                            return value;
+                        }
+                    }},
+                    <php>else :</php>
+                    {field:'{$fo.column_name}',title:'{$fo.column_comment}',align:'left'},
+                    <php>endif ;</php>
+                    </foreach>
+                    <php>if ($act==1) :</php>
+                    {
+                        field: 'operate',
+                            title: '功能操作',
+                        formatter: operateFormatter,
+                        events: operateEvents
+                    },
+                    <php>endif ;</php>
+                    ],
+                    url:'#', //请求控制器地址
                         method: 'get', //请求方式
                         datatype:'json', //返回数据格式
                         //striped: true,       //是否显示行间隔色
@@ -235,7 +274,7 @@
                         showColumns:true,
                         sortOrder:'',  //排序规则
                         sortName:'id' //排序字段
-                        //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+                    //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
                     });
                     //导出Excel文件处理
                     function expinfo(){
@@ -248,108 +287,35 @@
                             exclude_links: true,
                             exclude_inputs: false
                         });
-                    }
-                    //编辑信息保存
-                    function PutSubmit() {
-                    <foreach name="formname" item="fo" >
-                        var {$fo.column_name} = $("#{$fo.column_name}").val();
-                        </foreach>
-                        //console.log(id);
-                        $.ajax({
-                            type: "post",
-                            url: "/ProductAPI/", //注意修改
-                            //contentType: "application/json",
-                            data: {<foreach name="formname" item="fo" >"{$fo.column_name}": {$fo.column_name},</foreach>},
-                            success: function (data) {
-                                if (data.code = 200) {
-                                    $("#ok").show().delay(1000).hide(100);
-                                    $("#exp").bootstrapTable('refresh', opt);
-                                } else {
-                                    $("#error").show().delay(2000).hide(200);
-                                    //console.log(data.msg);
-                                    return false;
+                    };
+                    //定义操作功能
+                    function operateFormatter(value, row, index) {
+                        return [
+                            '<div class="btn-group btn-xs" role="group">' +
+                            '<input href="#form-1" data-toggle="modal" class="btn btn-success btn-xs" id="EditInfo" type="button" value="编辑" title="编辑信息" />' +
+                            '<input class="btn btn-danger btn-xs" id="DelInfo" type="button" value="删除" title="删除信息" />'+
+                            '</div>',
+                        ].join('');
+                    };
+                    //清空表单
+                    function clearForm(){
+                        var objE=$("#form-1");
+                        $(objE).find(':input').each(
+                            function(){
+                                switch(this.type){
+                                    case 'passsword':
+                                    case 'select-multiple':
+                                    case 'select-one':
+                                    case 'text':
+                                    case 'textarea':
+                                        $(this).val('');
+                                        break;
+                                    case 'checkbox':
+                                    case 'radio':
+                                        this.checked = false;
                                 }
-                            },
-                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
-                                //alert(textStatus);
-                            },
-                            timeout: 60000,
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
-                                alert("服务器响应超时，请稍候重试：" + errorThrown);
-                                return false;
                             }
-                        })
-                    }
-                    //读取详细信息
-                    function Editinfo(id) {
-                        if (!id) {
-                            alert("请选择一个信息!");
-                            return false;
-                        } else {
-                            //alert(id);
-
-                            $.ajax({
-                                type: "get",
-                                url: "/ProductAPI/ProductTpl", //注意手工修改
-                                contentType: "application/json",
-                                data: {"id": id},
-                                success: function (data, state) { //成功调用回调信息
-                                    if (data.code == 200) {
-                                        $.each(data.data, function (i, value) {
-                                        <foreach name="formname" item="fo" >
-                                            $("#{$fo.column_name}").val(value.{$fo.column_name});
-                                        </foreach>
-                                        })
-                                        //console.log(data.data);
-                                        //$("#ok").show().delay(1000).hide(100);
-                                        //$("#exp").bootstrapTable('refresh', opt);
-                                    } else if (data.code == 500) {
-                                        $("#error").show().delay(1000).hide(100);
-                                        return false;
-                                    }
-                                },
-                                complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
-                                    //alert(textStatus);
-                                },
-                                timeout: 60000,
-                                error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
-                                    alert("服务器响应超时，请稍候重试：" + errorThrown);
-                                    return false;
-                                }
-                            })
-                        }
-                    }
-                    //删除信息
-                    function delinfo(id) {
-                        if (!id) {
-                            alert("请选择一个信息!");
-                            return false;
-                        } else {
-                            var massage = confirm("删除后不可恢复，请确认!");
-                            if (massage == true) {
-                                $.ajax({
-                                    type: "delete",
-                                    url: "/ProductAPI/EditTplInfo?id=" + id, //注意手工修改
-                                    success: function (data, state) { //成功调用回调信息
-                                        if (data.code == 200 && data.total == 1) {
-                                            $("#ok").show().delay(1000).hide(100);
-                                            $("#exp").bootstrapTable('refresh', opt);
-                                        } else if (data == 500) {
-                                            $("#error").show().delay(1000).hide(100);
-                                            return false;
-                                        }
-                                    },
-                                    complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
-                                        //alert(textStatus);
-                                    },
-                                    timeout: 60000,
-                                    error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
-                                        alert("服务器响应超时，请稍候重试：" + textStatus);
-                                        return false;
-                                    }
-                                })
-                            }
-                        }
+                        );
                     }
 
                 </script>
@@ -378,8 +344,6 @@
                                     }
                                 },
                                 </foreach>
-
-
                             }
                         });
                     });

@@ -14,9 +14,9 @@ class CourseAPI
     public $_keyword = ""; //关键字数据
     public $_Msg = ""; //信息输出
 
+    //讀取課程信息
     function pt_course_tbmatedata($id)
     {
-
         $limit = I("limit"); //从前端获取每页显示的数量
         $order = I("order"); //排序方式获取
         $sort = I("sort"); //排序字段获取
@@ -88,21 +88,91 @@ class CourseAPI
         $AddData->co_money = I("co_money"); //正常價格
         $AddData->co_vip = I("co_vip"); //VIP
         $AddData->co_status = 1; //課程狀態
-        $AddData->co_datetime = date('Y-m-d H:i:s',time()) ; //發布時間
+        $AddData->co_datetime = date('Y-m-d H:i:s', time()); //發布時間
         $AddData->co_photo = I("co_photo"); //課程圖片
-        if (!$id){
-            $ret=$AddData->add();
-        }else{
-            $where["id"]=array("eq",$id);
-            $ret=$AddData->where($where)->save();
+        if (!$id) {
+            $ret = $AddData->add();
+        } else {
+            $where["id"] = array("eq", $id);
+            $ret = $AddData->where($where)->save();
         }
 
-        if ($ret){
-            $this->_Msg='操作成功';
+        if ($ret) {
+            $this->_Msg = '操作成功';
             return true;
-        }else{
-            $this->_Msg='操作失败';
+        } else {
+            $this->_Msg = '操作失败';
             return false;
+        }
+    }
+
+    //讀取用戶報名信息
+    function pt_actry_vm($id)
+    {
+
+        $limit = I("limit"); //从前端获取每页显示的数量
+        $order = I("order"); //排序方式获取
+        $sort = I("sort"); //排序字段获取
+        $offset = I("offset"); //排序位置获取
+        $search = I("search"); //获取搜索关键字
+
+        if (!$sort) {
+            $sort = "id"; //默认排序字段
+        }
+        if (!$order) {
+            $order = "desc"; //默认排序方式
+        }
+        if (!$offset) {
+            $offset = 0; //默认数据读取
+        }
+        if (!$limit) {
+            $limit = $this->_page_size; //前台未传参时，默认每页显示为50条数据
+        }
+
+        $TableName = M("actry_vm"); //注意去除表头
+        $this->_keyword = $search;
+        if ($this->_keyword != "") {
+            $where["name"] = array('like', "%$this->_keyword%");
+            $where["emailtel"] = array('like', "%$this->_keyword%");
+            $where["company"] = array('like', "%$this->_keyword%");
+            $where["message"] = array('like', "%$this->_keyword%");
+            $where["actdate"] = array('like', "%$this->_keyword%");
+            $where["isuser"] = array('like', "%$this->_keyword%");
+            $where["activitiesid"] = array('like', "%$this->_keyword%");
+            $where["address"] = array('like', "%$this->_keyword%");
+            $where["zhicheng"] = array('like', "%$this->_keyword%");
+            $where["mobile"] = array('like', "%$this->_keyword%");
+            $where["actstatus"] = array('like', "%$this->_keyword%");
+            $where["moneystatus"] = array('like', "%$this->_keyword%");
+            $where["co_date"] = array('like', "%$this->_keyword%");
+            $where["co_date2"] = array('like', "%$this->_keyword%");
+            $where["co_date3"] = array('like', "%$this->_keyword%");
+            $where["co_sktime"] = array('like', "%$this->_keyword%");
+            $where["co_title"] = array('like', "%$this->_keyword%");
+            $where["co_content"] = array('like', "%$this->_keyword%");
+            $where["co_zmoney"] = array('like', "%$this->_keyword%");
+            $where["co_money"] = array('like', "%$this->_keyword%");
+            $where["co_status"] = array('like', "%$this->_keyword%");
+            $where['_logic'] = 'OR';
+        }
+        //加载主表数据
+        $this->_page_count = $count = $TableName->where($where)->count(); //加载获取到的数据量
+        $Page = new \Think\Page($count, $limit);
+        //$Page->parameter=$this->_keyword;
+
+
+        $this->_page_bar = $Page->show(); //把分布内容赋值给变量
+        $this->_page_ys = $Page->totalPages;
+        if (!$id) {
+            $this->_main_data = $TableName->where($where)->order($sort . " " . $order)->LIMIT($offset . ',' . $limit)->select(); //据取值完成
+        } else { //ID不为空时读取详细信息
+            $this->_main_data = $TableName->where("id=$id")->order($sort . " " . $order)->LIMIT($offset . ',' . $limit)->select(); //据取值完成
+        }
+        //echo $TableName->getLastSql();
+        if ($count == 0) {
+            $this->_Msg = '数据结果为0';
+        } else {
+            $this->_Msg = '获取成功';
         }
     }
 

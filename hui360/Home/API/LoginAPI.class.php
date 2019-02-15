@@ -91,7 +91,7 @@ class LoginAPI
                         }
                         $this->LoginLog("$get_UserName","$ip",'Success','Login Success'); //用户登录日志保存
                         //$this->_info="OK";
-                        redirect('/',2, '登录成功,正在跳转...');
+                        redirect('/Manage',2, '登录成功,正在跳转...');
                     }else{
                         //$this->actionInfo='{$this->assign("errorInfo","密码错误！");}';
                         //$this->_info="密码错误或用户无效";

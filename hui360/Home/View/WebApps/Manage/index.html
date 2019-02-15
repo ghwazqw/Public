@@ -1,0 +1,60 @@
+<extend name="WebApps/index/base" />
+<block name="customer">
+<div class="container">
+    <link href="__PUBLIC__/bs/css/bootstrap-switch.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/bs/js/bootstrap-switch.min.js"></script>
+</div>
+    <div class="container-fluid">
+        <dic class="col-md-6">
+        <div class="panel panel-warning" style="line-height: 22px">
+            <div class="panel-heading"><i class="fa fa-info" aria-hidden="true"></i> 系统基础参数 <small>System Parameter </small>
+            </div>
+            <div class="panel-body">
+                <volist name="sysconfig" id="v">
+                    {$key}：<small>{$v}</small><br/>
+                </volist>
+                系统开关：
+                <input name="status" type="checkbox" checked /><br />
+                <foreach name="LoginInfo" item="info" >
+                    最后一次登录时间：<small>{$info.log_date}</small><br/>
+                    最后一次登录用户：<small>{$info.user_name}</small><br/>
+                    最后一次登录IP：<small>{$info.user_ip}</small><br/>
+                </foreach>
+            </div>
+        </div>
+        </dic>
+
+        <div class="col-md-6">
+            <div class="panel panel-success" style="line-height: 22px">
+                <div class="panel-heading"><i class="fa fa-inbox" aria-hidden="true"></i> 系统基础信息 <small>System Information </small>
+
+                </div>
+                <div class="panel-body">
+                    <volist name="sysinfo" id="v">
+                        <php>if ($key=='isMoblie' && $v==0) :</php>
+                        手机适配：<small>否</small><br/>
+                        <php>else :</php>
+                        {$key}：<small>{$v}</small><br/>
+                        <php>endif ;</php>
+                    </volist>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('[name="status"]').bootstrapSwitch({
+            onText:"开",
+            offText:"关",
+            onColor:"success",
+            offColor:"danger",
+            size:"mini",
+            onSwitchChange:function(event,state){
+                if(state==true){
+                    $(this).val("1");
+                }else{
+                    $(this).val("2");
+                }
+            }
+        })
+    </script>
+</block>

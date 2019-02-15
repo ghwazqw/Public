@@ -25,6 +25,18 @@
         <section class="blasa-section page-details left-sidebar">
             <div class="container">
                 <div class="row">
+                    <div class="col-lg-9 col-md-12 col-12 pagecontent-col">
+                        <article class="wrap_page_content single-page">
+                            <!-- images carousel -->
+                            <div class="row-page-section">
+                                <h2>正在報名的課程</h2>
+                                <foreach name='InfoData' item='Info' >
+                                    <a href="/index/CourseDal/id/{$Info.id}.html">{$Info.co_title}</a> <span style="text-align: right;margin-left: 20px">{$Info.co_datetime}</span><br />
+                                    <hr />
+                                </foreach>
+                            </div>
+                        </article>
+                    </div>
                     <div class="col-lg-3 col-md-12 col-12 sidebar-col">
                         <div class="wrap_page_sidebar">
                             <div class="widget tp_widget related_widget">
@@ -73,7 +85,7 @@
                                             <span class="wcontact_icon"><i class="fas fa-envelope"></i></span>
                                             <div class="wcontact_text">
                                                 <h3>Email</h3>
-                                                <p>{$email}</p>
+                                                <p><a href="mailto:{$email}">{$email}</a></p>
                                             </div>
                                         </li>
                                     </ul>
@@ -81,18 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-9 col-md-12 col-12 pagecontent-col">
-                        <article class="wrap_page_content single-page">
-                            <!-- images carousel -->
-                            <div class="row-page-section">
-                                <h2>正在報名的課程</h2>
-                                <foreach name='InfoData' item='Info' >
-                                <a href="/index/CourseDal/id/{$Info.id}.html">{$Info.co_title}</a> <span style="text-align: right;margin-left: 20px">{$Info.co_datetime}</span><br />
-                                    <hr />
-                                </foreach>
-                            </div>
-                        </article>
-                    </div>
+
                 </div>
             </div>
         </section>

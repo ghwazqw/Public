@@ -181,9 +181,9 @@ class TestController extends PublicController
 
     public function upload()
     {
-        $ii=new UserAPI();
+        $ii = new UserAPI();
         $ii->GetUserInfo();
-        $get_UserName=$ii->_username;
+        $get_UserName = $ii->_username;
         $config = C('uploadfile'); //读取上传文件配置类
         $upload = new \Think\Upload($config);// 实例化上传类
         //上传文件
@@ -194,16 +194,17 @@ class TestController extends PublicController
             //$this->success('上传成功！');
             foreach ($info as $file) {
                 $zc_photo = $file['savepath'] . $file['savename'];
-                $io=new ActionAPI();
-                if ($io->UploadImg('/'.$zc_photo,'AD',$get_UserName)){
-                    echo json_encode(array('code' => 200, 'src' => "/" . $zc_photo,'Msg' => '上传成功'));
-                }else{
-                    echo json_encode(array('code' => 500,'Msg' => '上传失败'));
+                $io = new ActionAPI();
+                if ($io->UploadImg('/' . $zc_photo, 'AD', $get_UserName)) {
+                    echo json_encode(array('code' => 200, 'src' => "/" . $zc_photo, 'Msg' => '上传成功'));
+                } else {
+                    echo json_encode(array('code' => 500, 'Msg' => '上传失败'));
                 }
             }
             //echo $zc_photo;
         }
     }
+
     public function setname()
     {
         $tablename = I("tablename");
@@ -227,7 +228,18 @@ class TestController extends PublicController
     {
         $this->theme("manage")->display("");
     }
-    public function facebook(){
+
+    public function facebook()
+    {
         $this->theme("manage")->display("");
+    }
+
+    public function testsendmail()
+    {
+        if (SendMail('gao0@me.com', '報名郵件測試', "報名內容測試")) {
+            echo "ok";
+        }else{
+            echo "error";
+        }
     }
 }

@@ -1,0 +1,240 @@
+<extend name="WebApps/index/base"/>
+<block name="customer">
+    <div class="container-fluid" style="margin-top: 60px">
+        <!--导入Excel文件插件-->
+        <script type="text/javascript" src="/Public/bs/js/jquery.table2excel.min.js"></script>
+        <!--菜单导航开始-->
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">管理系统首页</a>
+            </li>
+            <li class="active">
+                <a href="#">課程報名信息管理</a>
+            </li>
+        </ul>
+        <!--菜单导航结束-->
+        <!--工具栏开始-->
+        <div id="toolbar">
+            <div class="btn-group" role="group">
+                <button type="button" role="button" data-toggle="modal" onclick="expinfo()" title="导出结果"
+                        class="btn btn-success btn-xs"><span
+                        class="glyphicon glyphicon-export"></span> 导出
+                </button>
+
+            </div>
+            <span id="ok" style="display:none;" class="label label-success">操作成功</span>
+            <span id="error" style="display:none;" class="label label-danger">操作失败</span>
+        </div>
+        <!--工具栏结束-->
+        <!--表格开始-->
+        <table id="exp" style="font-size: 12px" class="table table-condensed table-responsive"
+               data-classes="table table-hover"
+               data-show-columns="true"
+               data-height="600"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-toolbar="#toolbar"
+        >
+        </table>
+        <!--表格结束-->
+    </div>
+    <script>
+        //异步表格所必须
+        var opt = {
+            url: "/Restful/actRyAPI", //注意手工修改
+            type: "get",
+            silent: true,
+            query: {
+                type: 1,
+                level: 2
+            }
+        };
+        window.operateEvents = {
+            'click #DelInfo': function (e, value, row, index) { //删除按钮
+                if (!row.id) {
+                    layer.alert('错误，请选择一个信息!', {icon: 2});
+                    return false;
+                } else {
+                    var massage = confirm("删除后不可恢复，请确认!");
+                    if (massage == true) {
+                        $.ajax({
+                            type: "delete",
+                            url: "#?id=" + row.id, //自定义提交类
+                            success: function (data, state) { //成功调用回调信息
+                                if (data.code == 200 && data.total == 1) {
+                                    $("#ok").show().delay(1000).hide(100);
+                                    $("#exp").bootstrapTable('refresh', opt);
+                                } else if (data == 500) {
+                                    $("#error").show().delay(1000).hide(100);
+                                    return false;
+                                }
+                            },
+                            complete: function (XMLHttpRequest, textStatus) {  //调用后返回信息
+                                //alert(textStatus);
+                            },
+                            timeout: 60000,
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {  //失败后调用回调信息
+                                alert("服务器响应超时，请稍候重试：" + textStatus);
+                                return false;
+                            }
+                        })
+                    }
+                }
+            },
+            'click #EditInfo': function (e, value, row, index) { //编辑信息
+
+                $("#name").val(row.name);
+                $("#emailtel").val(row.emailtel);
+                $("#company").val(row.company);
+                $("#message").val(row.message);
+                $("#actdate").val(row.actdate);
+                $("#isuser").val(row.isuser);
+                $("#activitiesid").val(row.activitiesid);
+                $("#address").val(row.address);
+                $("#zhicheng").val(row.zhicheng);
+                $("#mobile").val(row.mobile);
+                $("#actstatus").val(row.actstatus);
+                $("#moneystatus").val(row.moneystatus);
+                $("#co_date").val(row.co_date);
+                $("#co_date2").val(row.co_date2);
+                $("#co_date3").val(row.co_date3);
+                $("#co_sktime").val(row.co_sktime);
+                $("#co_title").val(row.co_title);
+                $("#co_content").val(row.co_content);
+                $("#co_zmoney").val(row.co_zmoney);
+                $("#co_money").val(row.co_money);
+                $("#co_status").val(row.co_status);
+                $("#id").val(row.id);
+            },
+        };
+        $('#exp').bootstrapTable({
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'id', title: '序号.', formatter: function (value, row, index) {
+                    //return index + 1;
+                    return (index + 1);
+                },
+                width: 50,
+                align: 'center'
+            },
+                {field: 'name', title: '姓名', align: 'left'},
+                {field: 'emailtel', title: '電子郵箱', align: 'left',formatter:function (value, row, index) {
+                        return '<a href="mailto:'+value+'" title="點擊可以直接發送郵件">'+value+'</a>'
+                    }},
+                {field: 'company', title: '公司名稱', align: 'left'},
+                {field: 'message', title: '其他信息', align: 'left'},
+                {field: 'actdate', title: '報名時間', align: 'left'},
+                {field: 'co_title', title: '課程題目', align: 'left'},
+                /*{field: 'isuser', title: '是否會員', align: 'left'},
+                {field: 'activitiesid', title: '參與活動信息', align: 'left'},*/
+                {field: 'address', title: '上課地址', align: 'left'},
+                {field: 'zhicheng', title: '職稱', align: 'left'},
+                {field: 'mobile', title: '移動電話', align: 'left'},
+                {
+                    field: 'actstatus', title: '報名狀態', align: 'left', formatter: function (value, row, index) {
+                        if (value == 1) {
+                            return '<span class="label label-success">已交費</span>';
+                        } else if (value == 0){
+                            return '<span class="label label-danger">未交費</span>';
+                        }
+                    }
+                },
+                {
+                    field: 'moneystatus', title: '交費狀態', align: 'left', formatter: function (value, row, index) {
+                        if (value == 1) {
+                            return '<span class="label label-success">報名成功</span>';
+                        } else if (value == 0){
+                            return '<span class="label label-warning">已申請</span>';
+                        }
+                    }
+                },
+                {
+                    field: 'txstatus', title: '提醒狀態', align: 'left', formatter: function (value, row, index) {
+                        if (value == 1) {
+                            return '<span class="label label-success">已提醒</span>';
+                        } else if (value == 0){
+                            return '<span class="label label-warning">未提醒</span>';
+                        }
+                    }
+                },
+                {field: 'address', title: '上課日期', align: 'left',formatter:function (value, row, index) {
+                        if (value=="台北"){
+                            return row.co_date;
+                        }else if (value=="台中"){
+                            return row.co_date2;
+                        }else if (value=="高雄"){
+                            return row.co_date3;
+                        }
+                    }},
+                /*{field: 'co_date2', title: '課程日期2', align: 'left'},
+                {field: 'co_date3', title: '課程日期3', align: 'left'},*/
+                {field: 'co_sktime', title: '上課時間', align: 'right'},
+                {field: 'co_zmoney', title: '早鳥標價', align: 'right'},
+                {field: 'co_money', title: '正常價格', align: 'right'},
+                {
+                    field: 'operate',
+                    title: '功能操作',
+                    formatter: operateFormatter,
+                    events: operateEvents
+                },
+            ],
+            url: '/Restful/actRyAPI', //请求控制器地址
+            method: 'get', //请求方式
+            datatype: 'json', //返回数据格式
+            //striped: true,       //是否显示行间隔色
+            height: 760,//高度调整
+            undefinedText: '--', //数据为空时的显示内容
+            /*工具栏处理*/
+            toolbar: '#toolbar',//指定工具栏
+            toolbarAlign: 'left', //工具样位置
+            striped: true, //是否显示行间隔色
+            //earchText:'请输入搜索内容', //搜索默认文字
+
+
+            /*分页处理*/
+            dataField: "data", //读取后端给出的JSON中的数据记录集合，必须与后端保证一致
+            pageNumber: 1, //初始化加载第一页，默认第一页
+            pagination: true,//是否分页
+            //clickToSelect: true, //
+            queryParamsType: 'limit',//查询参数组织方式
+            //contentType: "application/x-www-form-urlencoded",//发送到服务器的数据编码类型
+            sidePagination: 'server',//指定服务器端分页
+            pageSize: 50,//单页记录数
+            pageList: [25, 50, 100, 500, 'All'],//分页步进值
+            data_local: "zh-US",//表格汉化
+            showRefresh: true,//刷新按钮
+            showColumns: true,
+            sortOrder: '',  //排序规则
+            sortName: 'id' //排序字段
+            //responseHandler:responseHandler,//请求数据成功后，渲染表格前的方法
+        });
+
+        //导出Excel文件处理
+        function expinfo() {
+            var myDate = new Date();
+            $("#exp").table2excel({
+                exclude: ".noExl",
+                name: "Excel Document Name.xls",
+                filename: myDate.toLocaleString() + ".xls",
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: false
+            });
+        };
+
+        //定义操作功能
+        function operateFormatter(value, row, index) {
+            return [
+                '<div class="btn-group btn-xs" role="group">' +
+                '<a href="/Course/SendJfAPI?email='+row.emailtel+'&id='+row.id+'" class="btn btn-success btn-xs" type="button" title="發送資費郵件" >JF</a>' +
+                '<a href="/Course/SendTfAPI?email='+row.emailtel+'&id='+row.id+'" class="btn btn-warning btn-xs" type="button" title="發送提醒郵件" >TF</a>' +
+                '</div>',
+            ].join('');
+        };
+
+
+    </script>
+
+</block>

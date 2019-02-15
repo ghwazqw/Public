@@ -1,141 +1,159 @@
-<extend name="web/Index/base" />
+<extend name="web/Index/base"/>
 <block name="customer">
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bs/BootstarpCh/css/bootstrapValidator.min.css">
-	<script type="text/javascript" src="__PUBLIC__/bs/BootstarpCh/js/bootstrapValidator.min.js"></script>
-		<!-- breadcurmbs -->
-		<section class="blasa-section r-breadcurmbs-1">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="wrap_breadcrumbs_1">
-							<h1 class="breadcurmbs-head">Online application
-							</h1>
-							<ul class="breadcrumbs_content_1 ">
-								<li><a href="#" title="home"> Home </a> /</li>
-								<li><span>application</span></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/bs/BootstarpCh/css/bootstrapValidator.min.css">
+    <script type="text/javascript" src="__PUBLIC__/bs/BootstarpCh/js/bootstrapValidator.min.js"></script>
+    <!-- breadcurmbs -->
+    <section class="blasa-section r-breadcurmbs-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="wrap_breadcrumbs_1">
+                        <h1 class="breadcurmbs-head">Online application
+                        </h1>
+                        <ul class="breadcrumbs_content_1 ">
+                            <li><a href="#" title="home"> Home </a> /</li>
+                            <li><span>application</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
-	<section class="blasa-section contactus">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-				<div class="wrap_contact_info">
-					<div class="head_contact">
-						<h3>地址：</h3>
-					</div>
-					<div class="wrap_contact_text">
-						<p>{$address}<br /> {$addressx}</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-				<div class="wrap_contact_info">
-					<div class="head_contact">
-						<h3>Email & 聯係電話：</h3>
-					</div>
-					<div class="wrap_contact_text">
-						<p>
-							Email: {$email}
-							<br /> Phone: {$tel}
+    <section class="blasa-section contactus">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="wrap_contact_info">
+                        <div class="head_contact">
+                            <h3>地址：</h3>
+                        </div>
+                        <div class="wrap_contact_text">
+                            <p>{$address}<br/> {$addressx}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="wrap_contact_info">
+                        <div class="head_contact">
+                            <h3>Email & 聯係電話：</h3>
+                        </div>
+                        <div class="wrap_contact_text">
+                            <p>
+                                Email: {$email}
+                                <br/> Phone: {$tel}
 
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-				<div class="wrap_contact_info">
-					<div class="head_contact">
-						<h3>
-							工作時間：
-						</h3>
-					</div>
-					<div class="wrap_contact_text">
-						<p>
-							Monday to Friday from 9 a.m. to 6 p.m.
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-				<div class="wrap_contact_info">
-					<div class="head_contact">
-						<h3>
-							線上聯係方式：
-						</h3>
-					</div>
-					<div class="wrap_contact_text">
-						<ul class="share-post">
-							<li> <a href="#"><i class="fab fa-facebook-f"></i></a></li>
-							<li> <a href="#"><i class="fab fa-twitter"></i></a></li>
-							<li> <a href="#"><i class="fab fa-google-plus"></i></a></li>
-							<li> <a href="#"><i class="fab fa-weixin"></i></a></li>
-							<li> <a href="#"><i class="fab fa-qq"></i></a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row_contact row">
-			<div class="col-12">
-				<form action="/index/Editapplic" method="post" id="form" class="comment-form">
-					<div class="row">
-						<div class="col-12">
-							<p class="contact-form-el">
-								<select class="form-control" name="activitiesid">
-									<foreach name='InfoData' item='Info' >
-									<option value="{$Info.id}">{$Info.co_title}</option>
-									</foreach>
-								</select>
-							</p>
-						</div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="wrap_contact_info">
+                        <div class="head_contact">
+                            <h3>
+                                工作時間：
+                            </h3>
+                        </div>
+                        <div class="wrap_contact_text">
+                            <p>
+                                Monday to Friday from 9 a.m. to 6 p.m.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="wrap_contact_info">
+                        <div class="head_contact">
+                            <h3>
+                                線上聯係方式：
+                            </h3>
+                        </div>
+                        <div class="wrap_contact_text">
+                            <ul class="share-post">
+                                <li><a href="https://www.facebook.com/sharer.php?u={$geturl}" target="_blank"><i
+                                        class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="https://twitter.com/share" target="_blank" data-url="{$geturl}"
+                                       data-text="" data-via=""
+                                       data-lang="ja"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href='https://lineit.line.me/share/ui?url=encodeURIComponent("{$geturl}")'
+                                       target="_blank"><i class="fab fa-line"></i></a></li>
+                                <li><a href="#"><i class="fab fa-weixin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row_contact row">
+                <div class="col-12">
+                    <form action="/index/Editapplic" method="post" id="form" class="comment-form">
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="contact-form-el">
+                                    <select class="form-control" name="activitiesid">
+                                        <foreach name='InfoData' item='Info'>
+                                            <option value="{$Info.id}">{$Info.co_title}</option>
+                                        </foreach>
+                                    </select>
+                                </p>
+                            </div>
 
-						<div class="col-12">
-							<p class="contact-form-el">
-								<select class="form-control" name="address">
-									<option>台北</option>
-									<option>台中</option>
-									<option>高雄</option>
-								</select>
-							</p>
-						</div>
-						<div class="col-lg-4 col-md-12 col-12">
-							<p class="contact-form-el">
-								<input type="text" name="name" id="name" class="tp-feild tp-user-name" required="" placeholder="請輸入您的姓名 *">
-							</p>
-						</div>
-						<div class="col-lg-4 col-md-12 col-12">
-							<p class="contact-form-el">
-								<input type="text" name="email" class="tp-feild tp-email" id="email" required="" placeholder="您的郵箱或電話 *">
-							</p>
-						</div>
-						<div class="col-lg-4 col-md-12 col-12">
-							<p class="contact-form-el">
-								<input type="text" id="company" name="company" class="tp-feild tp-phone" placeholder="您的公司名稱 *">
-							</p>
-						</div>
-						<div class="col-12">
-							<p class="contact-form-el">
-								<textarea name="message" class="tp-message" placeholder="其他需求.500字以內"></textarea>
-							</p>
-						</div>
-						<div class="col-12 ">
-							<div class="tp-wrap-btn">
-								<button type="submit" class=" sendmessage_btn" id="tp-submit">提交報名信息</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	</section>
-	<script>
+                            <div class="col-12">
+                                <p class="contact-form-el">
+                                    <select class="form-control" name="address">
+                                        <option>台北</option>
+                                        <option>台中</option>
+                                        <option>高雄</option>
+                                    </select>
+                                </p>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-12">
+                                <p class="contact-form-el">
+                                    <input type="text" name="name" id="name" class="tp-feild tp-user-name" required=""
+                                           placeholder="請輸入您的姓名 *">
+                                </p>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-12">
+                                <p class="contact-form-el">
+                                    <input type="text" name="email" class="tp-feild tp-email" id="email" required=""
+                                           placeholder="您的郵箱 *">
+                                </p>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-12">
+                                <p class="contact-form-el">
+                                    <input type="text" id="company" name="company" class="tp-feild tp-phone"
+                                           placeholder="您的公司名稱 *">
+                                </p>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-12">
+                                <p class="contact-form-el">
+                                    <input type="text" id="zhicheng" name="zhicheng" class="tp-feild tp-phone"
+                                           placeholder="您的職稱 *">
+                                </p>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-12">
+                                <p class="contact-form-el">
+                                    <input type="text" id="mobile" name="mobile" class="tp-feild tp-phone"
+                                           placeholder="行動電話 *">
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <p class="contact-form-el">
+                                    <textarea name="message" class="tp-message" placeholder="其他需求.500字以內"></textarea>
+                                </p>
+                            </div>
+                            <div class="col-12 ">
+                                <div class="tp-wrap-btn">
+                                    <button type="submit" class=" sendmessage_btn" id="tp-submit">提交報名信息</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
         $(function () {
             $('form').bootstrapValidator({
                 message: 'This value is not valid',
@@ -154,10 +172,12 @@
                         }
                     },
                     email: {
-                        message: '請輸入正確的郵箱或者電話',
+                        message: '請輸入正確的郵箱',
                         validators: {
                             notEmpty: {
-                                message: '請輸入正確的郵箱或者電話'
+                                message: '請輸入正確的郵箱'
+                            }, emailAddress: {
+                                message: '不是正确的email地址'
                             }
                         }
                     },
@@ -169,9 +189,25 @@
                             }
                         }
                     },
+                    zhicheng: {
+                        message: '請輸入正確的郵箱',
+                        validators: {
+                            notEmpty: {
+                                message: '請輸入您的職稱信息'
+                            }
+                        }
+                    },
+                    mobile: {
+                        message: '請輸入正確的移動電話',
+                        validators: {
+                            notEmpty: {
+                                message: '請輸入您的移動電話號碼'
+                            }
+                        }
+                    },
 
                 }
             });
         });
-	</script>
+    </script>
 </block>

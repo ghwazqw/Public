@@ -17,7 +17,7 @@ class UserController extends PublicController {
     //角色管理
     public function RoleManage(){
         $this->assign("title","角色信息管理");
-        $this->theme("webapps")->display("");
+        $this->theme("WebApps")->display("");
     }
     //删除角色
     public function RoleDel($id){
@@ -60,7 +60,7 @@ class UserController extends PublicController {
         $this->assign("mtea_data",$ii->_class_meta_data); //三级菜单
 
         $this->assign("title","角色权限管理");
-        $this->theme("webapps")->display("");
+        $this->theme("WebApps")->display("");
     }
     //获取角色下属菜单信息
     public function RoleAuthMenu(){
@@ -74,12 +74,12 @@ class UserController extends PublicController {
     //用户信息列表
     public function UserManage(){
         $this->assign("title","管理员信息管理");
-        $this->theme("webapps")->display("");
+        $this->theme("WebApps")->display("");
     }
     //用户登录信息列表
     public function UserLogList(){
         $this->assign("title","管理员登录日志查询");
-        $this->theme("webapps")->display("");
+        $this->theme("WebApps")->display("");
     }
     //检测手机号是否存在
     public function chmob(){
@@ -103,19 +103,19 @@ class UserController extends PublicController {
         }else{
             session("mobcode",null);
             $this->assign("title","用户注册");
-            $this->theme("webapps")->display("");
+            $this->theme("WebApps")->display("");
         }
     }
     //前端用户登录
     public function Qlogin(){
         $this->assign("title","用户登录");
-        $this->theme("webapps")->display("");
+        $this->theme("WebApps")->display("");
     }
     //后端用户登录
     public function login(){
         if (!$_POST){
             $this->assign("title","|用户登录");
-            $this->theme("webapps")->display();
+            $this->theme("WebApps")->display();
         }else {
             $get_UserName = I("Username");
             $a = new LoginAPI();

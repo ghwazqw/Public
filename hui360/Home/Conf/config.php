@@ -125,6 +125,16 @@ return array(
     /*apptoken开关*/
     "token_switch"=>"0", //0为关闭,1为开启
 
+    /*發送郵件設置*/
+    'MAIL_HOST' =>'smtp.gmail.com',
+    'MAIL_SMTPAUTH' =>TRUE, //
+    'MAIL_USERNAME' =>'net2ccservice@gmail.com',//
+    'MAIL_FROM' =>'net2ccservice@gmail.com',//
+    'MAIL_FROMNAME'=>'網天下(www.Net2cc.com)',//
+    'MAIL_PASSWORD' =>'ghwytr3530',//
+    'MAIL_CHARSET' =>'utf-8',//
+    'MAIL_ISHTML' =>TRUE, //
+
     /*cooker 加密KEY配置*/
     "cookkey"=>"ghwazqw",
 
